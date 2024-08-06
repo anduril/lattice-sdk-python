@@ -9,9 +9,10 @@ src-layout = true
 name = "anduril"
 version = "1.0"
 dependencies = [
-  "protobuf",
+  "betterproto",
   "grpcio",
-  "grpclib"
+  "grpclib",
+  "protobuf"
 ]
 requires-python = ">=3.8"
 authors = [
