@@ -9,7 +9,7 @@ src-layout = true
 name = "anduril"
 version = "1.0"
 dependencies = [
-  "betterproto",
+  "betterproto>=2.0.0b6",
   "grpcio",
   "grpclib",
   "protobuf"
