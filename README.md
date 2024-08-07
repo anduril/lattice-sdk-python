@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
 ## Support
 
-For support with this library please [file an issue](https://github.com/anduril/anduril-javascript/issues/new) or reach out to your Anduril representative. 
+For support with this library please [file an issue](https://github.com/anduril/anduril-python/issues/new) or reach out to your Anduril representative. 
 
 
 
