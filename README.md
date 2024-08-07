@@ -1,31 +1,72 @@
-# anduril-sdk-python
+# Anduril SDK Python
 
-## Quick Start
+The official [Anduril](https://www.anduril.com/) client library.
 
-```bash
-mkdir cmd
-touch main.py
-python3 -m venv .venv
-pip3 install git+https://{USER}:{GH_KEY}@github.com/anduril/anduril-python.git@main -U
+## Requirements
+
+Python 3
+
+## Installation
+
+### Authentication
+
+To authenticate with the Github package repository, you will need to generate a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic). This should have at least `read:packages` scope. Please keep the token safe for the next stage of the setup procedure.
+
+### Pip
+
+Install the SDK with Pip. 
+
 ```
+pip install git+https://{GITHUB_USERNAME}:{GITHUB_TOKEN}@github.com/anduril/anduril-python.git -U
+```
+
+**Note:** To use gRPC's in Python, you must install the
+[`grpclib`](https://grpclib.readthedocs.io/en/latest/index.html) dependency
+
+```
+pip install "grpclib[protobuf]"
+```
+
+You'll also need
+[`certifi`](https://grpclib.readthedocs.io/en/latest/client.html#secure-channels)
+to setup a secure connection to gRPC server:
+
+```
+pip install certifi
+```
+## Usage
 
 main.py
 
 ```python
-from anduril.entitymanager.v1 import Entity, PublishEntitiesRequest, EntityManagerApiStub
-
+from anduril.entitymanager.v1 import EntityManagerApiStub, GetEntityRequest
 from grpclib.client import Channel
+import asyncio
 
-def main():
-    entity = Entity()
-    entity.entity_id = "abasd"
-    channel = Channel(host="127.0.0.1", port=443)
-    service = EntityManagerApiStub(channel)
-    response = service.publish_entities(PublishEntitiesRequest(entity = entity))
-    print(response)
-    # don't forget to close the channel when done!
-    channel.close()
+metadata = {
+    'authorization': 'Bearer <YOUR BEARER TOKEN>'
+}
+
+async def get_entity(entity_id):
+    # open secure channel
+    channel = Channel(host="desert-guardian.anduril.com", port=443, ssl=True)
+
+    # create service instance
+    entity_manager_stub = EntityManagerApiStub(channel)
+
+    # make request with auth header
+    response = await entity_manager_stub.get_entity(GetEntityRequest(entity_id = entity_id), metadata=metadata)
+
+    channel.close() # don't forget to close the channel!
+    return response
 
 if __name__ == "__main__":
-    main()
+    print(asyncio.run(get_entity("<ENTITY ID>")))
 ```
+
+## Support
+
+For support with this library please [file an issue](https://github.com/anduril/anduril-javascript/issues/new) or reach out to your Anduril representative. 
+
+
+
