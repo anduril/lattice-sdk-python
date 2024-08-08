@@ -32,6 +32,53 @@ if TYPE_CHECKING:
     from grpclib.metadata import Deadline
 
 
+class ClassificationLevels(betterproto.Enum):
+    """An enumeration of security classification levels."""
+
+    CLASSIFICATION_LEVELS_INVALID = 0
+    CLASSIFICATION_LEVELS_UNCLASSIFIED = 1
+    CLASSIFICATION_LEVELS_CONTROLLED_UNCLASSIFIED = 2
+    CLASSIFICATION_LEVELS_CONFIDENTIAL = 3
+    CLASSIFICATION_LEVELS_SECRET = 4
+    CLASSIFICATION_LEVELS_TOP_SECRET = 5
+
+
+class CorrelationStatus(betterproto.Enum):
+    """The status of the correlation."""
+
+    CORRELATION_STATUS_INVALID = 0
+    CORRELATION_STATUS_MANUAL_INSPECTION = 1
+    """
+    potential correlation requested by manual inspection, not yet confirmed.
+    """
+
+    CORRELATION_STATUS_AUTO_SUGGESTED = 2
+    """potential correlation suggested by system, not yet confirmed."""
+
+    CORRELATION_STATUS_START_CORRELATE = 3
+    """deprecated"""
+
+    CORRELATION_STATUS_CONFIRMED = 4
+    """correlation has been confirmed, treat non primary as hidden."""
+
+    CORRELATION_STATUS_DENIED = 5
+    """correlation was explicitly rejected, treat as non correlated."""
+
+
+class ScoreInterpretation(betterproto.Enum):
+    """The interpretation of the correlation score."""
+
+    SCORE_INTERPRETATION_INVALID = 0
+    SCORE_INTERPRETATION_UNLIKELY = 1
+    """unlikely these are the same entity"""
+
+    SCORE_INTERPRETATION_LIKELY = 2
+    """likely these are the same entity"""
+
+    SCORE_INTERPRETATION_VERY_LIKELY = 3
+    """very likely these are the same entity"""
+
+
 class GeoType(betterproto.Enum):
     """The type of geo entity."""
 
@@ -184,114 +231,6 @@ class McmDetailType(betterproto.Enum):
     MCM_DETAIL_TYPE_INVALID = 0
     MCM_DETAIL_TYPE_NAMED_AREA_OF_INTEREST = 1
     MCM_DETAIL_TYPE_TARGET_AREA_OF_INTEREST = 2
-
-
-class Comparator(betterproto.Enum):
-    """
-    The Comparator specifies the set of supported comparison operations. It
-    also provides the mapping information about which comparators are supported
-    for which values. Services that wish to implement entity filters must
-    provide validation functionality to strictly enforce these mappings.
-    """
-
-    COMPARATOR_INVALID = 0
-    COMPARATOR_MATCH_ALL = 11
-    """
-    Comparators for: boolean, numeric, string, enum, position, timestamp,
-    positions, and bounded shapes.
-    """
-
-    COMPARATOR_EQUALITY = 1
-    """
-    Comparators for: boolean, numeric, string, enum, position, and timestamp.
-    """
-
-    COMPARATOR_IN = 9
-    COMPARATOR_LESS_THAN = 2
-    """Comparators for: numeric, string, and timestamp."""
-
-    COMPARATOR_GREATER_THAN = 3
-    COMPARATOR_LESS_THAN_EQUAL_TO = 4
-    COMPARATOR_GREATER_THAN_EQUAL_TO = 5
-    COMPARATOR_WITHIN = 6
-    """Comparators for: positions and bounded shapes."""
-
-    COMPARATOR_EXISTS = 7
-    """
-    Comparators for: existential checks. TRUE if path to field exists (parent
-    message is present), and either:   1. the field is a primitive: all values
-    including default pass check.   2. the field is a message and set/present.
-    3. the field is repeated or map with size > 0. FALSE unless path exists and
-    one of the above 3 conditions is met
-    """
-
-    COMPARATOR_CASE_INSENSITIVE_EQUALITY = 8
-    """Comparator for string type only."""
-
-    COMPARATOR_CASE_INSENSITIVE_EQUALITY_IN = 10
-    COMPARATOR_RANGE_CLOSED = 12
-    """
-    Comparators for range types only. Closed (inclusive endpoints) [a, b]
-    """
-
-
-class ListComparator(betterproto.Enum):
-    """
-    The ListComparator determines how to compose statement evaluations for
-    members of a list. For example, if ANY_OF is specified, the ListOperation
-    in which the ListComparator is embedded will return TRUE if any of the
-    values in the list returns true for the ListOperation's child statement.
-    """
-
-    LIST_COMPARATOR_INVALID = 0
-    LIST_COMPARATOR_ANY_OF = 1
-
-
-class ClassificationLevels(betterproto.Enum):
-    """An enumeration of security classification levels."""
-
-    CLASSIFICATION_LEVELS_INVALID = 0
-    CLASSIFICATION_LEVELS_UNCLASSIFIED = 1
-    CLASSIFICATION_LEVELS_CONTROLLED_UNCLASSIFIED = 2
-    CLASSIFICATION_LEVELS_CONFIDENTIAL = 3
-    CLASSIFICATION_LEVELS_SECRET = 4
-    CLASSIFICATION_LEVELS_TOP_SECRET = 5
-
-
-class CorrelationStatus(betterproto.Enum):
-    """The status of the correlation."""
-
-    CORRELATION_STATUS_INVALID = 0
-    CORRELATION_STATUS_MANUAL_INSPECTION = 1
-    """
-    potential correlation requested by manual inspection, not yet confirmed.
-    """
-
-    CORRELATION_STATUS_AUTO_SUGGESTED = 2
-    """potential correlation suggested by system, not yet confirmed."""
-
-    CORRELATION_STATUS_START_CORRELATE = 3
-    """deprecated"""
-
-    CORRELATION_STATUS_CONFIRMED = 4
-    """correlation has been confirmed, treat non primary as hidden."""
-
-    CORRELATION_STATUS_DENIED = 5
-    """correlation was explicitly rejected, treat as non correlated."""
-
-
-class ScoreInterpretation(betterproto.Enum):
-    """The interpretation of the correlation score."""
-
-    SCORE_INTERPRETATION_INVALID = 0
-    SCORE_INTERPRETATION_UNLIKELY = 1
-    """unlikely these are the same entity"""
-
-    SCORE_INTERPRETATION_LIKELY = 2
-    """likely these are the same entity"""
-
-    SCORE_INTERPRETATION_VERY_LIKELY = 3
-    """very likely these are the same entity"""
 
 
 class ConnectionStatus(betterproto.Enum):
@@ -854,6 +793,67 @@ class InteractivityMode(betterproto.Enum):
     INTERACTIVITY_MODE_DISABLED_ON_MAP = 2
 
 
+class Comparator(betterproto.Enum):
+    """
+    The Comparator specifies the set of supported comparison operations. It
+    also provides the mapping information about which comparators are supported
+    for which values. Services that wish to implement entity filters must
+    provide validation functionality to strictly enforce these mappings.
+    """
+
+    COMPARATOR_INVALID = 0
+    COMPARATOR_MATCH_ALL = 11
+    """
+    Comparators for: boolean, numeric, string, enum, position, timestamp,
+    positions, and bounded shapes.
+    """
+
+    COMPARATOR_EQUALITY = 1
+    """
+    Comparators for: boolean, numeric, string, enum, position, and timestamp.
+    """
+
+    COMPARATOR_IN = 9
+    COMPARATOR_LESS_THAN = 2
+    """Comparators for: numeric, string, and timestamp."""
+
+    COMPARATOR_GREATER_THAN = 3
+    COMPARATOR_LESS_THAN_EQUAL_TO = 4
+    COMPARATOR_GREATER_THAN_EQUAL_TO = 5
+    COMPARATOR_WITHIN = 6
+    """Comparators for: positions and bounded shapes."""
+
+    COMPARATOR_EXISTS = 7
+    """
+    Comparators for: existential checks. TRUE if path to field exists (parent
+    message is present), and either:   1. the field is a primitive: all values
+    including default pass check.   2. the field is a message and set/present.
+    3. the field is repeated or map with size > 0. FALSE unless path exists and
+    one of the above 3 conditions is met
+    """
+
+    COMPARATOR_CASE_INSENSITIVE_EQUALITY = 8
+    """Comparator for string type only."""
+
+    COMPARATOR_CASE_INSENSITIVE_EQUALITY_IN = 10
+    COMPARATOR_RANGE_CLOSED = 12
+    """
+    Comparators for range types only. Closed (inclusive endpoints) [a, b]
+    """
+
+
+class ListComparator(betterproto.Enum):
+    """
+    The ListComparator determines how to compose statement evaluations for
+    members of a list. For example, if ANY_OF is specified, the ListOperation
+    in which the ListComparator is embedded will return TRUE if any of the
+    values in the list returns true for the ListOperation's child statement.
+    """
+
+    LIST_COMPARATOR_INVALID = 0
+    LIST_COMPARATOR_ANY_OF = 1
+
+
 class EventType(betterproto.Enum):
     """The type of entity event."""
 
@@ -872,6 +872,126 @@ class EventType(betterproto.Enum):
 
     EVENT_TYPE_POST_EXPIRY_OVERRIDE = 5
     """entity override was set after the entity expiration."""
+
+
+@dataclass(eq=False, repr=False)
+class Classification(betterproto.Message):
+    """
+    A component that describes an entity's security classification levels.
+    """
+
+    level: "ClassificationLevels" = betterproto.enum_field(1)
+    default: "ClassificationInformation" = betterproto.message_field(2)
+    """
+    The default classification information which should be assumed to apply to
+    everything in the entity unless a specific field level classification is
+    present.
+    """
+
+    fields: List["FieldClassificationInformation"] = betterproto.message_field(3)
+    """
+    The set of individual field classification information which should always
+    precedence over the default classification information.
+    """
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        if self.is_set("level"):
+            warnings.warn("Classification.level is deprecated", DeprecationWarning)
+
+
+@dataclass(eq=False, repr=False)
+class FieldClassificationInformation(betterproto.Message):
+    """A field specific classification information definition."""
+
+    field_path: str = betterproto.string_field(1)
+    """
+    Proto field path which is the string representation of a field. > example:
+    signal.bandwidth_hz would be bandwidth_hz in the signal component
+    """
+
+    classification_information: "ClassificationInformation" = betterproto.message_field(
+        2
+    )
+    """
+    The information which makes up the field level classification marking.
+    """
+
+
+@dataclass(eq=False, repr=False)
+class ClassificationInformation(betterproto.Message):
+    """
+    Represents all of the necessary information required to generate a
+    summarized classification marking. > example: A summarized classification
+    marking of "TOPSECRET//NOFORN//FISA"            would be defined as: {
+    "level": 5, "caveats": [ "NOFORN, "FISA" ] }
+    """
+
+    level: "ClassificationLevels" = betterproto.enum_field(1)
+    """Classification level to be applied to the information in question."""
+
+    caveats: List[str] = betterproto.string_field(2)
+    """
+    Caveats that may further restrict how the information can be disseminated.
+    """
+
+
+@dataclass(eq=False, repr=False)
+class ContactDetails(betterproto.Message):
+    """Contains details on how to make contact with an entity."""
+
+    phone_number: str = betterproto.string_field(1)
+    """The primary phone number for this entity."""
+
+
+@dataclass(eq=False, repr=False)
+class Correlated(betterproto.Message):
+    """
+    Available for Entities that are a correlated (N to 1) set of entities. This
+    will be present on each entity in the set.
+    """
+
+    primary_entity_id: str = betterproto.string_field(1)
+    """primary entity id"""
+
+    status: "CorrelationStatus" = betterproto.enum_field(2)
+    """status representing this correlation"""
+
+    scores: List["CorrelationScore"] = betterproto.message_field(3)
+    """score pairings between this and other entity ids"""
+
+    expires_time: datetime = betterproto.message_field(4)
+    """if not present, does not expire"""
+
+
+@dataclass(eq=False, repr=False)
+class CorrelationScore(betterproto.Message):
+    """A correlation scoring between two entities."""
+
+    other_entity_id: str = betterproto.string_field(1)
+    score: float = betterproto.float_field(2)
+    interpretation: "ScoreInterpretation" = betterproto.enum_field(3)
+    link16_compliant: bool = betterproto.bool_field(4)
+    """Deprecated: do not use"""
+
+    other_status: "CorrelationStatus" = betterproto.enum_field(5)
+    """
+    status of other_entity_id correlation, expresses relationship of other to
+    correlation set this entity is part of.
+    """
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        if self.is_set("link16_compliant"):
+            warnings.warn(
+                "CorrelationScore.link16_compliant is deprecated", DeprecationWarning
+            )
+
+
+@dataclass(eq=False, repr=False)
+class Dimensions(betterproto.Message):
+    length_m: float = betterproto.float_field(1)
+    """Length of the entity in meters"""
 
 
 @dataclass(eq=False, repr=False)
@@ -1311,452 +1431,6 @@ class ControlAreaDetails(betterproto.Message):
     """
 
     type: "ControlAreaType" = betterproto.enum_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class Statement(betterproto.Message):
-    """
-    A Statement is the building block of the entity filter. The outermost
-    statement is conceptually the root node of an "expression tree" which
-    allows for the construction of complete boolean logic statements.
-    Statements are formed by grouping sets of children statement(s) or
-    predicate(s) according to the boolean operation which is to be applied. For
-    example, the criteria "take an action if an entity is hostile and an air
-    vehicle" can be represented as: Statement1: { AndOperation: { Predicate1,
-    Predicate2 } }. Where Statement1 is the root of the expression tree, with
-    an AND operation that is applied to children predicates. The predicates
-    themselves encode "entity is hostile" and "entity is air vehicle."
-    """
-
-    and_: "AndOperation" = betterproto.message_field(1, group="operation")
-    or_: "OrOperation" = betterproto.message_field(2, group="operation")
-    not_: "NotOperation" = betterproto.message_field(3, group="operation")
-    list: "ListOperation" = betterproto.message_field(4, group="operation")
-    predicate: "Predicate" = betterproto.message_field(5, group="operation")
-
-
-@dataclass(eq=False, repr=False)
-class AndOperation(betterproto.Message):
-    """
-    The AndOperation represents the boolean AND operation, which is to be
-    applied to the list of children statement(s) or predicate(s).
-    """
-
-    predicate_set: "PredicateSet" = betterproto.message_field(1, group="children")
-    statement_set: "StatementSet" = betterproto.message_field(2, group="children")
-
-
-@dataclass(eq=False, repr=False)
-class OrOperation(betterproto.Message):
-    """
-    The OrOperation represents the boolean OR operation, which is to be applied
-    to the list of children statement(s) or predicate(s).
-    """
-
-    predicate_set: "PredicateSet" = betterproto.message_field(1, group="children")
-    statement_set: "StatementSet" = betterproto.message_field(2, group="children")
-
-
-@dataclass(eq=False, repr=False)
-class NotOperation(betterproto.Message):
-    """
-    The NotOperation represents the boolean NOT operation, which can only be
-    applied to a single child predicate or statement.
-    """
-
-    predicate: "Predicate" = betterproto.message_field(1, group="child")
-    statement: "Statement" = betterproto.message_field(2, group="child")
-
-
-@dataclass(eq=False, repr=False)
-class ListOperation(betterproto.Message):
-    """
-    The ListOperation represents an operation against a proto list. If the list
-    is of primitive proto type (e.g. int32), paths in all child predicates
-    should be left empty. If the list is of message proto type (e.g. Sensor),
-    paths in all child predicates should be relative to the list path. For
-    example, the criteria "take an action if an entity has any sensor with
-    sensor_id='sensor' and OperationalState=STATE_OFF" would be modeled as:
-    Predicate1: { path: "sensor_id", comparator: EQUAL_TO, value: "sensor" }
-    Predicate2: { path: "operational_state", comparator: EQUAL_TO, value:
-    STATE_OFF } Statement2: { AndOperation: PredicateSet: { <Predicate1>,
-    <Predicate2> } } ListOperation: { list_path: "sensors.sensors",
-    list_comparator: ANY, statement: <Statement2> } Statement1: {
-    ListOperation: <ListOperation> } Note that in the above, the child
-    predicates of the list operation have paths relative to the list_path
-    because the list is comprised of message not primitive types.
-    """
-
-    list_path: str = betterproto.string_field(1)
-    """
-    The list_path specifies the repeated field on an entity to which this
-    operation applies.
-    """
-
-    list_comparator: "ListComparator" = betterproto.enum_field(2)
-    """
-    The list_comparator specifies how to compose the boolean results from the
-    child statement for each member of the specified list.
-    """
-
-    statement: "Statement" = betterproto.message_field(3)
-    """
-    The statement is a new expression tree conceptually rooted at type of the
-    list. It determines how each member of the list is evaluated.
-    """
-
-
-@dataclass(eq=False, repr=False)
-class PredicateSet(betterproto.Message):
-    """
-    The PredicateSet represents a list of predicates or "leaf nodes" in the
-    expression tree, which can be directly evaluated to a boolean TRUE/FALSE
-    result.
-    """
-
-    predicates: List["Predicate"] = betterproto.message_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class StatementSet(betterproto.Message):
-    """
-    The StatementSet represents a list of statements or "tree nodes," each of
-    which follow the same behavior as the Statement proto message.
-    """
-
-    statements: List["Statement"] = betterproto.message_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class Predicate(betterproto.Message):
-    """
-    The Predicate fully encodes the information required to make an evaluation
-    of an entity field against a given static value, resulting in a boolean
-    TRUE/FALSE result. The structure of a predicate will always follow:
-    "{entity-value} {comparator} {fixed-value}" where the entity value is
-    determined by the field path. For example, a predicate would read as:
-    "{entity.location.velocity_enu} {LESS_THAN} {500kph}"
-    """
-
-    field_path: str = betterproto.string_field(1)
-    """
-    The field_path determines which field on an entity is being referenced in
-    this predicate. For example: correlated.primary_entity_id would be
-    primary_entity_id in correlated component.
-    """
-
-    value: "Value" = betterproto.message_field(2)
-    """
-    The value determines the fixed value against which the entity field is to
-    be compared. In the case of COMPARATOR_MATCH_ALL, the value contents do not
-    matter as long as the Value is a supported type.
-    """
-
-    comparator: "Comparator" = betterproto.enum_field(3)
-    """
-    The comparator determines the manner in which the entity field and static
-    value are compared. Comparators may only be applied to certain values. For
-    example, the WITHIN comparator cannot be used for a boolean value
-    comparison.
-    """
-
-
-@dataclass(eq=False, repr=False)
-class Value(betterproto.Message):
-    """
-    The Value represents the information against which an entity field is
-    evaluated. It is one of a fixed set of types, each of which correspond to
-    specific comparators. See "ComparatorType" for the full list of Value <->
-    Comparator mappings.
-    """
-
-    boolean_type: "BooleanType" = betterproto.message_field(1, group="type")
-    numeric_type: "NumericType" = betterproto.message_field(2, group="type")
-    string_type: "StringType" = betterproto.message_field(3, group="type")
-    enum_type: "EnumType" = betterproto.message_field(4, group="type")
-    timestamp_type: "TimestampType" = betterproto.message_field(5, group="type")
-    bounded_shape_type: "BoundedShapeType" = betterproto.message_field(6, group="type")
-    position_type: "PositionType" = betterproto.message_field(7, group="type")
-    heading_type: "HeadingType" = betterproto.message_field(8, group="type")
-    list_type: "ListType" = betterproto.message_field(9, group="type")
-    range_type: "RangeType" = betterproto.message_field(10, group="type")
-
-
-@dataclass(eq=False, repr=False)
-class BooleanType(betterproto.Message):
-    """The BooleanType represents a static boolean value."""
-
-    value: bool = betterproto.bool_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class NumericType(betterproto.Message):
-    """
-    The NumericType represents static numeric values. It supports all numeric
-    primitives supported by the proto3 language specification.
-    """
-
-    double_value: float = betterproto.double_field(1, group="value")
-    float_value: float = betterproto.float_field(2, group="value")
-    int32_value: int = betterproto.int32_field(3, group="value")
-    int64_value: int = betterproto.int64_field(4, group="value")
-    uint32_value: int = betterproto.uint32_field(5, group="value")
-    uint64_value: int = betterproto.uint64_field(6, group="value")
-
-
-@dataclass(eq=False, repr=False)
-class StringType(betterproto.Message):
-    """The StringType represents static string values."""
-
-    value: str = betterproto.string_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class EnumType(betterproto.Message):
-    """
-    The EnumType represents members of well-known anduril ontologies, such as
-    "disposition." When such a value is specified, the evaluation library
-    expects the integer representation of the enum value. For example, a
-    disposition derived from ontology.v1 such as "DISPOSITION_HOSTILE" should
-    be represented with the integer value 2.
-    """
-
-    value: int = betterproto.int32_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class ListType(betterproto.Message):
-    """A List of Values for use with the IN comparator."""
-
-    values: List["Value"] = betterproto.message_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class TimestampType(betterproto.Message):
-    """The TimestampType represents a static timestamp value."""
-
-    value: datetime = betterproto.message_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class PositionType(betterproto.Message):
-    """The PositionType represents any fixed LLA point in space."""
-
-    value: "Position" = betterproto.message_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class BoundedShapeType(betterproto.Message):
-    """The BoundedShapeType represents any static fully-enclosed shape."""
-
-    polygon_value: "GeoPolygon" = betterproto.message_field(1, group="value")
-
-
-@dataclass(eq=False, repr=False)
-class HeadingType(betterproto.Message):
-    """
-    The HeadingType represents the heading in degrees for an entity's
-    attitudeEnu quaternion to be compared against. Defaults between a range of
-    0 to 360
-    """
-
-    value: int = betterproto.int32_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class RangeType(betterproto.Message):
-    """
-    The RangeType represents a numeric range. Whether endpoints are included
-    are based on the comparator used. Both endpoints must be of the same
-    numeric type.
-    """
-
-    start: "NumericType" = betterproto.message_field(1)
-    end: "NumericType" = betterproto.message_field(2)
-
-
-@dataclass(eq=False, repr=False)
-class DynamicStatement(betterproto.Message):
-    """
-    A DynamicStatement is the building block of a "runtime aware" entity filter
-    - that is, any filter which needs to perform operations against a series of
-    entities that will need to be evaluated against on demand. The
-    DynamicStatement allows you to perform a set intersection operation across
-    a static set of entities dictated by a filter, and a dynamic set of
-    entities dictated by a selector statement. For example, the expression
-    "find me all hostile entities that reside within any assumed friendly
-    geoentity" would be represented as the following dynamic statement:
-    DynamicStatement    filter      predicate        field_path:
-    mil_view.disposition        comparator: EQUALITY        value: 2 // Hostile
-    selector      andOperation        predicate1          field_path:
-    mil_view.disposition          comparator: EQUALITY          value: 4 //
-    Assumed Friendly        predicate2          field_path: ontology.template
-    comparator: EQUALITY          value: 4 // Template Geo    comparator
-    IntersectionComparator        WithinComparison
-    """
-
-    filter: "Statement" = betterproto.message_field(1)
-    """
-    The filter statement is used to determine which entities can be compared to
-    the dynamic series of entities aggregated by the selector statement.
-    """
-
-    selector: "Statement" = betterproto.message_field(2)
-    """
-    The selector statement is used to determine which entities should be a part
-    of dynamically changing set. The selector should be reevaluated as entites
-    are created or deleted.
-    """
-
-    comparator: "IntersectionComparator" = betterproto.message_field(3)
-    """
-    The comparator specifies how the set intersection operation will be
-    performed.
-    """
-
-
-@dataclass(eq=False, repr=False)
-class IntersectionComparator(betterproto.Message):
-    """
-    The IntersectionComparator determines what entities and what fields to
-    respect within a set during a set intersection operation.
-    """
-
-    within_comparison: "WithinComparison" = betterproto.message_field(
-        1, group="comparison"
-    )
-
-
-@dataclass(eq=False, repr=False)
-class WithinComparison(betterproto.Message):
-    """
-    The WithinComparison implicitly will understand how to determine which
-    entitites reside within other geo-shaped entities. This comparison is being
-    left empty, but as a proto, to support future expansions of the within
-    comparison (eg; within range of a static distance).
-    """
-
-    pass
-
-
-@dataclass(eq=False, repr=False)
-class Classification(betterproto.Message):
-    """
-    A component that describes an entity's security classification levels.
-    """
-
-    level: "ClassificationLevels" = betterproto.enum_field(1)
-    default: "ClassificationInformation" = betterproto.message_field(2)
-    """
-    The default classification information which should be assumed to apply to
-    everything in the entity unless a specific field level classification is
-    present.
-    """
-
-    fields: List["FieldClassificationInformation"] = betterproto.message_field(3)
-    """
-    The set of individual field classification information which should always
-    precedence over the default classification information.
-    """
-
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("level"):
-            warnings.warn("Classification.level is deprecated", DeprecationWarning)
-
-
-@dataclass(eq=False, repr=False)
-class FieldClassificationInformation(betterproto.Message):
-    """A field specific classification information definition."""
-
-    field_path: str = betterproto.string_field(1)
-    """
-    Proto field path which is the string representation of a field. > example:
-    signal.bandwidth_hz would be bandwidth_hz in the signal component
-    """
-
-    classification_information: "ClassificationInformation" = betterproto.message_field(
-        2
-    )
-    """
-    The information which makes up the field level classification marking.
-    """
-
-
-@dataclass(eq=False, repr=False)
-class ClassificationInformation(betterproto.Message):
-    """
-    Represents all of the necessary information required to generate a
-    summarized classification marking. > example: A summarized classification
-    marking of "TOPSECRET//NOFORN//FISA"            would be defined as: {
-    "level": 5, "caveats": [ "NOFORN, "FISA" ] }
-    """
-
-    level: "ClassificationLevels" = betterproto.enum_field(1)
-    """Classification level to be applied to the information in question."""
-
-    caveats: List[str] = betterproto.string_field(2)
-    """
-    Caveats that may further restrict how the information can be disseminated.
-    """
-
-
-@dataclass(eq=False, repr=False)
-class ContactDetails(betterproto.Message):
-    """Contains details on how to make contact with an entity."""
-
-    phone_number: str = betterproto.string_field(1)
-    """The primary phone number for this entity."""
-
-
-@dataclass(eq=False, repr=False)
-class Correlated(betterproto.Message):
-    """
-    Available for Entities that are a correlated (N to 1) set of entities. This
-    will be present on each entity in the set.
-    """
-
-    primary_entity_id: str = betterproto.string_field(1)
-    """primary entity id"""
-
-    status: "CorrelationStatus" = betterproto.enum_field(2)
-    """status representing this correlation"""
-
-    scores: List["CorrelationScore"] = betterproto.message_field(3)
-    """score pairings between this and other entity ids"""
-
-    expires_time: datetime = betterproto.message_field(4)
-    """if not present, does not expire"""
-
-
-@dataclass(eq=False, repr=False)
-class CorrelationScore(betterproto.Message):
-    """A correlation scoring between two entities."""
-
-    other_entity_id: str = betterproto.string_field(1)
-    score: float = betterproto.float_field(2)
-    interpretation: "ScoreInterpretation" = betterproto.enum_field(3)
-    link16_compliant: bool = betterproto.bool_field(4)
-    """Deprecated: do not use"""
-
-    other_status: "CorrelationStatus" = betterproto.enum_field(5)
-    """
-    status of other_entity_id correlation, expresses relationship of other to
-    correlation set this entity is part of.
-    """
-
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("link16_compliant"):
-            warnings.warn(
-                "CorrelationScore.link16_compliant is deprecated", DeprecationWarning
-            )
-
-
-@dataclass(eq=False, repr=False)
-class Dimensions(betterproto.Message):
-    length_m: float = betterproto.float_field(1)
-    """Length of the entity in meters"""
 
 
 @dataclass(eq=False, repr=False)
@@ -3436,6 +3110,268 @@ class TeamStatus(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
+class Statement(betterproto.Message):
+    """
+    A Statement is the building block of the entity filter. The outermost
+    statement is conceptually the root node of an "expression tree" which
+    allows for the construction of complete boolean logic statements.
+    Statements are formed by grouping sets of children statement(s) or
+    predicate(s) according to the boolean operation which is to be applied. For
+    example, the criteria "take an action if an entity is hostile and an air
+    vehicle" can be represented as: Statement1: { AndOperation: { Predicate1,
+    Predicate2 } }. Where Statement1 is the root of the expression tree, with
+    an AND operation that is applied to children predicates. The predicates
+    themselves encode "entity is hostile" and "entity is air vehicle."
+    """
+
+    and_: "AndOperation" = betterproto.message_field(1, group="operation")
+    or_: "OrOperation" = betterproto.message_field(2, group="operation")
+    not_: "NotOperation" = betterproto.message_field(3, group="operation")
+    list: "ListOperation" = betterproto.message_field(4, group="operation")
+    predicate: "Predicate" = betterproto.message_field(5, group="operation")
+
+
+@dataclass(eq=False, repr=False)
+class AndOperation(betterproto.Message):
+    """
+    The AndOperation represents the boolean AND operation, which is to be
+    applied to the list of children statement(s) or predicate(s).
+    """
+
+    predicate_set: "PredicateSet" = betterproto.message_field(1, group="children")
+    statement_set: "StatementSet" = betterproto.message_field(2, group="children")
+
+
+@dataclass(eq=False, repr=False)
+class OrOperation(betterproto.Message):
+    """
+    The OrOperation represents the boolean OR operation, which is to be applied
+    to the list of children statement(s) or predicate(s).
+    """
+
+    predicate_set: "PredicateSet" = betterproto.message_field(1, group="children")
+    statement_set: "StatementSet" = betterproto.message_field(2, group="children")
+
+
+@dataclass(eq=False, repr=False)
+class NotOperation(betterproto.Message):
+    """
+    The NotOperation represents the boolean NOT operation, which can only be
+    applied to a single child predicate or statement.
+    """
+
+    predicate: "Predicate" = betterproto.message_field(1, group="child")
+    statement: "Statement" = betterproto.message_field(2, group="child")
+
+
+@dataclass(eq=False, repr=False)
+class ListOperation(betterproto.Message):
+    """
+    The ListOperation represents an operation against a proto list. If the list
+    is of primitive proto type (e.g. int32), paths in all child predicates
+    should be left empty. If the list is of message proto type (e.g. Sensor),
+    paths in all child predicates should be relative to the list path. For
+    example, the criteria "take an action if an entity has any sensor with
+    sensor_id='sensor' and OperationalState=STATE_OFF" would be modeled as:
+    Predicate1: { path: "sensor_id", comparator: EQUAL_TO, value: "sensor" }
+    Predicate2: { path: "operational_state", comparator: EQUAL_TO, value:
+    STATE_OFF } Statement2: { AndOperation: PredicateSet: { <Predicate1>,
+    <Predicate2> } } ListOperation: { list_path: "sensors.sensors",
+    list_comparator: ANY, statement: <Statement2> } Statement1: {
+    ListOperation: <ListOperation> } Note that in the above, the child
+    predicates of the list operation have paths relative to the list_path
+    because the list is comprised of message not primitive types.
+    """
+
+    list_path: str = betterproto.string_field(1)
+    """
+    The list_path specifies the repeated field on an entity to which this
+    operation applies.
+    """
+
+    list_comparator: "ListComparator" = betterproto.enum_field(2)
+    """
+    The list_comparator specifies how to compose the boolean results from the
+    child statement for each member of the specified list.
+    """
+
+    statement: "Statement" = betterproto.message_field(3)
+    """
+    The statement is a new expression tree conceptually rooted at type of the
+    list. It determines how each member of the list is evaluated.
+    """
+
+
+@dataclass(eq=False, repr=False)
+class PredicateSet(betterproto.Message):
+    """
+    The PredicateSet represents a list of predicates or "leaf nodes" in the
+    expression tree, which can be directly evaluated to a boolean TRUE/FALSE
+    result.
+    """
+
+    predicates: List["Predicate"] = betterproto.message_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class StatementSet(betterproto.Message):
+    """
+    The StatementSet represents a list of statements or "tree nodes," each of
+    which follow the same behavior as the Statement proto message.
+    """
+
+    statements: List["Statement"] = betterproto.message_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class Predicate(betterproto.Message):
+    """
+    The Predicate fully encodes the information required to make an evaluation
+    of an entity field against a given static value, resulting in a boolean
+    TRUE/FALSE result. The structure of a predicate will always follow:
+    "{entity-value} {comparator} {fixed-value}" where the entity value is
+    determined by the field path. For example, a predicate would read as:
+    "{entity.location.velocity_enu} {LESS_THAN} {500kph}"
+    """
+
+    field_path: str = betterproto.string_field(1)
+    """
+    The field_path determines which field on an entity is being referenced in
+    this predicate. For example: correlated.primary_entity_id would be
+    primary_entity_id in correlated component.
+    """
+
+    value: "Value" = betterproto.message_field(2)
+    """
+    The value determines the fixed value against which the entity field is to
+    be compared. In the case of COMPARATOR_MATCH_ALL, the value contents do not
+    matter as long as the Value is a supported type.
+    """
+
+    comparator: "Comparator" = betterproto.enum_field(3)
+    """
+    The comparator determines the manner in which the entity field and static
+    value are compared. Comparators may only be applied to certain values. For
+    example, the WITHIN comparator cannot be used for a boolean value
+    comparison.
+    """
+
+
+@dataclass(eq=False, repr=False)
+class Value(betterproto.Message):
+    """
+    The Value represents the information against which an entity field is
+    evaluated. It is one of a fixed set of types, each of which correspond to
+    specific comparators. See "ComparatorType" for the full list of Value <->
+    Comparator mappings.
+    """
+
+    boolean_type: "BooleanType" = betterproto.message_field(1, group="type")
+    numeric_type: "NumericType" = betterproto.message_field(2, group="type")
+    string_type: "StringType" = betterproto.message_field(3, group="type")
+    enum_type: "EnumType" = betterproto.message_field(4, group="type")
+    timestamp_type: "TimestampType" = betterproto.message_field(5, group="type")
+    bounded_shape_type: "BoundedShapeType" = betterproto.message_field(6, group="type")
+    position_type: "PositionType" = betterproto.message_field(7, group="type")
+    heading_type: "HeadingType" = betterproto.message_field(8, group="type")
+    list_type: "ListType" = betterproto.message_field(9, group="type")
+    range_type: "RangeType" = betterproto.message_field(10, group="type")
+
+
+@dataclass(eq=False, repr=False)
+class BooleanType(betterproto.Message):
+    """The BooleanType represents a static boolean value."""
+
+    value: bool = betterproto.bool_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class NumericType(betterproto.Message):
+    """
+    The NumericType represents static numeric values. It supports all numeric
+    primitives supported by the proto3 language specification.
+    """
+
+    double_value: float = betterproto.double_field(1, group="value")
+    float_value: float = betterproto.float_field(2, group="value")
+    int32_value: int = betterproto.int32_field(3, group="value")
+    int64_value: int = betterproto.int64_field(4, group="value")
+    uint32_value: int = betterproto.uint32_field(5, group="value")
+    uint64_value: int = betterproto.uint64_field(6, group="value")
+
+
+@dataclass(eq=False, repr=False)
+class StringType(betterproto.Message):
+    """The StringType represents static string values."""
+
+    value: str = betterproto.string_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class EnumType(betterproto.Message):
+    """
+    The EnumType represents members of well-known anduril ontologies, such as
+    "disposition." When such a value is specified, the evaluation library
+    expects the integer representation of the enum value. For example, a
+    disposition derived from ontology.v1 such as "DISPOSITION_HOSTILE" should
+    be represented with the integer value 2.
+    """
+
+    value: int = betterproto.int32_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class ListType(betterproto.Message):
+    """A List of Values for use with the IN comparator."""
+
+    values: List["Value"] = betterproto.message_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class TimestampType(betterproto.Message):
+    """The TimestampType represents a static timestamp value."""
+
+    value: datetime = betterproto.message_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class PositionType(betterproto.Message):
+    """The PositionType represents any fixed LLA point in space."""
+
+    value: "Position" = betterproto.message_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class BoundedShapeType(betterproto.Message):
+    """The BoundedShapeType represents any static fully-enclosed shape."""
+
+    polygon_value: "GeoPolygon" = betterproto.message_field(1, group="value")
+
+
+@dataclass(eq=False, repr=False)
+class HeadingType(betterproto.Message):
+    """
+    The HeadingType represents the heading in degrees for an entity's
+    attitudeEnu quaternion to be compared against. Defaults between a range of
+    0 to 360
+    """
+
+    value: int = betterproto.int32_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class RangeType(betterproto.Message):
+    """
+    The RangeType represents a numeric range. Whether endpoints are included
+    are based on the comparator used. Both endpoints must be of the same
+    numeric type.
+    """
+
+    start: "NumericType" = betterproto.message_field(1)
+    end: "NumericType" = betterproto.message_field(2)
+
+
+@dataclass(eq=False, repr=False)
 class RateLimit(betterproto.Message):
     """rate-limiting / down-sampling parameters."""
 
@@ -3648,6 +3584,70 @@ class Heartbeat(betterproto.Message):
 
     timestamp: datetime = betterproto.message_field(1)
     """The timestamp at which the heartbeat message was sent."""
+
+
+@dataclass(eq=False, repr=False)
+class DynamicStatement(betterproto.Message):
+    """
+    A DynamicStatement is the building block of a "runtime aware" entity filter
+    - that is, any filter which needs to perform operations against a series of
+    entities that will need to be evaluated against on demand. The
+    DynamicStatement allows you to perform a set intersection operation across
+    a static set of entities dictated by a filter, and a dynamic set of
+    entities dictated by a selector statement. For example, the expression
+    "find me all hostile entities that reside within any assumed friendly
+    geoentity" would be represented as the following dynamic statement:
+    DynamicStatement    filter      predicate        field_path:
+    mil_view.disposition        comparator: EQUALITY        value: 2 // Hostile
+    selector      andOperation        predicate1          field_path:
+    mil_view.disposition          comparator: EQUALITY          value: 4 //
+    Assumed Friendly        predicate2          field_path: ontology.template
+    comparator: EQUALITY          value: 4 // Template Geo    comparator
+    IntersectionComparator        WithinComparison
+    """
+
+    filter: "Statement" = betterproto.message_field(1)
+    """
+    The filter statement is used to determine which entities can be compared to
+    the dynamic series of entities aggregated by the selector statement.
+    """
+
+    selector: "Statement" = betterproto.message_field(2)
+    """
+    The selector statement is used to determine which entities should be a part
+    of dynamically changing set. The selector should be reevaluated as entites
+    are created or deleted.
+    """
+
+    comparator: "IntersectionComparator" = betterproto.message_field(3)
+    """
+    The comparator specifies how the set intersection operation will be
+    performed.
+    """
+
+
+@dataclass(eq=False, repr=False)
+class IntersectionComparator(betterproto.Message):
+    """
+    The IntersectionComparator determines what entities and what fields to
+    respect within a set during a set intersection operation.
+    """
+
+    within_comparison: "WithinComparison" = betterproto.message_field(
+        1, group="comparison"
+    )
+
+
+@dataclass(eq=False, repr=False)
+class WithinComparison(betterproto.Message):
+    """
+    The WithinComparison implicitly will understand how to determine which
+    entitites reside within other geo-shaped entities. This comparison is being
+    left empty, but as a proto, to support future expansions of the within
+    comparison (eg; within range of a static distance).
+    """
+
+    pass
 
 
 @dataclass(eq=False, repr=False)
