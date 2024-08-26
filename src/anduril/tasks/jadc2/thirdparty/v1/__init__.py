@@ -15,16 +15,15 @@ from ..... import type as ____type__
 
 
 class PowerState(betterproto.Enum):
-    POWER_STATE_INVALID = 0
-    POWER_STATE_ON = 1
-    POWER_STATE_OFF = 2
+    INVALID = 0
+    ON = 1
+    OFF = 2
 
 
 @dataclass(eq=False, repr=False)
 class SetPowerState(betterproto.Message):
     """
-    Set the power state of a robot. It is up to the robot to interpret the
-    power state and act accordingly.
+    Set the power state of a robot. It is up to the robot to interpret the power state and act accordingly.
     """
 
     power_state: "PowerState" = betterproto.enum_field(1)
@@ -53,19 +52,17 @@ class Transit(betterproto.Message):
 class PathSegment(betterproto.Message):
     endpoint: "____type__.Lla" = betterproto.message_field(1)
     """
-    Describes the end of the path segment, the starting point is the end of the
-    previous segment or the current position if first. Note that the Altitude
-    reference for a given waypoint dictates the height  mode used when
-    traversing TO that waypoint.
+    Describes the end of the path segment, the starting point is the end of the previous segment or the
+     current position if first. Note that the Altitude reference for a given waypoint dictates the height
+      mode used when traversing TO that waypoint.
     """
 
 
 @dataclass(eq=False, repr=False)
 class TeamTransit(betterproto.Message):
     """
-    TeamTransit represents moving a team of vehicles into a zone. The specifics
-    of how each vehicle in the team behaves is determined by the specific
-    autonomy logic.
+    TeamTransit represents moving a team of vehicles into a zone.
+     The specifics of how each vehicle in the team behaves is determined by the specific autonomy logic.
     """
 
     transit_zone_entity_id: str = betterproto.string_field(1)

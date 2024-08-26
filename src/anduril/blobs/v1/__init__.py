@@ -71,14 +71,12 @@ class CreateBlobRequest(betterproto.Message):
 
     retention_time: datetime = betterproto.message_field(3)
     """
-    timestamp after which should no longer retain this blob. required and
-    cannot be > 90 days in the future.
+    timestamp after which should no longer retain this blob. required and cannot be > 90 days in the future.
     """
 
     md5: bytes = betterproto.bytes_field(4)
     """
-    optional md5 sum/hash of contents. if provided, will be validated against
-    md5 of contents
+    optional md5 sum/hash of contents. if provided, will be validated against md5 of contents
     """
 
     contents: bytes = betterproto.bytes_field(5)
@@ -100,10 +98,9 @@ class CreateBlobResponse(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class CreateBlobChunkedRequest(betterproto.Message):
     """
-    Create and store a new blob. Only the first 'CreateBlobChunkedRequest'
-    message in the client stream needs to contain metadata specific fields (IE:
-    client_id, key, md5 etc.). Metadata fields set on all requests ensuing the
-    first request will be ignored.
+    Create and store a new blob. Only the first 'CreateBlobChunkedRequest' message in the client stream needs
+     to contain metadata specific fields (IE: client_id, key, md5 etc.). Metadata fields set on all requests
+     ensuing the first request will be ignored.
     """
 
     client_id: str = betterproto.string_field(1)
@@ -114,20 +111,17 @@ class CreateBlobChunkedRequest(betterproto.Message):
 
     retention_time: datetime = betterproto.message_field(3)
     """
-    timestamp after which should no longer retain this blob. required and
-    cannot be > 90 days in the future.
+    timestamp after which should no longer retain this blob. required and cannot be > 90 days in the future.
     """
 
     md5: bytes = betterproto.bytes_field(4)
     """
-    optional md5 sum/hash of contents. if provided, will be validated against
-    the md5 of all contents in aggregate
+    optional md5 sum/hash of contents. if provided, will be validated against the md5 of all contents in aggregate
     """
 
     chunk_contents: bytes = betterproto.bytes_field(5)
     """
-    contents of the blob chunk, maximum size is 2MB per message (2 * 1024 *
-    1024 bytes)
+    contents of the blob chunk, maximum size is 2MB per message (2 * 1024 * 1024 bytes)
     """
 
     provenance: "BlobProvenance" = betterproto.message_field(6)
@@ -151,8 +145,7 @@ class GetBlobRequest(betterproto.Message):
 class GetBlobResponse(betterproto.Message):
     contents: bytes = betterproto.bytes_field(1)
     """
-    contents of the blob, maximum size of each response message contents in
-    stream is capped at 2MB.
+    contents of the blob, maximum size of each response message contents in stream is capped at 2MB.
     """
 
     metadata: "BlobMetadata" = betterproto.message_field(2)
@@ -182,8 +175,7 @@ class StreamBlobMetadataRequest(betterproto.Message):
 class StreamBlobMetadataResponse(betterproto.Message):
     announcements: List["BlobAnnouncement"] = betterproto.message_field(1)
     """
-    The set of blob announcement metadata returned from a
-    StreamBlobMetadataResponse.
+    The set of blob announcement metadata returned from a StreamBlobMetadataResponse.
     """
 
 
@@ -202,10 +194,9 @@ class BlobAnnouncement(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class Statement(betterproto.Message):
     """
-    If match and not_match are both populated, both must evaluate to true for
-    Statement to evaluate to true. If match is not populated, only not_match is
-    used. If not_match is empty, only match is used. If match is not populated
-    and not_match is empty, Statement evaluates to true.
+    If match and not_match are both populated, both must evaluate to true for Statement to evaluate to true.
+     If match is not populated, only not_match is used. If not_match is empty, only match is used.
+     If match is not populated and not_match is empty, Statement evaluates to true.
     """
 
     match: "FieldMatcher" = betterproto.message_field(1)
@@ -213,8 +204,7 @@ class Statement(betterproto.Message):
 
     not_match: List["FieldMatcher"] = betterproto.message_field(2)
     """
-    Negative match fields. All not_match FieldMatchers must evaluate to false
-    for this to evaluate to true.
+    Negative match fields. All not_match FieldMatchers must evaluate to false for this to evaluate to true.
     """
 
 
@@ -248,8 +238,7 @@ class BlobsApiStub(betterproto.ServiceStub):
     async def create_blob_chunked(
         self,
         create_blob_chunked_request_iterator: Union[
-            AsyncIterable["CreateBlobChunkedRequest"],
-            Iterable["CreateBlobChunkedRequest"],
+            AsyncIterable[CreateBlobChunkedRequest], Iterable[CreateBlobChunkedRequest]
         ],
         *,
         timeout: Optional[float] = None,
@@ -273,7 +262,7 @@ class BlobsApiStub(betterproto.ServiceStub):
         timeout: Optional[float] = None,
         deadline: Optional["Deadline"] = None,
         metadata: Optional["MetadataLike"] = None
-    ) -> AsyncIterator["GetBlobResponse"]:
+    ) -> AsyncIterator[GetBlobResponse]:
         async for response in self._unary_stream(
             "/anduril.blobs.v1.BlobsAPI/GetBlob",
             get_blob_request,
@@ -308,7 +297,7 @@ class BlobsApiStub(betterproto.ServiceStub):
         timeout: Optional[float] = None,
         deadline: Optional["Deadline"] = None,
         metadata: Optional["MetadataLike"] = None
-    ) -> AsyncIterator["StreamBlobMetadataResponse"]:
+    ) -> AsyncIterator[StreamBlobMetadataResponse]:
         async for response in self._unary_stream(
             "/anduril.blobs.v1.BlobsAPI/StreamBlobMetadata",
             stream_blob_metadata_request,
@@ -329,13 +318,13 @@ class BlobsApiBase(ServiceBase):
 
     async def create_blob_chunked(
         self,
-        create_blob_chunked_request_iterator: AsyncIterator["CreateBlobChunkedRequest"],
+        create_blob_chunked_request_iterator: AsyncIterator[CreateBlobChunkedRequest],
     ) -> "CreateBlobChunkedResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def get_blob(
         self, get_blob_request: "GetBlobRequest"
-    ) -> AsyncIterator["GetBlobResponse"]:
+    ) -> AsyncIterator[GetBlobResponse]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
         yield GetBlobResponse()
 
@@ -346,7 +335,7 @@ class BlobsApiBase(ServiceBase):
 
     async def stream_blob_metadata(
         self, stream_blob_metadata_request: "StreamBlobMetadataRequest"
-    ) -> AsyncIterator["StreamBlobMetadataResponse"]:
+    ) -> AsyncIterator[StreamBlobMetadataResponse]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
         yield StreamBlobMetadataResponse()
 
