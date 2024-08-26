@@ -20,35 +20,35 @@ from ... import type as __type__
 
 
 class ControlAreaType(betterproto.Enum):
-    CONTROL_AREA_TYPE_INVALID = 0
-    CONTROL_AREA_TYPE_KEEP_IN_ZONE = 1
-    CONTROL_AREA_TYPE_KEEP_OUT_ZONE = 2
-    CONTROL_AREA_TYPE_DITCH_ZONE = 3
+    INVALID = 0
+    KEEP_IN_ZONE = 1
+    KEEP_OUT_ZONE = 2
+    DITCH_ZONE = 3
     """
-    Zone for an autonomous asset to nose-dive into when its assignment has been
-    concluded
+    Zone for an autonomous asset to nose-dive into
+     when its assignment has been concluded
     """
 
 
 class OrbitDirection(betterproto.Enum):
     """Direction of the loiter relative to the front of the vehicle."""
 
-    ORBIT_DIRECTION_DIRECTION_INVALID = 0
-    ORBIT_DIRECTION_RIGHT = 1
-    ORBIT_DIRECTION_LEFT = 2
+    DIRECTION_INVALID = 0
+    RIGHT = 1
+    LEFT = 2
 
 
 class OrbitPattern(betterproto.Enum):
-    ORBIT_PATTERN_INVALID = 0
-    ORBIT_PATTERN_CIRCLE = 1
-    ORBIT_PATTERN_RACETRACK = 2
-    ORBIT_PATTERN_FIGURE_EIGHT = 3
+    INVALID = 0
+    CIRCLE = 1
+    RACETRACK = 2
+    FIGURE_EIGHT = 3
 
 
 class LaunchTrackingMode(betterproto.Enum):
-    LAUNCH_TRACKING_MODE_INVALID = 0
-    LAUNCH_TRACKING_MODE_GO_TO_WAYPOINT = 1
-    LAUNCH_TRACKING_MODE_TRACK_TO_WAYPOINT = 2
+    INVALID = 0
+    GO_TO_WAYPOINT = 1
+    TRACK_TO_WAYPOINT = 2
 
 
 @dataclass(eq=False, repr=False)
@@ -58,8 +58,8 @@ class TaskCatalog(betterproto.Message):
     task_definitions: List["TaskDefinition"] = betterproto.message_field(1)
     is_asset_inhibited: bool = betterproto.bool_field(2)
     """
-    Asset is inhibited by VCE. Asset can still receive tasks but not be able to
-    act on them until inhibition status is lifted.
+    Asset is inhibited by VCE.
+     Asset can still receive tasks but not be able to act on them until inhibition status is lifted.
     """
 
 
@@ -133,9 +133,8 @@ class Objective(betterproto.Message):
 
     entity_id: str = betterproto.string_field(1, group="objective")
     """
-    Prefer Entity Objectives whenever the objective is in fact an entity. In
-    other words, don't take position/point out of an entity and pass it as a
-    simple point.
+    Prefer Entity Objectives whenever the objective is in fact an entity. In other words, don't take position/point
+     out of an entity and pass it as a simple point.
     """
 
     point: "Point" = betterproto.message_field(5, group="objective")
@@ -145,8 +144,7 @@ class Objective(betterproto.Message):
 
     produced_by_asset_id: str = betterproto.string_field(2)
     """
-    the asset (if known) which produced the objective (useful for time-series
-    lookups of historical objectives).
+    the asset (if known) which produced the objective (useful for time-series lookups of historical objectives).
     """
 
 
@@ -162,9 +160,8 @@ class Point(betterproto.Message):
 
     backing_entity_id: str = betterproto.string_field(3)
     """
-    An optional entity id that is provided for reverse lookup purposes. This
-    may be used any time the UI might have to convert a geoentity to statically
-    defined LLA.
+    An optional entity id that is provided for reverse lookup purposes. This may be used any time the UI might
+     have to convert a geoentity to statically defined LLA.
     """
 
 
@@ -204,8 +201,7 @@ class Map(betterproto.Message):
         3, wraps=betterproto.TYPE_UINT32
     )
     """
-    minimum desired NIIRS (National Image Interpretability Rating Scales) see
-    https://irp.fas.org/imint/niirs.htm
+    minimum desired NIIRS (National Image Interpretability Rating Scales) see https://irp.fas.org/imint/niirs.htm
     """
 
 
@@ -223,16 +219,15 @@ class Loiter(betterproto.Message):
 
     parameters: "IsrParameters" = betterproto.message_field(3)
     """
-    Optional common ISR parameters. The loiter radius and bearing should be
-    inferred from the standoff_distance and standoff_angle respectively.
+    Optional common ISR parameters.
+     The loiter radius and bearing should be inferred from the standoff_distance and standoff_angle respectively.
     """
 
 
 @dataclass(eq=False, repr=False)
 class AreaSearch(betterproto.Message):
     """
-    Represents intent to search an area. Maps to the Area Search Team Task
-    within the Mission Autonomy Task Model.
+    Represents intent to search an area. Maps to the Area Search Team Task within the Mission Autonomy Task Model.
     """
 
     objective: "Objective" = betterproto.message_field(1)
@@ -251,8 +246,7 @@ class AreaSearch(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class VolumeSearch(betterproto.Message):
     """
-    Represents intent to search a volume. Maps to the Volume Search Team Task
-    within the Mission Autonomy Task Model.
+    Represents intent to search a volume. Maps to the Volume Search Team Task within the Mission Autonomy Task Model.
     """
 
     objective: "Objective" = betterproto.message_field(1)
@@ -271,8 +265,7 @@ class VolumeSearch(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class ImproveTrackQuality(betterproto.Message):
     """
-    Task to improve the quality of a track. Maps to the Improve Track Task
-    within the Mission Autonomy Task Model.
+    Task to improve the quality of a track. Maps to the Improve Track Task within the Mission Autonomy Task Model.
     """
 
     objective: "Objective" = betterproto.message_field(1)
@@ -280,8 +273,7 @@ class ImproveTrackQuality(betterproto.Message):
 
     termination_track_quality: int = betterproto.uint32_field(2)
     """
-    Task will complete when the requested track reaches a TQ >= the
-    termination_track_quality.
+    Task will complete when the requested track reaches a TQ >= the termination_track_quality.
     """
 
 
@@ -329,9 +321,8 @@ class Prior(betterproto.Message):
 
     entity_id: str = betterproto.string_field(1, group="prior")
     """
-    Prefer Entity priors whenever the prior is in fact an entity. In other
-    words, don't take position/point out of an entity and pass it as a simple
-    point.
+    Prefer Entity priors whenever the prior is in fact an entity. In other words, don't take position/point
+     out of an entity and pass it as a simple point.
     """
 
     point: "Point" = betterproto.message_field(5, group="prior")
@@ -344,9 +335,8 @@ class IsrParameters(betterproto.Message):
 
     speed: Optional[float] = betterproto.message_field(1, wraps=betterproto.TYPE_FLOAT)
     """
-    Indicates the target speed of the asset. DEPRECATION NOTE: deprecated in
-    favor of speed_ms since we might have legacy integrations not conforming to
-    the meters per second units.
+    Indicates the target speed of the asset. DEPRECATION NOTE: deprecated in favor
+     of speed_ms since we might have legacy integrations not conforming to the meters per second units.
     """
 
     speed_m_s: Optional[float] = betterproto.message_field(
@@ -360,34 +350,31 @@ class IsrParameters(betterproto.Message):
         3, wraps=betterproto.TYPE_FLOAT
     )
     """
-    Indicates the standoff distance from the objective. The units are in
-    meters.
+    Indicates the standoff distance from the objective. The units are in meters.
     """
 
     standoff_distance: Optional[float] = betterproto.message_field(
         4, wraps=betterproto.TYPE_FLOAT
     )
     """
-    Indicates the standoff distance from the objective. DEPRECATION NOTE:
-    deprecated in favor of standoff_distance_m  since we might have legacy
-    integrations not conforming to the meters unit.
+    Indicates the standoff distance from the objective. DEPRECATION NOTE: deprecated in favor of standoff_distance_m
+      since we might have legacy integrations not conforming to the meters unit.
     """
 
     standoff_angle: Optional[float] = betterproto.message_field(
         5, wraps=betterproto.TYPE_FLOAT
     )
     """
-    Indicates the standoff angle relative to the objective's bearing
-    orientation (defaults to north). In particular, the asset should approach
-    target from this angle. Units in degrees.
+    Indicates the standoff angle relative to the objective's bearing orientation (defaults to north).
+     In particular, the asset should approach target from this angle. Units in degrees.
     """
 
     expiration_time_ms: Optional[int] = betterproto.message_field(
         6, wraps=betterproto.TYPE_UINT64
     )
     """
-    Indicates the amount of time in milliseconds to execute an ISR task before
-    expiring. 0 value indicates no expiration.
+    Indicates the amount of time in milliseconds to execute an ISR task before expiring. 0 value indicates no
+     expiration.
     """
 
     def __post_init__(self) -> None:
@@ -406,16 +393,14 @@ class GimbalPoint(betterproto.Message):
 
     look_at: "Objective" = betterproto.message_field(1, group="point_type")
     """
-    Point the gimbal at and lock on, continuing to look at a specific objective
-    even as the platform moves.
+    Point the gimbal at and lock on, continuing to look at a specific objective even as the platform moves.
     """
 
     celestial_location: "AzimuthElevationPoint" = betterproto.message_field(
         2, group="point_type"
     )
     """
-    Point the gimbal at a fixed azimuth/elevation with respect to the platform
-    frame.
+    Point the gimbal at a fixed azimuth/elevation with respect to the platform frame.
     """
 
     frame_location: "FramePoint" = betterproto.message_field(4, group="point_type")
@@ -439,14 +424,14 @@ class FramePoint(betterproto.Message):
 
     x: float = betterproto.float_field(1)
     """
-    Frame-normalized location in frame on the x-axis, range (0, 1). For
-    example, x = 0.3 implies a pixel location of 0.3 * image_width.
+    Frame-normalized location in frame on the x-axis, range (0, 1).
+     For example, x = 0.3 implies a pixel location of 0.3 * image_width.
     """
 
     y: float = betterproto.float_field(2)
     """
-    Frame-normalized location in frame on the y-axis, range (0, 1). For
-    example, y = 0.3 implies a pixel location of 0.3 * image_height.
+    Frame-normalized location in frame on the y-axis, range (0, 1).
+     For example, y = 0.3 implies a pixel location of 0.3 * image_height.
     """
 
     timestamp: datetime = betterproto.message_field(3)
@@ -473,8 +458,8 @@ class GimbalZoom(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class Monitor(betterproto.Message):
     """
-    Maps to BREVITY code ID with type MONITOR. To task assets to maintain
-    sensor awareness on a given objective.
+    Maps to BREVITY code ID with type MONITOR. To task assets to maintain sensor awareness
+     on a given objective.
     """
 
     objective: "Objective" = betterproto.message_field(1)
@@ -490,8 +475,7 @@ class Monitor(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class Scan(betterproto.Message):
     """
-    Maps to BREVITY code ID with type SCAN. To task assets to find and report
-    any tracks in a geographic area.
+    Maps to BREVITY code ID with type SCAN. To task assets to find and report any tracks in a geographic area.
     """
 
     objective: "Objective" = betterproto.message_field(1)
@@ -504,8 +488,7 @@ class Scan(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class BattleDamageAssessment(betterproto.Message):
     """
-    Performs a Battle Damage Assessment (BDA). Does not map to any Task in
-    either UCI or BREVITY.
+    Performs a Battle Damage Assessment (BDA). Does not map to any Task in either UCI or BREVITY.
     """
 
     objective: "Objective" = betterproto.message_field(1)
@@ -518,8 +501,8 @@ class BattleDamageAssessment(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class Marshal(betterproto.Message):
     """
-    Maps to BREVITY code Marshal. Establish(ed) at a specific point, typically
-    used to posture forces in preparation for an offensive operation.
+    Maps to BREVITY code Marshal.
+     Establish(ed) at a specific point, typically used to posture forces in preparation for an offensive operation.
     """
 
     objective: "Objective" = betterproto.message_field(1)
@@ -529,8 +512,8 @@ class Marshal(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class Transit(betterproto.Message):
     """
-    Maps to UCI code RoutePlan. Used to command a platform between locations by
-    requesting to make this RoutePlan the single primary active route.
+    Maps to UCI code RoutePlan.
+     Used to command a platform between locations by requesting to make this RoutePlan the single primary active route.
     """
 
     plan: "RoutePlan" = betterproto.message_field(1)
@@ -586,8 +569,8 @@ class Strike(betterproto.Message):
 
     strike_release_constraint: "StrikeReleaseConstraint" = betterproto.message_field(3)
     """
-    Distance at which to yield flight control to the onboard flight computer
-    rather than higher level autonomy.
+    Distance at which to yield flight control to the onboard flight computer rather than
+     higher level autonomy.
     """
 
     parameters: "StrikeParameters" = betterproto.message_field(4)
@@ -619,8 +602,7 @@ class StrikeParameters(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class PayloadConfiguration(betterproto.Message):
     """
-    Individual payload configuration, can represent a munition such as a
-    missile, a gun, or a non-kinetic effect.
+    Individual payload configuration, can represent a munition such as a missile, a gun, or a non-kinetic effect.
     """
 
     capability_id: str = betterproto.string_field(1)
@@ -638,8 +620,7 @@ class ReleasePayload(betterproto.Message):
 
     objective: "Objective" = betterproto.message_field(2)
     """
-    Optional objective, of where the payload should be dropped. If omitted the
-    payload will drop the current location
+    Optional objective, of where the payload should be dropped. If omitted the payload will drop the current location
     """
 
     precision_release: "betterproto_lib_google_protobuf.Empty" = (
