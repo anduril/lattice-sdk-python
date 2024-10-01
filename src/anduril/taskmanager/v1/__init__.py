@@ -140,6 +140,14 @@ class TaskView(betterproto.Enum):
     """
 
 
+class QueryTasksRequestFilterType(betterproto.Enum):
+    """The type of filter."""
+
+    FILTER_TYPE_INVALID = 0
+    FILTER_TYPE_INCLUSIVE = 1
+    FILTER_TYPE_EXCLUSIVE = 2
+
+
 @dataclass(eq=False, repr=False)
 class Task(betterproto.Message):
     """
@@ -579,27 +587,65 @@ class GetTaskResponse(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
-class UpdateTaskRequest(betterproto.Message):
-    """Request to update a Task."""
-
-    task: "Task" = betterproto.message_field(1)
-    """New Task definition."""
-
-    is_executed_elsewhere: bool = betterproto.bool_field(7)
+class QueryTasksRequest(betterproto.Message):
     """
-    If set, execution of this Task is managed elsewhere, not by task-manager.
-     In other words, Task Manager will not attempt to update the assigned agent with execution instructions.
-     We note that this will also override the existing is_executed_elsewhere value in the Task
-     object provided in this request.
+    Request to query for Tasks. Returns the each latest Task by Status ID and Version ID by default with no filters.
+    """
+
+    parent_task_id: str = betterproto.string_field(1)
+    """
+    If present matches Tasks with this parent Task ID.
+     Note: this is mutually exclusive with all other query parameters, i.e., either provide parent Task ID, or
+      any of the remaining parameters, but not both.
+    """
+
+    page_token: str = betterproto.string_field(3)
+    """If set, returns results starting from the given page token."""
+
+    status_filter: "QueryTasksRequestStatusFilter" = betterproto.message_field(4)
+    """Filters on provided status types in the filter."""
+
+    update_time_range: "QueryTasksRequestTimeRange" = betterproto.message_field(5)
+    """If provided, only provides Tasks updated within the time range."""
+
+    view: "TaskView" = betterproto.enum_field(6)
+    """
+    Optional filter for view of a Task.
+     If not set, defaults to TASK_VIEW_MANAGER.
     """
 
 
 @dataclass(eq=False, repr=False)
-class UpdateTaskResponse(betterproto.Message):
-    """Response to an Update Task request."""
+class QueryTasksRequestTimeRange(betterproto.Message):
+    """A time range query for Tasks."""
 
-    task: "Task" = betterproto.message_field(1)
-    """the updated task"""
+    update_start_time: datetime = betterproto.message_field(1)
+    """If provided, returns Tasks only updated after this time."""
+
+    update_end_time: datetime = betterproto.message_field(2)
+    """If provided, returns Tasks only updated before this time."""
+
+
+@dataclass(eq=False, repr=False)
+class QueryTasksRequestStatusFilter(betterproto.Message):
+    """A filter for statuses."""
+
+    status: List["Status"] = betterproto.enum_field(1)
+    """Statuses to be part of the filter."""
+
+    filter_type: "QueryTasksRequestFilterType" = betterproto.enum_field(2)
+    """The type of filter to apply."""
+
+
+@dataclass(eq=False, repr=False)
+class QueryTasksResponse(betterproto.Message):
+    """Response to a Query Task request."""
+
+    tasks: List["Task"] = betterproto.message_field(1)
+    """Tasks matching the Query Task request."""
+
+    page_token: str = betterproto.string_field(2)
+    """Page token to the next page of Tasks."""
 
 
 @dataclass(eq=False, repr=False)
@@ -616,47 +662,6 @@ class UpdateStatusResponse(betterproto.Message):
 
     task: "Task" = betterproto.message_field(1)
     """The updated Task."""
-
-
-@dataclass(eq=False, repr=False)
-class StreamTasksRequest(betterproto.Message):
-    """
-    Request to Stream Tasks. Returns all live Tasks (aka all not-DONE Tasks).
-    """
-
-    rate_limit: "RateLimit" = betterproto.message_field(1)
-    """Optional rate limiting on StreamTasksResponses."""
-
-    views: List["TaskView"] = betterproto.enum_field(2)
-    """
-    Optional additional views of a Task.
-     If not set, defaults to TASK_VIEW_MANAGER.
-    """
-
-    heartbeat_period_millis: int = betterproto.uint32_field(3)
-    """
-    Optional period (in milliseconds) at which a Heartbeat message will be sent on the
-     message stream. If this field is unset then no Heartbeat messages are sent.
-    """
-
-    exclude_preexisting_tasks: bool = betterproto.bool_field(4)
-    """
-    Optional flag to only include tasks created or updated after the stream is initiated, and not any previous preexisting tasks.
-     If unset, the stream will include any new tasks and task updates, as well as all preexisting tasks.
-    """
-
-
-@dataclass(eq=False, repr=False)
-class StreamTasksResponse(betterproto.Message):
-    """
-    Response stream will be fed all matching pre-existing live Tasks, plus any new events ongoing.
-    """
-
-    task_event: "TaskEvent" = betterproto.message_field(1)
-    """Task event associated with the streaming request."""
-
-    heartbeat: "Heartbeat" = betterproto.message_field(2)
-    """Heartbeat message signaling liveliness of the stream."""
 
 
 @dataclass(eq=False, repr=False)
@@ -742,18 +747,18 @@ class TaskManagerApiStub(betterproto.ServiceStub):
             metadata=metadata,
         )
 
-    async def update_task(
+    async def query_tasks(
         self,
-        update_task_request: "UpdateTaskRequest",
+        query_tasks_request: "QueryTasksRequest",
         *,
         timeout: Optional[float] = None,
         deadline: Optional["Deadline"] = None,
         metadata: Optional["MetadataLike"] = None
-    ) -> "UpdateTaskResponse":
+    ) -> "QueryTasksResponse":
         return await self._unary_unary(
-            "/anduril.taskmanager.v1.TaskManagerAPI/UpdateTask",
-            update_task_request,
-            UpdateTaskResponse,
+            "/anduril.taskmanager.v1.TaskManagerAPI/QueryTasks",
+            query_tasks_request,
+            QueryTasksResponse,
             timeout=timeout,
             deadline=deadline,
             metadata=metadata,
@@ -775,24 +780,6 @@ class TaskManagerApiStub(betterproto.ServiceStub):
             deadline=deadline,
             metadata=metadata,
         )
-
-    async def stream_tasks(
-        self,
-        stream_tasks_request: "StreamTasksRequest",
-        *,
-        timeout: Optional[float] = None,
-        deadline: Optional["Deadline"] = None,
-        metadata: Optional["MetadataLike"] = None
-    ) -> AsyncIterator[StreamTasksResponse]:
-        async for response in self._unary_stream(
-            "/anduril.taskmanager.v1.TaskManagerAPI/StreamTasks",
-            stream_tasks_request,
-            StreamTasksResponse,
-            timeout=timeout,
-            deadline=deadline,
-            metadata=metadata,
-        ):
-            yield response
 
     async def listen_as_agent(
         self,
@@ -823,21 +810,15 @@ class TaskManagerApiBase(ServiceBase):
     async def get_task(self, get_task_request: "GetTaskRequest") -> "GetTaskResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def update_task(
-        self, update_task_request: "UpdateTaskRequest"
-    ) -> "UpdateTaskResponse":
+    async def query_tasks(
+        self, query_tasks_request: "QueryTasksRequest"
+    ) -> "QueryTasksResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def update_status(
         self, update_status_request: "UpdateStatusRequest"
     ) -> "UpdateStatusResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
-
-    async def stream_tasks(
-        self, stream_tasks_request: "StreamTasksRequest"
-    ) -> AsyncIterator[StreamTasksResponse]:
-        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
-        yield StreamTasksResponse()
 
     async def listen_as_agent(
         self, listen_as_agent_request: "ListenAsAgentRequest"
@@ -859,11 +840,11 @@ class TaskManagerApiBase(ServiceBase):
         response = await self.get_task(request)
         await stream.send_message(response)
 
-    async def __rpc_update_task(
-        self, stream: "grpclib.server.Stream[UpdateTaskRequest, UpdateTaskResponse]"
+    async def __rpc_query_tasks(
+        self, stream: "grpclib.server.Stream[QueryTasksRequest, QueryTasksResponse]"
     ) -> None:
         request = await stream.recv_message()
-        response = await self.update_task(request)
+        response = await self.query_tasks(request)
         await stream.send_message(response)
 
     async def __rpc_update_status(
@@ -872,16 +853,6 @@ class TaskManagerApiBase(ServiceBase):
         request = await stream.recv_message()
         response = await self.update_status(request)
         await stream.send_message(response)
-
-    async def __rpc_stream_tasks(
-        self, stream: "grpclib.server.Stream[StreamTasksRequest, StreamTasksResponse]"
-    ) -> None:
-        request = await stream.recv_message()
-        await self._call_rpc_handler_server_stream(
-            self.stream_tasks,
-            stream,
-            request,
-        )
 
     async def __rpc_listen_as_agent(
         self,
@@ -908,23 +879,17 @@ class TaskManagerApiBase(ServiceBase):
                 GetTaskRequest,
                 GetTaskResponse,
             ),
-            "/anduril.taskmanager.v1.TaskManagerAPI/UpdateTask": grpclib.const.Handler(
-                self.__rpc_update_task,
+            "/anduril.taskmanager.v1.TaskManagerAPI/QueryTasks": grpclib.const.Handler(
+                self.__rpc_query_tasks,
                 grpclib.const.Cardinality.UNARY_UNARY,
-                UpdateTaskRequest,
-                UpdateTaskResponse,
+                QueryTasksRequest,
+                QueryTasksResponse,
             ),
             "/anduril.taskmanager.v1.TaskManagerAPI/UpdateStatus": grpclib.const.Handler(
                 self.__rpc_update_status,
                 grpclib.const.Cardinality.UNARY_UNARY,
                 UpdateStatusRequest,
                 UpdateStatusResponse,
-            ),
-            "/anduril.taskmanager.v1.TaskManagerAPI/StreamTasks": grpclib.const.Handler(
-                self.__rpc_stream_tasks,
-                grpclib.const.Cardinality.UNARY_STREAM,
-                StreamTasksRequest,
-                StreamTasksResponse,
             ),
             "/anduril.taskmanager.v1.TaskManagerAPI/ListenAsAgent": grpclib.const.Handler(
                 self.__rpc_listen_as_agent,
