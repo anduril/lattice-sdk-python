@@ -265,6 +265,26 @@ class HealthStatus(betterproto.Enum):
     """
 
 
+class AlertLevel(betterproto.Enum):
+    """
+    Alerts are categorized into one of three levels - Warnings, Cautions, and Advisories (WCAs).
+    """
+
+    INVALID = 0
+    ADVISORY = 1
+    """
+    For conditions that require awareness and may require subsequent response.
+    """
+
+    CAUTION = 2
+    """
+    For conditions that require immediate awareness and subsequent response.
+    """
+
+    WARNING = 3
+    """For conditions that require immediate awareness and response."""
+
+
 class MediaType(betterproto.Enum):
     INVALID = 0
     THUMBNAIL = 1
@@ -296,11 +316,13 @@ class AltIdType(betterproto.Enum):
     """an Anduril AssetId"""
 
     LINK16_TRACK_NUMBER = 6
-    """deprecated, do not use"""
+    """
+    Use for Link 16 track identifiers for non-JTIDS Unit (JU) entities, such as assets (STN) and tracks (RefTN). Values range from AA000 to ZZ777.
+    """
 
     LINK16_JU = 7
     """
-    a Link 16 track number. This will allow a link 16 asset (STN) or track (RefTN) to be identified.
+    Use for Link 16 JTIDS Unit (JU) identifiers. Applicable to assets representing JUs, with values ranging from 00001 to 77777.
     """
 
     NCCT_MESSAGE_ID = 8
@@ -1487,6 +1509,64 @@ class Health(betterproto.Message):
     """
     The update time for the top-level health information.
      If this timestamp is unset, the data is assumed to be most recent
+    """
+
+    active_alerts: List["Alert"] = betterproto.message_field(5)
+    """
+    Active alerts indicate a critical change in system state sent by the asset
+     that must be made known to an operator or consumer of the common operating picture.
+     Alerts are different from ComponentHealth messages--an active alert does not necessarily
+     indicate a component is in an unhealthy state. For example, an asset may trigger
+     an active alert based on fuel levels running low. Alerts should be removed from this list when their conditions
+     are cleared. In other words, only active alerts should be reported here.
+    """
+
+
+@dataclass(eq=False, repr=False)
+class Alert(betterproto.Message):
+    """
+    An alert informs operators of critical events related to system performance and mission
+     execution. An alert is produced as a result of one or more alert conditions.
+    """
+
+    alert_code: str = betterproto.string_field(1)
+    """
+    Short, machine-readable code that describes this alert. This code is intended to provide systems off-asset
+     with a lookup key to retrieve more detailed information about the alert.
+    """
+
+    description: str = betterproto.string_field(2)
+    """
+    Human-readable description of this alert. The description is intended for display in the UI for human
+     understanding and should not be used for machine processing. If the description is fixed and the vehicle controller
+     provides no dynamic substitutions, then prefer lookup based on alert_code.
+    """
+
+    level: "AlertLevel" = betterproto.enum_field(3)
+    """Alert level (Warning, Caution, or Advisory)."""
+
+    activated_time: datetime = betterproto.message_field(4)
+    """Time at which this alert was activated."""
+
+    active_conditions: List["AlertCondition"] = betterproto.message_field(5)
+    """Set of conditions which have activated this alert."""
+
+
+@dataclass(eq=False, repr=False)
+class AlertCondition(betterproto.Message):
+    """A condition which may trigger an alert."""
+
+    condition_code: str = betterproto.string_field(1)
+    """
+    Short, machine-readable code that describes this condition. This code is intended to provide systems off-asset
+     with a lookup key to retrieve more detailed information about the condition.
+    """
+
+    description: str = betterproto.string_field(2)
+    """
+    Human-readable description of this condition. The description is intended for display in the UI for human
+     understanding and should not be used for machine processing. If the description is fixed and the vehicle controller
+     provides no dynamic substitutions, then prefer lookup based on condition_code.
     """
 
 
@@ -2772,11 +2852,24 @@ class Tracked(betterproto.Message):
 class Provenance(betterproto.Message):
     """Data provenance."""
 
+    feed_name: str = betterproto.string_field(7)
+    """
+    A feed is a 1:1 or Many:1 mapping between a data type from a specific vendor
+     and an output stream of entities. The feed_name identifies the feed definition
+     in the Feeds API and must be globally unique per feed.
+    """
+
     integration_name: str = betterproto.string_field(5)
-    """Name of the integration that produced this entity"""
+    """
+    Name of the integration that produced this entity
+     To be deprecated soon in favor of feed_name
+    """
 
     data_type: str = betterproto.string_field(6)
-    """Source data type of this entity. Examples: ADSB, Link16, etc."""
+    """
+    Source data type of this entity. Examples: ADSB, Link16, etc.
+     To be deprecated soon in favor of feed_name
+    """
 
     source: "Source" = betterproto.enum_field(1)
     """Enum defining the source TO BE DEPRECATED"""
@@ -2785,7 +2878,11 @@ class Provenance(betterproto.Message):
     """An ID that allows an element from a source to be uniquely identified"""
 
     source_update_time: datetime = betterproto.message_field(2)
-    """Main update timer for the entity with the exception of overrides"""
+    """
+    The time, according to the source system, that the data in the entity was last modified. Generally, this should
+     be the time that the source-reported time of validity of the data in the entity. This field must be
+     updated with every change to the entity or else Entity Manager will discard the update.
+    """
 
     source_description: str = betterproto.string_field(4)
     """
@@ -3262,6 +3359,51 @@ class RateLimit(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
+class PublishEntityRequest(betterproto.Message):
+    entity: "Entity" = betterproto.message_field(1)
+    """
+    Stream of fully formed entities to publish
+     Required fields per entity:
+       * expiry_time - must be in the future, but less than 30 days from now
+       * provenance.data_type [if using deprecated provenance.source, migrate to data_type.]
+       * provenance.source_update_time (can be earlier than rpc call if data entered is older)
+       * aliases.name
+       * ontology.template
+     any additional required fields will be determined by template, see com.anduril.entitymanager.v1.Template
+     if an entity_id is provided, will treat as update, otherwise create
+    """
+
+
+@dataclass(eq=False, repr=False)
+class PublishEntityResponse(betterproto.Message):
+    pass
+
+
+@dataclass(eq=False, repr=False)
+class PublishEntitiesRequest(betterproto.Message):
+    entity: "Entity" = betterproto.message_field(1)
+    """
+    Required fields:
+       * expiry_time - must be in the future, but less than 30 days from now
+       * provenance.data_type
+       * provenance.source_update_time (can be earlier than rpc call if data entered is older)
+       * aliases.name
+     any additional required fields will be determined by template, see com.anduril.entitymanager.v1.Template
+     if an entity_id is provided, will treat as update, otherwise create
+    """
+
+
+@dataclass(eq=False, repr=False)
+class PublishEntitiesResponse(betterproto.Message):
+    """
+    After the stream is closed the server will return an empty message indicating success. If any streamed message
+     caused an error then the stream is immediately terminated and an error code is returned.
+    """
+
+    pass
+
+
+@dataclass(eq=False, repr=False)
 class GetEntityRequest(betterproto.Message):
     entity_id: str = betterproto.string_field(1)
     """the GUID of this entity to query"""
@@ -3271,6 +3413,48 @@ class GetEntityRequest(betterproto.Message):
 class GetEntityResponse(betterproto.Message):
     entity: "Entity" = betterproto.message_field(1)
     """an Entity object that corresponds with the requested entityId"""
+
+
+@dataclass(eq=False, repr=False)
+class OverrideEntityRequest(betterproto.Message):
+    entity: "Entity" = betterproto.message_field(1)
+    """
+    The entity containing the overwritten fields. The service will extract the overridable fields from the entity
+     object and ignore any other fields.
+    """
+
+    field_path: List[str] = betterproto.string_field(2)
+    """
+    The field paths that will be extracted from the Entity and saved as an override. Only fields marked overridable can
+     be overriden.
+    """
+
+    provenance: "Provenance" = betterproto.message_field(3)
+    """Additional information about the source of the override"""
+
+
+@dataclass(eq=False, repr=False)
+class OverrideEntityResponse(betterproto.Message):
+    status: "OverrideStatus" = betterproto.enum_field(1)
+    """The status of the override request."""
+
+
+@dataclass(eq=False, repr=False)
+class RemoveEntityOverrideRequest(betterproto.Message):
+    entity_id: str = betterproto.string_field(1)
+    """The entity ID that the override will be removed from"""
+
+    field_path: List[str] = betterproto.string_field(2)
+    """
+    The field paths to remove from the override store for the provided entityId.
+    """
+
+
+@dataclass(eq=False, repr=False)
+class RemoveEntityOverrideResponse(betterproto.Message):
+    """void response but with placeholder for future optional fields."""
+
+    pass
 
 
 @dataclass(eq=False, repr=False)
@@ -3321,180 +3505,6 @@ class StreamEntityComponentsResponse(betterproto.Message):
 
     entity_event: "EntityEvent" = betterproto.message_field(1)
     heartbeat: "Heartbeat" = betterproto.message_field(2)
-
-
-@dataclass(eq=False, repr=False)
-class PutEntityRequest(betterproto.Message):
-    entity: "Entity" = betterproto.message_field(1)
-    """
-    The entity to put.
-     Required fields:
-       * expiry_time - must be in the future, but less than 30 days from now
-       * provenance.data_type
-       * provenance.source_update_time (can be earlier than rpc call if data entered is older)
-       * aliases.name
-       * ontology.template
-     any additional required fields will be determined by template, see com.anduril.entitymanager.v1.Template
-     if an entity_id is provided, will treat as update, otherwise create
-    """
-
-    unique_id: str = betterproto.string_field(2)
-    """
-    An optional unique identifier for this entity supplied by integration.
-     If provided, EntityId will be determined via consistent hash with provenance.data_type + unique_id
-    """
-
-
-@dataclass(eq=False, repr=False)
-class PutEntityResponse(betterproto.Message):
-    entity: "Entity" = betterproto.message_field(1)
-    """
-    The updated entity.
-     Automatically updated fields:
-       * is_live - always reset to true
-       * entity_id - new GUID on create
-       * created_time - set on create
-    """
-
-
-@dataclass(eq=False, repr=False)
-class PublishEntitiesRequest(betterproto.Message):
-    entity: "Entity" = betterproto.message_field(1)
-    """
-    Stream of fully formed entities to publish
-     Required fields per entity:
-       * expiry_time - must be in the future, but less than 30 days from now
-       * provenance.data_type
-       * provenance.source_update_time (can be earlier than rpc call if data entered is older)
-       * aliases.name
-       * ontology.template
-     any additional required fields will be determined by template, see com.anduril.entitymanager.v1.Template
-     if an entity_id is provided, will treat as update, otherwise create
-    """
-
-
-@dataclass(eq=False, repr=False)
-class PublishEntitiesResponse(betterproto.Message):
-    """
-    After the stream is closed the server will return an empty message indicating success. If any streamed message
-     caused an error then the stream is immediately terminated and an error code is returned.
-    """
-
-    pass
-
-
-@dataclass(eq=False, repr=False)
-class OverrideEntityRequest(betterproto.Message):
-    entity: "Entity" = betterproto.message_field(1)
-    """
-    The entity containing the overwritten fields. The service will extract the overridable fields from the entity
-     object and ignore any other fields.
-    """
-
-    field_path: List[str] = betterproto.string_field(2)
-    """
-    The field paths that will be extracted from the Entity and saved as an override. Only fields marked overridable can
-     be overriden.
-    """
-
-    provenance: "Provenance" = betterproto.message_field(3)
-    """Additional information about the source of the override"""
-
-
-@dataclass(eq=False, repr=False)
-class OverrideEntityResponse(betterproto.Message):
-    status: "OverrideStatus" = betterproto.enum_field(1)
-    """The status of the override request."""
-
-
-@dataclass(eq=False, repr=False)
-class RemoveEntityOverrideRequest(betterproto.Message):
-    entity_id: str = betterproto.string_field(1)
-    """The entity ID that the override will be removed from"""
-
-    field_path: List[str] = betterproto.string_field(2)
-    """
-    The field paths to remove from the override store for the provided entityId.
-    """
-
-
-@dataclass(eq=False, repr=False)
-class RemoveEntityOverrideResponse(betterproto.Message):
-    """void response but with placeholder for future optional fields."""
-
-    pass
-
-
-@dataclass(eq=False, repr=False)
-class DeleteEntityRequest(betterproto.Message):
-    entity_id: str = betterproto.string_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class DeleteEntityResponse(betterproto.Message):
-    """void response but with placeholder for future optional fields."""
-
-    pass
-
-
-@dataclass(eq=False, repr=False)
-class RelateEntityRequest(betterproto.Message):
-    """
-    The set of relationships to add to an entity. Relationships are specified from the primary entity to the
-     other entity specified in the relationship request(s).
-    """
-
-    entity_id: str = betterproto.string_field(1)
-    """The entity onto which relationships are being added."""
-
-    relationships: List["RelationshipRequest"] = betterproto.message_field(2)
-    """The relationships to add to the entity."""
-
-
-@dataclass(eq=False, repr=False)
-class RelationshipRequest(betterproto.Message):
-    """
-    A request for a relationship on an entity. Forms a partial of the entitymanager.v1.Relationship message.
-    """
-
-    related_entity_id: str = betterproto.string_field(1)
-    """The entity ID to which this entity is related."""
-
-    relationship_id: str = betterproto.string_field(2)
-    """
-    If RelationshipID is empty, a new relationship is created. Otherwise, the service will attempt
-     to update an already existing relationship on the entity.
-    """
-
-    relationship_type: "RelationshipType" = betterproto.message_field(3)
-    """The relationship type"""
-
-
-@dataclass(eq=False, repr=False)
-class RelateEntityResponse(betterproto.Message):
-    entity: "Entity" = betterproto.message_field(1)
-    """
-    Newly related entity object with only Relationships component present.
-    """
-
-
-@dataclass(eq=False, repr=False)
-class UnrelateEntityRequest(betterproto.Message):
-    """The relationships to remove from an entity."""
-
-    entity_id: str = betterproto.string_field(1)
-    """The entity from which relationships are being removed."""
-
-    relationship_ids: List[str] = betterproto.string_field(2)
-    """
-    The relationships to delete on the entity, specified as relationship id.
-    """
-
-
-@dataclass(eq=False, repr=False)
-class UnrelateEntityResponse(betterproto.Message):
-    entity: "Entity" = betterproto.message_field(1)
-    """Updated entity object with only Relationships component present."""
 
 
 @dataclass(eq=False, repr=False)
@@ -3613,53 +3623,18 @@ class OverrideNotificationPayload(betterproto.Message):
 
 
 class EntityManagerApiStub(betterproto.ServiceStub):
-    async def get_entity(
+    async def publish_entity(
         self,
-        get_entity_request: "GetEntityRequest",
+        publish_entity_request: "PublishEntityRequest",
         *,
         timeout: Optional[float] = None,
         deadline: Optional["Deadline"] = None,
         metadata: Optional["MetadataLike"] = None
-    ) -> "GetEntityResponse":
+    ) -> "PublishEntityResponse":
         return await self._unary_unary(
-            "/anduril.entitymanager.v1.EntityManagerAPI/GetEntity",
-            get_entity_request,
-            GetEntityResponse,
-            timeout=timeout,
-            deadline=deadline,
-            metadata=metadata,
-        )
-
-    async def stream_entity_components(
-        self,
-        stream_entity_components_request: "StreamEntityComponentsRequest",
-        *,
-        timeout: Optional[float] = None,
-        deadline: Optional["Deadline"] = None,
-        metadata: Optional["MetadataLike"] = None
-    ) -> AsyncIterator[StreamEntityComponentsResponse]:
-        async for response in self._unary_stream(
-            "/anduril.entitymanager.v1.EntityManagerAPI/StreamEntityComponents",
-            stream_entity_components_request,
-            StreamEntityComponentsResponse,
-            timeout=timeout,
-            deadline=deadline,
-            metadata=metadata,
-        ):
-            yield response
-
-    async def put_entity(
-        self,
-        put_entity_request: "PutEntityRequest",
-        *,
-        timeout: Optional[float] = None,
-        deadline: Optional["Deadline"] = None,
-        metadata: Optional["MetadataLike"] = None
-    ) -> "PutEntityResponse":
-        return await self._unary_unary(
-            "/anduril.entitymanager.v1.EntityManagerAPI/PutEntity",
-            put_entity_request,
-            PutEntityResponse,
+            "/anduril.entitymanager.v1.EntityManagerAPI/PublishEntity",
+            publish_entity_request,
+            PublishEntityResponse,
             timeout=timeout,
             deadline=deadline,
             metadata=metadata,
@@ -3680,6 +3655,23 @@ class EntityManagerApiStub(betterproto.ServiceStub):
             publish_entities_request_iterator,
             PublishEntitiesRequest,
             PublishEntitiesResponse,
+            timeout=timeout,
+            deadline=deadline,
+            metadata=metadata,
+        )
+
+    async def get_entity(
+        self,
+        get_entity_request: "GetEntityRequest",
+        *,
+        timeout: Optional[float] = None,
+        deadline: Optional["Deadline"] = None,
+        metadata: Optional["MetadataLike"] = None
+    ) -> "GetEntityResponse":
+        return await self._unary_unary(
+            "/anduril.entitymanager.v1.EntityManagerAPI/GetEntity",
+            get_entity_request,
+            GetEntityResponse,
             timeout=timeout,
             deadline=deadline,
             metadata=metadata,
@@ -3719,79 +3711,40 @@ class EntityManagerApiStub(betterproto.ServiceStub):
             metadata=metadata,
         )
 
-    async def delete_entity(
+    async def stream_entity_components(
         self,
-        delete_entity_request: "DeleteEntityRequest",
+        stream_entity_components_request: "StreamEntityComponentsRequest",
         *,
         timeout: Optional[float] = None,
         deadline: Optional["Deadline"] = None,
         metadata: Optional["MetadataLike"] = None
-    ) -> "DeleteEntityResponse":
-        return await self._unary_unary(
-            "/anduril.entitymanager.v1.EntityManagerAPI/DeleteEntity",
-            delete_entity_request,
-            DeleteEntityResponse,
+    ) -> AsyncIterator[StreamEntityComponentsResponse]:
+        async for response in self._unary_stream(
+            "/anduril.entitymanager.v1.EntityManagerAPI/StreamEntityComponents",
+            stream_entity_components_request,
+            StreamEntityComponentsResponse,
             timeout=timeout,
             deadline=deadline,
             metadata=metadata,
-        )
-
-    async def relate_entity(
-        self,
-        relate_entity_request: "RelateEntityRequest",
-        *,
-        timeout: Optional[float] = None,
-        deadline: Optional["Deadline"] = None,
-        metadata: Optional["MetadataLike"] = None
-    ) -> "RelateEntityResponse":
-        return await self._unary_unary(
-            "/anduril.entitymanager.v1.EntityManagerAPI/RelateEntity",
-            relate_entity_request,
-            RelateEntityResponse,
-            timeout=timeout,
-            deadline=deadline,
-            metadata=metadata,
-        )
-
-    async def unrelate_entity(
-        self,
-        unrelate_entity_request: "UnrelateEntityRequest",
-        *,
-        timeout: Optional[float] = None,
-        deadline: Optional["Deadline"] = None,
-        metadata: Optional["MetadataLike"] = None
-    ) -> "UnrelateEntityResponse":
-        return await self._unary_unary(
-            "/anduril.entitymanager.v1.EntityManagerAPI/UnrelateEntity",
-            unrelate_entity_request,
-            UnrelateEntityResponse,
-            timeout=timeout,
-            deadline=deadline,
-            metadata=metadata,
-        )
+        ):
+            yield response
 
 
 class EntityManagerApiBase(ServiceBase):
 
-    async def get_entity(
-        self, get_entity_request: "GetEntityRequest"
-    ) -> "GetEntityResponse":
-        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
-
-    async def stream_entity_components(
-        self, stream_entity_components_request: "StreamEntityComponentsRequest"
-    ) -> AsyncIterator[StreamEntityComponentsResponse]:
-        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
-        yield StreamEntityComponentsResponse()
-
-    async def put_entity(
-        self, put_entity_request: "PutEntityRequest"
-    ) -> "PutEntityResponse":
+    async def publish_entity(
+        self, publish_entity_request: "PublishEntityRequest"
+    ) -> "PublishEntityResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def publish_entities(
         self, publish_entities_request_iterator: AsyncIterator[PublishEntitiesRequest]
     ) -> "PublishEntitiesResponse":
+        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+
+    async def get_entity(
+        self, get_entity_request: "GetEntityRequest"
+    ) -> "GetEntityResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
     async def override_entity(
@@ -3804,44 +3757,18 @@ class EntityManagerApiBase(ServiceBase):
     ) -> "RemoveEntityOverrideResponse":
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
 
-    async def delete_entity(
-        self, delete_entity_request: "DeleteEntityRequest"
-    ) -> "DeleteEntityResponse":
+    async def stream_entity_components(
+        self, stream_entity_components_request: "StreamEntityComponentsRequest"
+    ) -> AsyncIterator[StreamEntityComponentsResponse]:
         raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
+        yield StreamEntityComponentsResponse()
 
-    async def relate_entity(
-        self, relate_entity_request: "RelateEntityRequest"
-    ) -> "RelateEntityResponse":
-        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
-
-    async def unrelate_entity(
-        self, unrelate_entity_request: "UnrelateEntityRequest"
-    ) -> "UnrelateEntityResponse":
-        raise grpclib.GRPCError(grpclib.const.Status.UNIMPLEMENTED)
-
-    async def __rpc_get_entity(
-        self, stream: "grpclib.server.Stream[GetEntityRequest, GetEntityResponse]"
-    ) -> None:
-        request = await stream.recv_message()
-        response = await self.get_entity(request)
-        await stream.send_message(response)
-
-    async def __rpc_stream_entity_components(
+    async def __rpc_publish_entity(
         self,
-        stream: "grpclib.server.Stream[StreamEntityComponentsRequest, StreamEntityComponentsResponse]",
+        stream: "grpclib.server.Stream[PublishEntityRequest, PublishEntityResponse]",
     ) -> None:
         request = await stream.recv_message()
-        await self._call_rpc_handler_server_stream(
-            self.stream_entity_components,
-            stream,
-            request,
-        )
-
-    async def __rpc_put_entity(
-        self, stream: "grpclib.server.Stream[PutEntityRequest, PutEntityResponse]"
-    ) -> None:
-        request = await stream.recv_message()
-        response = await self.put_entity(request)
+        response = await self.publish_entity(request)
         await stream.send_message(response)
 
     async def __rpc_publish_entities(
@@ -3850,6 +3777,13 @@ class EntityManagerApiBase(ServiceBase):
     ) -> None:
         request = stream.__aiter__()
         response = await self.publish_entities(request)
+        await stream.send_message(response)
+
+    async def __rpc_get_entity(
+        self, stream: "grpclib.server.Stream[GetEntityRequest, GetEntityResponse]"
+    ) -> None:
+        request = await stream.recv_message()
+        response = await self.get_entity(request)
         await stream.send_message(response)
 
     async def __rpc_override_entity(
@@ -3868,53 +3802,36 @@ class EntityManagerApiBase(ServiceBase):
         response = await self.remove_entity_override(request)
         await stream.send_message(response)
 
-    async def __rpc_delete_entity(
-        self, stream: "grpclib.server.Stream[DeleteEntityRequest, DeleteEntityResponse]"
-    ) -> None:
-        request = await stream.recv_message()
-        response = await self.delete_entity(request)
-        await stream.send_message(response)
-
-    async def __rpc_relate_entity(
-        self, stream: "grpclib.server.Stream[RelateEntityRequest, RelateEntityResponse]"
-    ) -> None:
-        request = await stream.recv_message()
-        response = await self.relate_entity(request)
-        await stream.send_message(response)
-
-    async def __rpc_unrelate_entity(
+    async def __rpc_stream_entity_components(
         self,
-        stream: "grpclib.server.Stream[UnrelateEntityRequest, UnrelateEntityResponse]",
+        stream: "grpclib.server.Stream[StreamEntityComponentsRequest, StreamEntityComponentsResponse]",
     ) -> None:
         request = await stream.recv_message()
-        response = await self.unrelate_entity(request)
-        await stream.send_message(response)
+        await self._call_rpc_handler_server_stream(
+            self.stream_entity_components,
+            stream,
+            request,
+        )
 
     def __mapping__(self) -> Dict[str, grpclib.const.Handler]:
         return {
-            "/anduril.entitymanager.v1.EntityManagerAPI/GetEntity": grpclib.const.Handler(
-                self.__rpc_get_entity,
+            "/anduril.entitymanager.v1.EntityManagerAPI/PublishEntity": grpclib.const.Handler(
+                self.__rpc_publish_entity,
                 grpclib.const.Cardinality.UNARY_UNARY,
-                GetEntityRequest,
-                GetEntityResponse,
-            ),
-            "/anduril.entitymanager.v1.EntityManagerAPI/StreamEntityComponents": grpclib.const.Handler(
-                self.__rpc_stream_entity_components,
-                grpclib.const.Cardinality.UNARY_STREAM,
-                StreamEntityComponentsRequest,
-                StreamEntityComponentsResponse,
-            ),
-            "/anduril.entitymanager.v1.EntityManagerAPI/PutEntity": grpclib.const.Handler(
-                self.__rpc_put_entity,
-                grpclib.const.Cardinality.UNARY_UNARY,
-                PutEntityRequest,
-                PutEntityResponse,
+                PublishEntityRequest,
+                PublishEntityResponse,
             ),
             "/anduril.entitymanager.v1.EntityManagerAPI/PublishEntities": grpclib.const.Handler(
                 self.__rpc_publish_entities,
                 grpclib.const.Cardinality.STREAM_UNARY,
                 PublishEntitiesRequest,
                 PublishEntitiesResponse,
+            ),
+            "/anduril.entitymanager.v1.EntityManagerAPI/GetEntity": grpclib.const.Handler(
+                self.__rpc_get_entity,
+                grpclib.const.Cardinality.UNARY_UNARY,
+                GetEntityRequest,
+                GetEntityResponse,
             ),
             "/anduril.entitymanager.v1.EntityManagerAPI/OverrideEntity": grpclib.const.Handler(
                 self.__rpc_override_entity,
@@ -3928,22 +3845,10 @@ class EntityManagerApiBase(ServiceBase):
                 RemoveEntityOverrideRequest,
                 RemoveEntityOverrideResponse,
             ),
-            "/anduril.entitymanager.v1.EntityManagerAPI/DeleteEntity": grpclib.const.Handler(
-                self.__rpc_delete_entity,
-                grpclib.const.Cardinality.UNARY_UNARY,
-                DeleteEntityRequest,
-                DeleteEntityResponse,
-            ),
-            "/anduril.entitymanager.v1.EntityManagerAPI/RelateEntity": grpclib.const.Handler(
-                self.__rpc_relate_entity,
-                grpclib.const.Cardinality.UNARY_UNARY,
-                RelateEntityRequest,
-                RelateEntityResponse,
-            ),
-            "/anduril.entitymanager.v1.EntityManagerAPI/UnrelateEntity": grpclib.const.Handler(
-                self.__rpc_unrelate_entity,
-                grpclib.const.Cardinality.UNARY_UNARY,
-                UnrelateEntityRequest,
-                UnrelateEntityResponse,
+            "/anduril.entitymanager.v1.EntityManagerAPI/StreamEntityComponents": grpclib.const.Handler(
+                self.__rpc_stream_entity_components,
+                grpclib.const.Cardinality.UNARY_STREAM,
+                StreamEntityComponentsRequest,
+                StreamEntityComponentsResponse,
             ),
         }
