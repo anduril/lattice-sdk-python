@@ -48,7 +48,7 @@ class Disposition(betterproto.Enum):
 
 class Environment(betterproto.Enum):
     """
-    Describes the operating environment of an object. For more information refer to MIl-STD 2525d or MIL-STD 6016f.
+    Describes the operating environment of an object. For more information refer to MIL-STD 2525D.
      Surface is used to describe objects on-top the water such as boats, while Sub-Surface is used to describe under the
      water.
     """
