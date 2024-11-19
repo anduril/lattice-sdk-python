@@ -102,135 +102,6 @@ class GeoType(betterproto.Enum):
     """Maneuver Control Measure"""
 
 
-class EmergencyType(betterproto.Enum):
-    """Type of an emergency."""
-
-    INVALID = 0
-    DOWN_AIRCRAFT = 1
-    MAN_IN_WATER = 2
-    DITCHING = 3
-    BAILOUT = 4
-    DISTRESSED_VEHICLE = 5
-    GROUND_INCIDENT = 6
-    MEDICAL = 7
-    ISOLATED_PERSON = 8
-
-
-class ControlAreaType(betterproto.Enum):
-    INVALID = 0
-    KEEP_IN_ZONE = 1
-    KEEP_OUT_ZONE = 2
-    DITCH_ZONE = 3
-    """
-    Zone for an autonomous asset to nose-dive into
-     when its assignment has been concluded
-    """
-
-    OBSERVATION_EXCLUSION = 4
-    """Areas where we do not process radar detections"""
-
-    OBSERVATION_INCLUSION = 5
-    """Areas where we process radar detections exclusively"""
-
-    OBSERVATION_PRIORITY = 6
-    """Areas where we elevate interrogation priority"""
-
-
-class FscmDetailType(betterproto.Enum):
-    INVALID = 0
-    DEAD_SPACE_AREA = 1
-    NO_FIRE_AREA = 2
-    FREE_FIRE_AREA = 3
-    RESTRICTIVE_FIRE_AREA = 4
-    SAFE_FIRE_AREA = 5
-    AIRSPACE_COORDINATION_AREA = 6
-    FORWARD_EDGE_OF_THE_BATTLE_AREA = 7
-    FIRE_SUPPORT_AREA = 8
-    PATROL_RECONNAISSANCE = 9
-    ZONE_OF_RESPONSIBILITY = 10
-    PRIORITY_CALL_FOR_FIRE_ZONE = 11
-    CENSORED_ZONE = 12
-    ZONE_OF_ACTION = 13
-    CRITICAL_FRIENDLY_ZONE = 14
-    PLATOON_AREA_HAZARD = 15
-    TARGET_AREA_HAZARD = 16
-    RESTRICTED_OPERATIONS_ZONE = 17
-    AIR_CORRIDOR = 18
-    RESTRICTIVE_FIRE_LINE = 19
-    COORDINATED_FIRE_LINE_NO_FIRE_LINE = 20
-    BOUNDARY_LINE = 21
-    FORWARD_LINE = 22
-    FIRE_SUPPORT_LINE = 23
-    LINE_OF_DEPARTURE = 24
-    LINE_OF_CONTACT = 25
-    LINE_OF_DEPARTURE_LINE_OF_CONTACT = 26
-    ZONE_OF_FIRE = 27
-
-
-class AcmDetailType(betterproto.Enum):
-    INVALID = 0
-    AIR_CORRIDOR = 1
-    MINIMUM_RISK_ROUTE = 2
-    TEMPORARY_MINIMUM_RISK_ROUTE = 3
-    TRANSIT_ROUTE = 4
-    LOW_LEVEL_TRANSIT_ROUTE = 5
-    SPECIAL_CORRIDOR = 6
-    STANDARD_USE_ARMY_AIRCRAFT_FLIGHT_ROUTE = 7
-    RESTRICTED_OPERATIONS_ZONE = 8
-    AIR_TO_AIR_REFUELING_AREA = 9
-    AIRBORNE_COMMAND_AND_CONTROL_AREA = 10
-    AIRBORNE_EARLY_WARNING_AREA = 11
-    CLOSE_AIR_SUPPORT_AREA = 12
-    COMBAT_AIR_PATROL = 13
-    DROP_ZONE = 14
-    ELECTRONIC_COMBAT = 15
-    LANDING_ZONE = 16
-    PICKUP_ZONE = 17
-    RECONNAISSANCE_AREA = 18
-    SPECIAL_OPERATIONS_FORCE_AREA = 19
-    SURFACE_TO_SURFACE_MISSILE_SYSTEM = 20
-    SURFACE_TO_SURFACE_MUNITIONS = 21
-    UNMANNED_AIRCRAFT_AREA = 22
-    COORDINATING_ALTITUDE = 23
-    COORDINATION_LEVEL = 24
-    HIGH_DENSITY_AIRSPACE_CONTROL_ZONE = 25
-    NO_FLY_AREA = 26
-    TRANSIT_CORRIDOR = 27
-    RETURN_TO_FORCE = 28
-
-
-class AmmoRestrictionType(betterproto.Enum):
-    INVALID = 0
-    HIGH_EXPLOSIVE_MUNITIONS = 1
-    IMPROVED_CONVENTIONAL_MUNITIONS = 2
-    CHEMICAL_MUNITIONS = 3
-    NUCLEAR_MUNITIONS = 4
-    WHITE_PHOSPHORUS_MUNITIONS = 5
-    ILLUMINATION_MUNITIONS = 6
-    TERMINAL_HOMING_MUNITIONS = 7
-    FASCAM_MUNITIONS = 8
-    SMOKE_MUNITIONS = 9
-    ALL_MUNITIONS = 10
-
-
-class RestrictiveMeasureType(betterproto.Enum):
-    INVALID = 0
-    STAY_INSIDE_AREA = 1
-    STAY_OUTSIDE_AREA = 2
-    STAY_ABOVE_AREA = 3
-    STAY_BELOW_AREA = 4
-    STAY_NORTH_OF_LINE = 5
-    STAY_EAST_OF_LINE = 6
-    STAY_SOUTH_OF_LINE = 7
-    STAY_WEST_OF_LINE = 8
-
-
-class McmDetailType(betterproto.Enum):
-    INVALID = 0
-    NAMED_AREA_OF_INTEREST = 1
-    TARGET_AREA_OF_INTEREST = 2
-
-
 class ConnectionStatus(betterproto.Enum):
     """Enumeration of possible connection states."""
 
@@ -283,14 +154,6 @@ class AlertLevel(betterproto.Enum):
 
     WARNING = 3
     """For conditions that require immediate awareness and response."""
-
-
-class MediaType(betterproto.Enum):
-    INVALID = 0
-    THUMBNAIL = 1
-    IMAGE = 2
-    VIDEO = 3
-    SLIPPY_TILES = 4
 
 
 class AltIdType(betterproto.Enum):
@@ -793,31 +656,44 @@ class InterrogationResponse(betterproto.Enum):
     NO_RESPONSE = 3
 
 
-class Deletable(betterproto.Enum):
+class CorrelationType(betterproto.Enum):
+    """The type of correlation indicating how it was made."""
+
+    INVALID = 0
+    MANUAL = 1
     """
-    Indicates whether an entity can be deleted with the DeleteEntity API call
+    The correlation was made manually by a human.
+     Manual is higher precedence than automated assuming the same replication mode.
+    """
+
+    AUTOMATED = 2
+    """
+    The correlation was automatically made by a service or some other automated process.
+     Automated is lower precedence than manual assuming the same replication mode.
+    """
+
+
+class CorrelationReplicationMode(betterproto.Enum):
+    """
+    The replication mode of the correlation indicating how the correlation will be replication to
+     other nodes in the mesh.
     """
 
     INVALID = 0
-    TRUE = 1
-    """Entity can immediately be deleted."""
-
-    FALSE = 2
+    LOCAL = 1
     """
-    Entity is from another source that is known to not allow entities to be deleted
-    """
-
-    REQUEST = 3
-    """
-    Entity is from another source that requires the source to accept the request. The DeleteEntity API call
-     will work asynchronously in this case.
+    The correlation is local only to the originating node and will not be distributed to other
+     nodes in the mesh. In the case of conflicts, this correlation will override ones coming from
+     other nodes. Local is always higher precedence than global regardless of the correlation type.
     """
 
-
-class InteractivityMode(betterproto.Enum):
-    INVALID = 0
-    DEFAULT = 1
-    DISABLED_ON_MAP = 2
+    GLOBAL = 2
+    """
+    The correlation is distributed globally across all nodes in the mesh. Because an entity can
+     only be part of one correlation, this is based on last-write-wins semantics, however, the
+     correlation will also be stored locally in the originating node preventing any overrides.
+     Global is always lower precedence than local regardless of the correlation type.
+    """
 
 
 class Comparator(betterproto.Enum):
@@ -900,6 +776,14 @@ class EventType(betterproto.Enum):
 
     POST_EXPIRY_OVERRIDE = 5
     """entity override was set after the entity expiration."""
+
+
+class MediaType(betterproto.Enum):
+    INVALID = 0
+    THUMBNAIL = 1
+    IMAGE = 2
+    VIDEO = 3
+    SLIPPY_TILES = 4
 
 
 @dataclass(eq=False, repr=False)
@@ -1026,9 +910,7 @@ class Location(betterproto.Message):
     """Available for Entities that have a single or primary Location."""
 
     position: "Position" = betterproto.message_field(1)
-    """
-    see Position definition for details. We opt not to use anduril type for altitude clarity.
-    """
+    """see Position definition for details."""
 
     velocity_enu: "__type__.Enu" = betterproto.message_field(2)
     """
@@ -1051,7 +933,13 @@ class Location(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class Position(betterproto.Message):
-    """WGS84 position."""
+    """
+    WGS84 position. Position includes four altitude references.
+     The data model does not currently support Mean Sea Level (MSL) references,
+     such as the Earth Gravitational Model 1996 (EGM-96) and the Earth Gravitational Model 2008 (EGM-08).
+     If the only altitude reference available to your integration is MSL, convert it to
+     Height Above Ellipsoid (HAE) and populate the altitude_hae_meters field.
+    """
 
     latitude_degrees: float = betterproto.double_field(1)
     """WGS84 geodetic latitude in decimal degrees."""
@@ -1071,8 +959,9 @@ class Position(betterproto.Message):
         4, wraps=betterproto.TYPE_DOUBLE
     )
     """
-    Altitude as AGL (Above Ground Level) if the upstream data source has this value set. If the value is not set from the upstream, this value is
-     not set.
+    Altitude as AGL (Above Ground Level) if the upstream data source has this value set. This value represents the
+     entity's height above the terrain. This is typically measured with a radar altimeter or by using a terrain tile
+     set lookup. If the value is not set from the upstream, this value is not set.
     """
 
     altitude_asf_meters: Optional[float] = betterproto.message_field(
@@ -1087,7 +976,7 @@ class Position(betterproto.Message):
         6, wraps=betterproto.TYPE_DOUBLE
     )
     """
-    Depth in meters measures the depth of the entity from the surface of the water through sensor measurements based on differential pressure
+    The depth of the entity from the surface of the water through sensor measurements based on differential pressure
      between the interior and exterior of the vessel. If the value is not set from the upstream, this value is not set.
     """
 
@@ -1098,12 +987,14 @@ class LocationUncertainty(betterproto.Message):
 
     position_enu_cov: "TMat3" = betterproto.message_field(1)
     """
-    Positional covariance represented by the upper triangle of the covariance matrix.
+    Positional covariance represented by the upper triangle of the covariance matrix. It is valid to populate
+     only the diagonal of the matrix if the full covariance matrix is unknown.
     """
 
     velocity_enu_cov: "TMat3" = betterproto.message_field(2)
     """
-    Velocity covariance represented by the upper triangle of the covariance matrix.
+    Velocity covariance represented by the upper triangle of the covariance matrix. It is valid to populate
+     only the diagonal of the matrix if the full covariance matrix is unknown.
     """
 
     position_error_ellipse: "ErrorEllipse" = betterproto.message_field(3)
@@ -1149,8 +1040,6 @@ class ErrorEllipse(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class Pose(betterproto.Message):
-    """Overrides anduril.type.Pose."""
-
     pos: "Position" = betterproto.message_field(1)
     """Geospatial location defined by this Pose."""
 
@@ -1185,22 +1074,6 @@ class GeoDetails(betterproto.Message):
     """A component that describes a geo-entity."""
 
     type: "GeoType" = betterproto.enum_field(1)
-    emergency: "EmergencyDetails" = betterproto.message_field(2, group="type_details")
-    fscm: "FscmDetails" = betterproto.message_field(4, group="type_details")
-    control_area: "ControlAreaDetails" = betterproto.message_field(
-        5, group="type_details"
-    )
-    acm: "AcmDetails" = betterproto.message_field(6, group="type_details")
-    mcm: "McmDetails" = betterproto.message_field(7, group="type_details")
-    visual_details: "GeoVisualDetails" = betterproto.message_field(3)
-
-
-@dataclass(eq=False, repr=False)
-class EmergencyDetails(betterproto.Message):
-    """Details specific to a geo-entity of emergency type."""
-
-    emergency_type: "EmergencyType" = betterproto.enum_field(1)
-    personnel_involved: int = betterproto.uint32_field(2)
 
 
 @dataclass(eq=False, repr=False)
@@ -1356,98 +1229,8 @@ class GeoPolygonPosition(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
-class GeoVisualDetails(betterproto.Message):
-    """Details specific to displaying a geo-entity"""
-
-    fill_color: "__type__.Color" = betterproto.message_field(1)
-    """A string describing the fill color of a geo-entity."""
-
-    line_color: "__type__.Color" = betterproto.message_field(2)
-    """A string describing the line color of a geo-entity."""
-
-
-@dataclass(eq=False, repr=False)
-class FscmDetails(betterproto.Message):
-    """
-    Details specific to a geo-entity of Fire Support Coordination Measure (FSCM) type
-    """
-
-    fscm_type: "FscmDetailType" = betterproto.enum_field(1)
-    fscm_description: str = betterproto.string_field(2)
-    """
-    Used for loosely typed associations, such as assignment to a specific fires unit
-     Limit to 150 characters
-    """
-
-    firing_authority: "FiringAuthority" = betterproto.message_field(3)
-    ammo_restriction_type: "AmmoRestrictionType" = betterproto.enum_field(4)
-    restrictive_measure_type: "RestrictiveMeasureType" = betterproto.enum_field(5)
-    ammo_restrict_types: List["AmmoRestrictionType"] = betterproto.enum_field(6)
-    is_ground: bool = betterproto.bool_field(7)
-    """
-    Used to indicate distinction between an FSCM applying to either air or ground, never both
-    """
-
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("ammo_restriction_type"):
-            warnings.warn(
-                "FscmDetails.ammo_restriction_type is deprecated", DeprecationWarning
-            )
-
-
-@dataclass(eq=False, repr=False)
-class AcmDetails(betterproto.Message):
-    acm_type: "AcmDetailType" = betterproto.enum_field(1)
-    acm_description: str = betterproto.string_field(2)
-    """
-    Used for loosely typed associations, such as assignment to a specific fires unit
-     Limit to 150 characters
-    """
-
-
-@dataclass(eq=False, repr=False)
-class McmDetails(betterproto.Message):
-    mcm_type: "McmDetailType" = betterproto.enum_field(1)
-    mcm_description: str = betterproto.string_field(2)
-    """
-    Used for loosely typed associations, such as assignment to a specific fires unit
-     Limit to 150 characters
-    """
-
-
-@dataclass(eq=False, repr=False)
-class FiringAuthority(betterproto.Message):
-    """
-    Lists the entities that have authority to execute fires into, or through, this FSCM
-    """
-
-    entity_ids: List[str] = betterproto.string_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class ControlAreaDetails(betterproto.Message):
-    """
-    Details specific to a geo-entity of the GEO_TYPE_CONTROL_AREA type,
-     representing an autonomous asset Control Area.
-    """
-
-    type: "ControlAreaType" = betterproto.enum_field(1)
-
-
-@dataclass(eq=False, repr=False)
 class GroupDetails(betterproto.Message):
     """Details related to grouping for this entity"""
-
-    team: "Team" = betterproto.message_field(1, group="group_type")
-
-
-@dataclass(eq=False, repr=False)
-class Team(betterproto.Message):
-    """
-    Describes a Team group type. Comprised of autonomous assets where an asset
-     in a Team can only be a part of a single Team at a time.
-    """
 
     pass
 
@@ -1571,29 +1354,6 @@ class AlertCondition(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
-class Media(betterproto.Message):
-    """Media associated with an entity."""
-
-    media: List["MediaItem"] = betterproto.message_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class MediaItem(betterproto.Message):
-    url: str = betterproto.string_field(1)
-    """
-    To Be Deprecated, use relative_path.
-     The url where the media related to an entity can be accessed
-    """
-
-    type: "MediaType" = betterproto.enum_field(2)
-    relative_path: str = betterproto.string_field(3)
-    """
-    The relative path where the media related to an entity can be accessed when used to query against a blobs service
-     node.
-    """
-
-
-@dataclass(eq=False, repr=False)
 class UInt32Range(betterproto.Message):
     lower_bound: int = betterproto.uint32_field(1)
     upper_bound: int = betterproto.uint32_field(2)
@@ -1618,20 +1378,15 @@ class MilView(betterproto.Message):
 class Ontology(betterproto.Message):
     """Ontology of the entity."""
 
-    descriptors: List[str] = betterproto.string_field(1)
-    """DEPRECATED: list of possible descriptors in preferred order."""
-
     platform_type: str = betterproto.string_field(3)
     """
-    A string that describes the asset's high-level type with natural language. These values include, but are not
-     limited to the AIR/SURFACE/SUBSURFACE/LAND/SPACE PLATFORM TYPE values found in MIL-STD 6016F.
+    A string that describes the entity's high-level type with natural language.
      Examples include "FIGHTER", "TANK", "AIRCRAFT CARRIER", "UAV".
     """
 
     specific_type: str = betterproto.string_field(4)
     """
-    A string that describes the asset's exact model or type. These values include, but are not
-     limited to the AIR/SURFACE/SUBSURFACE/LAND/SPACE SPECIFIC TYPE values found in MIL-STD 6016F.
+    A string that describes the entity's exact model or type.
      Examples include "F-16", "NASAMS-LCHR", "ARLEIGH BURKE DDG", "GHOST".
     """
 
@@ -1639,11 +1394,6 @@ class Ontology(betterproto.Message):
     """
     The template used when creating this entity. Specifies minimum required components.
     """
-
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("descriptors"):
-            warnings.warn("Ontology.descriptors is deprecated", DeprecationWarning)
 
 
 @dataclass(eq=False, repr=False)
@@ -1670,10 +1420,6 @@ class Payload(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class PayloadConfiguration(betterproto.Message):
-    """
-    The configuration for this capability, published on the CAPABILITY_TOPIC_PAYLOAD_CONFIGURATION topic id.
-    """
-
     capability_id: str = betterproto.string_field(1)
     """
     Identifying ID for the capability.
@@ -2067,6 +1813,11 @@ class Sensor(betterproto.Message):
     fields_of_view: List["FieldOfView"] = betterproto.message_field(9)
     """Multiple fields of view for a single sensor component"""
 
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        if self.is_set("field_of_view"):
+            warnings.warn("Sensor.field_of_view is deprecated", DeprecationWarning)
+
 
 @dataclass(eq=False, repr=False)
 class FieldOfView(betterproto.Message):
@@ -2180,7 +1931,7 @@ class Bandwidth(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class Relationships(betterproto.Message):
     """
-    The relationships between this entity and other entities in the battlespace.
+    The relationships between this entity and other entities in the common operational picture.
     """
 
     relationships: List["Relationship"] = betterproto.message_field(1)
@@ -2208,21 +1959,10 @@ class Relationship(betterproto.Message):
 class RelationshipType(betterproto.Message):
     """Determines the type of relationship between this entity and another."""
 
-    tether: "Tether" = betterproto.message_field(1, group="type")
     tracked_by: "TrackedBy" = betterproto.message_field(2, group="type")
-    configure: "Configure" = betterproto.message_field(3, group="type")
     group_child: "GroupChild" = betterproto.message_field(4, group="type")
     group_parent: "GroupParent" = betterproto.message_field(5, group="type")
     merged_from: "MergedFrom" = betterproto.message_field(6, group="type")
-
-
-@dataclass(eq=False, repr=False)
-class Tether(betterproto.Message):
-    """
-    A tether relationship indicates that this entity should take the position of the other entity.
-    """
-
-    pass
 
 
 @dataclass(eq=False, repr=False)
@@ -2242,15 +1982,6 @@ class TrackedBy(betterproto.Message):
     """
     Latest time that any sensor in actively_tracking_sensors detected the tracked entity.
     """
-
-
-@dataclass(eq=False, repr=False)
-class Configure(betterproto.Message):
-    """
-    A configure relationship indicates that this entity is a configuration on other entity.
-    """
-
-    pass
 
 
 @dataclass(eq=False, repr=False)
@@ -2557,49 +2288,45 @@ class ModeS(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class Entity(betterproto.Message):
     """
-    An entity object represents a single entity within the Lattice operational environment, and it contains
-     all data associated with that entity, such as its name, ID, and any other relevant components.
+    The entity object represents a single known object within the Lattice operational environment. It contains
+     all data associated with the entity, such as its name, ID, and other relevant components.
     """
 
     entity_id: str = betterproto.string_field(1)
     """
-    A Globally Unique Identifier (GUID) for your entity. If blank, the Entity API creates
-     an entity and automatically generates a new ID for the entity.
+    A Globally Unique Identifier (GUID) for your entity. If this field is empty, the Entity API
+     automatically generates an ID when it creates the entity.
     """
 
     description: str = betterproto.string_field(2)
     """
-    Helpful, human-readable entity description mainly used for debugging purposes and human
-     traceability. If blank, the Entity API generates one for you.
+    A human-readable entity description that's helpful for debugging purposes and human
+     traceability. If this field is empty, the Entity API generates one for you.
     """
 
     is_live: bool = betterproto.bool_field(3)
     """
-    Indicates an active asset receiving updates. This is a required field for publishing an entity.
-     It needs to be set to true when publishing an entity.
+    Indicates the entity is active and should have lifecycle state of CREATE or UPDATE.
+     Set this field to true when publishing an entity.
     """
 
     created_time: datetime = betterproto.message_field(4)
     """
-    Time when the asset enters the system. If blank, the Entity API uses a current timestamp.
-     For example, when a drone is first powered on, it might report it's boot time as the created time.
+    The time when the entity was first known to the entity producer. If this field is empty, the Entity API uses the
+     current timestamp of when the entity is first received.
+     For example, when a drone is first powered on, it might report its startup time as the created time.
+     The timestamp doesn't change for the lifetime of an entity.
     """
 
     expiry_time: datetime = betterproto.message_field(5)
     """
-    A future time that expires an entity and updates the isLive flag.
+    Future time that expires an entity and updates the is_live flag.
      For entities that are constantly updating, the expiry time also updates.
-     Note in some cases this may differ from isLive.
+     In some cases, this may differ from is_live.
      Example: Entities with tasks exported to an external system must remain
-     active, even after they expire.
-     This is a required field for publishing an entity via Flux or PublishEntities rpc. When publishing
-     an entity, this timestamp must be in the future, but less than 30 days from the current time.
-    """
-
-    no_expiry: bool = betterproto.bool_field(43)
-    """
-    To indicate that this entity should not expire. Only to be set to `true` on entities published
-     via PutEntity call. Entities published via Flux or PublishEntities rpc with `no_expiry == true` will be rejected.
+     active even after they expire.
+     This field is required when publishing a prepopulated entity.
+     The expiry time must be in the future, but less than 30 days from the current time.
     """
 
     status: "Status" = betterproto.message_field(19)
@@ -2607,14 +2334,11 @@ class Entity(betterproto.Message):
 
     location: "Location" = betterproto.message_field(6)
     """
-    Geospatial data related to the entity, including it's position, kinematics and orientation.
+    Geospatial data related to the entity, including its position, kinematics, and orientation.
     """
 
     location_uncertainty: "LocationUncertainty" = betterproto.message_field(15)
-    """Uncertainty of the entity's position and kinematics."""
-
-    geopolygon: "GeoPolygon" = betterproto.message_field(17)
-    """Deprecated: do not use, use geo_shape instead"""
+    """Indicates uncertainty of the entity's position and kinematics."""
 
     geo_shape: "GeoShape" = betterproto.message_field(23)
     """
@@ -2628,86 +2352,70 @@ class Entity(betterproto.Message):
 
     aliases: "Aliases" = betterproto.message_field(7)
     """
-    Naming of the entity as well as identifiers that other systems use to reference the same entity.
+    Entity name displayed in the Lattice UI side panel. Also includes identifiers that other systems can use to reference the same entity.
     """
 
     tracked: "Tracked" = betterproto.message_field(8)
     """
-    If this entity is tracked by another, this component contains data related to how it's being tracked.
+    If this entity is tracked by another entity, this component contains data related to how it's being tracked.
     """
 
-    correlated: "Correlated" = betterproto.message_field(9)
+    correlation: "Correlation" = betterproto.message_field(47)
     """
-    If this entity has been correlated to another one, this component contains the status of the correlation, the primary entity
-     and the correlation scores.
+    If this entity has been correlated or decorrelated to another one, this component contains information on the correlation or decorrelation.
     """
 
     mil_view: "MilView" = betterproto.message_field(10)
-    """Military view of the entity"""
+    """Military view of the entity."""
 
     ontology: "Ontology" = betterproto.message_field(11)
-    """A standardized representation of the entity"""
+    """A standardized representation of the entity."""
 
     sensors: "Sensors" = betterproto.message_field(20)
-    """Details of Sensors that are available on an entity"""
+    """Details an entity's available sensors."""
 
     payloads: "Payloads" = betterproto.message_field(21)
-    """Details of payloads that are available on an entity"""
+    """Details an entity's available payloads."""
 
     power_state: "PowerState" = betterproto.message_field(30)
-    """Details of the power source on an entity"""
+    """Details the entity's power source."""
 
     provenance: "Provenance" = betterproto.message_field(12)
-    """The primary data source provenance for this entity"""
+    """The primary data source provenance for this entity."""
 
     overrides: "Overrides" = betterproto.message_field(13)
-    """Provenance of override data"""
+    """Provenance of override data."""
 
     indicators: "Indicators" = betterproto.message_field(14)
     """
-    Indicators of an entity's state that describes properties of the entity as well as what operations can be performed on the entity (eg.
-     can it be deleted)
-    """
-
-    original_data: "OriginalData" = betterproto.message_field(18)
-    """
-    A component that references the primary original data source. For example, this would allow the original NITF file
-     data that was ingested to be retrieved.
+    Describes an entity's specific characteristics and the operations that can be performed on the entity.
+     For example, "simulated" informs the operator that the entity is from a simulation, and "deletable"
+     informs the operator (and system) that the delete operation is valid against the entity.
     """
 
     target_priority: "TargetPriority" = betterproto.message_field(22)
     """
-    The prioritization associated with an entity such as if it's a threat or a high value target.
+    The prioritization associated with an entity, such as if it's a threat or a high-value target.
     """
 
     signal: "Signal" = betterproto.message_field(25)
     """
-    A component that describes an entity's signal characteristics. Primarily used if the entity is a signal of interest
+    Describes an entity's signal characteristics, primarily used when an entity is a signal of interest.
     """
 
     transponder_codes: "TransponderCodes" = betterproto.message_field(26)
     """
-    A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S interrogations. These are related to ADS-B modes
-    """
-
-    contact: "ContactDetails" = betterproto.message_field(27)
-    """
-    Contains details on how to make out-of-band contact with an entity, such as via a phone or email
+    A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S interrogations. These are related to ADS-B modes.
     """
 
     data_classification: "Classification" = betterproto.message_field(29)
     """
-    A component that describes an entity's security classification levels both at an overall classification level for the entity as well as on a per
+    Describes an entity's security classification levels at an overall classification level and on a per
      field level.
     """
 
     task_catalog: "__tasks_v2__.TaskCatalog" = betterproto.message_field(31)
     """A catalog of tasks that can be performed by an entity."""
-
-    media: "Media" = betterproto.message_field(32)
-    """
-    Media associated with an entity such as videos, images or thumbnails.
-    """
 
     relationships: "Relationships" = betterproto.message_field(33)
     """
@@ -2720,46 +2428,27 @@ class Entity(betterproto.Message):
     """
 
     dimensions: "Dimensions" = betterproto.message_field(36)
-    """Physical dimensions of the entity"""
+    """Physical dimensions of the entity."""
 
     route_details: "RouteDetails" = betterproto.message_field(37)
     """Additional information about an entity's route."""
 
     schedules: "Schedules" = betterproto.message_field(38)
-    """Schedules associated with this entity"""
+    """Schedules associated with this entity."""
 
     health: "Health" = betterproto.message_field(39)
-    """Health metrics or status reported by the entity"""
+    """Health metrics or connection status reported by the entity."""
 
     group_details: "GroupDetails" = betterproto.message_field(40)
-    """Details for the group associated with this entity"""
-
-    team_status: "TeamStatus" = betterproto.message_field(41)
-    """
-    Describes an entity's collaborative autonomous teaming status, if any.
-    """
+    """Details for the group associated with this entity."""
 
     supplies: "Supplies" = betterproto.message_field(42)
     """
-    Contains relevant supply information for the entity (e.g., munitions and fuel)
+    Contains relevant supply information for the entity, such as munitions and fuel.
     """
 
     orbit: "Orbit" = betterproto.message_field(46)
-    """Orbit information for space objects"""
-
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("geopolygon"):
-            warnings.warn("Entity.geopolygon is deprecated", DeprecationWarning)
-
-
-@dataclass(eq=False, repr=False)
-class Entities(betterproto.Message):
-    """
-    We need a proto containing a list of Entities for marshalling/unmarshalling
-    """
-
-    entities: List["Entity"] = betterproto.message_field(1)
+    """Orbit information for space objects."""
 
 
 @dataclass(eq=False, repr=False)
@@ -2768,15 +2457,14 @@ class Status(betterproto.Message):
 
     platform_activity: str = betterproto.string_field(1)
     """
-    A string that describes the activity that the entity is performing. These values
-     include, but are not limited to the AIR/SURFACE/SUBSURFACE/LAND/SPACE ACTIVITY values found in MIL-STD 6016F.
+    A string that describes the activity that the entity is performing.
      Examples include "RECONNAISSANCE", "INTERDICTION", "ELECTRONIC WARFARE (EW)", "RETURN TO BASE (RTB)", "PREPARING
      FOR LAUNCH".
     """
 
     role: str = betterproto.string_field(2)
     """
-    A string that describes the role the entity is currently performing. E.g. "Team Member", "Commander" or
+    A human-readable string that describes the role the entity is currently performing. E.g. "Team Member", "Commander".
     """
 
 
@@ -2792,11 +2480,6 @@ class Aliases(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class Tracked(betterproto.Message):
     """Available for Entities that are tracked."""
-
-    track_quality: int = betterproto.uint32_field(1)
-    """
-    deprecated in favor of track_quality_wrapper to better indicate when TQ is actually missing vs 0 which is valid
-    """
 
     track_quality_wrapper: Optional[int] = betterproto.message_field(
         2, wraps=betterproto.TYPE_INT32
@@ -2818,11 +2501,6 @@ class Tracked(betterproto.Message):
      0 indicates unset.
     """
 
-    sensor_details: "Sensors" = betterproto.message_field(5)
-    """
-    deprecated. data from sensors actively tracking the entity are placed in the TrackedBy relationship.
-    """
-
     radar_cross_section: Optional[float] = betterproto.message_field(
         6, wraps=betterproto.TYPE_DOUBLE
     )
@@ -2840,36 +2518,16 @@ class Tracked(betterproto.Message):
      For this entity (A), being tracked by some entity (B), this LineOfBearing would express a ray from B to A.
     """
 
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("track_quality"):
-            warnings.warn("Tracked.track_quality is deprecated", DeprecationWarning)
-        if self.is_set("sensor_details"):
-            warnings.warn("Tracked.sensor_details is deprecated", DeprecationWarning)
-
 
 @dataclass(eq=False, repr=False)
 class Provenance(betterproto.Message):
     """Data provenance."""
 
-    feed_name: str = betterproto.string_field(7)
-    """
-    A feed is a 1:1 or Many:1 mapping between a data type from a specific vendor
-     and an output stream of entities. The feed_name identifies the feed definition
-     in the Feeds API and must be globally unique per feed.
-    """
-
     integration_name: str = betterproto.string_field(5)
-    """
-    Name of the integration that produced this entity
-     To be deprecated soon in favor of feed_name
-    """
+    """Name of the integration that produced this entity"""
 
     data_type: str = betterproto.string_field(6)
-    """
-    Source data type of this entity. Examples: ADSB, Link16, etc.
-     To be deprecated soon in favor of feed_name
-    """
+    """Source data type of this entity. Examples: ADSB, Link16, etc."""
 
     source: "Source" = betterproto.enum_field(1)
     """Enum defining the source TO BE DEPRECATED"""
@@ -2902,7 +2560,6 @@ class Indicators(betterproto.Message):
         3, wraps=betterproto.TYPE_BOOL
     )
     c2: Optional[bool] = betterproto.message_field(4, wraps=betterproto.TYPE_BOOL)
-    deletable: "Deletable" = betterproto.enum_field(5)
     egressable: Optional[bool] = betterproto.message_field(
         6, wraps=betterproto.TYPE_BOOL
     )
@@ -2922,13 +2579,6 @@ class Overrides(betterproto.Message):
     """Metadata about entity overrides present."""
 
     override: List["Override"] = betterproto.message_field(2)
-    provenance: List["OverrideProvenance"] = betterproto.message_field(1)
-    """Deprecated: do not use"""
-
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("provenance"):
-            warnings.warn("Overrides.provenance is deprecated", DeprecationWarning)
 
 
 @dataclass(eq=False, repr=False)
@@ -2967,78 +2617,11 @@ class Override(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
-class OverrideProvenance(betterproto.Message):
-    """The provenance of a particular override within the entity."""
-
-    field_path: str = betterproto.string_field(1)
-    """
-    proto field path which is the string representation of a field.
-     example: correlated.primary_entity_id would be primary_entity_id in correlated component
-    """
-
-    source_id: str = betterproto.string_field(2)
-    """Deprecated: do not use"""
-
-    provenance: "Provenance" = betterproto.message_field(3)
-
-    def __post_init__(self) -> None:
-        warnings.warn("OverrideProvenance is deprecated", DeprecationWarning)
-        super().__post_init__()
-        if self.is_set("source_id"):
-            warnings.warn(
-                "OverrideProvenance.source_id is deprecated", DeprecationWarning
-            )
-
-
-@dataclass(eq=False, repr=False)
-class OriginalData(betterproto.Message):
-    """
-    A component that references the primary original data source. For example, this would allow the original NITF file
-     data that was ingested to be retrieved.
-    """
-
-    url: str = betterproto.string_field(1)
-    """
-    The URL is a reference to the data's location so it can be retrieved after being converted to an entity.
-    """
-
-    tle: "OriginalDataTle" = betterproto.message_field(2)
-
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("tle"):
-            warnings.warn("OriginalData.tle is deprecated", DeprecationWarning)
-
-
-@dataclass(eq=False, repr=False)
-class OriginalDataTle(betterproto.Message):
-    """
-    A TLE is a space industry standard for representing the characteristics of an object on orbit.
-     It is composed of two lines that are each a fixed width of 69 characters.
-    """
-
-    line1: str = betterproto.string_field(1)
-    line2: str = betterproto.string_field(2)
-
-    def __post_init__(self) -> None:
-        warnings.warn("OriginalDataTle is deprecated", DeprecationWarning)
-        super().__post_init__()
-
-
-@dataclass(eq=False, repr=False)
 class AlternateId(betterproto.Message):
     """An alternate id for an Entity."""
 
-    source: str = betterproto.string_field(1)
-    """deprecated in favor of type"""
-
     id: str = betterproto.string_field(2)
     type: "AltIdType" = betterproto.enum_field(3)
-
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("source"):
-            warnings.warn("AlternateId.source is deprecated", DeprecationWarning)
 
 
 @dataclass(eq=False, repr=False)
@@ -3049,12 +2632,6 @@ class VisualDetails(betterproto.Message):
 
     range_rings: "RangeRings" = betterproto.message_field(1)
     """The range rings to display around an entity."""
-
-    interactivity_mode: "InteractivityMode" = betterproto.enum_field(2)
-    """
-    Control the operator's ability to interact with the entity on the UI (disable hover/click on map, etc.)
-     Not a security/access flag
-    """
 
 
 @dataclass(eq=False, repr=False)
@@ -3076,15 +2653,108 @@ class RangeRings(betterproto.Message):
     ring_count: int = betterproto.uint32_field(3)
     """The count of range rings."""
 
+    ring_line_color: "__type__.Color" = betterproto.message_field(4)
+    """The color of range rings, specified in hex string."""
+
 
 @dataclass(eq=False, repr=False)
-class TeamStatus(betterproto.Message):
+class Correlation(betterproto.Message):
     """
-    If present, signifies the entity can participate in collaborative autonomous teaming.
-     Any status about team membership will be reported here.
+    Available for Entities that are a correlated (N to 1) set of entities. This will be present on
+     each entity in the set.
     """
 
-    pass
+    primary: "PrimaryCorrelation" = betterproto.message_field(1, group="correlation")
+    """
+    This entity is the primary of a correlation meaning that it serves as the representative
+     entity of the correlation set.
+    """
+
+    secondary: "SecondaryCorrelation" = betterproto.message_field(
+        2, group="correlation"
+    )
+    """
+    This entity is a secondary of a correlation meaning that it will be represented by the
+     primary of the correlation set.
+    """
+
+    decorrelation: "Decorrelation" = betterproto.message_field(3)
+    """
+    If present, this entity was explicitly decorrelated from one or more entities.
+     An entity can be both correlated and decorrelated as long as they are disjoint sets.
+     An example would be if a user in the UI decides that two tracks are not actually the
+     same despite an automatic correlator having correlated them. The user would then
+     decorrelate the two tracks and this decorrelation would be preserved preventing the
+     correlator from re-correlating them at a later time.
+    """
+
+
+@dataclass(eq=False, repr=False)
+class PrimaryCorrelation(betterproto.Message):
+    secondary_entity_ids: List[str] = betterproto.string_field(1)
+    """The secondary entity IDs part of this correlation."""
+
+
+@dataclass(eq=False, repr=False)
+class SecondaryCorrelation(betterproto.Message):
+    primary_entity_id: str = betterproto.string_field(1)
+    """The primary of this correlation."""
+
+    metadata: "CorrelationMetadata" = betterproto.message_field(2)
+    """Metadata about the correlation."""
+
+
+@dataclass(eq=False, repr=False)
+class Decorrelation(betterproto.Message):
+    all: "DecorrelatedAll" = betterproto.message_field(1)
+    """
+    This will be specified if this entity was decorrelated against all other entities.
+    """
+
+    decorrelated_entities: List["DecorrelatedSingle"] = betterproto.message_field(2)
+    """
+    A list of decorrelated entities that have been explicitly decorrelated against this entity
+     which prevents lower precedence correlations from overriding it in the future.
+     For example, if an operator in the UI decorrelated tracks A and B, any automated
+     correlators would be unable to correlate them since manual decorrelations have
+     higher precedence than automatic ones. Precedence is determined by both correlation
+     type and replication mode.
+    """
+
+
+@dataclass(eq=False, repr=False)
+class DecorrelatedAll(betterproto.Message):
+    metadata: "CorrelationMetadata" = betterproto.message_field(1)
+    """Metadata about the decorrelation."""
+
+
+@dataclass(eq=False, repr=False)
+class DecorrelatedSingle(betterproto.Message):
+    entity_id: str = betterproto.string_field(1)
+    """The entity that was decorrelated against."""
+
+    metadata: "CorrelationMetadata" = betterproto.message_field(2)
+    """Metadata about the decorrelation."""
+
+
+@dataclass(eq=False, repr=False)
+class CorrelationMetadata(betterproto.Message):
+    provenance: "Provenance" = betterproto.message_field(1)
+    """Who or what added this entity to the (de)correlation."""
+
+    replication_mode: "CorrelationReplicationMode" = betterproto.enum_field(2)
+    """
+    Indicates how the correlation will be distributed. Because a correlation is composed of
+     multiple secondaries, each of which may have been correlated with different replication
+     modes, the distribution of the correlation is composed of distributions of the individual
+     entities within the correlation set.
+     For example, if there are two secondary entities A and B correlated against a primary C,
+     with A having been correlated globally and B having been correlated locally, then the
+     correlation set that is distributed globally than what is known locally in the node.
+    """
+
+    type: "CorrelationType" = betterproto.enum_field(3)
+    """What type of (de)correlation was this entity added with."""
 
 
 @dataclass(eq=False, repr=False)
@@ -3597,6 +3267,29 @@ class WithinComparison(betterproto.Message):
     """
 
     pass
+
+
+@dataclass(eq=False, repr=False)
+class Media(betterproto.Message):
+    """Media associated with an entity."""
+
+    media: List["MediaItem"] = betterproto.message_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class MediaItem(betterproto.Message):
+    url: str = betterproto.string_field(1)
+    """
+    To Be Deprecated, use relative_path.
+     The url where the media related to an entity can be accessed
+    """
+
+    type: "MediaType" = betterproto.enum_field(2)
+    relative_path: str = betterproto.string_field(3)
+    """
+    The relative path where the media related to an entity can be accessed when used to query against a blobs service
+     node.
+    """
 
 
 @dataclass(eq=False, repr=False)
