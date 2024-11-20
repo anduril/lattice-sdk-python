@@ -282,33 +282,6 @@ class RigidTransform(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
-class Color(betterproto.Message):
-    red: float = betterproto.float_field(1)
-    """The amount of red in the color as a value in the interval [0, 1]."""
-
-    green: float = betterproto.float_field(2)
-    """The amount of green in the color as a value in the interval [0, 1]."""
-
-    blue: float = betterproto.float_field(3)
-    """The amount of blue in the color as a value in the interval [0, 1]."""
-
-    alpha: Optional[float] = betterproto.message_field(4, wraps=betterproto.TYPE_FLOAT)
-    """
-    The fraction of this color that should be applied to the pixel. That is,
-     the final pixel color is defined by the equation:
-    
-     `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
-    
-     This means that a value of 1.0 corresponds to a solid color, whereas
-     a value of 0.0 corresponds to a completely transparent color. This
-     uses a wrapper message rather than a simple float scalar so that it is
-     possible to distinguish between a default value and the value being unset.
-     If omitted, this color object is rendered as a solid color
-     (as if the alpha value had been explicitly given a value of 1.0).
-    """
-
-
-@dataclass(eq=False, repr=False)
 class OrbitMeanElements(betterproto.Message):
     """
     Orbit Mean Elements data, analogous to the Orbit Mean Elements Message in CCSDS 502.0-B-3
@@ -421,6 +394,33 @@ class TleParameters(betterproto.Message):
     agom: float = betterproto.double_field(10, group="line1_field10")
     """
     Solar radiation pressure coefficient A_gamma / m in m^2 / kg. For use with SGP4-XP.
+    """
+
+
+@dataclass(eq=False, repr=False)
+class Color(betterproto.Message):
+    red: float = betterproto.float_field(1)
+    """The amount of red in the color as a value in the interval [0, 1]."""
+
+    green: float = betterproto.float_field(2)
+    """The amount of green in the color as a value in the interval [0, 1]."""
+
+    blue: float = betterproto.float_field(3)
+    """The amount of blue in the color as a value in the interval [0, 1]."""
+
+    alpha: Optional[float] = betterproto.message_field(4, wraps=betterproto.TYPE_FLOAT)
+    """
+    The fraction of this color that should be applied to the pixel. That is,
+     the final pixel color is defined by the equation:
+    
+     `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
+    
+     This means that a value of 1.0 corresponds to a solid color, whereas
+     a value of 0.0 corresponds to a completely transparent color. This
+     uses a wrapper message rather than a simple float scalar so that it is
+     possible to distinguish between a default value and the value being unset.
+     If omitted, this color object is rendered as a solid color
+     (as if the alpha value had been explicitly given a value of 1.0).
     """
 
 
