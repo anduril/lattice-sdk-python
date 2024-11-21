@@ -1,6 +1,8 @@
 [project]
 name = "anduril-lattice-sdk"
-version = "0.0.0-DEVELOPMENT"
+dynamic = [
+  "version",
+]
 dependencies = [
   "betterproto>=2.0.0b7",
   "grpcio",
@@ -27,6 +29,9 @@ Repository = "https://github.com/anduril/lattice-sdk-python"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "src/__about__.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/anduril"]

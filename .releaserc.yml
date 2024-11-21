@@ -3,9 +3,8 @@ plugins: [
   '@semantic-release/release-notes-generator',
   "@semantic-release/github",
   [
-    "semantic-release-pypi",
-    {
-      "pypiPublish": false
-    }
-   ],
+    "@semantic-release/exec", {
+      "prepareCmd": "hatch version ${nextRelease.version}"
+    },
+  ]
 ]
