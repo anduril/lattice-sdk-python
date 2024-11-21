@@ -49,7 +49,7 @@ metadata = {
 
 async def get_entity(entity_id):
     # open secure channel
-    channel = Channel(host="desert-guardian.anduril.com", port=443, ssl=True)
+    channel = Channel(host="HOSTNAME", port=443, ssl=True)
 
     # create service instance
     entity_manager_stub = EntityManagerApiStub(channel)
