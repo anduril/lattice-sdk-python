@@ -17,7 +17,7 @@ authors = [
 maintainers = [
   {name = "Anduril Industries Inc."}
 ]
-description = "Anduril SDK in Python"
+description = "Anduril Lattice SDK in Python"
 readme = "README.md"
 keywords = ["anduril", "lattice", "sdk"]
 
