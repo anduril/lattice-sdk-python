@@ -56,11 +56,6 @@ class TaskCatalog(betterproto.Message):
     """Catalog of supported tasks."""
 
     task_definitions: List["TaskDefinition"] = betterproto.message_field(1)
-    is_asset_inhibited: bool = betterproto.bool_field(2)
-    """
-    Asset is inhibited by VCE.
-     Asset can still receive tasks but not be able to act on them until inhibition status is lifted.
-    """
 
 
 @dataclass(eq=False, repr=False)
@@ -112,7 +107,6 @@ class AltitudeConstraint(betterproto.Message):
 class Agent(betterproto.Message):
     """Includes information about an Agent."""
 
-    asset_id: str = betterproto.string_field(1)
     entity_id: str = betterproto.string_field(2)
 
 
@@ -140,11 +134,6 @@ class Objective(betterproto.Message):
     point: "Point" = betterproto.message_field(5, group="objective")
     """
     Point objectives for simple reference points that are not geo entities.
-    """
-
-    produced_by_asset_id: str = betterproto.string_field(2)
-    """
-    the asset (if known) which produced the objective (useful for time-series lookups of historical objectives).
     """
 
 
@@ -464,12 +453,6 @@ class Monitor(betterproto.Message):
 
     objective: "Objective" = betterproto.message_field(1)
     """Indicates objective to monitor."""
-
-    track_id: str = betterproto.string_field(2)
-    """Identifies track to monitor."""
-
-    track_producer: str = betterproto.string_field(3)
-    """AssetId2 of asset that produced track."""
 
 
 @dataclass(eq=False, repr=False)
