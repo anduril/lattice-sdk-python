@@ -2,7 +2,7 @@
 # sources: anduril/tasks/v2/catalog.pub.proto, anduril/tasks/v2/common.pub.proto, anduril/tasks/v2/objective.pub.proto, anduril/tasks/v2/shared/isr.pub.proto, anduril/tasks/v2/shared/maneuver.pub.proto, anduril/tasks/v2/shared/strike.pub.proto
 # plugin: python-betterproto
 # This file has been @generated
-import warnings
+
 from dataclasses import dataclass
 from datetime import (
     datetime,
@@ -322,12 +322,6 @@ class Prior(betterproto.Message):
 class IsrParameters(betterproto.Message):
     """Common parameters for ISR Tasks."""
 
-    speed: Optional[float] = betterproto.message_field(1, wraps=betterproto.TYPE_FLOAT)
-    """
-    Indicates the target speed of the asset. DEPRECATION NOTE: deprecated in favor
-     of speed_ms since we might have legacy integrations not conforming to the meters per second units.
-    """
-
     speed_m_s: Optional[float] = betterproto.message_field(
         2, wraps=betterproto.TYPE_FLOAT
     )
@@ -340,14 +334,6 @@ class IsrParameters(betterproto.Message):
     )
     """
     Indicates the standoff distance from the objective. The units are in meters.
-    """
-
-    standoff_distance: Optional[float] = betterproto.message_field(
-        4, wraps=betterproto.TYPE_FLOAT
-    )
-    """
-    Indicates the standoff distance from the objective. DEPRECATION NOTE: deprecated in favor of standoff_distance_m
-      since we might have legacy integrations not conforming to the meters unit.
     """
 
     standoff_angle: Optional[float] = betterproto.message_field(
@@ -365,15 +351,6 @@ class IsrParameters(betterproto.Message):
     Indicates the amount of time in milliseconds to execute an ISR task before expiring. 0 value indicates no
      expiration.
     """
-
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("speed"):
-            warnings.warn("IsrParameters.speed is deprecated", DeprecationWarning)
-        if self.is_set("standoff_distance"):
-            warnings.warn(
-                "IsrParameters.standoff_distance is deprecated", DeprecationWarning
-            )
 
 
 @dataclass(eq=False, repr=False)
@@ -584,9 +561,7 @@ class StrikeParameters(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class PayloadConfiguration(betterproto.Message):
-    """
-    Individual payload configuration, can represent a munition such as a missile, a gun, or a non-kinetic effect.
-    """
+    """Individual payload configuration."""
 
     capability_id: str = betterproto.string_field(1)
     """Unique ID or descriptor for the capability."""

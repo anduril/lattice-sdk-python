@@ -300,51 +300,6 @@ class Template(betterproto.Enum):
     """
 
 
-class Source(betterproto.Enum):
-    """The source (provenance) of data."""
-
-    INVALID = 0
-    ANDURIL = 1
-    LINK_16 = 2
-    VMF = 3
-    ADSB = 4
-    CURSOR_ON_TARGET = 5
-    MAXAR = 6
-    MARTAC = 7
-    SAILDRONE = 8
-    HE_360 = 9
-    OFX = 10
-    BAS_T = 11
-    KINETICA = 12
-    USER = 13
-    NCCT = 14
-    AIS = 15
-    KLV = 16
-    NITF = 17
-    TAK = 18
-    SPIRE_AIS = 19
-    SEFI = 20
-    ADSB_EXCHANGE = 21
-    LIVE_UA_MAP = 22
-    CRUCIBLE = 23
-    IBS = 24
-    ADVANA = 25
-    THRESHER = 26
-    SEATRACKS = 27
-    TASS = 28
-    SMART_SENSOR = 30
-    STRIVEWORKS = 31
-    L3H_THEIA = 32
-    TALON_POWDERHORN = 33
-    IDT_VIRTUAL_TWIN = 34
-    MISSION_AUTONOMY = 35
-    GCCS = 36
-    FOUNDRY = 37
-    MIDB = 38
-    FOM = 39
-    GALE = 40
-
-
 class OverrideStatus(betterproto.Enum):
     """The state of an override."""
 
@@ -427,53 +382,6 @@ class PowerType(betterproto.Enum):
     BATTERY = 3
 
 
-class ModulationType(betterproto.Enum):
-    """Enumerates the possible modulation types"""
-
-    INVALID = 0
-    AMPLITUDE = 1
-    FREQUENCY = 2
-    PHASE = 3
-    SPACED = 4
-    AMPLITUDE_SHIFT_KEYING = 5
-    FREQUENCY_SHIFT_KEYING = 6
-    PHASE_SHIFT_KEYING = 7
-    MINIMUM_SHIFT_KEYING = 8
-    MINIMUM_SHIFT_KEYING_GAUSSIAN = 9
-    SINGLE_SIDE_BAND_UPPER = 10
-    SINGLE_SIDE_BAND_LOWER = 11
-    SINGLE_SIDE_BAND_FULL_CARRIER = 12
-    SINGLE_SIDE_BAND_SUPPRESSED_CARRIER = 13
-    SINGLE_SIDE_BAND_REDUCED_CARRIER = 14
-    SINGLE_SIDE_BAND_WITHOUT_CARRIER = 15
-    DUAL_SIDE_BAND_FULL_CARRIER = 16
-    DUAL_SIDE_BAND_SUPPRESSED_CARRIER = 17
-    DUAL_SIDE_BAND_REDUCED_CARRIER = 18
-    DUAL_SIDE_BAND_WITHOUT_CARRIER = 19
-    INDEPENDENT_SIDE_BAND = 20
-    VESTIGIAL_SIDE_BAND = 21
-    ON_OFF_KEYING = 22
-    MULTI_FREQUENCY_SHIFT_KEYING = 23
-    AUDIO_FREQUENCY_SHIFT_KEYING = 24
-    CONTINUOUS_PHASE_FREQUENCY_SHIFT_KEYING = 25
-    C_PHASE_SHIFT_KEYING = 26
-    DIFFERENTIALLY_ENCODED_BINARY_PHASE_SHIFT_KEYING = 27
-    DIFFERENTIALLY_ENCODED_QUADRATURE_PHASE_SHIFT_KEYING = 28
-    OFFSET_QUADRATURE_PHASE_SHIFT_KEYING = 29
-    DIFFERENTIAL_PHASE_SHIFT_KEYING = 30
-    PI_4_QUADRATURE_PHASE_SHIFT_KEYING = 31
-    STACKED_OVERLAPPING_QUADRATURE_PHASE_SHIFT_KEYING = 32
-    F_QUADRATURE_PHASE_SHIFT_KEYING = 33
-    QUADRATURE_AMPLITUDE_ANALOG = 34
-    QUADRATURE_AMPLITUDE_DIGITAL = 35
-    CONTINUOUS_PHASE = 36
-    PULSE_POSITION = 37
-    TRELLIS_CODE = 38
-    ORTHOGONAL_FREQUENCY_DIVISION_MULTIPLEXING = 39
-    FREQUENCY_HOPPING_SPREAD_SPECTRUM = 40
-    DIGITAL_SEQUENCE_SPREAD_SPECTRUM = 41
-
-
 class ScanType(betterproto.Enum):
     """Enumerates the possible scan types"""
 
@@ -541,7 +449,6 @@ class SensorType(betterproto.Enum):
     RF = 4
     GPS = 5
     PTU_POS = 6
-    WISP = 7
     PERIMETER = 8
     SONAR = 9
 
@@ -552,78 +459,6 @@ class ScheduleType(betterproto.Enum):
     INVALID = 0
     ZONE_ENABLED = 1
     ZONE_TEMP_ENABLED = 2
-
-
-class DodConditionCode(betterproto.Enum):
-    """
-    DOD Condition Codes as documented: DLM 4000.25, Volume 2, April 09, 2022 Change 14. located at https://www.dla.mil/Defense-Data-Standards/Publications/Appendices/
-     Please refer to the DLM reference for more details about each condition code
-    """
-
-    INVALID = 0
-    A = 1
-    """Serviceable issuable without qualification (i.e., ready for use)"""
-
-    B = 2
-    """Serviceable issuable with qualification  (e.g., limited shelf life)"""
-
-    C = 3
-    """Serviceable priority issue (i.e., use before A or B)"""
-
-    D = 4
-    """Serviceable (requires test or modification)"""
-
-    E = 5
-    """Unserviceable but limited restoration required"""
-
-    F = 6
-    """
-    Unserviceable Repairable (i.e., requires repair before ready for use)
-    """
-
-    G = 7
-    """Unserviceable Incomplete (needs add't parts)"""
-
-    H = 8
-    """Unserviceable (Condemned; requires classification or analysis)"""
-
-    Q = 9
-    """Suspended (Product Deficiency)"""
-
-    S = 10
-    """
-    Scrap. Materiel that has no value except for its basic materiel content
-    """
-
-    J = 11
-    """Suspended (In Stock; requires classification or analysis)"""
-
-    K = 12
-    """Suspended (Returns)"""
-
-    L = 13
-    """Suspended (Litigation)"""
-
-    M = 14
-    """Suspended (In work; undergoing maintenance)"""
-
-    N = 15
-    """Suspended (Ammunition Suitable for Emergency Combat Use Only)"""
-
-    P = 16
-    """Unserviceable (Contains parts that could be reclaimed)"""
-
-    R = 17
-    """Suspended (Reclaimed items, awaiting condition determination)"""
-
-    T = 18
-    """Serviceable (Ammunition Suitable for Training Use Only)"""
-
-    V = 19
-    """Unserviceable (waste military munitions)"""
-
-    X = 20
-    """Suspended (repair decision delayed)"""
 
 
 class InterrogationResponse(betterproto.Enum):
@@ -775,7 +610,6 @@ class Classification(betterproto.Message):
     A component that describes an entity's security classification levels.
     """
 
-    level: "ClassificationLevels" = betterproto.enum_field(1)
     default: "ClassificationInformation" = betterproto.message_field(2)
     """
     The default classification information which should be assumed to apply to everything in
@@ -787,11 +621,6 @@ class Classification(betterproto.Message):
     The set of individual field classification information which should always precedence
      over the default classification information.
     """
-
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("level"):
-            warnings.warn("Classification.level is deprecated", DeprecationWarning)
 
 
 @dataclass(eq=False, repr=False)
@@ -1100,7 +929,6 @@ class GeoPolygon(betterproto.Message):
     rings: List["LinearRing"] = betterproto.message_field(1)
     """
     An array of LinearRings where the first item is the exterior ring and subsequent items are interior rings.
-     For a good introduction read (https://macwright.com/2015/03/23/geojson-second-bite.html#polygons)
     """
 
     is_rectangle: bool = betterproto.bool_field(2)
@@ -1183,15 +1011,7 @@ class GeoEllipsoid(betterproto.Message):
 class LinearRing(betterproto.Message):
     """A closed ring of points. The first and last point must be the same."""
 
-    points: List["Position"] = betterproto.message_field(1)
-    """Deprecated: do not use, use positions instead"""
-
     positions: List["GeoPolygonPosition"] = betterproto.message_field(2)
-
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("points"):
-            warnings.warn("LinearRing.points is deprecated", DeprecationWarning)
 
 
 @dataclass(eq=False, repr=False)
@@ -1350,7 +1170,7 @@ class FloatRange(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class MilView(betterproto.Message):
-    """Available for Entities that have a military view representation."""
+    """Provides the disposition, environment, and nationality of an Entity."""
 
     disposition: "__ontology_v1__.Disposition" = betterproto.enum_field(1)
     environment: "__ontology_v1__.Environment" = betterproto.enum_field(2)
@@ -1364,14 +1184,10 @@ class Ontology(betterproto.Message):
     platform_type: str = betterproto.string_field(3)
     """
     A string that describes the entity's high-level type with natural language.
-     Examples include "FIGHTER", "TANK", "AIRCRAFT CARRIER", "UAV".
     """
 
     specific_type: str = betterproto.string_field(4)
-    """
-    A string that describes the entity's exact model or type.
-     Examples include "F-16", "NASAMS-LCHR", "ARLEIGH BURKE DDG", "GHOST".
-    """
+    """A string that describes the entity's exact model or type."""
 
     template: "Template" = betterproto.enum_field(2)
     """
@@ -1389,7 +1205,7 @@ class Orbit(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class Payloads(betterproto.Message):
-    """List of payloads available for an entity. i.e a weapon."""
+    """List of payloads available for an entity."""
 
     payload_configurations: List["Payload"] = betterproto.message_field(1)
 
@@ -1431,21 +1247,10 @@ class PowerState(betterproto.Message):
     source_id_to_state: Dict[str, "PowerSource"] = betterproto.map_field(
         5, betterproto.TYPE_STRING, betterproto.TYPE_MESSAGE
     )
-    power_status: "PowerStatus" = betterproto.enum_field(1)
-    power_type: "PowerType" = betterproto.enum_field(2)
-    power_level: "PowerLevel" = betterproto.message_field(3)
-    messages: List[str] = betterproto.string_field(4)
-
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("power_status"):
-            warnings.warn("PowerState.power_status is deprecated", DeprecationWarning)
-        if self.is_set("power_type"):
-            warnings.warn("PowerState.power_type is deprecated", DeprecationWarning)
-        if self.is_set("power_level"):
-            warnings.warn("PowerState.power_level is deprecated", DeprecationWarning)
-        if self.is_set("messages"):
-            warnings.warn("PowerState.messages is deprecated", DeprecationWarning)
+    """
+    This is a map where the key is a unique id of the power source and the value is additional information about the
+     power source.
+    """
 
 
 @dataclass(eq=False, repr=False)
@@ -1556,9 +1361,6 @@ class Signal(betterproto.Message):
     pulse_repetition_interval: "PulseRepetitionInterval" = betterproto.message_field(9)
     """length in time between the start of two pulses"""
 
-    modulation: "Modulation" = betterproto.message_field(10)
-    """characteristics of the carrier signal to transmit information"""
-
     scan_characteristics: "ScanCharacteristics" = betterproto.message_field(11)
     """describes how a signal is observing the environment"""
 
@@ -1610,15 +1412,6 @@ class FrequencyRange(betterproto.Message):
 class LineOfBearing(betterproto.Message):
     """A line of bearing of a signal."""
 
-    origin: "Position" = betterproto.message_field(1)
-    """
-    `origin` and `range_bearing` have been deprecated in favor of `angle_of_arrival`
-     The location of the asset at the time of measurement.
-    """
-
-    range_bearing: "RangeBearing" = betterproto.message_field(2)
-    """Describes the horizontal angle with respect to true north."""
-
     angle_of_arrival: "AngleOfArrival" = betterproto.message_field(3)
     """The direction pointing from this entity to the detection"""
 
@@ -1629,15 +1422,6 @@ class LineOfBearing(betterproto.Message):
 
     max_range_m: "Measurement" = betterproto.message_field(5, group="detection_range")
     """The maximum distance of the detection"""
-
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("origin"):
-            warnings.warn("LineOfBearing.origin is deprecated", DeprecationWarning)
-        if self.is_set("range_bearing"):
-            warnings.warn(
-                "LineOfBearing.range_bearing is deprecated", DeprecationWarning
-            )
 
 
 @dataclass(eq=False, repr=False)
@@ -1670,83 +1454,10 @@ class Fixed(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
-class RangeBearing(betterproto.Message):
-    """
-    Describes range and vertical and horizontal angular measurements of an entity with respect to a target.
-    """
-
-    range_m: "Measurement" = betterproto.message_field(1)
-    """
-    The range to a target along the measured angle in meters with its one sigma error value.
-    """
-
-    range_angle_d: "Measurement" = betterproto.message_field(2)
-    """
-    Horizontal angle - degrees rotated clockwise from origin_heading: 0-360.
-     Sigma is the standard deviation of the horizontal angular measurement in decimal degrees: 0-180 degrees.
-    """
-
-
-@dataclass(eq=False, repr=False)
 class PulseRepetitionInterval(betterproto.Message):
     """A component that describe the length in time between two pulses"""
 
     pulse_repetition_interval_s: "Measurement" = betterproto.message_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class Modulation(betterproto.Message):
-    """
-    A component that describe how information is encoded in a transmitted signal through a carrier signal
-    """
-
-    modulation_type: "ModulationType" = betterproto.enum_field(1)
-    """Modifications to the carrier signal"""
-
-    symbols: Optional[int] = betterproto.message_field(2, wraps=betterproto.TYPE_INT32)
-    """
-    describes the number of "symbols" that could be communicated with the modulation type
-     if modulation type is ASK and symbol is 4, signal could have 1 of 4 different amplitudes.
-    """
-
-    interpulse_modulation: str = betterproto.string_field(3)
-    """
-    Variations in the time intervals between pulses and the spacing and number of pulses in a series
-    """
-
-    encoding: "Encoding" = betterproto.message_field(4)
-    """
-    describes how information is formatted within the signal during transmission
-    """
-
-
-@dataclass(eq=False, repr=False)
-class Encoding(betterproto.Message):
-    """
-    A component that describes the formatting of the information in a signal
-    """
-
-    chip_hop_rate_num_sec: Optional[float] = betterproto.message_field(
-        1, wraps=betterproto.TYPE_DOUBLE
-    )
-    """
-    rate at which the spreading code is changing
-     a chip is a pulse of a spread spectrum code. Each data bit is spread across multiple chips (smaller time slots) using a spreading code
-    """
-
-    hop_dwell_time_sec: Optional[float] = betterproto.message_field(
-        2, wraps=betterproto.TYPE_DOUBLE
-    )
-    """
-    time a transmitter remains at a particular frequency before hopping to the next on
-    """
-
-    baud_rate_num_sec: Optional[float] = betterproto.message_field(
-        3, wraps=betterproto.TYPE_DOUBLE
-    )
-    """
-    symbols per sec. A symbol is distinct from a bit where one symbol could be composed of multiple bits
-    """
 
 
 @dataclass(eq=False, repr=False)
@@ -1772,15 +1483,10 @@ class Sensor(betterproto.Message):
 
     sensor_id: str = betterproto.string_field(1)
     """
-    This generally is used to indicate a specific type at a more detailed granularity. E.g. COMInt, LWIR or Echodyne
+    This generally is used to indicate a specific type at a more detailed granularity. E.g. COMInt or LWIR
     """
 
     operational_state: "OperationalState" = betterproto.enum_field(3)
-    field_of_view: "FieldOfView" = betterproto.message_field(4)
-    """
-    DEPRECATED -- use `fields_of_view` instead. This field will be marked deprecated and no longer populated by 11/26/2023.
-    """
-
     sensor_type: "SensorType" = betterproto.enum_field(5)
     """The type of sensor"""
 
@@ -1796,11 +1502,6 @@ class Sensor(betterproto.Message):
     fields_of_view: List["FieldOfView"] = betterproto.message_field(9)
     """Multiple fields of view for a single sensor component"""
 
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("field_of_view"):
-            warnings.warn("Sensor.field_of_view is deprecated", DeprecationWarning)
-
 
 @dataclass(eq=False, repr=False)
 class FieldOfView(betterproto.Message):
@@ -1809,8 +1510,8 @@ class FieldOfView(betterproto.Message):
     fov_id: int = betterproto.int32_field(1)
     """
     The Id for one instance of a FieldOfView, persisted across multiple updates to provide continuity during
-     smoothing. This is relevant for sensors like an ESM or Radar where the dwell schedule is on the order of
-     milliseconds, making multiple FOVs a requirement for proper display of search and weapon support beams.
+     smoothing. This is relevant for sensors where the dwell schedule is on the order of
+     milliseconds, making multiple FOVs a requirement for proper display of search beams.
     """
 
     mount_id: str = betterproto.string_field(2)
@@ -1870,28 +1571,11 @@ class ProjectedFrustum(betterproto.Message):
 class RfConfiguration(betterproto.Message):
     """Represents RF configurations supported on this sensor."""
 
-    frequency_range: List["FloatRange"] = betterproto.message_field(1)
-    """Frequency ranges that are available for this sensor."""
-
-    bandwidth_range: List["FloatRange"] = betterproto.message_field(2)
-    """Bandwidth ranges that are available for this sensor."""
-
     frequency_range_hz: List["FrequencyRange"] = betterproto.message_field(3)
     """Frequency ranges that are available for this sensor."""
 
     bandwidth_range_hz: List["BandwidthRange"] = betterproto.message_field(4)
     """Bandwidth ranges that are available for this sensor."""
-
-    def __post_init__(self) -> None:
-        super().__post_init__()
-        if self.is_set("frequency_range"):
-            warnings.warn(
-                "RfConfiguration.frequency_range is deprecated", DeprecationWarning
-            )
-        if self.is_set("bandwidth_range"):
-            warnings.warn(
-                "RfConfiguration.bandwidth_range is deprecated", DeprecationWarning
-            )
 
 
 @dataclass(eq=False, repr=False)
@@ -2042,8 +1726,6 @@ class CronWindow(betterproto.Message):
             0 0/5 12-20 * * ? *
         This schedule begins at 12:00:00pm UTC on March 2nd 2023
             0 0 12 2 3 ? 2023
-    
-     for more guidance see: http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html
     """
 
     duration_millis: int = betterproto.uint64_field(2)
@@ -2056,42 +1738,7 @@ class Supplies(betterproto.Message):
     Represents the state of supplies associated with an entity (available but not in condition to use immediately)
     """
 
-    munitions: List["Munition"] = betterproto.message_field(1)
     fuel: List["Fuel"] = betterproto.message_field(2)
-
-
-@dataclass(eq=False, repr=False)
-class Munition(betterproto.Message):
-    """
-    Munition describes an entity's munitions stores of a similar condition, classification, and quantity
-    """
-
-    munition_id: str = betterproto.string_field(1)
-    """
-    unique munition identifier (for the DoD would be called a munition code). It may be possible munitions with the same identifier
-     but different condition codes or quantities (e.g., qty 4 in condition A but qty 2 in condition F) to be included in the
-     repeated munitions field of the supplies message.
-    """
-
-    name: str = betterproto.string_field(2)
-    """long form name of the munition"""
-
-    dod_condition_code: "DodConditionCode" = betterproto.enum_field(
-        3, group="condition"
-    )
-    """status of the munition (U.S. DoD Specific)"""
-
-    quantity_units: int = betterproto.uint32_field(4)
-    """number of units"""
-
-    data_classification: "Classification" = betterproto.message_field(5)
-    """
-    munitions in a single asset may have different levels of classification
-     use case: nukes on ballistic missile submarine may be TS/SCI while torpedoes may be SECRET
-    """
-
-    data_source: str = betterproto.string_field(6)
-    """source of information"""
 
 
 @dataclass(eq=False, repr=False)
@@ -2167,8 +1814,6 @@ class HighValueTarget(betterproto.Message):
     is_high_payoff_target: bool = betterproto.bool_field(4)
     """
     Indicates whether the target is a 'High Payoff Target'. Targets can be one or both of high value and high payoff.
-     Semantically a High Value Target characterizes the target's importance to Red, whereas a High Payoff Target
-     indicates prosecuting the target furthers Blue's specific objectives.
     """
 
 
@@ -2256,25 +1901,25 @@ class Entity(betterproto.Message):
 
     entity_id: str = betterproto.string_field(1)
     """
-    A Globally Unique Identifier (GUID) for your entity. If this field is empty, the Entity API
+    A Globally Unique Identifier (GUID) for your entity. If this field is empty, the Entity Manager API
      automatically generates an ID when it creates the entity.
     """
 
     description: str = betterproto.string_field(2)
     """
     A human-readable entity description that's helpful for debugging purposes and human
-     traceability. If this field is empty, the Entity API generates one for you.
+     traceability. If this field is empty, the Entity Manager API generates one for you.
     """
 
     is_live: bool = betterproto.bool_field(3)
     """
-    Indicates the entity is active and should have lifecycle state of CREATE or UPDATE.
+    Indicates the entity is active and should have a lifecycle state of CREATE or UPDATE.
      Set this field to true when publishing an entity.
     """
 
     created_time: datetime = betterproto.message_field(4)
     """
-    The time when the entity was first known to the entity producer. If this field is empty, the Entity API uses the
+    The time when the entity was first known to the entity producer. If this field is empty, the Entity Manager API uses the
      current timestamp of when the entity is first received.
      For example, when a drone is first powered on, it might report its startup time as the created time.
      The timestamp doesn't change for the lifetime of an entity.
@@ -2328,7 +1973,7 @@ class Entity(betterproto.Message):
     """
 
     mil_view: "MilView" = betterproto.message_field(10)
-    """Military view of the entity."""
+    """View of the entity."""
 
     ontology: "Ontology" = betterproto.message_field(11)
     """A standardized representation of the entity."""
@@ -2381,7 +2026,7 @@ class Entity(betterproto.Message):
 
     relationships: "Relationships" = betterproto.message_field(33)
     """
-    The relationships between this entity and other entities in the battlespace.
+    The relationships between this entity and other entities in the common operational picture (COP).
     """
 
     visual_details: "VisualDetails" = betterproto.message_field(34)
@@ -2405,9 +2050,7 @@ class Entity(betterproto.Message):
     """Details for the group associated with this entity."""
 
     supplies: "Supplies" = betterproto.message_field(42)
-    """
-    Contains relevant supply information for the entity, such as munitions and fuel.
-    """
+    """Contains relevant supply information for the entity, such as fuel."""
 
     orbit: "Orbit" = betterproto.message_field(46)
     """Orbit information for space objects."""
@@ -2420,8 +2063,7 @@ class Status(betterproto.Message):
     platform_activity: str = betterproto.string_field(1)
     """
     A string that describes the activity that the entity is performing.
-     Examples include "RECONNAISSANCE", "INTERDICTION", "ELECTRONIC WARFARE (EW)", "RETURN TO BASE (RTB)", "PREPARING
-     FOR LAUNCH".
+     Examples include "RECONNAISSANCE", "INTERDICTION", "RETURN TO BASE (RTB)", "PREPARING FOR LAUNCH".
     """
 
     role: str = betterproto.string_field(2)
@@ -2490,9 +2132,6 @@ class Provenance(betterproto.Message):
 
     data_type: str = betterproto.string_field(6)
     """Source data type of this entity. Examples: ADSB, Link16, etc."""
-
-    source: "Source" = betterproto.enum_field(1)
-    """Enum defining the source TO BE DEPRECATED"""
 
     source_id: str = betterproto.string_field(3)
     """An ID that allows an element from a source to be uniquely identified"""
@@ -2640,6 +2279,9 @@ class Correlation(betterproto.Message):
      primary of the correlation set.
     """
 
+    membership: "CorrelationMembership" = betterproto.message_field(4)
+    """If present, this entity is a part of a correlation set."""
+
     decorrelation: "Decorrelation" = betterproto.message_field(3)
     """
     If present, this entity was explicitly decorrelated from one or more entities.
@@ -2664,6 +2306,39 @@ class SecondaryCorrelation(betterproto.Message):
 
     metadata: "CorrelationMetadata" = betterproto.message_field(2)
     """Metadata about the correlation."""
+
+
+@dataclass(eq=False, repr=False)
+class CorrelationMembership(betterproto.Message):
+    correlation_set_id: str = betterproto.string_field(1)
+    """The ID of the correlation set this entity belongs to."""
+
+    primary: "PrimaryMembership" = betterproto.message_field(2, group="membership")
+    """
+    This entity is the primary of a correlation set meaning that it serves as the representative
+     entity of the correlation set.
+    """
+
+    non_primary: "NonPrimaryMembership" = betterproto.message_field(
+        3, group="membership"
+    )
+    """
+    This entity is not the primary of the correlation set. Note that there may not
+     be a primary at all.
+    """
+
+    metadata: "CorrelationMetadata" = betterproto.message_field(4)
+    """Additional metadata on this correlation."""
+
+
+@dataclass(eq=False, repr=False)
+class PrimaryMembership(betterproto.Message):
+    pass
+
+
+@dataclass(eq=False, repr=False)
+class NonPrimaryMembership(betterproto.Message):
+    pass
 
 
 @dataclass(eq=False, repr=False)
@@ -2997,7 +2672,7 @@ class PublishEntityRequest(betterproto.Message):
     Sends an entity object to publish.
      Required fields:
        * expiry_time. This must be in the future, but less than 30 days from now.
-       * provenance.data_type. If using the deprecated provenance.source, migrate to data_type.
+       * provenance.data_type.
        * provenance.source_update_time. This can be earlier than the RPC call if the data entered is older.
        * aliases.name
        * ontology.template
@@ -3018,7 +2693,7 @@ class PublishEntitiesRequest(betterproto.Message):
     Sends a stream of entity objects to publish.
      Each entity requires the following fields:
        * expiry_time. This must be in the future, but less than 30 days from now.
-       * provenance.data_type. If using the deprecated provenance.source, migrate to data_type.
+       * provenance.data_type.
        * provenance.source_update_time. This can be earlier than the RPC call if the data entered is older.
        * aliases.name
        * ontology.template
@@ -3041,20 +2716,20 @@ class PublishEntitiesResponse(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class GetEntityRequest(betterproto.Message):
     entity_id: str = betterproto.string_field(1)
-    """the GUID of this entity to query"""
+    """The GUID of this entity to query."""
 
 
 @dataclass(eq=False, repr=False)
 class GetEntityResponse(betterproto.Message):
     entity: "Entity" = betterproto.message_field(1)
-    """an Entity object that corresponds with the requested entityId"""
+    """An Entity object that corresponds with the requested entityId."""
 
 
 @dataclass(eq=False, repr=False)
 class OverrideEntityRequest(betterproto.Message):
     entity: "Entity" = betterproto.message_field(1)
     """
-    The entity containing the overwritten fields. The service will extract the overridable fields from the entity
+    The entity containing the overridden fields. The service will extract the overridable fields from the entity
      object and ignore any other fields.
     """
 
@@ -3065,7 +2740,7 @@ class OverrideEntityRequest(betterproto.Message):
     """
 
     provenance: "Provenance" = betterproto.message_field(3)
-    """Additional information about the source of the override"""
+    """Additional information about the source of the override."""
 
 
 @dataclass(eq=False, repr=False)
@@ -3077,7 +2752,7 @@ class OverrideEntityResponse(betterproto.Message):
 @dataclass(eq=False, repr=False)
 class RemoveEntityOverrideRequest(betterproto.Message):
     entity_id: str = betterproto.string_field(1)
-    """The entity ID that the override will be removed from"""
+    """The entity ID that the override will be removed from."""
 
     field_path: List[str] = betterproto.string_field(2)
     """
@@ -3096,13 +2771,13 @@ class RemoveEntityOverrideResponse(betterproto.Message):
 class StreamEntityComponentsRequest(betterproto.Message):
     components_to_include: List[str] = betterproto.string_field(1)
     """
-    lower_snake_cased component names to include in response events, e.g. location. Only included components will
+    lower_snake_case component names to include in response events, e.g. location. Only included components will
      populate.
     """
 
     include_all_components: bool = betterproto.bool_field(2)
     """
-    subscribe to all components. This should only be used in cases where you want all components.
+    Subscribe to all components. This should only be used in cases where you want all components.
      Setting both components_to_include and include_all_components is invalid and will be rejected.
     """
 
@@ -3115,7 +2790,7 @@ class StreamEntityComponentsRequest(betterproto.Message):
 
     rate_limit: "RateLimit" = betterproto.message_field(4)
     """
-    optional rate-limiting / down-sampling parameters, see RateLimit message for details.
+    Optional rate-limiting / down-sampling parameters, see RateLimit message for details.
     """
 
     heartbeat_period_millis: int = betterproto.uint32_field(5)
@@ -3126,7 +2801,7 @@ class StreamEntityComponentsRequest(betterproto.Message):
 
     preexisting_only: bool = betterproto.bool_field(6)
     """
-    subscribe to a finite stream of preexisting events which closes when there are no additional pre-existing events to
+    Subscribe to a finite stream of preexisting events which closes when there are no additional pre-existing events to
      process. Respects the filter specified on the StreamEntityComponentsRequest.
     """
 

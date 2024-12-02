@@ -160,9 +160,7 @@ class GenericSpec(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class Task(betterproto.Message):
-    """
-    A Task is something an agent can be asked to do within a battle space, typically against a given objective.
-    """
+    """A Task is something an agent can be asked to do."""
 
     version: "TaskVersion" = betterproto.message_field(1)
     """Version of this Task."""
@@ -448,7 +446,7 @@ class Team(betterproto.Message):
 
 @dataclass(eq=False, repr=False)
 class Agent(betterproto.Message):
-    """Represents an Agent on the Battlespace."""
+    """Represents an Agent in the COP."""
 
     entity_id: str = betterproto.string_field(2)
     """Entity ID of the agent."""
@@ -505,7 +503,7 @@ class CreateTaskRequest(betterproto.Message):
 
     display_name: str = betterproto.string_field(1)
     """
-    Human readable display name for this Task, should be short (<100 chars).
+    Human-readable display name for this Task, should be short (<100 chars).
     """
 
     specification: "betterproto_lib_google_protobuf.Any" = betterproto.message_field(2)
@@ -527,7 +525,7 @@ class CreateTaskRequest(betterproto.Message):
     """
 
     description: str = betterproto.string_field(6)
-    """Longer, free form human readable description of this Task."""
+    """Longer, free-form, human-readable description of this Task."""
 
     is_executed_elsewhere: bool = betterproto.bool_field(7)
     """
@@ -579,7 +577,7 @@ class GetTaskResponse(betterproto.Message):
     """Response to a Get Task request."""
 
     task: "Task" = betterproto.message_field(1)
-    """Task that received."""
+    """Task that was returned."""
 
 
 @dataclass(eq=False, repr=False)

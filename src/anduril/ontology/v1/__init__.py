@@ -8,21 +8,6 @@ from dataclasses import dataclass
 import betterproto
 
 
-class Class(betterproto.Enum):
-    UNKNOWN = 0
-    PERSON = 1
-    CAR = 2
-    ANIMAL = 3
-    AIR_VEHICLE = 4
-    BICYCLE = 5
-    WATER_VEHICLE = 6
-    UNKNOWN_VEHICLE = 7
-    MISSILE = 8
-    UNKNOWN_AIR_VEHICLE = 9
-    BIRD = 10
-    BACKGROUND = 11
-
-
 class Disposition(betterproto.Enum):
     """
     Refers to the relationship of the tracker to the operational object being represented.
@@ -62,7 +47,9 @@ class Environment(betterproto.Enum):
 
 
 class Nationality(betterproto.Enum):
-    """Describes Nationality or Alliance information."""
+    """
+    Describes Nationality or Alliance information. This is derived from ISO-3166.
+    """
 
     INVALID = 0
     ALBANIA = 1
@@ -159,7 +146,7 @@ class Nationality(betterproto.Enum):
     SWEDEN = 43
     SWITZERLAND = 44
     SYRIAN_ARAB_REPUBLIC = 61
-    TAIWAN_PROVINCE_OF_CHINA = 73
+    TAIWAN = 73
     TAJIKISTAN = 45
     THAILAND = 70
     THE_FORMER_YUGOSLAV_REPUBLIC_OF_MACEDONIA = 46
@@ -178,14 +165,3 @@ class Nationality(betterproto.Enum):
     VIETNAM = 71
     YEMEN = 91
     ZIMBABWE = 97
-
-
-@dataclass(eq=False, repr=False)
-class ObjectType(betterproto.Message):
-    """
-    An ObjectType describes the type of object within the ontology and its disposition.
-    """
-
-    class_: "Class" = betterproto.enum_field(1)
-    disposition: "Disposition" = betterproto.enum_field(2)
-    environment: "Environment" = betterproto.enum_field(3)
