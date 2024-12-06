@@ -31,7 +31,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.version]
-path = "src/__about__.py"
+path = "version.py"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/anduril"]
