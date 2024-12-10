@@ -1976,7 +1976,9 @@ class Entity(betterproto.Message):
     """View of the entity."""
 
     ontology: "Ontology" = betterproto.message_field(11)
-    """A standardized representation of the entity."""
+    """
+    Ontology defines an entity's categorization in Lattice, and improves data retrieval and integration. Builds a standardized representation of the entity.
+    """
 
     sensors: "Sensors" = betterproto.message_field(20)
     """Details an entity's available sensors."""
@@ -2669,12 +2671,15 @@ class RateLimit(betterproto.Message):
 class PublishEntityRequest(betterproto.Message):
     entity: "Entity" = betterproto.message_field(1)
     """
-    Sends an entity object to publish.
+    Create or update an entity.
      Required fields:
-       * expiry_time. This must be in the future, but less than 30 days from now.
+       * entity_id: Unique string identifier. Can be a Globally Unique Identifier (GUID).
+       * expiry_time: Expiration time that must be greater than the current time and less than 30 days in the future. The Entities API will reject any entity update with an expiry_time in the past. When the expiry_time has passed, the Entities API will delete the entity from the COP and send a DELETE event.
+       * is_live: Boolean that when true, creates or updates the entity. If false and the entity is still live, triggers a DELETE event.
+       * provenance.integration_name: String that uniquely identifies the integration responsible for publishing the entity.
        * provenance.data_type.
        * provenance.source_update_time. This can be earlier than the RPC call if the data entered is older.
-       * aliases.name
+       * aliases.name: Human-readable string that represents the name of an entity.
        * ontology.template
      For additional required fields that are determined by template, see com.anduril.entitymanager.v1.Template.
      if an entity_id is provided, Entity Manager updates the entity. If no entity_id is provided, it creates an entity.
@@ -2690,12 +2695,15 @@ class PublishEntityResponse(betterproto.Message):
 class PublishEntitiesRequest(betterproto.Message):
     entity: "Entity" = betterproto.message_field(1)
     """
-    Sends a stream of entity objects to publish.
+    Sends a stream of entity objects to create or update.
      Each entity requires the following fields:
-       * expiry_time. This must be in the future, but less than 30 days from now.
+       * entity_id: Unique string identifier. Can be a Globally Unique Identifier (GUID).
+       * expiry_time: Expiration time that must be greater than the current time and less than 30 days in the future. The Entities API will reject any entity update with an expiry_time in the past. When the expiry_time has passed, the Entities API will delete the entity from the COP and send a DELETE event.
+       * is_live: Boolean that when true, creates or updates the entity. If false and the entity is still live, triggers a DELETE event.
+       * provenance.integration_name: String that uniquely identifies the integration responsible for publishing the entity.
        * provenance.data_type.
        * provenance.source_update_time. This can be earlier than the RPC call if the data entered is older.
-       * aliases.name
+       * aliases.name: Human-readable string that represents the name of an entity.
        * ontology.template
      For additional required fields that are determined by template, see com.anduril.entitymanager.v1.Template.
      If an entity_id is provided, the entity updates. If no entity_id is provided, the entity is created.

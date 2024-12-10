@@ -65,7 +65,7 @@ class TaskDefinition(betterproto.Message):
     """
 
     task_specification_url: str = betterproto.string_field(1)
-    display_name: str = betterproto.string_field(2)
+    """Url path must be prefixed with `type.googleapis.com/`."""
 
 
 @dataclass(eq=False, repr=False)

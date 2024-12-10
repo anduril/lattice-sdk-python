@@ -45,12 +45,13 @@ class Status(betterproto.Enum):
 
     MACHINE_RECEIPT = 4
     """
-    In case of a human operated asset assignee, the machine was reachable and responded, but operator did not ACK yet.
+    Task was sent to Assignee, and some system was reachable and responded.
+     However, the system responsible for execution on the Assignee has not yet acknowledged the Task.
     """
 
     ACK = 5
     """
-    Assignee (either human or system in case of autonomous robot) has acknowledged receipt of Task.
+    System responsible for execution on the Assignee has acknowledged the Task.
     """
 
     WILCO = 6
