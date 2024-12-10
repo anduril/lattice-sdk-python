@@ -19,7 +19,7 @@ maintainers = [
 ]
 description = "Anduril Lattice SDK in Python"
 readme = "README.md"
-keywords = ["anduril", "lattice", "sdk"]
+keywords = ["anduril", "lattice", "sdk", "api"]
 
 [project.urls]
 Homepage = "https://anduril.com"
