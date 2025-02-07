@@ -94,6 +94,22 @@ class GeoType(betterproto.Enum):
     BULLSEYE = 7
 
 
+class ArmyEchelon(betterproto.Enum):
+    """Military units defined by the Army."""
+
+    INVALID = 0
+    FIRE_TEAM = 1
+    SQUAD = 2
+    PLATOON = 3
+    COMPANY = 4
+    BATTALION = 5
+    REGIMENT = 6
+    BRIGADE = 7
+    DIVISION = 8
+    CORPS = 9
+    ARMY = 10
+
+
 class ConnectionStatus(betterproto.Enum):
     """Enumeration of possible connection states."""
 
@@ -1035,7 +1051,18 @@ class GeoPolygonPosition(betterproto.Message):
 class GroupDetails(betterproto.Message):
     """Details related to grouping for this entity"""
 
-    pass
+    echelon: "Echelon" = betterproto.message_field(3, group="group_type")
+
+
+@dataclass(eq=False, repr=False)
+class Echelon(betterproto.Message):
+    """
+    Describes a Echelon group type.  Comprised of entities which are members of the
+     same unit or echelon. Ex: A group of tanks within a armored company or that same company
+     as a member of a battalion.
+    """
+
+    army_echelon: "ArmyEchelon" = betterproto.enum_field(1, group="echelon_type")
 
 
 @dataclass(eq=False, repr=False)
@@ -1630,6 +1657,7 @@ class RelationshipType(betterproto.Message):
     group_child: "GroupChild" = betterproto.message_field(4, group="type")
     group_parent: "GroupParent" = betterproto.message_field(5, group="type")
     merged_from: "MergedFrom" = betterproto.message_field(6, group="type")
+    active_target: "ActiveTarget" = betterproto.message_field(7, group="type")
 
 
 @dataclass(eq=False, repr=False)
@@ -1678,6 +1706,16 @@ class MergedFrom(betterproto.Message):
     """
     A MergedFrom relationship is a uni-directional relationship indicating that this entity is a merged entity whose
      data has at least partially been merged from the related entity.
+    """
+
+    pass
+
+
+@dataclass(eq=False, repr=False)
+class ActiveTarget(betterproto.Message):
+    """
+    A target relationship is the inverse of TrackedBy; a one-way relation
+     from sensor to target, indicating track(s) currently prioritized by a robot.
     """
 
     pass
