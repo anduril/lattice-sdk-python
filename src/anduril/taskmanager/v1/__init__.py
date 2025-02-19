@@ -2,7 +2,7 @@
 # sources: anduril/taskmanager/v1/generic_spec.pub.proto, anduril/taskmanager/v1/task.pub.proto, anduril/taskmanager/v1/task_api.pub.proto, anduril/taskmanager/v1/task_manager_grpcapi.pub.proto
 # plugin: python-betterproto
 # This file has been @generated
-
+import warnings
 from dataclasses import dataclass
 from datetime import datetime
 from typing import (
@@ -168,7 +168,7 @@ class Task(betterproto.Message):
 
     display_name: str = betterproto.string_field(2)
     """
-    Human readable display name for this Task, should be short (<100 chars).
+    DEPRECATED: Human readable display name for this Task, should be short (<100 chars).
     """
 
     specification: "betterproto_lib_google_protobuf.Any" = betterproto.message_field(3)
@@ -228,6 +228,11 @@ class Task(betterproto.Message):
     The networked owner of this Task. It is used to ensure that linear writes occur on the node responsible
      for replication of task data to other nodes running Task Manager.
     """
+
+    def __post_init__(self) -> None:
+        super().__post_init__()
+        if self.is_set("display_name"):
+            warnings.warn("Task.display_name is deprecated", DeprecationWarning)
 
 
 @dataclass(eq=False, repr=False)

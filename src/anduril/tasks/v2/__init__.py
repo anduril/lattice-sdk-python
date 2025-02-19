@@ -69,6 +69,39 @@ class TaskDefinition(betterproto.Message):
 
 
 @dataclass(eq=False, repr=False)
+class Objective(betterproto.Message):
+    """Describes the objective of a task."""
+
+    entity_id: str = betterproto.string_field(1, group="objective")
+    """
+    Prefer Entity Objectives whenever the objective is in fact an entity. In other words, don't take position/point
+     out of an entity and pass it as a simple point.
+    """
+
+    point: "Point" = betterproto.message_field(5, group="objective")
+    """
+    Point objectives for simple reference points that are not geo entities.
+    """
+
+
+@dataclass(eq=False, repr=False)
+class Point(betterproto.Message):
+    """Describes a single point location."""
+
+    reference_name: str = betterproto.string_field(1)
+    """A human readable name for the point."""
+
+    lla: "__type__.Lla" = betterproto.message_field(2)
+    """Indicates the objective is the provided location."""
+
+    backing_entity_id: str = betterproto.string_field(3)
+    """
+    An optional entity id that is provided for reverse lookup purposes. This may be used any time the UI might
+     have to convert a geoentity to statically defined LLA.
+    """
+
+
+@dataclass(eq=False, repr=False)
 class DurationRange(betterproto.Message):
     """Maps to the UCI DurationRangeType."""
 
@@ -119,39 +152,6 @@ class ControlArea(betterproto.Message):
 
     control_area_type: "ControlAreaType" = betterproto.enum_field(2)
     """Type of ControlArea."""
-
-
-@dataclass(eq=False, repr=False)
-class Objective(betterproto.Message):
-    """Describes the objective of a task."""
-
-    entity_id: str = betterproto.string_field(1, group="objective")
-    """
-    Prefer Entity Objectives whenever the objective is in fact an entity. In other words, don't take position/point
-     out of an entity and pass it as a simple point.
-    """
-
-    point: "Point" = betterproto.message_field(5, group="objective")
-    """
-    Point objectives for simple reference points that are not geo entities.
-    """
-
-
-@dataclass(eq=False, repr=False)
-class Point(betterproto.Message):
-    """Describes a single point location."""
-
-    reference_name: str = betterproto.string_field(1)
-    """A human readable name for the point."""
-
-    lla: "__type__.Lla" = betterproto.message_field(2)
-    """Indicates the objective is the provided location."""
-
-    backing_entity_id: str = betterproto.string_field(3)
-    """
-    An optional entity id that is provided for reverse lookup purposes. This may be used any time the UI might
-     have to convert a geoentity to statically defined LLA.
-    """
 
 
 @dataclass(eq=False, repr=False)
