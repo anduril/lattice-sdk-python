@@ -6,7 +6,7 @@ The official [Anduril](https://www.anduril.com/) Lattice SDK for Python.
 
 ## Documentation
 
-See the documentation for [Lattice Python SDK](https://docs.anduril.com/sdks/python).
+See the documentation for [Lattice Python SDK](https://docs.anduril.com/guide/sdks/python).
 
 ## Requirements
 
