@@ -1051,7 +1051,18 @@ class GeoPolygonPosition(betterproto.Message):
 class GroupDetails(betterproto.Message):
     """Details related to grouping for this entity"""
 
+    team: "Team" = betterproto.message_field(1, group="group_type")
     echelon: "Echelon" = betterproto.message_field(3, group="group_type")
+
+
+@dataclass(eq=False, repr=False)
+class Team(betterproto.Message):
+    """
+    Describes a Team group type. Comprised of autonomous entities where an entity
+     in a Team can only be a part of a single Team at a time.
+    """
+
+    pass
 
 
 @dataclass(eq=False, repr=False)
