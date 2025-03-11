@@ -92,6 +92,28 @@ class GeoType(betterproto.Enum):
 
     CONTROL_AREA = 6
     BULLSEYE = 7
+    ACM = 8
+    """Airspace Coordinating Measure"""
+
+
+class ControlAreaType(betterproto.Enum):
+    INVALID = 0
+    KEEP_IN_ZONE = 1
+    KEEP_OUT_ZONE = 2
+    DITCH_ZONE = 3
+    """
+    The zone for an autonomous asset to nose-dive into
+     when its assignment has been concluded.
+    """
+
+    LOITER_ZONE = 7
+    """The area where an asset is able to loiter."""
+
+
+class AcmDetailType(betterproto.Enum):
+    INVALID = 0
+    LANDING_ZONE = 16
+    """The zone that the autonomous asset is configured to land in."""
 
 
 class ArmyEchelon(betterproto.Enum):
@@ -902,6 +924,30 @@ class GeoDetails(betterproto.Message):
     """A component that describes a geo-entity."""
 
     type: "GeoType" = betterproto.enum_field(1)
+    control_area: "ControlAreaDetails" = betterproto.message_field(
+        5, group="type_details"
+    )
+    acm: "AcmDetails" = betterproto.message_field(6, group="type_details")
+
+
+@dataclass(eq=False, repr=False)
+class ControlAreaDetails(betterproto.Message):
+    """
+    Determines the type of control area being represented by the geo-entity,
+     in which an asset can, or cannot, operate.
+    """
+
+    type: "ControlAreaType" = betterproto.enum_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class AcmDetails(betterproto.Message):
+    acm_type: "AcmDetailType" = betterproto.enum_field(1)
+    acm_description: str = betterproto.string_field(2)
+    """
+    Used for loosely typed associations, such as assignment to a specific fires unit.
+     Limit to 150 characters.
+    """
 
 
 @dataclass(eq=False, repr=False)
