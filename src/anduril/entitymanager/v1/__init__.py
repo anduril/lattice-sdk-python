@@ -206,7 +206,7 @@ class AltIdType(betterproto.Enum):
     """Track repo alert ID"""
 
     ASSET_ID = 5
-    """an Anduril AssetId"""
+    """an Anduril AssetId v2"""
 
     LINK16_TRACK_NUMBER = 6
     """Use for Link 16 track identifiers for non-JTIDS Unit entities."""

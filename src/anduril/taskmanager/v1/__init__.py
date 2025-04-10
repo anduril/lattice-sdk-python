@@ -172,9 +172,7 @@ class Task(betterproto.Message):
     """
 
     specification: "betterproto_lib_google_protobuf.Any" = betterproto.message_field(3)
-    """
-    Full Task parameterization, must be a message under anduril/tasks/v*/
-    """
+    """Full Task parameterization."""
 
     created_by: "Principal" = betterproto.message_field(16)
     """
@@ -513,9 +511,7 @@ class CreateTaskRequest(betterproto.Message):
     """
 
     specification: "betterproto_lib_google_protobuf.Any" = betterproto.message_field(2)
-    """
-    Full task parameterization, must be a message under anduril/tasks/v*/.
-    """
+    """Full task parameterization."""
 
     author: "Principal" = betterproto.message_field(3)
     """
