@@ -6,13 +6,14 @@ This is the Anduril Lattice Software Development Kit (SDK) License Agreement (th
  
 1. **Introduction**
   - 1.1  "Anduril" means Anduril Industries, Inc., organized under the laws of the State of Delaware, USA, and operating under the laws of 
-the USA with principal place of business at 1400 Anduril, Costa Mesa, California 92626, USA.  
+    the USA with principal place of business at 1400 Anduril, Costa Mesa, California 92626, USA.  
   - 1.2  "Lattice" means the Anduril Lattice™ software stack for devices, as made available by Anduril, as updated from time to time.  
-  - 1.3  The  Anduril  Lattice  Software  Development  Kit  (referred  to  in  the  License  Agreement  as  the  "SDK"  and  specifically  including  the  
-Lattice system files, packaged APIs, and Anduril APIs add-ons) is licensed to you subject to the terms of the License Agreement. The 
-License Agreement forms a legally binding contract between you and Anduril in relation to your use of the SDK.  
+  - 1.3 The Anduril Lattice Software Development Kit (referred to in the License Agreement as the "SDK" and specifically including the
+    Lattice system files, packaged APIs, and Anduril APIs add-ons) is licensed to you subject to the terms of the License Agreement.
+    The License Agreement forms a legally binding contract between you and Anduril in relation to your use of the SDK. SDK, as used
+    herein, also includes any software libraries and/or packages that reference this License.
   - 1.4  A  "compatible  implementation"  means  any  use  that  (i)  is  compatible  with  Lattice;  or  (ii)  successfully  is  validated  by  Anduril  to  be  
-compatible with Lattice. The determination of a compatible implementation is solely at the discretion of Anduril.   
+    compatible with Lattice. The determination of a compatible implementation is solely at the discretion of Anduril.   
 
 2. **Accepting this License Agreement**
 
@@ -28,8 +29,9 @@ by an entity such as your employer binds your employer to this License Agreement
 
 3. **SDK License from Anduril**
 
-  - 3.1 Subject to the terms of the License Agreement, Anduril grants you a limited, revocable, worldwide, royalty-free, non-assignable, non-
-exclusive, and non-sublicensable license to use the SDK solely to develop applications for compatible implementations of Lattice.  
+  - 3.1 Subject to the terms of the License Agreement, Anduril grants you a limited, revocable, worldwide, royalty-free, non-assignable,
+    non- exclusive, and non-sublicensable license to use the SDK, or the software referencing this License Agreement, solely to develop
+    applications for compatible implementations of Anduril technology including without limitation systems, hardware and software such as Anduril Lattice.
   - 3.2  You  may  not  use  this  SDK  to  develop  applications  for  other  platforms  (including  non-compatible  implementations  of  Lattice)  or  to  
 develop another SDK. You are of course free to develop applications for other platforms, including non-compatible implementations of 
 Lattice, provided that this SDK is not used for that purpose.  
@@ -37,7 +39,7 @@ Lattice, provided that this SDK is not used for that purpose.
 that subsist in the SDK. "Intellectual Property Rights" means any and all rights under patent law, copyright law, trade secret law, trademark 
 law, and any and all other proprietary rights. Anduril reserves all rights not expressly granted to you.  
   - 3.4  You  may  not  use  the  SDK  for  any  purpose  not  expressly  permitted  by  the  License  Agreement.  Except  to  the  extent  required  by 
-applicable third party licenses, you may not copy (except for backup purposes), modify, adapt, redistribute, decompile, reverse engineer, 
+applicable third party licenses, you may not copy (except for backup purposes), modify, adapt, redistribute, de compile, reverse engineer, 
 disassemble, or create derivative works of the SDK or any part of the SDK.  
   - 3.5 Use, reproduction and distribution of components of the SDK licensed under an open-source software license are governed solely by 
 the terms of that open-source software license and not the License Agreement.  
@@ -183,6 +185,5 @@ arbitration shall take place in Irvine, California and the arbitral decision may
 of any court action, you agree to submit to the exclusive jurisdiction of the courts located in the city of Irvine located in Orange, California. 
 Notwithstanding this, you agree that Anduril shall still be allowed to apply for injunctive remedies (or an equivalent type of urgent legal 
 relief) in any jurisdiction.  
- 
- 
-**November 27, 2024**
+  
+**April 14, 2025**
