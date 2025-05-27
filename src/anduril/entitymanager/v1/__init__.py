@@ -186,6 +186,12 @@ class AlertLevel(betterproto.Enum):
     """For conditions that require immediate awareness and response."""
 
 
+class MediaType(betterproto.Enum):
+    INVALID = 0
+    IMAGE = 2
+    VIDEO = 3
+
+
 class AltIdType(betterproto.Enum):
     """The type of alternate id."""
 
@@ -623,14 +629,6 @@ class EventType(betterproto.Enum):
 
     POST_EXPIRY_OVERRIDE = 5
     """entity override was set after the entity expiration."""
-
-
-class MediaType(betterproto.Enum):
-    INVALID = 0
-    THUMBNAIL = 1
-    IMAGE = 2
-    VIDEO = 3
-    SLIPPY_TILES = 4
 
 
 @dataclass(eq=False, repr=False)
@@ -1228,6 +1226,22 @@ class AlertCondition(betterproto.Message):
     Human-readable description of this condition. The description is intended for display in the UI for human
      understanding and should not be used for machine processing. If the description is fixed and the vehicle controller
      provides no dynamic substitutions, then prefer lookup based on condition_code.
+    """
+
+
+@dataclass(eq=False, repr=False)
+class Media(betterproto.Message):
+    """Media associated with an entity."""
+
+    media: List["MediaItem"] = betterproto.message_field(1)
+
+
+@dataclass(eq=False, repr=False)
+class MediaItem(betterproto.Message):
+    type: "MediaType" = betterproto.enum_field(2)
+    relative_path: str = betterproto.string_field(3)
+    """
+    The path, relative to the environment base URL, where media related to an entity can be accessed
     """
 
 
@@ -2111,6 +2125,11 @@ class Entity(betterproto.Message):
 
     task_catalog: "__tasks_v2__.TaskCatalog" = betterproto.message_field(31)
     """A catalog of tasks that can be performed by an entity."""
+
+    media: "Media" = betterproto.message_field(32)
+    """
+    Media associated with an entity, such as videos, images, or thumbnails.
+    """
 
     relationships: "Relationships" = betterproto.message_field(33)
     """
@@ -3000,29 +3019,6 @@ class WithinComparison(betterproto.Message):
     """
 
     pass
-
-
-@dataclass(eq=False, repr=False)
-class Media(betterproto.Message):
-    """Media associated with an entity."""
-
-    media: List["MediaItem"] = betterproto.message_field(1)
-
-
-@dataclass(eq=False, repr=False)
-class MediaItem(betterproto.Message):
-    url: str = betterproto.string_field(1)
-    """
-    To Be Deprecated, use relative_path.
-     The url where the media related to an entity can be accessed
-    """
-
-    type: "MediaType" = betterproto.enum_field(2)
-    relative_path: str = betterproto.string_field(3)
-    """
-    The relative path where the media related to an entity can be accessed when used to query against a blobs service
-     node.
-    """
 
 
 @dataclass(eq=False, repr=False)
