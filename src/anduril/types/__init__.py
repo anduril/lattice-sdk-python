@@ -50,7 +50,6 @@ from .entity_event_response import EntityEventResponse
 from .entity_ids_selector import EntityIdsSelector
 from .entity_stream_event import EntityStreamEvent
 from .entity_stream_heartbeat import EntityStreamHeartbeat
-from .entity_stream_heartbeat_data import EntityStreamHeartbeatData
 from .enu import Enu
 from .error_ellipse import ErrorEllipse
 from .execute_request import ExecuteRequest
@@ -77,6 +76,7 @@ from .group_parent import GroupParent
 from .health import Health
 from .health_connection_status import HealthConnectionStatus
 from .health_health_status import HealthHealthStatus
+from .heartbeat_object import HeartbeatObject
 from .high_value_target import HighValueTarget
 from .high_value_target_match import HighValueTargetMatch
 from .indicators import Indicators
@@ -229,7 +229,6 @@ __all__ = [
     "EntityIdsSelector",
     "EntityStreamEvent",
     "EntityStreamHeartbeat",
-    "EntityStreamHeartbeatData",
     "Enu",
     "ErrorEllipse",
     "ExecuteRequest",
@@ -256,6 +255,7 @@ __all__ = [
     "Health",
     "HealthConnectionStatus",
     "HealthHealthStatus",
+    "HeartbeatObject",
     "HighValueTarget",
     "HighValueTargetMatch",
     "Indicators",

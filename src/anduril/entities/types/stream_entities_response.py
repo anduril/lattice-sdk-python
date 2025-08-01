@@ -2,21 +2,22 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
-from ...types.entity_event import EntityEvent
-from ...types.entity_stream_heartbeat_data import EntityStreamHeartbeatData
+from ...core.serialization import FieldMetadata
+from ...types.entity_event_event_type import EntityEventEventType
 
 
-class SseEntityEventsResponse_Heartbeat(UniversalBaseModel):
+class StreamEntitiesResponse_Heartbeat(UniversalBaseModel):
     """
-    stream event response.
+    The stream event response.
     """
 
     event: typing.Literal["heartbeat"] = "heartbeat"
-    data: EntityStreamHeartbeatData
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -28,13 +29,17 @@ class SseEntityEventsResponse_Heartbeat(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class SseEntityEventsResponse_Entity(UniversalBaseModel):
+class StreamEntitiesResponse_Entity(UniversalBaseModel):
     """
-    stream event response.
+    The stream event response.
     """
 
     event: typing.Literal["entity"] = "entity"
-    data: EntityEvent
+    event_type: typing_extensions.Annotated[typing.Optional[EntityEventEventType], FieldMetadata(alias="eventType")] = (
+        None
+    )
+    time: typing.Optional[dt.datetime] = None
+    entity: typing.Optional["Entity"] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -50,5 +55,5 @@ from ...types.entity import Entity  # noqa: E402, F401, I001
 from ...types.override import Override  # noqa: E402, F401, I001
 from ...types.overrides import Overrides  # noqa: E402, F401, I001
 
-SseEntityEventsResponse = typing.Union[SseEntityEventsResponse_Heartbeat, SseEntityEventsResponse_Entity]
-update_forward_refs(SseEntityEventsResponse_Entity)
+StreamEntitiesResponse = typing.Union[StreamEntitiesResponse_Heartbeat, StreamEntitiesResponse_Entity]
+update_forward_refs(StreamEntitiesResponse_Entity)
