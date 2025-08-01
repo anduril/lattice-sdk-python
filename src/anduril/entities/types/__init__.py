@@ -2,10 +2,10 @@
 
 # isort: skip_file
 
-from .sse_entity_events_response import (
-    SseEntityEventsResponse,
-    SseEntityEventsResponse_Entity,
-    SseEntityEventsResponse_Heartbeat,
+from .stream_entities_response import (
+    StreamEntitiesResponse,
+    StreamEntitiesResponse_Entity,
+    StreamEntitiesResponse_Heartbeat,
 )
 
-__all__ = ["SseEntityEventsResponse", "SseEntityEventsResponse_Entity", "SseEntityEventsResponse_Heartbeat"]
+__all__ = ["StreamEntitiesResponse", "StreamEntitiesResponse_Entity", "StreamEntitiesResponse_Heartbeat"]

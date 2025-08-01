@@ -39,7 +39,7 @@ from ..types.tracked import Tracked
 from ..types.transponder_codes import TransponderCodes
 from ..types.visual_details import VisualDetails
 from .raw_client import AsyncRawEntitiesClient, RawEntitiesClient
-from .types.sse_entity_events_response import SseEntityEventsResponse
+from .types.stream_entities_response import StreamEntitiesResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -467,16 +467,16 @@ class EntitiesClient:
         )
         return _response.data
 
-    def sse_entity_events(
+    def stream_entities(
         self,
         *,
         heartbeat_interval_ms: typing.Optional[int] = OMIT,
         pre_existing_only: typing.Optional[bool] = OMIT,
         components_to_include: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[SseEntityEventsResponse]:
+    ) -> typing.Iterator[StreamEntitiesResponse]:
         """
-        This SSE API establishes a persistent connection to stream entity events as they occur.
+        Establishes a persistent connection to stream entity events as they occur.
 
         Parameters
         ----------
@@ -494,8 +494,8 @@ class EntitiesClient:
 
         Yields
         ------
-        typing.Iterator[SseEntityEventsResponse]
-            SSE stream of entity events.
+        typing.Iterator[StreamEntitiesResponse]
+            Returns all pre-existing data and then return all new data as they become available.
 
         Examples
         --------
@@ -504,11 +504,11 @@ class EntitiesClient:
         client = Lattice(
             token="YOUR_TOKEN",
         )
-        response = client.entities.sse_entity_events()
+        response = client.entities.stream_entities()
         for chunk in response:
             yield chunk
         """
-        with self._raw_client.sse_entity_events(
+        with self._raw_client.stream_entities(
             heartbeat_interval_ms=heartbeat_interval_ms,
             pre_existing_only=pre_existing_only,
             components_to_include=components_to_include,
@@ -981,16 +981,16 @@ class AsyncEntitiesClient:
         )
         return _response.data
 
-    async def sse_entity_events(
+    async def stream_entities(
         self,
         *,
         heartbeat_interval_ms: typing.Optional[int] = OMIT,
         pre_existing_only: typing.Optional[bool] = OMIT,
         components_to_include: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[SseEntityEventsResponse]:
+    ) -> typing.AsyncIterator[StreamEntitiesResponse]:
         """
-        This SSE API establishes a persistent connection to stream entity events as they occur.
+        Establishes a persistent connection to stream entity events as they occur.
 
         Parameters
         ----------
@@ -1008,8 +1008,8 @@ class AsyncEntitiesClient:
 
         Yields
         ------
-        typing.AsyncIterator[SseEntityEventsResponse]
-            SSE stream of entity events.
+        typing.AsyncIterator[StreamEntitiesResponse]
+            Returns all pre-existing data and then return all new data as they become available.
 
         Examples
         --------
@@ -1023,14 +1023,14 @@ class AsyncEntitiesClient:
 
 
         async def main() -> None:
-            response = await client.entities.sse_entity_events()
+            response = await client.entities.stream_entities()
             async for chunk in response:
                 yield chunk
 
 
         asyncio.run(main())
         """
-        async with self._raw_client.sse_entity_events(
+        async with self._raw_client.stream_entities(
             heartbeat_interval_ms=heartbeat_interval_ms,
             pre_existing_only=pre_existing_only,
             components_to_include=components_to_include,
