@@ -7,7 +7,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class EntityStreamHeartbeatData(UniversalBaseModel):
+class HeartbeatObject(UniversalBaseModel):
     timestamp: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     timestamp of the heartbeat
