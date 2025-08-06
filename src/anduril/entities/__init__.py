@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from .types import SseEntityEventsResponse, SseEntityEventsResponse_Entity, SseEntityEventsResponse_Heartbeat
+from .types import StreamEntitiesResponse, StreamEntitiesResponse_Entity, StreamEntitiesResponse_Heartbeat
 
-__all__ = ["SseEntityEventsResponse", "SseEntityEventsResponse_Entity", "SseEntityEventsResponse_Heartbeat"]
+__all__ = ["StreamEntitiesResponse", "StreamEntitiesResponse_Entity", "StreamEntitiesResponse_Heartbeat"]

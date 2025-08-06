@@ -241,7 +241,7 @@ class RawObjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PathMetadata]:
         """
-        Uploads an object using multiform data. The object must be 1 GiB or smaller.
+        Uploads an object. The object must be 1 GiB or smaller.
 
         Parameters
         ----------
@@ -696,7 +696,7 @@ class AsyncRawObjectsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PathMetadata]:
         """
-        Uploads an object using multiform data. The object must be 1 GiB or smaller.
+        Uploads an object. The object must be 1 GiB or smaller.
 
         Parameters
         ----------

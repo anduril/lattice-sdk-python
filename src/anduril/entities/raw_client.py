@@ -52,7 +52,7 @@ from ..types.task_catalog import TaskCatalog
 from ..types.tracked import Tracked
 from ..types.transponder_codes import TransponderCodes
 from ..types.visual_details import VisualDetails
-from .types.sse_entity_events_response import SseEntityEventsResponse
+from .types.stream_entities_response import StreamEntitiesResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -748,16 +748,16 @@ class RawEntitiesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.contextmanager
-    def sse_entity_events(
+    def stream_entities(
         self,
         *,
         heartbeat_interval_ms: typing.Optional[int] = OMIT,
         pre_existing_only: typing.Optional[bool] = OMIT,
         components_to_include: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[HttpResponse[typing.Iterator[SseEntityEventsResponse]]]:
+    ) -> typing.Iterator[HttpResponse[typing.Iterator[StreamEntitiesResponse]]]:
         """
-        This SSE API establishes a persistent connection to stream entity events as they occur.
+        Establishes a persistent connection to stream entity events as they occur.
 
         Parameters
         ----------
@@ -775,8 +775,8 @@ class RawEntitiesClient:
 
         Yields
         ------
-        typing.Iterator[HttpResponse[typing.Iterator[SseEntityEventsResponse]]]
-            SSE stream of entity events.
+        typing.Iterator[HttpResponse[typing.Iterator[StreamEntitiesResponse]]]
+            Returns all pre-existing data and then return all new data as they become available.
         """
         with self._client_wrapper.httpx_client.stream(
             "api/v1/entities/stream",
@@ -793,7 +793,7 @@ class RawEntitiesClient:
             omit=OMIT,
         ) as _response:
 
-            def _stream() -> HttpResponse[typing.Iterator[SseEntityEventsResponse]]:
+            def _stream() -> HttpResponse[typing.Iterator[StreamEntitiesResponse]]:
                 try:
                     if 200 <= _response.status_code < 300:
 
@@ -804,9 +804,9 @@ class RawEntitiesClient:
                                     return
                                 try:
                                     yield typing.cast(
-                                        SseEntityEventsResponse,
+                                        StreamEntitiesResponse,
                                         parse_obj_as(
-                                            type_=SseEntityEventsResponse,  # type: ignore
+                                            type_=StreamEntitiesResponse,  # type: ignore
                                             object_=json.loads(_sse.data),
                                         ),
                                     )
@@ -1538,16 +1538,16 @@ class AsyncRawEntitiesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.asynccontextmanager
-    async def sse_entity_events(
+    async def stream_entities(
         self,
         *,
         heartbeat_interval_ms: typing.Optional[int] = OMIT,
         pre_existing_only: typing.Optional[bool] = OMIT,
         components_to_include: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[SseEntityEventsResponse]]]:
+    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamEntitiesResponse]]]:
         """
-        This SSE API establishes a persistent connection to stream entity events as they occur.
+        Establishes a persistent connection to stream entity events as they occur.
 
         Parameters
         ----------
@@ -1565,8 +1565,8 @@ class AsyncRawEntitiesClient:
 
         Yields
         ------
-        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[SseEntityEventsResponse]]]
-            SSE stream of entity events.
+        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamEntitiesResponse]]]
+            Returns all pre-existing data and then return all new data as they become available.
         """
         async with self._client_wrapper.httpx_client.stream(
             "api/v1/entities/stream",
@@ -1583,7 +1583,7 @@ class AsyncRawEntitiesClient:
             omit=OMIT,
         ) as _response:
 
-            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[SseEntityEventsResponse]]:
+            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[StreamEntitiesResponse]]:
                 try:
                     if 200 <= _response.status_code < 300:
 
@@ -1594,9 +1594,9 @@ class AsyncRawEntitiesClient:
                                     return
                                 try:
                                     yield typing.cast(
-                                        SseEntityEventsResponse,
+                                        StreamEntitiesResponse,
                                         parse_obj_as(
-                                            type_=SseEntityEventsResponse,  # type: ignore
+                                            type_=StreamEntitiesResponse,  # type: ignore
                                             object_=json.loads(_sse.data),
                                         ),
                                     )
