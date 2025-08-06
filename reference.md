@@ -708,7 +708,7 @@ client.entities.long_poll_entity_events(
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">sse_entity_events</a>(...)</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">stream_entities</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -720,7 +720,7 @@ client.entities.long_poll_entity_events(
 <dl>
 <dd>
 
-This SSE API establishes a persistent connection to stream entity events as they occur.
+Establishes a persistent connection to stream entity events as they occur.
 </dd>
 </dl>
 </dd>
@@ -740,7 +740,7 @@ from anduril import Lattice
 client = Lattice(
     token="YOUR_TOKEN",
 )
-response = client.entities.sse_entity_events()
+response = client.entities.stream_entities()
 for chunk in response.data:
     yield chunk
 
