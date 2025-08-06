@@ -51,7 +51,6 @@ from .types import (
     EntityIdsSelector,
     EntityStreamEvent,
     EntityStreamHeartbeat,
-    EntityStreamHeartbeatData,
     Enu,
     ErrorEllipse,
     ExecuteRequest,
@@ -78,6 +77,7 @@ from .types import (
     Health,
     HealthConnectionStatus,
     HealthHealthStatus,
+    HeartbeatObject,
     HighValueTarget,
     HighValueTargetMatch,
     Indicators,
@@ -193,7 +193,7 @@ from .errors import (
 )
 from . import entities, entity, object, objects, task, tasks
 from .client import AsyncLattice, Lattice
-from .entities import SseEntityEventsResponse, SseEntityEventsResponse_Entity, SseEntityEventsResponse_Heartbeat
+from .entities import StreamEntitiesResponse, StreamEntitiesResponse_Entity, StreamEntitiesResponse_Heartbeat
 from .environment import LatticeEnvironment
 from .objects import GetObjectRequestAcceptEncoding
 from .tasks import TaskQueryStatusFilter, TaskQueryStatusFilterStatus, TaskQueryUpdateTimeRange
@@ -251,7 +251,6 @@ __all__ = [
     "EntityIdsSelector",
     "EntityStreamEvent",
     "EntityStreamHeartbeat",
-    "EntityStreamHeartbeatData",
     "Enu",
     "ErrorEllipse",
     "ExecuteRequest",
@@ -279,6 +278,7 @@ __all__ = [
     "Health",
     "HealthConnectionStatus",
     "HealthHealthStatus",
+    "HeartbeatObject",
     "HighValueTarget",
     "HighValueTargetMatch",
     "Indicators",
@@ -360,10 +360,10 @@ __all__ = [
     "SensorSensorType",
     "Sensors",
     "Signal",
-    "SseEntityEventsResponse",
-    "SseEntityEventsResponse_Entity",
-    "SseEntityEventsResponse_Heartbeat",
     "Status",
+    "StreamEntitiesResponse",
+    "StreamEntitiesResponse_Entity",
+    "StreamEntitiesResponse_Heartbeat",
     "Supplies",
     "System",
     "TMat2",
