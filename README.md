@@ -1,10 +1,10 @@
-# Anduril Python Library
+# Anduril Lattice SDK Library
 
 ![](https://www.anduril.com/lattice-sdk/)
 
 [![pypi](https://img.shields.io/pypi/v/anduril-lattice-sdk)](https://pypi.python.org/pypi/anduril-lattice-sdk)
 
-The Anduril Python library provides convenient access to the Anduril API from Python.
+The Lattice SDK Python library provides convenient access to the Anduril API from Python.
 
 ## Documentation
 
