@@ -4,7 +4,7 @@
 
 [![pypi](https://img.shields.io/pypi/v/anduril-lattice-sdk)](https://pypi.python.org/pypi/anduril-lattice-sdk)
 
-The Lattice SDK Python library provides convenient access to the Anduril API from Python.
+The Lattice SDK Python library provides convenient access to the Anduril Lattice SDK from Python.
 
 ## Documentation
 
