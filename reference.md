@@ -116,6 +116,19 @@ Future time that expires an entity and updates the is_live flag.
 <dl>
 <dd>
 
+**no_expiry:** `typing.Optional[bool]` 
+
+Use noExpiry only when the entity contains information that should be available to other
+ tasks or integrations beyond its immediate operational context. For example, use noExpiry
+ for long-living geographical entities that maintain persistent relevance across multiple
+ operations or tasks.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **status:** `typing.Optional[Status]` — Human-readable descriptions of what the entity is currently doing.
     
 </dd>
