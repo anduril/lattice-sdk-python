@@ -92,6 +92,16 @@ class Entity(UniversalBaseModel):
      The expiry time must be in the future, but less than 30 days from the current time.
     """
 
+    no_expiry: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="noExpiry")] = pydantic.Field(
+        default=None
+    )
+    """
+    Use noExpiry only when the entity contains information that should be available to other
+     tasks or integrations beyond its immediate operational context. For example, use noExpiry
+     for long-living geographical entities that maintain persistent relevance across multiple
+     operations or tasks.
+    """
+
     status: typing.Optional[Status] = pydantic.Field(default=None)
     """
     Human-readable descriptions of what the entity is currently doing.
