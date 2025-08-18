@@ -68,6 +68,7 @@ class EntitiesClient:
         is_live: typing.Optional[bool] = OMIT,
         created_time: typing.Optional[dt.datetime] = OMIT,
         expiry_time: typing.Optional[dt.datetime] = OMIT,
+        no_expiry: typing.Optional[bool] = OMIT,
         status: typing.Optional[Status] = OMIT,
         location: typing.Optional[Location] = OMIT,
         location_uncertainty: typing.Optional[LocationUncertainty] = OMIT,
@@ -138,6 +139,12 @@ class EntitiesClient:
              active even after they expire.
              This field is required when publishing a prepopulated entity.
              The expiry time must be in the future, but less than 30 days from the current time.
+
+        no_expiry : typing.Optional[bool]
+            Use noExpiry only when the entity contains information that should be available to other
+             tasks or integrations beyond its immediate operational context. For example, use noExpiry
+             for long-living geographical entities that maintain persistent relevance across multiple
+             operations or tasks.
 
         status : typing.Optional[Status]
             Human-readable descriptions of what the entity is currently doing.
@@ -258,6 +265,7 @@ class EntitiesClient:
             is_live=is_live,
             created_time=created_time,
             expiry_time=expiry_time,
+            no_expiry=no_expiry,
             status=status,
             location=location,
             location_uncertainty=location_uncertainty,
@@ -540,6 +548,7 @@ class AsyncEntitiesClient:
         is_live: typing.Optional[bool] = OMIT,
         created_time: typing.Optional[dt.datetime] = OMIT,
         expiry_time: typing.Optional[dt.datetime] = OMIT,
+        no_expiry: typing.Optional[bool] = OMIT,
         status: typing.Optional[Status] = OMIT,
         location: typing.Optional[Location] = OMIT,
         location_uncertainty: typing.Optional[LocationUncertainty] = OMIT,
@@ -610,6 +619,12 @@ class AsyncEntitiesClient:
              active even after they expire.
              This field is required when publishing a prepopulated entity.
              The expiry time must be in the future, but less than 30 days from the current time.
+
+        no_expiry : typing.Optional[bool]
+            Use noExpiry only when the entity contains information that should be available to other
+             tasks or integrations beyond its immediate operational context. For example, use noExpiry
+             for long-living geographical entities that maintain persistent relevance across multiple
+             operations or tasks.
 
         status : typing.Optional[Status]
             Human-readable descriptions of what the entity is currently doing.
@@ -738,6 +753,7 @@ class AsyncEntitiesClient:
             is_live=is_live,
             created_time=created_time,
             expiry_time=expiry_time,
+            no_expiry=no_expiry,
             status=status,
             location=location,
             location_uncertainty=location_uncertainty,
