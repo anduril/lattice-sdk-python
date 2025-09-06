@@ -1365,6 +1365,84 @@ for page in response.iter_pages():
 </dl>
 </details>
 
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">get_object</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Fetches an object from your environment using the objectPath path parameter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+
+client = Lattice(
+    token="YOUR_TOKEN",
+)
+client.objects.get_object(
+    object_path="objectPath",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**object_path:** `str` — The path of the object to fetch.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**accept_encoding:** `typing.Optional[GetObjectRequestAcceptEncoding]` — If set, Lattice will compress the response using the specified compression method. If the header is not defined, or the compression method is set to `identity`, no compression will be applied to the response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.objects.<a href="src/anduril/objects/client.py">delete_object</a>(...)</code></summary>
 <dl>
 <dd>
