@@ -110,6 +110,17 @@ class ObjectsClient:
         -------
         typing.Iterator[bytes]
             Successful operation
+
+        Examples
+        --------
+        from anduril import Lattice
+
+        client = Lattice(
+            token="YOUR_TOKEN",
+        )
+        client.objects.get_object(
+            object_path="objectPath",
+        )
         """
         with self._raw_client.get_object(
             object_path, accept_encoding=accept_encoding, request_options=request_options
@@ -312,6 +323,25 @@ class AsyncObjectsClient:
         -------
         typing.AsyncIterator[bytes]
             Successful operation
+
+        Examples
+        --------
+        import asyncio
+
+        from anduril import AsyncLattice
+
+        client = AsyncLattice(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.objects.get_object(
+                object_path="objectPath",
+            )
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.get_object(
             object_path, accept_encoding=accept_encoding, request_options=request_options
