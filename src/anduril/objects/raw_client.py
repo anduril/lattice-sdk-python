@@ -142,6 +142,7 @@ class RawObjectsClient:
         object_path: str,
         *,
         accept_encoding: typing.Optional[GetObjectRequestAcceptEncoding] = None,
+        priority: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -154,6 +155,9 @@ class RawObjectsClient:
 
         accept_encoding : typing.Optional[GetObjectRequestAcceptEncoding]
             If set, Lattice will compress the response using the specified compression method. If the header is not defined, or the compression method is set to `identity`, no compression will be applied to the response.
+
+        priority : typing.Optional[str]
+            Indicates a client's preference for the priority of the response. The value is a structured header as defined in RFC 9218. If you do not set the header, Lattice uses the default priority set for the environment. Incremental delivery directives are not supported and will be ignored.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -168,6 +172,7 @@ class RawObjectsClient:
             method="GET",
             headers={
                 "Accept-Encoding": str(accept_encoding) if accept_encoding is not None else None,
+                "Priority": str(priority) if priority is not None else None,
             },
             request_options=request_options,
         ) as _response:
@@ -596,6 +601,7 @@ class AsyncRawObjectsClient:
         object_path: str,
         *,
         accept_encoding: typing.Optional[GetObjectRequestAcceptEncoding] = None,
+        priority: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
@@ -608,6 +614,9 @@ class AsyncRawObjectsClient:
 
         accept_encoding : typing.Optional[GetObjectRequestAcceptEncoding]
             If set, Lattice will compress the response using the specified compression method. If the header is not defined, or the compression method is set to `identity`, no compression will be applied to the response.
+
+        priority : typing.Optional[str]
+            Indicates a client's preference for the priority of the response. The value is a structured header as defined in RFC 9218. If you do not set the header, Lattice uses the default priority set for the environment. Incremental delivery directives are not supported and will be ignored.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
@@ -622,6 +631,7 @@ class AsyncRawObjectsClient:
             method="GET",
             headers={
                 "Accept-Encoding": str(accept_encoding) if accept_encoding is not None else None,
+                "Priority": str(priority) if priority is not None else None,
             },
             request_options=request_options,
         ) as _response:
