@@ -65,12 +65,21 @@ class ObjectsClient:
 
         Examples
         --------
+        import datetime
+
         from anduril import Lattice
 
         client = Lattice(
             token="YOUR_TOKEN",
         )
-        response = client.objects.list_objects()
+        response = client.objects.list_objects(
+            prefix="prefix",
+            since_timestamp=datetime.datetime.fromisoformat(
+                "2024-01-15 09:30:00+00:00",
+            ),
+            page_token="pageToken",
+            all_objects_in_mesh=True,
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -90,6 +99,7 @@ class ObjectsClient:
         object_path: str,
         *,
         accept_encoding: typing.Optional[GetObjectRequestAcceptEncoding] = None,
+        priority: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[bytes]:
         """
@@ -103,6 +113,9 @@ class ObjectsClient:
         accept_encoding : typing.Optional[GetObjectRequestAcceptEncoding]
             If set, Lattice will compress the response using the specified compression method. If the header is not defined, or the compression method is set to `identity`, no compression will be applied to the response.
 
+        priority : typing.Optional[str]
+            Indicates a client's preference for the priority of the response. The value is a structured header as defined in RFC 9218. If you do not set the header, Lattice uses the default priority set for the environment. Incremental delivery directives are not supported and will be ignored.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -110,9 +123,20 @@ class ObjectsClient:
         -------
         typing.Iterator[bytes]
             Successful operation
+
+        Examples
+        --------
+        from anduril import Lattice
+
+        client = Lattice(
+            token="YOUR_TOKEN",
+        )
+        client.objects.get_object(
+            object_path="objectPath",
+        )
         """
         with self._raw_client.get_object(
-            object_path, accept_encoding=accept_encoding, request_options=request_options
+            object_path, accept_encoding=accept_encoding, priority=priority, request_options=request_options
         ) as r:
             yield from r.data
 
@@ -259,6 +283,7 @@ class AsyncObjectsClient:
         Examples
         --------
         import asyncio
+        import datetime
 
         from anduril import AsyncLattice
 
@@ -268,7 +293,14 @@ class AsyncObjectsClient:
 
 
         async def main() -> None:
-            response = await client.objects.list_objects()
+            response = await client.objects.list_objects(
+                prefix="prefix",
+                since_timestamp=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                page_token="pageToken",
+                all_objects_in_mesh=True,
+            )
             async for item in response:
                 yield item
 
@@ -292,6 +324,7 @@ class AsyncObjectsClient:
         object_path: str,
         *,
         accept_encoding: typing.Optional[GetObjectRequestAcceptEncoding] = None,
+        priority: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -305,6 +338,9 @@ class AsyncObjectsClient:
         accept_encoding : typing.Optional[GetObjectRequestAcceptEncoding]
             If set, Lattice will compress the response using the specified compression method. If the header is not defined, or the compression method is set to `identity`, no compression will be applied to the response.
 
+        priority : typing.Optional[str]
+            Indicates a client's preference for the priority of the response. The value is a structured header as defined in RFC 9218. If you do not set the header, Lattice uses the default priority set for the environment. Incremental delivery directives are not supported and will be ignored.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
 
@@ -312,9 +348,28 @@ class AsyncObjectsClient:
         -------
         typing.AsyncIterator[bytes]
             Successful operation
+
+        Examples
+        --------
+        import asyncio
+
+        from anduril import AsyncLattice
+
+        client = AsyncLattice(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            await client.objects.get_object(
+                object_path="objectPath",
+            )
+
+
+        asyncio.run(main())
         """
         async with self._raw_client.get_object(
-            object_path, accept_encoding=accept_encoding, request_options=request_options
+            object_path, accept_encoding=accept_encoding, priority=priority, request_options=request_options
         ) as r:
             async for _chunk in r.data:
                 yield _chunk

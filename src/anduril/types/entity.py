@@ -34,6 +34,7 @@ from .sensors import Sensors
 from .signal import Signal
 from .status import Status
 from .supplies import Supplies
+from .symbology import Symbology
 from .target_priority import TargetPriority
 from .task_catalog import TaskCatalog
 from .tracked import Tracked
@@ -282,6 +283,11 @@ class Entity(UniversalBaseModel):
     orbit: typing.Optional[Orbit] = pydantic.Field(default=None)
     """
     Orbit information for space objects.
+    """
+
+    symbology: typing.Optional[Symbology] = pydantic.Field(default=None)
+    """
+    Symbology/iconography for the entity respecting an existing standard.
     """
 
     if IS_PYDANTIC_V2:

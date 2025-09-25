@@ -2,183 +2,392 @@
 
 # isort: skip_file
 
-from .acm_details import AcmDetails
-from .acm_details_acm_type import AcmDetailsAcmType
-from .active_target import ActiveTarget
-from .agent import Agent
-from .agent_request import AgentRequest
-from .alert import Alert
-from .alert_condition import AlertCondition
-from .alert_level import AlertLevel
-from .aliases import Aliases
-from .allocation import Allocation
-from .alternate_id import AlternateId
-from .alternate_id_type import AlternateIdType
-from .angle_of_arrival import AngleOfArrival
-from .bandwidth import Bandwidth
-from .bandwidth_range import BandwidthRange
-from .cancel_request import CancelRequest
-from .classification import Classification
-from .classification_information import ClassificationInformation
-from .classification_information_level import ClassificationInformationLevel
-from .color import Color
-from .complete_request import CompleteRequest
-from .component_health import ComponentHealth
-from .component_health_health import ComponentHealthHealth
-from .component_message import ComponentMessage
-from .component_message_status import ComponentMessageStatus
-from .content_identifier import ContentIdentifier
-from .control_area_details import ControlAreaDetails
-from .control_area_details_type import ControlAreaDetailsType
-from .correlation import Correlation
-from .correlation_membership import CorrelationMembership
-from .correlation_metadata import CorrelationMetadata
-from .correlation_metadata_replication_mode import CorrelationMetadataReplicationMode
-from .correlation_metadata_type import CorrelationMetadataType
-from .cron_window import CronWindow
-from .decorrelated_all import DecorrelatedAll
-from .decorrelated_single import DecorrelatedSingle
-from .decorrelation import Decorrelation
-from .dimensions import Dimensions
-from .echelon import Echelon
-from .echelon_army_echelon import EchelonArmyEchelon
-from .emitter_notation import EmitterNotation
-from .entity import Entity
-from .entity_event import EntityEvent
-from .entity_event_event_type import EntityEventEventType
-from .entity_event_response import EntityEventResponse
-from .entity_ids_selector import EntityIdsSelector
-from .entity_stream_event import EntityStreamEvent
-from .entity_stream_heartbeat import EntityStreamHeartbeat
-from .enu import Enu
-from .error_ellipse import ErrorEllipse
-from .execute_request import ExecuteRequest
-from .field_classification_information import FieldClassificationInformation
-from .field_of_view import FieldOfView
-from .field_of_view_mode import FieldOfViewMode
-from .fixed import Fixed
-from .frequency import Frequency
-from .frequency_range import FrequencyRange
-from .fuel import Fuel
-from .geo_details import GeoDetails
-from .geo_details_type import GeoDetailsType
-from .geo_ellipse import GeoEllipse
-from .geo_ellipsoid import GeoEllipsoid
-from .geo_line import GeoLine
-from .geo_point import GeoPoint
-from .geo_polygon import GeoPolygon
-from .geo_polygon_position import GeoPolygonPosition
-from .geo_shape import GeoShape
-from .google_protobuf_any import GoogleProtobufAny
-from .group_child import GroupChild
-from .group_details import GroupDetails
-from .group_parent import GroupParent
-from .health import Health
-from .health_connection_status import HealthConnectionStatus
-from .health_health_status import HealthHealthStatus
-from .heartbeat_object import HeartbeatObject
-from .high_value_target import HighValueTarget
-from .high_value_target_match import HighValueTargetMatch
-from .indicators import Indicators
-from .line_of_bearing import LineOfBearing
-from .linear_ring import LinearRing
-from .list_response import ListResponse
-from .lla import Lla
-from .lla_altitude_reference import LlaAltitudeReference
-from .location import Location
-from .location_uncertainty import LocationUncertainty
-from .mean_keplerian_elements import MeanKeplerianElements
-from .measurement import Measurement
-from .media import Media
-from .media_item import MediaItem
-from .media_item_type import MediaItemType
-from .merged_from import MergedFrom
-from .mil_view import MilView
-from .mil_view_disposition import MilViewDisposition
-from .mil_view_environment import MilViewEnvironment
-from .mil_view_nationality import MilViewNationality
-from .mode_5 import Mode5
-from .mode_5_mode_5_interrogation_response import Mode5Mode5InterrogationResponse
-from .mode_s import ModeS
-from .non_primary_membership import NonPrimaryMembership
-from .ontology import Ontology
-from .ontology_template import OntologyTemplate
-from .orbit import Orbit
-from .orbit_mean_elements import OrbitMeanElements
-from .orbit_mean_elements_metadata import OrbitMeanElementsMetadata
-from .orbit_mean_elements_metadata_mean_element_theory import OrbitMeanElementsMetadataMeanElementTheory
-from .orbit_mean_elements_metadata_ref_frame import OrbitMeanElementsMetadataRefFrame
-from .override import Override
-from .override_status import OverrideStatus
-from .override_type import OverrideType
-from .overrides import Overrides
-from .owner import Owner
-from .path_metadata import PathMetadata
-from .payload import Payload
-from .payload_configuration import PayloadConfiguration
-from .payload_configuration_effective_environment_item import PayloadConfigurationEffectiveEnvironmentItem
-from .payload_configuration_payload_operational_state import PayloadConfigurationPayloadOperationalState
-from .payloads import Payloads
-from .pose import Pose
-from .position import Position
-from .power_level import PowerLevel
-from .power_source import PowerSource
-from .power_source_power_status import PowerSourcePowerStatus
-from .power_source_power_type import PowerSourcePowerType
-from .power_state import PowerState
-from .primary_correlation import PrimaryCorrelation
-from .primary_membership import PrimaryMembership
-from .principal import Principal
-from .projected_frustum import ProjectedFrustum
-from .provenance import Provenance
-from .pulse_repetition_interval import PulseRepetitionInterval
-from .quaternion import Quaternion
-from .range_rings import RangeRings
-from .relations import Relations
-from .relationship import Relationship
-from .relationship_type import RelationshipType
-from .relationships import Relationships
-from .replication import Replication
-from .rf_configuration import RfConfiguration
-from .route_details import RouteDetails
-from .scan_characteristics import ScanCharacteristics
-from .scan_characteristics_scan_type import ScanCharacteristicsScanType
-from .schedule import Schedule
-from .schedule_schedule_type import ScheduleScheduleType
-from .schedules import Schedules
-from .secondary_correlation import SecondaryCorrelation
-from .sensor import Sensor
-from .sensor_operational_state import SensorOperationalState
-from .sensor_sensor_type import SensorSensorType
-from .sensors import Sensors
-from .signal import Signal
-from .status import Status
-from .supplies import Supplies
-from .system import System
-from .t_mat_2 import TMat2
-from .t_mat_3 import TMat3
-from .target_priority import TargetPriority
-from .task import Task
-from .task_catalog import TaskCatalog
-from .task_definition import TaskDefinition
-from .task_entity import TaskEntity
-from .task_error import TaskError
-from .task_error_code import TaskErrorCode
-from .task_query_results import TaskQueryResults
-from .task_status import TaskStatus
-from .task_status_status import TaskStatusStatus
-from .task_version import TaskVersion
-from .team import Team
-from .threat import Threat
-from .timestamp import Timestamp
-from .tle_parameters import TleParameters
-from .tracked import Tracked
-from .tracked_by import TrackedBy
-from .transponder_codes import TransponderCodes
-from .transponder_codes_mode_4_interrogation_response import TransponderCodesMode4InterrogationResponse
-from .u_int_32_range import UInt32Range
-from .user import User
-from .visual_details import VisualDetails
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .acm_details import AcmDetails
+    from .acm_details_acm_type import AcmDetailsAcmType
+    from .active_target import ActiveTarget
+    from .agent import Agent
+    from .agent_request import AgentRequest
+    from .alert import Alert
+    from .alert_condition import AlertCondition
+    from .alert_level import AlertLevel
+    from .aliases import Aliases
+    from .allocation import Allocation
+    from .alternate_id import AlternateId
+    from .alternate_id_type import AlternateIdType
+    from .angle_of_arrival import AngleOfArrival
+    from .bandwidth import Bandwidth
+    from .bandwidth_range import BandwidthRange
+    from .cancel_request import CancelRequest
+    from .classification import Classification
+    from .classification_information import ClassificationInformation
+    from .classification_information_level import ClassificationInformationLevel
+    from .color import Color
+    from .complete_request import CompleteRequest
+    from .component_health import ComponentHealth
+    from .component_health_health import ComponentHealthHealth
+    from .component_message import ComponentMessage
+    from .component_message_status import ComponentMessageStatus
+    from .content_identifier import ContentIdentifier
+    from .control_area_details import ControlAreaDetails
+    from .control_area_details_type import ControlAreaDetailsType
+    from .correlation import Correlation
+    from .correlation_membership import CorrelationMembership
+    from .correlation_metadata import CorrelationMetadata
+    from .correlation_metadata_replication_mode import CorrelationMetadataReplicationMode
+    from .correlation_metadata_type import CorrelationMetadataType
+    from .cron_window import CronWindow
+    from .decorrelated_all import DecorrelatedAll
+    from .decorrelated_single import DecorrelatedSingle
+    from .decorrelation import Decorrelation
+    from .dimensions import Dimensions
+    from .echelon import Echelon
+    from .echelon_army_echelon import EchelonArmyEchelon
+    from .emitter_notation import EmitterNotation
+    from .entity import Entity
+    from .entity_event import EntityEvent
+    from .entity_event_event_type import EntityEventEventType
+    from .entity_event_response import EntityEventResponse
+    from .entity_ids_selector import EntityIdsSelector
+    from .entity_stream_event import EntityStreamEvent
+    from .entity_stream_heartbeat import EntityStreamHeartbeat
+    from .enu import Enu
+    from .error_ellipse import ErrorEllipse
+    from .execute_request import ExecuteRequest
+    from .field_classification_information import FieldClassificationInformation
+    from .field_of_view import FieldOfView
+    from .field_of_view_mode import FieldOfViewMode
+    from .fixed import Fixed
+    from .frequency import Frequency
+    from .frequency_range import FrequencyRange
+    from .fuel import Fuel
+    from .geo_details import GeoDetails
+    from .geo_details_type import GeoDetailsType
+    from .geo_ellipse import GeoEllipse
+    from .geo_ellipsoid import GeoEllipsoid
+    from .geo_line import GeoLine
+    from .geo_point import GeoPoint
+    from .geo_polygon import GeoPolygon
+    from .geo_polygon_position import GeoPolygonPosition
+    from .geo_shape import GeoShape
+    from .google_protobuf_any import GoogleProtobufAny
+    from .group_child import GroupChild
+    from .group_details import GroupDetails
+    from .group_parent import GroupParent
+    from .health import Health
+    from .health_connection_status import HealthConnectionStatus
+    from .health_health_status import HealthHealthStatus
+    from .heartbeat_object import HeartbeatObject
+    from .high_value_target import HighValueTarget
+    from .high_value_target_match import HighValueTargetMatch
+    from .indicators import Indicators
+    from .line_of_bearing import LineOfBearing
+    from .linear_ring import LinearRing
+    from .list_response import ListResponse
+    from .lla import Lla
+    from .lla_altitude_reference import LlaAltitudeReference
+    from .location import Location
+    from .location_uncertainty import LocationUncertainty
+    from .mean_keplerian_elements import MeanKeplerianElements
+    from .measurement import Measurement
+    from .media import Media
+    from .media_item import MediaItem
+    from .media_item_type import MediaItemType
+    from .merged_from import MergedFrom
+    from .mil_std_2525_c import MilStd2525C
+    from .mil_view import MilView
+    from .mil_view_disposition import MilViewDisposition
+    from .mil_view_environment import MilViewEnvironment
+    from .mil_view_nationality import MilViewNationality
+    from .mode_5 import Mode5
+    from .mode_5_mode_5_interrogation_response import Mode5Mode5InterrogationResponse
+    from .mode_s import ModeS
+    from .non_primary_membership import NonPrimaryMembership
+    from .ontology import Ontology
+    from .ontology_template import OntologyTemplate
+    from .orbit import Orbit
+    from .orbit_mean_elements import OrbitMeanElements
+    from .orbit_mean_elements_metadata import OrbitMeanElementsMetadata
+    from .orbit_mean_elements_metadata_mean_element_theory import OrbitMeanElementsMetadataMeanElementTheory
+    from .orbit_mean_elements_metadata_ref_frame import OrbitMeanElementsMetadataRefFrame
+    from .override import Override
+    from .override_status import OverrideStatus
+    from .override_type import OverrideType
+    from .overrides import Overrides
+    from .owner import Owner
+    from .path_metadata import PathMetadata
+    from .payload import Payload
+    from .payload_configuration import PayloadConfiguration
+    from .payload_configuration_effective_environment_item import PayloadConfigurationEffectiveEnvironmentItem
+    from .payload_configuration_payload_operational_state import PayloadConfigurationPayloadOperationalState
+    from .payloads import Payloads
+    from .pose import Pose
+    from .position import Position
+    from .power_level import PowerLevel
+    from .power_source import PowerSource
+    from .power_source_power_status import PowerSourcePowerStatus
+    from .power_source_power_type import PowerSourcePowerType
+    from .power_state import PowerState
+    from .primary_correlation import PrimaryCorrelation
+    from .primary_membership import PrimaryMembership
+    from .principal import Principal
+    from .projected_frustum import ProjectedFrustum
+    from .provenance import Provenance
+    from .pulse_repetition_interval import PulseRepetitionInterval
+    from .quaternion import Quaternion
+    from .range_rings import RangeRings
+    from .relations import Relations
+    from .relationship import Relationship
+    from .relationship_type import RelationshipType
+    from .relationships import Relationships
+    from .replication import Replication
+    from .rf_configuration import RfConfiguration
+    from .route_details import RouteDetails
+    from .scan_characteristics import ScanCharacteristics
+    from .scan_characteristics_scan_type import ScanCharacteristicsScanType
+    from .schedule import Schedule
+    from .schedule_schedule_type import ScheduleScheduleType
+    from .schedules import Schedules
+    from .secondary_correlation import SecondaryCorrelation
+    from .sensor import Sensor
+    from .sensor_operational_state import SensorOperationalState
+    from .sensor_sensor_type import SensorSensorType
+    from .sensors import Sensors
+    from .signal import Signal
+    from .status import Status
+    from .supplies import Supplies
+    from .symbology import Symbology
+    from .system import System
+    from .t_mat_2 import TMat2
+    from .t_mat_3 import TMat3
+    from .target_priority import TargetPriority
+    from .task import Task
+    from .task_catalog import TaskCatalog
+    from .task_definition import TaskDefinition
+    from .task_entity import TaskEntity
+    from .task_error import TaskError
+    from .task_error_code import TaskErrorCode
+    from .task_query_results import TaskQueryResults
+    from .task_status import TaskStatus
+    from .task_status_status import TaskStatusStatus
+    from .task_version import TaskVersion
+    from .team import Team
+    from .threat import Threat
+    from .timestamp import Timestamp
+    from .tle_parameters import TleParameters
+    from .tracked import Tracked
+    from .tracked_by import TrackedBy
+    from .transponder_codes import TransponderCodes
+    from .transponder_codes_mode_4_interrogation_response import TransponderCodesMode4InterrogationResponse
+    from .u_int_32_range import UInt32Range
+    from .user import User
+    from .visual_details import VisualDetails
+_dynamic_imports: typing.Dict[str, str] = {
+    "AcmDetails": ".acm_details",
+    "AcmDetailsAcmType": ".acm_details_acm_type",
+    "ActiveTarget": ".active_target",
+    "Agent": ".agent",
+    "AgentRequest": ".agent_request",
+    "Alert": ".alert",
+    "AlertCondition": ".alert_condition",
+    "AlertLevel": ".alert_level",
+    "Aliases": ".aliases",
+    "Allocation": ".allocation",
+    "AlternateId": ".alternate_id",
+    "AlternateIdType": ".alternate_id_type",
+    "AngleOfArrival": ".angle_of_arrival",
+    "Bandwidth": ".bandwidth",
+    "BandwidthRange": ".bandwidth_range",
+    "CancelRequest": ".cancel_request",
+    "Classification": ".classification",
+    "ClassificationInformation": ".classification_information",
+    "ClassificationInformationLevel": ".classification_information_level",
+    "Color": ".color",
+    "CompleteRequest": ".complete_request",
+    "ComponentHealth": ".component_health",
+    "ComponentHealthHealth": ".component_health_health",
+    "ComponentMessage": ".component_message",
+    "ComponentMessageStatus": ".component_message_status",
+    "ContentIdentifier": ".content_identifier",
+    "ControlAreaDetails": ".control_area_details",
+    "ControlAreaDetailsType": ".control_area_details_type",
+    "Correlation": ".correlation",
+    "CorrelationMembership": ".correlation_membership",
+    "CorrelationMetadata": ".correlation_metadata",
+    "CorrelationMetadataReplicationMode": ".correlation_metadata_replication_mode",
+    "CorrelationMetadataType": ".correlation_metadata_type",
+    "CronWindow": ".cron_window",
+    "DecorrelatedAll": ".decorrelated_all",
+    "DecorrelatedSingle": ".decorrelated_single",
+    "Decorrelation": ".decorrelation",
+    "Dimensions": ".dimensions",
+    "Echelon": ".echelon",
+    "EchelonArmyEchelon": ".echelon_army_echelon",
+    "EmitterNotation": ".emitter_notation",
+    "Entity": ".entity",
+    "EntityEvent": ".entity_event",
+    "EntityEventEventType": ".entity_event_event_type",
+    "EntityEventResponse": ".entity_event_response",
+    "EntityIdsSelector": ".entity_ids_selector",
+    "EntityStreamEvent": ".entity_stream_event",
+    "EntityStreamHeartbeat": ".entity_stream_heartbeat",
+    "Enu": ".enu",
+    "ErrorEllipse": ".error_ellipse",
+    "ExecuteRequest": ".execute_request",
+    "FieldClassificationInformation": ".field_classification_information",
+    "FieldOfView": ".field_of_view",
+    "FieldOfViewMode": ".field_of_view_mode",
+    "Fixed": ".fixed",
+    "Frequency": ".frequency",
+    "FrequencyRange": ".frequency_range",
+    "Fuel": ".fuel",
+    "GeoDetails": ".geo_details",
+    "GeoDetailsType": ".geo_details_type",
+    "GeoEllipse": ".geo_ellipse",
+    "GeoEllipsoid": ".geo_ellipsoid",
+    "GeoLine": ".geo_line",
+    "GeoPoint": ".geo_point",
+    "GeoPolygon": ".geo_polygon",
+    "GeoPolygonPosition": ".geo_polygon_position",
+    "GeoShape": ".geo_shape",
+    "GoogleProtobufAny": ".google_protobuf_any",
+    "GroupChild": ".group_child",
+    "GroupDetails": ".group_details",
+    "GroupParent": ".group_parent",
+    "Health": ".health",
+    "HealthConnectionStatus": ".health_connection_status",
+    "HealthHealthStatus": ".health_health_status",
+    "HeartbeatObject": ".heartbeat_object",
+    "HighValueTarget": ".high_value_target",
+    "HighValueTargetMatch": ".high_value_target_match",
+    "Indicators": ".indicators",
+    "LineOfBearing": ".line_of_bearing",
+    "LinearRing": ".linear_ring",
+    "ListResponse": ".list_response",
+    "Lla": ".lla",
+    "LlaAltitudeReference": ".lla_altitude_reference",
+    "Location": ".location",
+    "LocationUncertainty": ".location_uncertainty",
+    "MeanKeplerianElements": ".mean_keplerian_elements",
+    "Measurement": ".measurement",
+    "Media": ".media",
+    "MediaItem": ".media_item",
+    "MediaItemType": ".media_item_type",
+    "MergedFrom": ".merged_from",
+    "MilStd2525C": ".mil_std_2525_c",
+    "MilView": ".mil_view",
+    "MilViewDisposition": ".mil_view_disposition",
+    "MilViewEnvironment": ".mil_view_environment",
+    "MilViewNationality": ".mil_view_nationality",
+    "Mode5": ".mode_5",
+    "Mode5Mode5InterrogationResponse": ".mode_5_mode_5_interrogation_response",
+    "ModeS": ".mode_s",
+    "NonPrimaryMembership": ".non_primary_membership",
+    "Ontology": ".ontology",
+    "OntologyTemplate": ".ontology_template",
+    "Orbit": ".orbit",
+    "OrbitMeanElements": ".orbit_mean_elements",
+    "OrbitMeanElementsMetadata": ".orbit_mean_elements_metadata",
+    "OrbitMeanElementsMetadataMeanElementTheory": ".orbit_mean_elements_metadata_mean_element_theory",
+    "OrbitMeanElementsMetadataRefFrame": ".orbit_mean_elements_metadata_ref_frame",
+    "Override": ".override",
+    "OverrideStatus": ".override_status",
+    "OverrideType": ".override_type",
+    "Overrides": ".overrides",
+    "Owner": ".owner",
+    "PathMetadata": ".path_metadata",
+    "Payload": ".payload",
+    "PayloadConfiguration": ".payload_configuration",
+    "PayloadConfigurationEffectiveEnvironmentItem": ".payload_configuration_effective_environment_item",
+    "PayloadConfigurationPayloadOperationalState": ".payload_configuration_payload_operational_state",
+    "Payloads": ".payloads",
+    "Pose": ".pose",
+    "Position": ".position",
+    "PowerLevel": ".power_level",
+    "PowerSource": ".power_source",
+    "PowerSourcePowerStatus": ".power_source_power_status",
+    "PowerSourcePowerType": ".power_source_power_type",
+    "PowerState": ".power_state",
+    "PrimaryCorrelation": ".primary_correlation",
+    "PrimaryMembership": ".primary_membership",
+    "Principal": ".principal",
+    "ProjectedFrustum": ".projected_frustum",
+    "Provenance": ".provenance",
+    "PulseRepetitionInterval": ".pulse_repetition_interval",
+    "Quaternion": ".quaternion",
+    "RangeRings": ".range_rings",
+    "Relations": ".relations",
+    "Relationship": ".relationship",
+    "RelationshipType": ".relationship_type",
+    "Relationships": ".relationships",
+    "Replication": ".replication",
+    "RfConfiguration": ".rf_configuration",
+    "RouteDetails": ".route_details",
+    "ScanCharacteristics": ".scan_characteristics",
+    "ScanCharacteristicsScanType": ".scan_characteristics_scan_type",
+    "Schedule": ".schedule",
+    "ScheduleScheduleType": ".schedule_schedule_type",
+    "Schedules": ".schedules",
+    "SecondaryCorrelation": ".secondary_correlation",
+    "Sensor": ".sensor",
+    "SensorOperationalState": ".sensor_operational_state",
+    "SensorSensorType": ".sensor_sensor_type",
+    "Sensors": ".sensors",
+    "Signal": ".signal",
+    "Status": ".status",
+    "Supplies": ".supplies",
+    "Symbology": ".symbology",
+    "System": ".system",
+    "TMat2": ".t_mat_2",
+    "TMat3": ".t_mat_3",
+    "TargetPriority": ".target_priority",
+    "Task": ".task",
+    "TaskCatalog": ".task_catalog",
+    "TaskDefinition": ".task_definition",
+    "TaskEntity": ".task_entity",
+    "TaskError": ".task_error",
+    "TaskErrorCode": ".task_error_code",
+    "TaskQueryResults": ".task_query_results",
+    "TaskStatus": ".task_status",
+    "TaskStatusStatus": ".task_status_status",
+    "TaskVersion": ".task_version",
+    "Team": ".team",
+    "Threat": ".threat",
+    "Timestamp": ".timestamp",
+    "TleParameters": ".tle_parameters",
+    "Tracked": ".tracked",
+    "TrackedBy": ".tracked_by",
+    "TransponderCodes": ".transponder_codes",
+    "TransponderCodesMode4InterrogationResponse": ".transponder_codes_mode_4_interrogation_response",
+    "UInt32Range": ".u_int_32_range",
+    "User": ".user",
+    "VisualDetails": ".visual_details",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "AcmDetails",
@@ -272,6 +481,7 @@ __all__ = [
     "MediaItem",
     "MediaItemType",
     "MergedFrom",
+    "MilStd2525C",
     "MilView",
     "MilViewDisposition",
     "MilViewEnvironment",
@@ -333,6 +543,7 @@ __all__ = [
     "Signal",
     "Status",
     "Supplies",
+    "Symbology",
     "System",
     "TMat2",
     "TMat3",
