@@ -47,6 +47,7 @@ from ..types.sensors import Sensors
 from ..types.signal import Signal
 from ..types.status import Status
 from ..types.supplies import Supplies
+from ..types.symbology import Symbology
 from ..types.target_priority import TargetPriority
 from ..types.task_catalog import TaskCatalog
 from ..types.tracked import Tracked
@@ -102,6 +103,7 @@ class RawEntitiesClient:
         group_details: typing.Optional[GroupDetails] = OMIT,
         supplies: typing.Optional[Supplies] = OMIT,
         orbit: typing.Optional[Orbit] = OMIT,
+        symbology: typing.Optional[Symbology] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Entity]:
         """
@@ -244,6 +246,9 @@ class RawEntitiesClient:
         orbit : typing.Optional[Orbit]
             Orbit information for space objects.
 
+        symbology : typing.Optional[Symbology]
+            Symbology/iconography for the entity respecting an existing standard.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -345,6 +350,9 @@ class RawEntitiesClient:
                     object_=supplies, annotation=Supplies, direction="write"
                 ),
                 "orbit": convert_and_respect_annotation_metadata(object_=orbit, annotation=Orbit, direction="write"),
+                "symbology": convert_and_respect_annotation_metadata(
+                    object_=symbology, annotation=Symbology, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -900,6 +908,7 @@ class AsyncRawEntitiesClient:
         group_details: typing.Optional[GroupDetails] = OMIT,
         supplies: typing.Optional[Supplies] = OMIT,
         orbit: typing.Optional[Orbit] = OMIT,
+        symbology: typing.Optional[Symbology] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Entity]:
         """
@@ -1042,6 +1051,9 @@ class AsyncRawEntitiesClient:
         orbit : typing.Optional[Orbit]
             Orbit information for space objects.
 
+        symbology : typing.Optional[Symbology]
+            Symbology/iconography for the entity respecting an existing standard.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1143,6 +1155,9 @@ class AsyncRawEntitiesClient:
                     object_=supplies, annotation=Supplies, direction="write"
                 ),
                 "orbit": convert_and_respect_annotation_metadata(object_=orbit, annotation=Orbit, direction="write"),
+                "symbology": convert_and_respect_annotation_metadata(
+                    object_=symbology, annotation=Symbology, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",

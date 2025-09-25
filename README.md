@@ -1,10 +1,11 @@
-# Anduril Lattice SDK Library
+# Lattice SDK Python Library
 
 ![](https://www.anduril.com/lattice-sdk/)
 
+[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fanduril%2Flattice-sdk-python)
 [![pypi](https://img.shields.io/pypi/v/anduril-lattice-sdk)](https://pypi.python.org/pypi/anduril-lattice-sdk)
 
-The Lattice SDK Python library provides convenient access to the Anduril Lattice SDK from Python.
+The Lattice SDK Python library provides convenient access to the Lattice SDK APIs from Python.
 
 ## Documentation
 
@@ -47,7 +48,7 @@ client.entities.long_poll_entity_events(
 
 ## Async Client
 
-The SDK also exports an `async` client so that you can make non-blocking calls to our API.
+The SDK also exports an `async` client so that you can make non-blocking calls to our API. Note that if you are constructing an Async httpx client class to pass into this client, use `httpx.AsyncClient()` instead of `httpx.Client()` (e.g. for the `httpx_client` parameter of this client).
 
 ```python
 import asyncio
@@ -103,12 +104,21 @@ for chunk in response.data:
 Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
 
 ```python
+import datetime
+
 from anduril import Lattice
 
 client = Lattice(
     token="YOUR_TOKEN",
 )
-response = client.objects.list_objects()
+response = client.objects.list_objects(
+    prefix="prefix",
+    since_timestamp=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    page_token="pageToken",
+    all_objects_in_mesh=True,
+)
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
@@ -198,8 +208,9 @@ from anduril import Lattice
 client = Lattice(
     ...,
     httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
+        proxy="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),
 )
 ```
+
