@@ -33,6 +33,7 @@ from ..types.sensors import Sensors
 from ..types.signal import Signal
 from ..types.status import Status
 from ..types.supplies import Supplies
+from ..types.symbology import Symbology
 from ..types.target_priority import TargetPriority
 from ..types.task_catalog import TaskCatalog
 from ..types.tracked import Tracked
@@ -100,6 +101,7 @@ class EntitiesClient:
         group_details: typing.Optional[GroupDetails] = OMIT,
         supplies: typing.Optional[Supplies] = OMIT,
         orbit: typing.Optional[Orbit] = OMIT,
+        symbology: typing.Optional[Symbology] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Entity:
         """
@@ -242,6 +244,9 @@ class EntitiesClient:
         orbit : typing.Optional[Orbit]
             Orbit information for space objects.
 
+        symbology : typing.Optional[Symbology]
+            Symbology/iconography for the entity respecting an existing standard.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -297,6 +302,7 @@ class EntitiesClient:
             group_details=group_details,
             supplies=supplies,
             orbit=orbit,
+            symbology=symbology,
             request_options=request_options,
         )
         return _response.data
@@ -580,6 +586,7 @@ class AsyncEntitiesClient:
         group_details: typing.Optional[GroupDetails] = OMIT,
         supplies: typing.Optional[Supplies] = OMIT,
         orbit: typing.Optional[Orbit] = OMIT,
+        symbology: typing.Optional[Symbology] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Entity:
         """
@@ -722,6 +729,9 @@ class AsyncEntitiesClient:
         orbit : typing.Optional[Orbit]
             Orbit information for space objects.
 
+        symbology : typing.Optional[Symbology]
+            Symbology/iconography for the entity respecting an existing standard.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -785,6 +795,7 @@ class AsyncEntitiesClient:
             group_details=group_details,
             supplies=supplies,
             orbit=orbit,
+            symbology=symbology,
             request_options=request_options,
         )
         return _response.data
