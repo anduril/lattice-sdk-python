@@ -3,7 +3,7 @@ name = "anduril-lattice-sdk"
 
 [tool.poetry]
 name = "anduril-lattice-sdk"
-version = "2.3.0"
+version = "2.4.0"
 description = "HTTP clients for the Anduril Lattice SDK"
 readme = "README.md"
 authors = [
@@ -43,7 +43,6 @@ Repository = 'https://github.com/anduril/lattice-sdk-python'
 [tool.poetry.dependencies]
 python = "^3.8"
 httpx = ">=0.21.2"
-httpx-sse = "0.4.0"
 pydantic = ">= 1.9.2"
 pydantic-core = ">=2.18.2"
 typing_extensions = ">= 4.0.0"
