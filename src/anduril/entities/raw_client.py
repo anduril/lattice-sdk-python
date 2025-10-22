@@ -2,14 +2,14 @@
 
 import contextlib
 import datetime as dt
-import json
 import typing
 from json.decoder import JSONDecodeError
+from logging import error, warning
 
-import httpx_sse
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.http_sse._api import EventSource
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
@@ -814,7 +814,7 @@ class RawEntitiesClient:
                     if 200 <= _response.status_code < 300:
 
                         def _iter():
-                            _event_source = httpx_sse.EventSource(_response)
+                            _event_source = EventSource(_response)
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
@@ -823,11 +823,19 @@ class RawEntitiesClient:
                                         StreamEntitiesResponse,
                                         parse_obj_as(
                                             type_=StreamEntitiesResponse,  # type: ignore
-                                            object_=json.loads(_sse.data),
+                                            object_=_sse.json(),
                                         ),
                                     )
-                                except Exception:
-                                    pass
+                                except JSONDecodeError as e:
+                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
+                                except (TypeError, ValueError, KeyError, AttributeError) as e:
+                                    warning(
+                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
+                                except Exception as e:
+                                    error(
+                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
                             return
 
                         return HttpResponse(response=_response, data=_iter())
@@ -1619,7 +1627,7 @@ class AsyncRawEntitiesClient:
                     if 200 <= _response.status_code < 300:
 
                         async def _iter():
-                            _event_source = httpx_sse.EventSource(_response)
+                            _event_source = EventSource(_response)
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
@@ -1628,11 +1636,19 @@ class AsyncRawEntitiesClient:
                                         StreamEntitiesResponse,
                                         parse_obj_as(
                                             type_=StreamEntitiesResponse,  # type: ignore
-                                            object_=json.loads(_sse.data),
+                                            object_=_sse.json(),
                                         ),
                                     )
-                                except Exception:
-                                    pass
+                                except JSONDecodeError as e:
+                                    warning(f"Skipping SSE event with invalid JSON: {e}, sse: {_sse!r}")
+                                except (TypeError, ValueError, KeyError, AttributeError) as e:
+                                    warning(
+                                        f"Skipping SSE event due to model construction error: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
+                                except Exception as e:
+                                    error(
+                                        f"Unexpected error processing SSE event: {type(e).__name__}: {e}, sse: {_sse!r}"
+                                    )
                             return
 
                         return AsyncHttpResponse(response=_response, data=_iter())
