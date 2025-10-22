@@ -30,9 +30,9 @@ class Pose(UniversalBaseModel):
      Implementations of this quaternion should left multiply this quaternion to transform a point from the Pose frame
      to the enu frame.
     
-     Point<Pose\> posePt{1,0,0};
-     Rotation<Enu, Pose\> attPoseToEnu{};
-     Point<Enu\> = attPoseToEnu*posePt;
+     Point<Pose\\> posePt{1,0,0};
+     Rotation<Enu, Pose\\> attPoseToEnu{};
+     Point<Enu\\> = attPoseToEnu*posePt;
     
      This transformed point represents some vector in ENU space that is aligned with the x axis of the attPoseToEnu
      matrix.
