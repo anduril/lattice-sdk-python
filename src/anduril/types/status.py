@@ -3,28 +3,27 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .google_protobuf_any import GoogleProtobufAny
+from ..core.serialization import FieldMetadata
 
 
 class Status(UniversalBaseModel):
     """
-    The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
+    Contains status of entities.
     """
 
-    code: typing.Optional[int] = pydantic.Field(default=None)
+    platform_activity: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="platformActivity")] = (
+        pydantic.Field(default=None)
+    )
     """
-    The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
-    """
-
-    message: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+    A string that describes the activity that the entity is performing.
+     Examples include "RECONNAISSANCE", "INTERDICTION", "RETURN TO BASE (RTB)", "PREPARING FOR LAUNCH".
     """
 
-    details: typing.Optional[typing.List[GoogleProtobufAny]] = pydantic.Field(default=None)
+    role: typing.Optional[str] = pydantic.Field(default=None)
     """
-    A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+    A human-readable string that describes the role the entity is currently performing. E.g. "Team Member", "Commander".
     """
 
     if IS_PYDANTIC_V2:
