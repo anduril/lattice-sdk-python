@@ -3,7 +3,7 @@ name = "anduril-lattice-sdk"
 
 [tool.poetry]
 name = "anduril-lattice-sdk"
-version = "3.0.0"
+version = "3.1.0"
 description = "HTTP clients for the Anduril Lattice SDK"
 readme = "README.md"
 authors = [
