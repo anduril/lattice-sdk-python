@@ -11,12 +11,13 @@ from .task import Task
 
 class ExecuteRequest(UniversalBaseModel):
     """
-    Request to execute a Task.
+    The request to execute a task.
+     Contains the unique ID of the task to execute.
     """
 
     task: typing.Optional[Task] = pydantic.Field(default=None)
     """
-    Task to execute.
+    The task to execute.
     """
 
     if IS_PYDANTIC_V2:

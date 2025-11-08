@@ -10,7 +10,7 @@ from ..core.serialization import FieldMetadata
 
 class Agent(UniversalBaseModel):
     """
-    Represents an Agent in the COP.
+    Represents an agent capable of processing tasks.
     """
 
     entity_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="entityId")] = pydantic.Field(

@@ -14,6 +14,19 @@ from .execute_request import ExecuteRequest
 
 
 class AgentRequest(UniversalBaseModel):
+    """
+    Response streamed to an agent containing task actions to perform.
+
+    This message is streamed from Tasks API to agents and contains one of three
+    possible requests: execute a task, cancel a task, or complete a task. The agent
+    should process these requests according to its capabilities and report status
+    updates back to Tasks API using the UpdateStatus endpoint.
+
+    Multiple responses may be sent for different tasks, and the agent should maintain
+    the connection to receive ongoing task requests. The connection may also be used
+    for heartbeat messages to ensure the agent is still responsive.
+    """
+
     execute_request: typing_extensions.Annotated[
         typing.Optional[ExecuteRequest], FieldMetadata(alias="executeRequest")
     ] = None

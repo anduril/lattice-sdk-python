@@ -10,7 +10,8 @@ from ..core.serialization import FieldMetadata
 
 class CompleteRequest(UniversalBaseModel):
     """
-    Request to Complete a Task.
+    The request to complete a task.
+     Contains the unique ID of the task to complete.
     """
 
     task_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="taskId")] = pydantic.Field(

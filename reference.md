@@ -56,8 +56,8 @@ client.entities.publish_entity()
 
 **entity_id:** `typing.Optional[str]` 
 
-A Globally Unique Identifier (GUID) for your entity. If this field is empty, the Entity Manager API
- automatically generates an ID when it creates the entity.
+A Globally Unique Identifier (GUID) for your entity. This is a required
+ field.
     
 </dd>
 </dl>
@@ -741,7 +741,25 @@ client.entities.long_poll_entity_events(
 <dl>
 <dd>
 
-Establishes a persistent connection to stream entity events as they occur.
+Establishes a server-sent events (SSE) connection that streams entity data in real-time.
+This is a one-way connection from server to client that follows the SSE protocol with text/event-stream content type.
+
+This endpoint enables clients to maintain a real-time view of the common operational picture (COP)
+by first streaming all pre-existing entities that match filter criteria, then continuously delivering
+updates as entities are created, modified, or deleted.
+
+The server first sends events with type PREEXISTING for all live entities matching the filter that existed before the stream was open,
+then streams CREATE events for newly created entities, UPDATE events when existing entities change, and DELETED events when entities are removed. The stream remains open
+indefinitely unless preExistingOnly is set to true.
+
+Heartbeat messages can be configured to maintain connection health and detect disconnects by setting the heartbeatIntervalMS
+parameter. These heartbeats help keep the connection alive and allow clients to verify the server is still responsive.
+
+Clients can optimize bandwidth usage by specifying which entity components they need populated using the componentsToInclude parameter.
+This allows receiving only relevant data instead of complete entities.
+
+The connection automatically recovers from temporary disconnections, resuming the stream where it left off. Unlike polling approaches,
+this provides real-time updates with minimal latency and reduced server load.
 </dd>
 </dl>
 </dd>
@@ -828,8 +846,14 @@ for chunk in response.data:
 <dl>
 <dd>
 
-Submit a request to create a task and schedule it for delivery. Tasks, once delivered, will 
-be asynchronously updated by their destined agent. 
+Creates a new Task in the system with the specified parameters.
+
+This method initiates a new task with a unique ID (either provided or auto-generated),
+sets the initial task state to STATUS_CREATED, and establishes task ownership. The task
+can be assigned to a specific agent through the Relations field.
+
+Once created, a task enters the lifecycle workflow and can be tracked, updated, and managed
+through other Tasks API endpoints.
 </dd>
 </dl>
 </dd>
@@ -892,7 +916,7 @@ GUID. Will reject if supplied Task ID does not match [A-Za-z0-9_-.]{5,36}.
 <dl>
 <dd>
 
-**specification:** `typing.Optional[GoogleProtobufAny]` — Full set of task parameters.
+**specification:** `typing.Optional[GoogleProtobufAny]` — The path for the Protobuf task definition, and the complete task data.
     
 </dd>
 </dl>
@@ -958,6 +982,27 @@ task. For example, an entity Objective, an entity Keep In Zone, etc.
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves a specific Task by its ID, with options to select a particular task version or view.
+
+This method returns detailed information about a task including its current status,
+specification, relations, and other metadata. The response includes the complete Task object
+with all associated fields.
+
+By default, the method returns the latest definition version of the task from the manager's
+perspective.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1022,7 +1067,17 @@ client.tasks.get_task(
 <dl>
 <dd>
 
-Update the status of a task.
+Updates the status of a Task as it progresses through its lifecycle.
+
+This method allows agents or operators to report the current state of a task,
+which could include changes to task status, and error information.
+
+Each status update increments the task's status_version. When updating status,
+clients must provide the current version to ensure consistency. The system rejects
+updates with mismatched versions to prevent race conditions.
+
+Terminal states (`STATUS_DONE_OK` and `STATUS_DONE_NOT_OK`) are permanent; once a task
+reaches these states, no further updates are allowed.
 </dd>
 </dl>
 </dd>
@@ -1121,7 +1176,21 @@ is known are considered stale and ignored.
 <dl>
 <dd>
 
-Query for tasks by a specified search criteria.
+Searches for Tasks that match specified filtering criteria and returns matching tasks in paginated form.
+
+This method allows filtering tasks based on multiple criteria including:
+- Parent task relationships
+- Task status (with inclusive or exclusive filtering)
+- Update time ranges
+- Task view (manager or agent perspective)
+- Task assignee
+- Task type (via exact URL matches or prefix matching)
+
+Results are returned in pages. When more results are available than can be returned in a single
+response, a page_token is provided that can be used in subsequent requests to retrieve the next
+set of results.
+
+By default, this returns the latest task version for each matching task from the manager's perspective.
 </dd>
 </dl>
 </dd>
@@ -1168,7 +1237,7 @@ client.tasks.query_tasks()
 **parent_task_id:** `typing.Optional[str]` 
 
 If present matches Tasks with this parent Task ID.
-Note: this is mutually exclusive with all other query parameters, i.e., either provide parent Task ID, or
+Note: this is mutually exclusive with all other query parameters, for example, either provide parent task ID, or
 any of the remaining parameters, but not both.
     
 </dd>
@@ -1217,8 +1286,25 @@ any of the remaining parameters, but not both.
 <dl>
 <dd>
 
-This is a long polling API that will block until a new task is ready for delivery. If no new task is 
-available then the server will hold on to your request for up to 5 minutes, after that 5 minute timeout 
+Establishes a server streaming connection that delivers tasks to taskable agents for execution.
+
+This method creates a persistent connection from Tasks API to an agent, allowing the server
+to push tasks to the agent as they become available. The agent receives a stream of tasks that
+match its selector criteria (entity IDs).
+
+The stream delivers three types of requests:
+- ExecuteRequest: Contains a new task for the agent to execute
+- CancelRequest: Indicates a task should be canceled
+- CompleteRequest: Indicates a task should be completed
+
+This is the primary method for taskable agents to receive and process tasks in real-time.
+Agents should maintain this connection and process incoming tasks according to their capabilities.
+
+When an agent receives a task, it should update the task status using the UpdateStatus endpoint
+to provide progress information back to Tasks API.
+
+This is a long polling API that will block until a new task is ready for delivery. If no new task is
+available then the server will hold on to your request for up to 5 minutes, after that 5 minute timeout
 period you will be expected to reinitiate a new request.
 </dd>
 </dl>

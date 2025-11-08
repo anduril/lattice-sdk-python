@@ -12,14 +12,15 @@ from ..core.serialization import FieldMetadata
 
 class CancelRequest(UniversalBaseModel):
     """
-    Request to Cancel a Task.
+    The request to cancel a task.
+     Contains the task, and the assignee of the request to cancel the task.
     """
 
     task_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="taskId")] = pydantic.Field(
         default=None
     )
     """
-    ID of the Task to cancel.
+    The unique task ID of the task to cancel.
     """
 
     assignee: typing.Optional["Principal"] = pydantic.Field(default=None)

@@ -20,38 +20,46 @@ from .task_version import TaskVersion
 
 class Task(UniversalBaseModel):
     """
-    A Task is something an agent can be asked to do.
+    A task represents a structured unit of work that can be assigned to an agent for execution.
+
+     Tasks are the fundamental building blocks of work assignment in the Lattice.
+     Each task has a unique identifier, a specification defining what needs to be done,
+     status information tracking its progress, and various metadata facilitating its lifecycle management.
+
+     Tasks can be related to each other, through parent-child relationships, assigned to
+     specific agents, and tracked through a well-defined state machine from creation to completion.
+     They support rich status reporting, including progress updates, error handling, and results.
     """
 
     version: typing.Optional[TaskVersion] = pydantic.Field(default=None)
     """
-    Version of this Task.
+    Version of this task.
     """
 
     display_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="displayName")] = (
         pydantic.Field(default=None)
     )
     """
-    DEPRECATED: Human readable display name for this Task, should be short (<100 chars).
+    DEPRECATED: Human readable display name for this task, should be short (<100 chars).
     """
 
     specification: typing.Optional[GoogleProtobufAny] = pydantic.Field(default=None)
     """
-    Full Task parameterization.
+    The path for the Protobuf task definition, and the complete task data.
     """
 
     created_by: typing_extensions.Annotated[typing.Optional["Principal"], FieldMetadata(alias="createdBy")] = (
         pydantic.Field(default=None)
     )
     """
-    Records who created this Task. This field will not change after the Task has been created.
+    Records who created this task. This field will not change after the task has been created.
     """
 
     last_updated_by: typing_extensions.Annotated[typing.Optional["Principal"], FieldMetadata(alias="lastUpdatedBy")] = (
         pydantic.Field(default=None)
     )
     """
-    Records who updated this Task last.
+    Records who updated this task last.
     """
 
     last_update_time: typing_extensions.Annotated[
@@ -63,44 +71,44 @@ class Task(UniversalBaseModel):
 
     status: typing.Optional[TaskStatus] = pydantic.Field(default=None)
     """
-    The status of this Task.
+    The status of this task.
     """
 
     scheduled_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="scheduledTime")] = (
         pydantic.Field(default=None)
     )
     """
-    If the Task has been scheduled to execute, what time it should execute at.
+    If the task has been scheduled to execute, what time it should execute at.
     """
 
     relations: typing.Optional[Relations] = pydantic.Field(default=None)
     """
-    Any related Tasks associated with this, typically includes an assignee for this Task and/or a parent.
+    Any related Tasks associated with this, typically includes an assignee for this task and/or a parent.
     """
 
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Longer, free form human readable description of this Task
+    Longer, free form human readable description of this task
     """
 
     is_executed_elsewhere: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="isExecutedElsewhere")
     ] = pydantic.Field(default=None)
     """
-    If set, execution of this Task is managed elsewhere, not by Task Manager.
-     In other words, Task manager will not attempt to update the assigned agent with execution instructions.
+    If set, execution of this task is managed elsewhere, not by Task Manager.
+     In other words, task manager will not attempt to update the assigned agent with execution instructions.
     """
 
     create_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createTime")] = (
         pydantic.Field(default=None)
     )
     """
-    Time of Task creation.
+    Time of task creation.
     """
 
     replication: typing.Optional[Replication] = pydantic.Field(default=None)
     """
-    If populated, designates this to be a replicated Task.
+    If populated, designates this to be a replicated task.
     """
 
     initial_entities: typing_extensions.Annotated[
@@ -115,7 +123,7 @@ class Task(UniversalBaseModel):
 
     owner: typing.Optional[Owner] = pydantic.Field(default=None)
     """
-    The networked owner of this Task. It is used to ensure that linear writes occur on the node responsible
+    The networked owner of this task. It is used to ensure that linear writes occur on the node responsible
      for replication of task data to other nodes running Task Manager.
     """
 
