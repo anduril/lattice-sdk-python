@@ -52,8 +52,8 @@ class Entity(UniversalBaseModel):
         default=None
     )
     """
-    A Globally Unique Identifier (GUID) for your entity. If this field is empty, the Entity Manager API
-     automatically generates an ID when it creates the entity.
+    A Globally Unique Identifier (GUID) for your entity. This is a required
+     field.
     """
 
     description: typing.Optional[str] = pydantic.Field(default=None)
@@ -300,7 +300,6 @@ class Entity(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .override import Override  # noqa: E402, F401, I001
-from .overrides import Overrides  # noqa: E402, F401, I001
+from .overrides import Overrides  # noqa: E402, I001
 
 update_forward_refs(Entity)

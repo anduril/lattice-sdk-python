@@ -15,7 +15,7 @@ from .user import User
 
 class Principal(UniversalBaseModel):
     """
-    A Principal is an entity that has authority over this Task.
+    A Principal is an entity that has authority over this task.
     """
 
     system: typing.Optional[System] = None

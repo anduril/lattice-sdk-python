@@ -11,12 +11,13 @@ from .task import Task
 
 class ExecuteRequest(UniversalBaseModel):
     """
-    Request to execute a Task.
+    The request to execute a task.
+     Contains the unique ID of the task to execute.
     """
 
     task: typing.Optional[Task] = pydantic.Field(default=None)
     """
-    Task to execute.
+    The task to execute.
     """
 
     if IS_PYDANTIC_V2:
@@ -28,10 +29,5 @@ class ExecuteRequest(UniversalBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
-
-from .entity import Entity  # noqa: E402, F401, I001
-from .override import Override  # noqa: E402, F401, I001
-from .overrides import Overrides  # noqa: E402, F401, I001
-from .principal import Principal  # noqa: E402, F401, I001
 
 update_forward_refs(ExecuteRequest)

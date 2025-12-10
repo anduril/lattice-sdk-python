@@ -71,7 +71,6 @@ class Override(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .entity import Entity  # noqa: E402, F401, I001
-from .overrides import Overrides  # noqa: E402, F401, I001
+from .entity import Entity  # noqa: E402, I001
 
 update_forward_refs(Override)

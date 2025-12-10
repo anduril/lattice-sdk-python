@@ -10,12 +10,16 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update
 
 class TaskEntity(UniversalBaseModel):
     """
-    Wrapper of an entity passed in Tasking, used to hold an additional information, and as a future extension point.
+    An entity wrapper used in task definitions, with additional metadata.
+
+     TaskEntity wraps an entity reference with additional contextual information for task execution.
+     This structure allows entities to be passed to tasks with supplementary metadata that aids
+     in proper task execution, while also serving as an extension point for future capabilities.
     """
 
     entity: typing.Optional["Entity"] = pydantic.Field(default=None)
     """
-    The wrapped entity-manager entity.
+    The wrapped entity.
     """
 
     snapshot: typing.Optional[bool] = pydantic.Field(default=None)
@@ -33,8 +37,6 @@ class TaskEntity(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .entity import Entity  # noqa: E402, F401, I001
-from .override import Override  # noqa: E402, F401, I001
-from .overrides import Overrides  # noqa: E402, F401, I001
+from .entity import Entity  # noqa: E402, I001
 
 update_forward_refs(TaskEntity)

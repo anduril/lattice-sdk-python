@@ -10,7 +10,7 @@ from ..core.serialization import FieldMetadata
 
 class Owner(UniversalBaseModel):
     """
-    Owner designates the entity responsible for writes of Task data.
+    Owner designates the entity responsible for writes of task data.
     """
 
     entity_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="entityId")] = pydantic.Field(

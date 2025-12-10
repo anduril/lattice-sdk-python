@@ -11,14 +11,14 @@ from ..core.serialization import FieldMetadata
 
 class Replication(UniversalBaseModel):
     """
-    Any metadata associated with the replication of a Task.
+    Any metadata associated with the replication of a task.
     """
 
     stale_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="staleTime")] = (
         pydantic.Field(default=None)
     )
     """
-    Time by which this Task should be assumed to be stale.
+    The time by which this task should be assumed to be stale.
     """
 
     if IS_PYDANTIC_V2:

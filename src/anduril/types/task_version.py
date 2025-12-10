@@ -10,28 +10,34 @@ from ..core.serialization import FieldMetadata
 
 class TaskVersion(UniversalBaseModel):
     """
-    Version of a Task.
+    Versioning information for a task.
+
+     TaskVersion provides a unique identifier for each task, along with separate version counters
+     for tracking changes to the task's definition and its status. This versioning system enables
+     optimistic concurrency control, ensuring that updates from multiple sources don't conflict.
     """
 
     task_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="taskId")] = pydantic.Field(
         default=None
     )
     """
-    The unique ID for this Task.
+    The unique identifier for this task, used to distinguish it from all other tasks in the system.
     """
 
     definition_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="definitionVersion")] = (
         pydantic.Field(default=None)
     )
     """
-    Increments on definition (i.e. not TaskStatus) change. 0 is unset, starts at 1 on creation.
+    Counter that increments on changes to the task definition.
+     Unset (0) initially, starts at 1 on creation, and increments with each update to task fields.
     """
 
     status_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="statusVersion")] = (
         pydantic.Field(default=None)
     )
     """
-    Increments on changes to TaskStatus. 0 is unset, starts at 1 on creation.
+    Counter that increments on changes to TaskStatus.
+     Unset (0) initially, starts at 1 on creation, and increments with each status update.
     """
 
     if IS_PYDANTIC_V2:

@@ -6,8 +6,8 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .entity_manager_t_mat3 import EntityManagerTMat3
 from .error_ellipse import ErrorEllipse
-from .t_mat_3 import TMat3
 
 
 class LocationUncertainty(UniversalBaseModel):
@@ -15,17 +15,17 @@ class LocationUncertainty(UniversalBaseModel):
     Uncertainty of entity position and velocity, if available.
     """
 
-    position_enu_cov: typing_extensions.Annotated[typing.Optional[TMat3], FieldMetadata(alias="positionEnuCov")] = (
-        pydantic.Field(default=None)
-    )
+    position_enu_cov: typing_extensions.Annotated[
+        typing.Optional[EntityManagerTMat3], FieldMetadata(alias="positionEnuCov")
+    ] = pydantic.Field(default=None)
     """
     Positional covariance represented by the upper triangle of the covariance matrix. It is valid to populate
      only the diagonal of the matrix if the full covariance matrix is unknown.
     """
 
-    velocity_enu_cov: typing_extensions.Annotated[typing.Optional[TMat3], FieldMetadata(alias="velocityEnuCov")] = (
-        pydantic.Field(default=None)
-    )
+    velocity_enu_cov: typing_extensions.Annotated[
+        typing.Optional[EntityManagerTMat3], FieldMetadata(alias="velocityEnuCov")
+    ] = pydantic.Field(default=None)
     """
     Velocity covariance represented by the upper triangle of the covariance matrix. It is valid to populate
      only the diagonal of the matrix if the full covariance matrix is unknown.

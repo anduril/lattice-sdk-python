@@ -7,7 +7,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .pose import Pose
-from .t_mat_2 import TMat2
+from .t_mat2 import TMat2
 
 
 class AngleOfArrival(UniversalBaseModel):
@@ -23,7 +23,7 @@ class AngleOfArrival(UniversalBaseModel):
      forward-left-up (FLU) frame where the x-axis (1, 0, 0) is pointing towards the target.
     """
 
-    bearing_elevation_covariance_rad_2: typing_extensions.Annotated[
+    bearing_elevation_covariance_rad2: typing_extensions.Annotated[
         typing.Optional[TMat2], FieldMetadata(alias="bearingElevationCovarianceRad2")
     ] = pydantic.Field(default=None)
     """

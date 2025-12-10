@@ -12,19 +12,20 @@ from ..core.serialization import FieldMetadata
 
 class Relations(UniversalBaseModel):
     """
-    Relations describes the relationships of this Task, such as assignment, or if the Task has any parents.
+    Describes the relationships associated with this task: the system assigned to
+     execute the task, and the parent task, if one exists.
     """
 
     assignee: typing.Optional["Principal"] = pydantic.Field(default=None)
     """
-    Who or what, if anyone, this Task is currently assigned to.
+    The system, user, or team assigned to the task.
     """
 
     parent_task_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="parentTaskId")] = (
         pydantic.Field(default=None)
     )
     """
-    If this Task is a "sub-Task", what is its parent, none if empty.
+    Identifies the parent task if the task is a sub-task.
     """
 
     if IS_PYDANTIC_V2:
@@ -37,6 +38,6 @@ class Relations(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from .principal import Principal  # noqa: E402, F401, I001
+from .principal import Principal  # noqa: E402, I001
 
 update_forward_refs(Relations)
