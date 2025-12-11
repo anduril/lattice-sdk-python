@@ -8,7 +8,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 from .line_of_bearing import LineOfBearing
-from .u_int_32_range import UInt32Range
+from .u_int32range import UInt32Range
 
 
 class Tracked(UniversalBaseModel):

@@ -18,8 +18,3 @@ class EntityStreamEvent(EntityEvent):
             frozen = True
             smart_union = True
             extra = pydantic.Extra.allow
-
-
-from .entity import Entity  # noqa: E402, F401, I001
-from .override import Override  # noqa: E402, F401, I001
-from .overrides import Overrides  # noqa: E402, F401, I001

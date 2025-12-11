@@ -6,6 +6,7 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
+from ..types.list_response import ListResponse
 from ..types.path_metadata import PathMetadata
 from .raw_client import AsyncRawObjectsClient, RawObjectsClient
 from .types.get_object_request_accept_encoding import GetObjectRequestAcceptEncoding
@@ -37,7 +38,7 @@ class ObjectsClient:
         page_token: typing.Optional[str] = None,
         all_objects_in_mesh: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[PathMetadata]:
+    ) -> SyncPager[PathMetadata, ListResponse]:
         """
         Lists objects in your environment. You can define a prefix to list a subset of your objects. If you do not set a prefix, Lattice returns all available objects. By default this endpoint will list local objects only.
 
@@ -60,26 +61,17 @@ class ObjectsClient:
 
         Returns
         -------
-        SyncPager[PathMetadata]
+        SyncPager[PathMetadata, ListResponse]
             Successful operation
 
         Examples
         --------
-        import datetime
-
         from anduril import Lattice
 
         client = Lattice(
             token="YOUR_TOKEN",
         )
-        response = client.objects.list_objects(
-            prefix="prefix",
-            since_timestamp=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            page_token="pageToken",
-            all_objects_in_mesh=True,
-        )
+        response = client.objects.list_objects()
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -254,7 +246,7 @@ class AsyncObjectsClient:
         page_token: typing.Optional[str] = None,
         all_objects_in_mesh: typing.Optional[bool] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[PathMetadata]:
+    ) -> AsyncPager[PathMetadata, ListResponse]:
         """
         Lists objects in your environment. You can define a prefix to list a subset of your objects. If you do not set a prefix, Lattice returns all available objects. By default this endpoint will list local objects only.
 
@@ -277,13 +269,12 @@ class AsyncObjectsClient:
 
         Returns
         -------
-        AsyncPager[PathMetadata]
+        AsyncPager[PathMetadata, ListResponse]
             Successful operation
 
         Examples
         --------
         import asyncio
-        import datetime
 
         from anduril import AsyncLattice
 
@@ -293,14 +284,7 @@ class AsyncObjectsClient:
 
 
         async def main() -> None:
-            response = await client.objects.list_objects(
-                prefix="prefix",
-                since_timestamp=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                page_token="pageToken",
-                all_objects_in_mesh=True,
-            )
+            response = await client.objects.list_objects()
             async for item in response:
                 yield item
 

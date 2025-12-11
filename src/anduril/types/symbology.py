@@ -6,7 +6,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .mil_std_2525_c import MilStd2525C
+from .mil_std2525c import MilStd2525C
 
 
 class Symbology(UniversalBaseModel):
@@ -14,7 +14,7 @@ class Symbology(UniversalBaseModel):
     Symbology associated with an entity.
     """
 
-    mil_std_2525_c: typing_extensions.Annotated[typing.Optional[MilStd2525C], FieldMetadata(alias="milStd2525C")] = None
+    mil_std2525c: typing_extensions.Annotated[typing.Optional[MilStd2525C], FieldMetadata(alias="milStd2525C")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -6,7 +6,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .mode_5_mode_5_interrogation_response import Mode5Mode5InterrogationResponse
+from .mode5mode5interrogation_response import Mode5Mode5InterrogationResponse
 
 
 class Mode5(UniversalBaseModel):
@@ -14,21 +14,19 @@ class Mode5(UniversalBaseModel):
     Describes the Mode 5 transponder interrogation status and codes.
     """
 
-    mode_5_interrogation_response: typing_extensions.Annotated[
+    mode5interrogation_response: typing_extensions.Annotated[
         typing.Optional[Mode5Mode5InterrogationResponse], FieldMetadata(alias="mode5InterrogationResponse")
     ] = pydantic.Field(default=None)
     """
     The validity of the response from the Mode 5 interrogation.
     """
 
-    mode_5: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="mode5")] = pydantic.Field(
-        default=None
-    )
+    mode5: typing.Optional[int] = pydantic.Field(default=None)
     """
     The Mode 5 code assigned to military assets.
     """
 
-    mode_5_platform_id: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="mode5PlatformId")] = (
+    mode5platform_id: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="mode5PlatformId")] = (
         pydantic.Field(default=None)
     )
     """

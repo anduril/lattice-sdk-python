@@ -6,6 +6,24 @@
 
 The Lattice SDK Python library provides convenient access to the Lattice SDK APIs from Python.
 
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Support](#support)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Async Client](#async-client)
+- [Exception Handling](#exception-handling)
+- [Streaming](#streaming)
+- [Pagination](#pagination)
+- [Advanced](#advanced)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Custom Client](#custom-client)
+
 ## Documentation
 
 API reference documentation is available [here](https://developer.anduril.com/).
@@ -103,26 +121,26 @@ for chunk in response.data:
 Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
 
 ```python
-import datetime
-
 from anduril import Lattice
 
 client = Lattice(
     token="YOUR_TOKEN",
 )
-response = client.objects.list_objects(
-    prefix="prefix",
-    since_timestamp=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    page_token="pageToken",
-    all_objects_in_mesh=True,
-)
+response = client.objects.list_objects()
 for item in response:
     yield item
 # alternatively, you can paginate page-by-page
 for page in response.iter_pages():
     yield page
+```
+
+```python
+# You can also iterate through pages and access the typed response per page
+pager = client.objects.list_objects(...)
+for page in pager.iter_pages():
+    print(page.response)  # access the typed response for each page
+    for item in page:
+        print(item)
 ```
 
 ## Advanced
@@ -142,11 +160,11 @@ response = client.entities.with_raw_response.long_poll_entity_events(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
 pager = client.objects.list_objects(...)
-print(pager.response.headers)  # access the response headers for the first page
+print(pager.response)  # access the typed response for the first page
 for item in pager:
     print(item)  # access the underlying object(s)
 for page in pager.iter_pages():
-    print(page.response.headers)  # access the response headers for each page
+    print(page.response)  # access the typed response for each page
     for item in page:
         print(item)  # access the underlying object(s)
 with client.entities.with_raw_response.stream_entities(...) as response:

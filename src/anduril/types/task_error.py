@@ -12,12 +12,16 @@ from .task_error_code import TaskErrorCode
 
 class TaskError(UniversalBaseModel):
     """
-    TaskError contains an error code and message typically associated to a Task.
+    Error information associated with a task.
+
+     TaskError contains structured error details, including an error code, a human-readable
+     message, and optional extended error information. This structure is used when a task
+     encounters problems during its lifecycle.
     """
 
     code: typing.Optional[TaskErrorCode] = pydantic.Field(default=None)
     """
-    Error code for Task error.
+    Error code for task error.
     """
 
     message: typing.Optional[str] = pydantic.Field(default=None)

@@ -6,7 +6,7 @@ import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class TMat3(UniversalBaseModel):
+class EntityManagerTMat3(UniversalBaseModel):
     """
     Symmetric 3d matrix only representing the upper right triangle.
     """

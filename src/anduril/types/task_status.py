@@ -15,47 +15,51 @@ from .task_status_status import TaskStatusStatus
 
 class TaskStatus(UniversalBaseModel):
     """
-    TaskStatus is contains information regarding the status of a Task at any given time. Can include related information
-      such as any progress towards Task completion, or any associated results if Task completed.
+    Comprehensive status information for a task at a given point in time.
+
+     TaskStatus contains all status-related information for a task, including its current state,
+     any error conditions, progress details, results, timing information, and resource allocations.
+     This object evolves throughout a task's lifecycle, providing increasing detail as the task
+     progresses from creation through execution to completion.
     """
 
     status: typing.Optional[TaskStatusStatus] = pydantic.Field(default=None)
     """
-    Status of the Task.
+    Status of the task.
     """
 
     task_error: typing_extensions.Annotated[typing.Optional[TaskError], FieldMetadata(alias="taskError")] = (
         pydantic.Field(default=None)
     )
     """
-    Any errors associated with the Task.
+    Any errors associated with the task.
     """
 
     progress: typing.Optional[GoogleProtobufAny] = pydantic.Field(default=None)
     """
-    Any incremental progress on the Task, should be from the tasks/v* /progress folder.
+    Any incremental progress on the task, should be from the tasks/v* /progress folder.
     """
 
     result: typing.Optional[GoogleProtobufAny] = pydantic.Field(default=None)
     """
-    Any final result of the Task, should be from tasks/v* /result folder.
+    Any final result of the task, should be from tasks/v* /result folder.
     """
 
     start_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="startTime")] = (
         pydantic.Field(default=None)
     )
     """
-    Time the Task began execution, may not be known even for executing Tasks.
+    Time the task began execution, may not be known even for executing Tasks.
     """
 
     estimate: typing.Optional[GoogleProtobufAny] = pydantic.Field(default=None)
     """
-    Any estimate for how the Task will progress, should be from tasks/v* /estimates folder.
+    Any estimate for how the task will progress, should be from tasks/v* /estimates folder.
     """
 
     allocation: typing.Optional[Allocation] = pydantic.Field(default=None)
     """
-    Any allocated agents of the Task.
+    Any allocated agents of the task.
     """
 
     if IS_PYDANTIC_V2:

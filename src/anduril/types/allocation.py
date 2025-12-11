@@ -11,14 +11,14 @@ from .agent import Agent
 
 class Allocation(UniversalBaseModel):
     """
-    Allocation contains a list of agents allocated to a Task.
+    Allocation contains a list of agents allocated to a task.
     """
 
     active_agents: typing_extensions.Annotated[
         typing.Optional[typing.List[Agent]], FieldMetadata(alias="activeAgents")
     ] = pydantic.Field(default=None)
     """
-    Agents actively being utilized in a Task.
+    Agents actively being utilized in a task.
     """
 
     if IS_PYDANTIC_V2:

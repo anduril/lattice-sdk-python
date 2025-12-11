@@ -33,7 +33,7 @@ class System(UniversalBaseModel):
     """
     Whether the System Principal (for example, an Asset) can own scheduling.
      This means we bypass manager-owned scheduling and defer to the system
-     Principal to handle scheduling and give us status updates for the Task.
+     Principal to handle scheduling and give us status updates for the task.
      Regardless of the value defined by the client, the Task Manager will
      determine and set this value appropriately.
     """

@@ -6,8 +6,8 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .entity_manager_pose import EntityManagerPose
 from .field_of_view_mode import FieldOfViewMode
-from .pose import Pose
 from .position import Position
 from .projected_frustum import ProjectedFrustum
 
@@ -47,9 +47,9 @@ class FieldOfView(UniversalBaseModel):
     Center ray of the frustum projected onto the ground.
     """
 
-    center_ray_pose: typing_extensions.Annotated[typing.Optional[Pose], FieldMetadata(alias="centerRayPose")] = (
-        pydantic.Field(default=None)
-    )
+    center_ray_pose: typing_extensions.Annotated[
+        typing.Optional[EntityManagerPose], FieldMetadata(alias="centerRayPose")
+    ] = pydantic.Field(default=None)
     """
     The origin and direction of the center ray for this sensor relative to the ENU frame. A ray which is aligned with
      the positive X axis in the sensor frame will be transformed into the ray along the sensor direction in the ENU

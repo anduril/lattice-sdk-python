@@ -13,7 +13,7 @@ class Lla(UniversalBaseModel):
     lon: typing.Optional[float] = None
     lat: typing.Optional[float] = None
     alt: typing.Optional[float] = None
-    is_2_d: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="is2d")] = None
+    is2d: typing.Optional[bool] = None
     altitude_reference: typing_extensions.Annotated[
         typing.Optional[LlaAltitudeReference], FieldMetadata(alias="altitudeReference")
     ] = pydantic.Field(default=None)

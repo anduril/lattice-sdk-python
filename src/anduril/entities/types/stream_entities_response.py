@@ -52,9 +52,9 @@ class StreamEntitiesResponse_Entity(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-from ...types.entity import Entity  # noqa: E402, F401, I001
-from ...types.override import Override  # noqa: E402, F401, I001
-from ...types.overrides import Overrides  # noqa: E402, F401, I001
+from ...types.entity import Entity  # noqa: E402, I001
 
-StreamEntitiesResponse = typing.Union[StreamEntitiesResponse_Heartbeat, StreamEntitiesResponse_Entity]
+StreamEntitiesResponse = typing_extensions.Annotated[
+    typing.Union[StreamEntitiesResponse_Heartbeat, StreamEntitiesResponse_Entity], pydantic.Field(discriminator="event")
+]
 update_forward_refs(StreamEntitiesResponse_Entity)

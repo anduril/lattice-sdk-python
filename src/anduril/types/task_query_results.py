@@ -12,6 +12,16 @@ from .task import Task
 
 
 class TaskQueryResults(UniversalBaseModel):
+    """
+    Response containing tasks that match the query criteria.
+
+    This message returns a list of Task objects that satisfy the filter conditions
+    specified in the request. When there are more matching tasks than can be returned
+    in a single response, a page_token is provided to retrieve the next batch in
+    a subsequent request. An empty tasks list with no page_token indicates that
+    there are no more matching tasks.
+    """
+
     tasks: typing.Optional[typing.List[Task]] = None
     next_page_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="nextPageToken")] = (
         pydantic.Field(default=None)
@@ -32,10 +42,5 @@ class TaskQueryResults(UniversalBaseModel):
             smart_union = True
             extra = pydantic.Extra.allow
 
-
-from .entity import Entity  # noqa: E402, F401, I001
-from .override import Override  # noqa: E402, F401, I001
-from .overrides import Overrides  # noqa: E402, F401, I001
-from .principal import Principal  # noqa: E402, F401, I001
 
 update_forward_refs(TaskQueryResults)

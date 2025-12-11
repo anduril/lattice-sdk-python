@@ -47,8 +47,14 @@ class RawTasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Task]:
         """
-        Submit a request to create a task and schedule it for delivery. Tasks, once delivered, will
-        be asynchronously updated by their destined agent.
+        Creates a new Task in the system with the specified parameters.
+
+        This method initiates a new task with a unique ID (either provided or auto-generated),
+        sets the initial task state to STATUS_CREATED, and establishes task ownership. The task
+        can be assigned to a specific agent through the Relations field.
+
+        Once created, a task enters the lifecycle workflow and can be tracked, updated, and managed
+        through other Tasks API endpoints.
 
         Parameters
         ----------
@@ -63,7 +69,7 @@ class RawTasksClient:
             Longer, free form human readable description of this Task.
 
         specification : typing.Optional[GoogleProtobufAny]
-            Full set of task parameters.
+            The path for the Protobuf task definition, and the complete task data.
 
         author : typing.Optional[Principal]
 
@@ -129,9 +135,9 @@ class RawTasksClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -140,9 +146,9 @@ class RawTasksClient:
                 raise UnauthorizedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -154,6 +160,15 @@ class RawTasksClient:
 
     def get_task(self, task_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Task]:
         """
+        Retrieves a specific Task by its ID, with options to select a particular task version or view.
+
+        This method returns detailed information about a task including its current status,
+        specification, relations, and other metadata. The response includes the complete Task object
+        with all associated fields.
+
+        By default, the method returns the latest definition version of the task from the manager's
+        perspective.
+
         Parameters
         ----------
         task_id : str
@@ -186,9 +201,9 @@ class RawTasksClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -197,9 +212,9 @@ class RawTasksClient:
                 raise UnauthorizedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -208,9 +223,9 @@ class RawTasksClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -230,7 +245,17 @@ class RawTasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Task]:
         """
-        Update the status of a task.
+        Updates the status of a Task as it progresses through its lifecycle.
+
+        This method allows agents or operators to report the current state of a task,
+        which could include changes to task status, and error information.
+
+        Each status update increments the task's status_version. When updating status,
+        clients must provide the current version to ensure consistency. The system rejects
+        updates with mismatched versions to prevent race conditions.
+
+        Terminal states (`STATUS_DONE_OK` and `STATUS_DONE_NOT_OK`) are permanent; once a task
+        reaches these states, no further updates are allowed.
 
         Parameters
         ----------
@@ -288,9 +313,9 @@ class RawTasksClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -299,9 +324,9 @@ class RawTasksClient:
                 raise UnauthorizedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -310,9 +335,9 @@ class RawTasksClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -332,7 +357,21 @@ class RawTasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[TaskQueryResults]:
         """
-        Query for tasks by a specified search criteria.
+        Searches for Tasks that match specified filtering criteria and returns matching tasks in paginated form.
+
+        This method allows filtering tasks based on multiple criteria including:
+        - Parent task relationships
+        - Task status (with inclusive or exclusive filtering)
+        - Update time ranges
+        - Task view (manager or agent perspective)
+        - Task assignee
+        - Task type (via exact URL matches or prefix matching)
+
+        Results are returned in pages. When more results are available than can be returned in a single
+        response, a page_token is provided that can be used in subsequent requests to retrieve the next
+        set of results.
+
+        By default, this returns the latest task version for each matching task from the manager's perspective.
 
         Parameters
         ----------
@@ -341,7 +380,7 @@ class RawTasksClient:
 
         parent_task_id : typing.Optional[str]
             If present matches Tasks with this parent Task ID.
-            Note: this is mutually exclusive with all other query parameters, i.e., either provide parent Task ID, or
+            Note: this is mutually exclusive with all other query parameters, for example, either provide parent task ID, or
             any of the remaining parameters, but not both.
 
         status_filter : typing.Optional[TaskQueryStatusFilter]
@@ -390,9 +429,9 @@ class RawTasksClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -401,9 +440,9 @@ class RawTasksClient:
                 raise UnauthorizedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -412,9 +451,9 @@ class RawTasksClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -431,6 +470,23 @@ class RawTasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AgentRequest]:
         """
+        Establishes a server streaming connection that delivers tasks to taskable agents for execution.
+
+        This method creates a persistent connection from Tasks API to an agent, allowing the server
+        to push tasks to the agent as they become available. The agent receives a stream of tasks that
+        match its selector criteria (entity IDs).
+
+        The stream delivers three types of requests:
+        - ExecuteRequest: Contains a new task for the agent to execute
+        - CancelRequest: Indicates a task should be canceled
+        - CompleteRequest: Indicates a task should be completed
+
+        This is the primary method for taskable agents to receive and process tasks in real-time.
+        Agents should maintain this connection and process incoming tasks according to their capabilities.
+
+        When an agent receives a task, it should update the task status using the UpdateStatus endpoint
+        to provide progress information back to Tasks API.
+
         This is a long polling API that will block until a new task is ready for delivery. If no new task is
         available then the server will hold on to your request for up to 5 minutes, after that 5 minute timeout
         period you will be expected to reinitiate a new request.
@@ -476,9 +532,9 @@ class RawTasksClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -487,9 +543,9 @@ class RawTasksClient:
                 raise UnauthorizedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -518,8 +574,14 @@ class AsyncRawTasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Task]:
         """
-        Submit a request to create a task and schedule it for delivery. Tasks, once delivered, will
-        be asynchronously updated by their destined agent.
+        Creates a new Task in the system with the specified parameters.
+
+        This method initiates a new task with a unique ID (either provided or auto-generated),
+        sets the initial task state to STATUS_CREATED, and establishes task ownership. The task
+        can be assigned to a specific agent through the Relations field.
+
+        Once created, a task enters the lifecycle workflow and can be tracked, updated, and managed
+        through other Tasks API endpoints.
 
         Parameters
         ----------
@@ -534,7 +596,7 @@ class AsyncRawTasksClient:
             Longer, free form human readable description of this Task.
 
         specification : typing.Optional[GoogleProtobufAny]
-            Full set of task parameters.
+            The path for the Protobuf task definition, and the complete task data.
 
         author : typing.Optional[Principal]
 
@@ -600,9 +662,9 @@ class AsyncRawTasksClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -611,9 +673,9 @@ class AsyncRawTasksClient:
                 raise UnauthorizedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -627,6 +689,15 @@ class AsyncRawTasksClient:
         self, task_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Task]:
         """
+        Retrieves a specific Task by its ID, with options to select a particular task version or view.
+
+        This method returns detailed information about a task including its current status,
+        specification, relations, and other metadata. The response includes the complete Task object
+        with all associated fields.
+
+        By default, the method returns the latest definition version of the task from the manager's
+        perspective.
+
         Parameters
         ----------
         task_id : str
@@ -659,9 +730,9 @@ class AsyncRawTasksClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -670,9 +741,9 @@ class AsyncRawTasksClient:
                 raise UnauthorizedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -681,9 +752,9 @@ class AsyncRawTasksClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -703,7 +774,17 @@ class AsyncRawTasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Task]:
         """
-        Update the status of a task.
+        Updates the status of a Task as it progresses through its lifecycle.
+
+        This method allows agents or operators to report the current state of a task,
+        which could include changes to task status, and error information.
+
+        Each status update increments the task's status_version. When updating status,
+        clients must provide the current version to ensure consistency. The system rejects
+        updates with mismatched versions to prevent race conditions.
+
+        Terminal states (`STATUS_DONE_OK` and `STATUS_DONE_NOT_OK`) are permanent; once a task
+        reaches these states, no further updates are allowed.
 
         Parameters
         ----------
@@ -761,9 +842,9 @@ class AsyncRawTasksClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -772,9 +853,9 @@ class AsyncRawTasksClient:
                 raise UnauthorizedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -783,9 +864,9 @@ class AsyncRawTasksClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -805,7 +886,21 @@ class AsyncRawTasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[TaskQueryResults]:
         """
-        Query for tasks by a specified search criteria.
+        Searches for Tasks that match specified filtering criteria and returns matching tasks in paginated form.
+
+        This method allows filtering tasks based on multiple criteria including:
+        - Parent task relationships
+        - Task status (with inclusive or exclusive filtering)
+        - Update time ranges
+        - Task view (manager or agent perspective)
+        - Task assignee
+        - Task type (via exact URL matches or prefix matching)
+
+        Results are returned in pages. When more results are available than can be returned in a single
+        response, a page_token is provided that can be used in subsequent requests to retrieve the next
+        set of results.
+
+        By default, this returns the latest task version for each matching task from the manager's perspective.
 
         Parameters
         ----------
@@ -814,7 +909,7 @@ class AsyncRawTasksClient:
 
         parent_task_id : typing.Optional[str]
             If present matches Tasks with this parent Task ID.
-            Note: this is mutually exclusive with all other query parameters, i.e., either provide parent Task ID, or
+            Note: this is mutually exclusive with all other query parameters, for example, either provide parent task ID, or
             any of the remaining parameters, but not both.
 
         status_filter : typing.Optional[TaskQueryStatusFilter]
@@ -863,9 +958,9 @@ class AsyncRawTasksClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -874,9 +969,9 @@ class AsyncRawTasksClient:
                 raise UnauthorizedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -885,9 +980,9 @@ class AsyncRawTasksClient:
                 raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -904,6 +999,23 @@ class AsyncRawTasksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AgentRequest]:
         """
+        Establishes a server streaming connection that delivers tasks to taskable agents for execution.
+
+        This method creates a persistent connection from Tasks API to an agent, allowing the server
+        to push tasks to the agent as they become available. The agent receives a stream of tasks that
+        match its selector criteria (entity IDs).
+
+        The stream delivers three types of requests:
+        - ExecuteRequest: Contains a new task for the agent to execute
+        - CancelRequest: Indicates a task should be canceled
+        - CompleteRequest: Indicates a task should be completed
+
+        This is the primary method for taskable agents to receive and process tasks in real-time.
+        Agents should maintain this connection and process incoming tasks according to their capabilities.
+
+        When an agent receives a task, it should update the task status using the UpdateStatus endpoint
+        to provide progress information back to Tasks API.
+
         This is a long polling API that will block until a new task is ready for delivery. If no new task is
         available then the server will hold on to your request for up to 5 minutes, after that 5 minute timeout
         period you will be expected to reinitiate a new request.
@@ -949,9 +1061,9 @@ class AsyncRawTasksClient:
                 raise BadRequestError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -960,9 +1072,9 @@ class AsyncRawTasksClient:
                 raise UnauthorizedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Optional[typing.Any],
+                        typing.Any,
                         parse_obj_as(
-                            type_=typing.Optional[typing.Any],  # type: ignore
+                            type_=typing.Any,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
