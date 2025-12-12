@@ -1545,6 +1545,82 @@ client.objects.get_object(
 </dl>
 </details>
 
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">upload_object</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Uploads an object. The object must be 1 GiB or smaller.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+
+client = Lattice(
+    token="YOUR_TOKEN",
+)
+client.objects.upload_object()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**object_path:** `str` — Path of the Object that is to be uploaded.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.objects.<a href="src/anduril/objects/client.py">delete_object</a>(...)</code></summary>
 <dl>
 <dd>
