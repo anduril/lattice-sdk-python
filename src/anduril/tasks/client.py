@@ -14,6 +14,7 @@ from ..types.task_entity import TaskEntity
 from ..types.task_query_results import TaskQueryResults
 from ..types.task_status import TaskStatus
 from .raw_client import AsyncRawTasksClient, RawTasksClient
+from .types.listen_as_agent_stream_response import ListenAsAgentStreamResponse
 from .types.task_query_status_filter import TaskQueryStatusFilter
 from .types.task_query_update_time_range import TaskQueryUpdateTimeRange
 
@@ -342,6 +343,64 @@ class TasksClient:
         """
         _response = self._raw_client.listen_as_agent(agent_selector=agent_selector, request_options=request_options)
         return _response.data
+
+    def listen_as_agent_stream(
+        self,
+        *,
+        agent_selector: typing.Optional[EntityIdsSelector] = OMIT,
+        heartbeat_interval_ms: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[ListenAsAgentStreamResponse]:
+        """
+        Establishes a server streaming connection that delivers tasks to taskable agents for execution
+        using Server-Sent Events (SSE).
+
+        This method creates a connection from the Tasks API to an agent that streams relevant tasks to the listener agent. The agent receives a stream of tasks that match the entities specified by the tasks' selector criteria.
+
+        The stream delivers three types of requests:
+        - `ExecuteRequest`: Contains a new task for the agent to execute
+        - `CancelRequest`: Indicates a task should be canceled
+        - `CompleteRequest`: Indicates a task should be completed
+
+        Additionally, heartbeat messages are sent periodically to maintain the connection.
+
+        This is recommended method for taskable agents to receive and process tasks in real-time.
+        Agents should maintain connection to this stream and process incoming tasks according to their capabilities.
+
+        When an agent receives a task, it should update the task status using the `UpdateStatus` endpoint
+        to provide progress information back to Tasks API.
+
+        Parameters
+        ----------
+        agent_selector : typing.Optional[EntityIdsSelector]
+            The selector criteria to determine which tasks the agent receives.
+
+        heartbeat_interval_ms : typing.Optional[int]
+            The time interval, defined in seconds, that determines the frequency at which to send heartbeat events. Defaults to 30s.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[ListenAsAgentStreamResponse]
+            Returns a stream of tasks to the agent as they become available.
+
+        Examples
+        --------
+        from anduril import Lattice
+
+        client = Lattice(
+            token="YOUR_TOKEN",
+        )
+        response = client.tasks.listen_as_agent_stream()
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.listen_as_agent_stream(
+            agent_selector=agent_selector, heartbeat_interval_ms=heartbeat_interval_ms, request_options=request_options
+        ) as r:
+            yield from r.data
 
 
 class AsyncTasksClient:
@@ -707,3 +766,70 @@ class AsyncTasksClient:
             agent_selector=agent_selector, request_options=request_options
         )
         return _response.data
+
+    async def listen_as_agent_stream(
+        self,
+        *,
+        agent_selector: typing.Optional[EntityIdsSelector] = OMIT,
+        heartbeat_interval_ms: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[ListenAsAgentStreamResponse]:
+        """
+        Establishes a server streaming connection that delivers tasks to taskable agents for execution
+        using Server-Sent Events (SSE).
+
+        This method creates a connection from the Tasks API to an agent that streams relevant tasks to the listener agent. The agent receives a stream of tasks that match the entities specified by the tasks' selector criteria.
+
+        The stream delivers three types of requests:
+        - `ExecuteRequest`: Contains a new task for the agent to execute
+        - `CancelRequest`: Indicates a task should be canceled
+        - `CompleteRequest`: Indicates a task should be completed
+
+        Additionally, heartbeat messages are sent periodically to maintain the connection.
+
+        This is recommended method for taskable agents to receive and process tasks in real-time.
+        Agents should maintain connection to this stream and process incoming tasks according to their capabilities.
+
+        When an agent receives a task, it should update the task status using the `UpdateStatus` endpoint
+        to provide progress information back to Tasks API.
+
+        Parameters
+        ----------
+        agent_selector : typing.Optional[EntityIdsSelector]
+            The selector criteria to determine which tasks the agent receives.
+
+        heartbeat_interval_ms : typing.Optional[int]
+            The time interval, defined in seconds, that determines the frequency at which to send heartbeat events. Defaults to 30s.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[ListenAsAgentStreamResponse]
+            Returns a stream of tasks to the agent as they become available.
+
+        Examples
+        --------
+        import asyncio
+
+        from anduril import AsyncLattice
+
+        client = AsyncLattice(
+            token="YOUR_TOKEN",
+        )
+
+
+        async def main() -> None:
+            response = await client.tasks.listen_as_agent_stream()
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.listen_as_agent_stream(
+            agent_selector=agent_selector, heartbeat_interval_ms=heartbeat_interval_ms, request_options=request_options
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk

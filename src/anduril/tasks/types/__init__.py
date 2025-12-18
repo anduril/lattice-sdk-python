@@ -6,10 +6,18 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .listen_as_agent_stream_response import (
+        ListenAsAgentStreamResponse,
+        ListenAsAgentStreamResponse_AgentRequest,
+        ListenAsAgentStreamResponse_Heartbeat,
+    )
     from .task_query_status_filter import TaskQueryStatusFilter
     from .task_query_status_filter_status import TaskQueryStatusFilterStatus
     from .task_query_update_time_range import TaskQueryUpdateTimeRange
 _dynamic_imports: typing.Dict[str, str] = {
+    "ListenAsAgentStreamResponse": ".listen_as_agent_stream_response",
+    "ListenAsAgentStreamResponse_AgentRequest": ".listen_as_agent_stream_response",
+    "ListenAsAgentStreamResponse_Heartbeat": ".listen_as_agent_stream_response",
     "TaskQueryStatusFilter": ".task_query_status_filter",
     "TaskQueryStatusFilterStatus": ".task_query_status_filter_status",
     "TaskQueryUpdateTimeRange": ".task_query_update_time_range",
@@ -37,4 +45,11 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["TaskQueryStatusFilter", "TaskQueryStatusFilterStatus", "TaskQueryUpdateTimeRange"]
+__all__ = [
+    "ListenAsAgentStreamResponse",
+    "ListenAsAgentStreamResponse_AgentRequest",
+    "ListenAsAgentStreamResponse_Heartbeat",
+    "TaskQueryStatusFilter",
+    "TaskQueryStatusFilterStatus",
+    "TaskQueryUpdateTimeRange",
+]

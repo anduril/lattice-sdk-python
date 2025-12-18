@@ -12,6 +12,10 @@ if typing.TYPE_CHECKING:
         ActiveTarget,
         Agent,
         AgentRequest,
+        AgentStreamEvent,
+        AgentStreamHeartbeat,
+        AgentStreamHeartbeatData,
+        AgentTaskRequest,
         Alert,
         AlertCondition,
         AlertLevel,
@@ -203,7 +207,14 @@ if typing.TYPE_CHECKING:
     from .entities import StreamEntitiesResponse, StreamEntitiesResponse_Entity, StreamEntitiesResponse_Heartbeat
     from .environment import LatticeEnvironment
     from .objects import GetObjectRequestAcceptEncoding
-    from .tasks import TaskQueryStatusFilter, TaskQueryStatusFilterStatus, TaskQueryUpdateTimeRange
+    from .tasks import (
+        ListenAsAgentStreamResponse,
+        ListenAsAgentStreamResponse_AgentRequest,
+        ListenAsAgentStreamResponse_Heartbeat,
+        TaskQueryStatusFilter,
+        TaskQueryStatusFilterStatus,
+        TaskQueryUpdateTimeRange,
+    )
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AcmDetails": ".types",
@@ -211,6 +222,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ActiveTarget": ".types",
     "Agent": ".types",
     "AgentRequest": ".types",
+    "AgentStreamEvent": ".types",
+    "AgentStreamHeartbeat": ".types",
+    "AgentStreamHeartbeatData": ".types",
+    "AgentTaskRequest": ".types",
     "Alert": ".types",
     "AlertCondition": ".types",
     "AlertLevel": ".types",
@@ -297,6 +312,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LineOfBearing": ".types",
     "LinearRing": ".types",
     "ListResponse": ".types",
+    "ListenAsAgentStreamResponse": ".tasks",
+    "ListenAsAgentStreamResponse_AgentRequest": ".tasks",
+    "ListenAsAgentStreamResponse_Heartbeat": ".tasks",
     "Lla": ".types",
     "LlaAltitudeReference": ".types",
     "Location": ".types",
@@ -441,6 +459,10 @@ __all__ = [
     "ActiveTarget",
     "Agent",
     "AgentRequest",
+    "AgentStreamEvent",
+    "AgentStreamHeartbeat",
+    "AgentStreamHeartbeatData",
+    "AgentTaskRequest",
     "Alert",
     "AlertCondition",
     "AlertLevel",
@@ -527,6 +549,9 @@ __all__ = [
     "LineOfBearing",
     "LinearRing",
     "ListResponse",
+    "ListenAsAgentStreamResponse",
+    "ListenAsAgentStreamResponse_AgentRequest",
+    "ListenAsAgentStreamResponse_Heartbeat",
     "Lla",
     "LlaAltitudeReference",
     "Location",
