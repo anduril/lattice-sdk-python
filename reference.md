@@ -1361,6 +1361,100 @@ client.tasks.listen_as_agent()
 </dl>
 </details>
 
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">listen_as_agent_stream</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Establishes a server streaming connection that delivers tasks to taskable agents for execution
+using Server-Sent Events (SSE).
+
+This method creates a connection from the Tasks API to an agent that streams relevant tasks to the listener agent. The agent receives a stream of tasks that match the entities specified by the tasks' selector criteria.
+
+The stream delivers three types of requests:
+- `ExecuteRequest`: Contains a new task for the agent to execute
+- `CancelRequest`: Indicates a task should be canceled
+- `CompleteRequest`: Indicates a task should be completed
+
+Additionally, heartbeat messages are sent periodically to maintain the connection.
+
+This is recommended method for taskable agents to receive and process tasks in real-time.
+Agents should maintain connection to this stream and process incoming tasks according to their capabilities. 
+
+When an agent receives a task, it should update the task status using the `UpdateStatus` endpoint
+to provide progress information back to Tasks API.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+
+client = Lattice(
+    token="YOUR_TOKEN",
+)
+response = client.tasks.listen_as_agent_stream()
+for chunk in response.data:
+    yield chunk
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_selector:** `typing.Optional[EntityIdsSelector]` — The selector criteria to determine which tasks the agent receives.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**heartbeat_interval_ms:** `typing.Optional[int]` — The time interval, defined in seconds, that determines the frequency at which to send heartbeat events. Defaults to 30s.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Objects
 <details><summary><code>client.objects.<a href="src/anduril/objects/client.py">list_objects</a>(...)</code></summary>
 <dl>
@@ -1534,6 +1628,82 @@ client.objects.get_object(
 <dd>
 
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">upload_object</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Uploads an object. The object must be 1 GiB or smaller.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+
+client = Lattice(
+    token="YOUR_TOKEN",
+)
+client.objects.upload_object()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**object_path:** `str` — Path of the Object that is to be uploaded.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>

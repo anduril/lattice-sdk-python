@@ -11,6 +11,10 @@ if typing.TYPE_CHECKING:
     from .active_target import ActiveTarget
     from .agent import Agent
     from .agent_request import AgentRequest
+    from .agent_stream_event import AgentStreamEvent
+    from .agent_stream_heartbeat import AgentStreamHeartbeat
+    from .agent_stream_heartbeat_data import AgentStreamHeartbeatData
+    from .agent_task_request import AgentTaskRequest
     from .alert import Alert
     from .alert_condition import AlertCondition
     from .alert_level import AlertLevel
@@ -192,6 +196,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ActiveTarget": ".active_target",
     "Agent": ".agent",
     "AgentRequest": ".agent_request",
+    "AgentStreamEvent": ".agent_stream_event",
+    "AgentStreamHeartbeat": ".agent_stream_heartbeat",
+    "AgentStreamHeartbeatData": ".agent_stream_heartbeat_data",
+    "AgentTaskRequest": ".agent_task_request",
     "Alert": ".alert",
     "AlertCondition": ".alert_condition",
     "AlertLevel": ".alert_level",
@@ -397,6 +405,10 @@ __all__ = [
     "ActiveTarget",
     "Agent",
     "AgentRequest",
+    "AgentStreamEvent",
+    "AgentStreamHeartbeat",
+    "AgentStreamHeartbeatData",
+    "AgentTaskRequest",
     "Alert",
     "AlertCondition",
     "AlertLevel",
