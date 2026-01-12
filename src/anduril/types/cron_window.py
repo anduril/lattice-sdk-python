@@ -10,7 +10,7 @@ from ..core.serialization import FieldMetadata
 
 class CronWindow(UniversalBaseModel):
     cron_expression: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="cronExpression")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="cronExpression", default=None)
     )
     """
     in UTC, describes when and at what cadence this window starts, in the quartz flavor of cron
@@ -25,7 +25,7 @@ class CronWindow(UniversalBaseModel):
     """
 
     duration_millis: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="durationMillis")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="durationMillis", default=None)
     )
     """
     describes the duration

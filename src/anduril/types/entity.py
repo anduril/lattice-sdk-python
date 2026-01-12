@@ -49,7 +49,7 @@ class Entity(UniversalBaseModel):
     """
 
     entity_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="entityId")] = pydantic.Field(
-        default=None
+        alias="entityId", default=None
     )
     """
     A Globally Unique Identifier (GUID) for your entity. This is a required
@@ -63,7 +63,7 @@ class Entity(UniversalBaseModel):
     """
 
     is_live: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isLive")] = pydantic.Field(
-        default=None
+        alias="isLive", default=None
     )
     """
     Indicates the entity is active and should have a lifecycle state of CREATE or UPDATE.
@@ -71,7 +71,7 @@ class Entity(UniversalBaseModel):
     """
 
     created_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdTime")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="createdTime", default=None)
     )
     """
     The time when the entity was first known to the entity producer. If this field is empty, the Entity Manager API uses the
@@ -81,7 +81,7 @@ class Entity(UniversalBaseModel):
     """
 
     expiry_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="expiryTime")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="expiryTime", default=None)
     )
     """
     Future time that expires an entity and updates the is_live flag.
@@ -94,7 +94,7 @@ class Entity(UniversalBaseModel):
     """
 
     no_expiry: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="noExpiry")] = pydantic.Field(
-        default=None
+        alias="noExpiry", default=None
     )
     """
     Use noExpiry only when the entity contains information that should be available to other
@@ -115,20 +115,20 @@ class Entity(UniversalBaseModel):
 
     location_uncertainty: typing_extensions.Annotated[
         typing.Optional[LocationUncertainty], FieldMetadata(alias="locationUncertainty")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="locationUncertainty", default=None)
     """
     Indicates uncertainty of the entity's position and kinematics.
     """
 
     geo_shape: typing_extensions.Annotated[typing.Optional[GeoShape], FieldMetadata(alias="geoShape")] = pydantic.Field(
-        default=None
+        alias="geoShape", default=None
     )
     """
     Geospatial representation of the entity, including entities that cover an area rather than a fixed point.
     """
 
     geo_details: typing_extensions.Annotated[typing.Optional[GeoDetails], FieldMetadata(alias="geoDetails")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="geoDetails", default=None)
     )
     """
     Additional details on what the geospatial area or point represents, along with visual display details.
@@ -150,7 +150,7 @@ class Entity(UniversalBaseModel):
     """
 
     mil_view: typing_extensions.Annotated[typing.Optional[MilView], FieldMetadata(alias="milView")] = pydantic.Field(
-        default=None
+        alias="milView", default=None
     )
     """
     View of the entity.
@@ -172,7 +172,7 @@ class Entity(UniversalBaseModel):
     """
 
     power_state: typing_extensions.Annotated[typing.Optional[PowerState], FieldMetadata(alias="powerState")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="powerState", default=None)
     )
     """
     Details the entity's power source.
@@ -197,7 +197,7 @@ class Entity(UniversalBaseModel):
 
     target_priority: typing_extensions.Annotated[
         typing.Optional[TargetPriority], FieldMetadata(alias="targetPriority")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="targetPriority", default=None)
     """
     The prioritization associated with an entity, such as if it's a threat or a high-value target.
     """
@@ -209,21 +209,21 @@ class Entity(UniversalBaseModel):
 
     transponder_codes: typing_extensions.Annotated[
         typing.Optional[TransponderCodes], FieldMetadata(alias="transponderCodes")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="transponderCodes", default=None)
     """
     A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S interrogations. These are related to ADS-B modes.
     """
 
     data_classification: typing_extensions.Annotated[
         typing.Optional[Classification], FieldMetadata(alias="dataClassification")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="dataClassification", default=None)
     """
     Describes an entity's security classification levels at an overall classification level and on a per
      field level.
     """
 
     task_catalog: typing_extensions.Annotated[typing.Optional[TaskCatalog], FieldMetadata(alias="taskCatalog")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="taskCatalog", default=None)
     )
     """
     A catalog of tasks that can be performed by an entity.
@@ -241,7 +241,7 @@ class Entity(UniversalBaseModel):
 
     visual_details: typing_extensions.Annotated[
         typing.Optional[VisualDetails], FieldMetadata(alias="visualDetails")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="visualDetails", default=None)
     """
     Visual details associated with the display of an entity in the client.
     """
@@ -252,7 +252,7 @@ class Entity(UniversalBaseModel):
     """
 
     route_details: typing_extensions.Annotated[typing.Optional[RouteDetails], FieldMetadata(alias="routeDetails")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="routeDetails", default=None)
     )
     """
     Additional information about an entity's route.
@@ -269,7 +269,7 @@ class Entity(UniversalBaseModel):
     """
 
     group_details: typing_extensions.Annotated[typing.Optional[GroupDetails], FieldMetadata(alias="groupDetails")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="groupDetails", default=None)
     )
     """
     Details for the group associated with this entity.
@@ -300,6 +300,7 @@ class Entity(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .override import Override  # noqa: E402, I001
 from .overrides import Overrides  # noqa: E402, I001
 
-update_forward_refs(Entity)
+update_forward_refs(Entity, Override=Override, Overrides=Overrides)

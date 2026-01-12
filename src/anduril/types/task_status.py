@@ -29,7 +29,7 @@ class TaskStatus(UniversalBaseModel):
     """
 
     task_error: typing_extensions.Annotated[typing.Optional[TaskError], FieldMetadata(alias="taskError")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="taskError", default=None)
     )
     """
     Any errors associated with the task.
@@ -46,7 +46,7 @@ class TaskStatus(UniversalBaseModel):
     """
 
     start_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="startTime")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="startTime", default=None)
     )
     """
     Time the task began execution, may not be known even for executing Tasks.

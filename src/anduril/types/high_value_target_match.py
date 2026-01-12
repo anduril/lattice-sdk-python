@@ -11,14 +11,14 @@ from ..core.serialization import FieldMetadata
 class HighValueTargetMatch(UniversalBaseModel):
     high_value_target_list_id: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="highValueTargetListId")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="highValueTargetListId", default=None)
     """
     The ID of the high value target list that matches the target description.
     """
 
     high_value_target_description_id: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="highValueTargetDescriptionId")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="highValueTargetDescriptionId", default=None)
     """
     The ID of the specific high value target description within a high value target list that was matched against.
      The ID is considered to be a globally unique identifier across all high value target IDs.

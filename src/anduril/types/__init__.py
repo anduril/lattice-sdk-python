@@ -11,6 +11,10 @@ if typing.TYPE_CHECKING:
     from .active_target import ActiveTarget
     from .agent import Agent
     from .agent_request import AgentRequest
+    from .agent_stream_event import AgentStreamEvent
+    from .agent_stream_event_event import AgentStreamEventEvent
+    from .agent_stream_request import AgentStreamRequest
+    from .agent_task_request import AgentTaskRequest
     from .alert import Alert
     from .alert_condition import AlertCondition
     from .alert_level import AlertLevel
@@ -19,6 +23,7 @@ if typing.TYPE_CHECKING:
     from .alternate_id import AlternateId
     from .alternate_id_type import AlternateIdType
     from .angle_of_arrival import AngleOfArrival
+    from .bad_request_error_body import BadRequestErrorBody
     from .bandwidth import Bandwidth
     from .bandwidth_range import BandwidthRange
     from .cancel_request import CancelRequest
@@ -160,6 +165,8 @@ if typing.TYPE_CHECKING:
     from .sensors import Sensors
     from .signal import Signal
     from .status import Status
+    from .stream_heartbeat import StreamHeartbeat
+    from .stream_heartbeat_data import StreamHeartbeatData
     from .supplies import Supplies
     from .symbology import Symbology
     from .system import System
@@ -171,9 +178,13 @@ if typing.TYPE_CHECKING:
     from .task_entity import TaskEntity
     from .task_error import TaskError
     from .task_error_code import TaskErrorCode
+    from .task_event_data import TaskEventData
+    from .task_event_data_task_event import TaskEventDataTaskEvent
+    from .task_event_data_task_event_event_type import TaskEventDataTaskEventEventType
     from .task_query_results import TaskQueryResults
     from .task_status import TaskStatus
     from .task_status_status import TaskStatusStatus
+    from .task_stream_event import TaskStreamEvent
     from .task_version import TaskVersion
     from .team import Team
     from .threat import Threat
@@ -184,6 +195,7 @@ if typing.TYPE_CHECKING:
     from .transponder_codes import TransponderCodes
     from .transponder_codes_mode4interrogation_response import TransponderCodesMode4InterrogationResponse
     from .u_int32range import UInt32Range
+    from .unauthorized_error_body import UnauthorizedErrorBody
     from .user import User
     from .visual_details import VisualDetails
 _dynamic_imports: typing.Dict[str, str] = {
@@ -192,6 +204,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ActiveTarget": ".active_target",
     "Agent": ".agent",
     "AgentRequest": ".agent_request",
+    "AgentStreamEvent": ".agent_stream_event",
+    "AgentStreamEventEvent": ".agent_stream_event_event",
+    "AgentStreamRequest": ".agent_stream_request",
+    "AgentTaskRequest": ".agent_task_request",
     "Alert": ".alert",
     "AlertCondition": ".alert_condition",
     "AlertLevel": ".alert_level",
@@ -200,6 +216,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AlternateId": ".alternate_id",
     "AlternateIdType": ".alternate_id_type",
     "AngleOfArrival": ".angle_of_arrival",
+    "BadRequestErrorBody": ".bad_request_error_body",
     "Bandwidth": ".bandwidth",
     "BandwidthRange": ".bandwidth_range",
     "CancelRequest": ".cancel_request",
@@ -341,6 +358,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Sensors": ".sensors",
     "Signal": ".signal",
     "Status": ".status",
+    "StreamHeartbeat": ".stream_heartbeat",
+    "StreamHeartbeatData": ".stream_heartbeat_data",
     "Supplies": ".supplies",
     "Symbology": ".symbology",
     "System": ".system",
@@ -352,9 +371,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TaskEntity": ".task_entity",
     "TaskError": ".task_error",
     "TaskErrorCode": ".task_error_code",
+    "TaskEventData": ".task_event_data",
+    "TaskEventDataTaskEvent": ".task_event_data_task_event",
+    "TaskEventDataTaskEventEventType": ".task_event_data_task_event_event_type",
     "TaskQueryResults": ".task_query_results",
     "TaskStatus": ".task_status",
     "TaskStatusStatus": ".task_status_status",
+    "TaskStreamEvent": ".task_stream_event",
     "TaskVersion": ".task_version",
     "Team": ".team",
     "Threat": ".threat",
@@ -365,6 +388,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransponderCodes": ".transponder_codes",
     "TransponderCodesMode4InterrogationResponse": ".transponder_codes_mode4interrogation_response",
     "UInt32Range": ".u_int32range",
+    "UnauthorizedErrorBody": ".unauthorized_error_body",
     "User": ".user",
     "VisualDetails": ".visual_details",
 }
@@ -397,6 +421,10 @@ __all__ = [
     "ActiveTarget",
     "Agent",
     "AgentRequest",
+    "AgentStreamEvent",
+    "AgentStreamEventEvent",
+    "AgentStreamRequest",
+    "AgentTaskRequest",
     "Alert",
     "AlertCondition",
     "AlertLevel",
@@ -405,6 +433,7 @@ __all__ = [
     "AlternateId",
     "AlternateIdType",
     "AngleOfArrival",
+    "BadRequestErrorBody",
     "Bandwidth",
     "BandwidthRange",
     "CancelRequest",
@@ -546,6 +575,8 @@ __all__ = [
     "Sensors",
     "Signal",
     "Status",
+    "StreamHeartbeat",
+    "StreamHeartbeatData",
     "Supplies",
     "Symbology",
     "System",
@@ -557,9 +588,13 @@ __all__ = [
     "TaskEntity",
     "TaskError",
     "TaskErrorCode",
+    "TaskEventData",
+    "TaskEventDataTaskEvent",
+    "TaskEventDataTaskEventEventType",
     "TaskQueryResults",
     "TaskStatus",
     "TaskStatusStatus",
+    "TaskStreamEvent",
     "TaskVersion",
     "Team",
     "Threat",
@@ -570,6 +605,7 @@ __all__ = [
     "TransponderCodes",
     "TransponderCodesMode4InterrogationResponse",
     "UInt32Range",
+    "UnauthorizedErrorBody",
     "User",
     "VisualDetails",
 ]

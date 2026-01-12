@@ -14,8 +14,10 @@ from ..types.task_entity import TaskEntity
 from ..types.task_query_results import TaskQueryResults
 from ..types.task_status import TaskStatus
 from .raw_client import AsyncRawTasksClient, RawTasksClient
+from .types.stream_tasks_response import StreamTasksResponse
 from .types.task_query_status_filter import TaskQueryStatusFilter
 from .types.task_query_update_time_range import TaskQueryUpdateTimeRange
+from .types.task_stream_request_task_type import TaskStreamRequestTaskType
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -102,7 +104,8 @@ class TasksClient:
         from anduril import Lattice
 
         client = Lattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.tasks.create_task()
         """
@@ -148,7 +151,8 @@ class TasksClient:
         from anduril import Lattice
 
         client = Lattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.tasks.get_task(
             task_id="taskId",
@@ -208,7 +212,8 @@ class TasksClient:
         from anduril import Lattice
 
         client = Lattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.tasks.update_task_status(
             task_id="taskId",
@@ -277,7 +282,8 @@ class TasksClient:
         from anduril import Lattice
 
         client = Lattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.tasks.query_tasks()
         """
@@ -289,6 +295,66 @@ class TasksClient:
             request_options=request_options,
         )
         return _response.data
+
+    def stream_tasks(
+        self,
+        *,
+        heartbeat_interval_ms: typing.Optional[int] = OMIT,
+        rate_limit: typing.Optional[int] = OMIT,
+        exclude_preexisting_tasks: typing.Optional[bool] = OMIT,
+        task_type: typing.Optional[TaskStreamRequestTaskType] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[StreamTasksResponse]:
+        """
+        Establishes a server streaming connection that delivers task updates in real-time using Server-Sent Events (SSE).
+
+        The stream delivers all existing non-terminal tasks when first connected, followed by real-time
+        updates for task creation and status changes. Additionally, heartbeat messages are sent periodically to maintain the connection.
+
+        Parameters
+        ----------
+        heartbeat_interval_ms : typing.Optional[int]
+            The time interval, in milliseconds, that determines the frequency at which to send heartbeat events. Defaults to 30000 (30 seconds).
+
+        rate_limit : typing.Optional[int]
+            The time interval, in milliseconds, after an update for a given task before another one will be sent for the same task.
+            If set, value must be >= 250.
+
+        exclude_preexisting_tasks : typing.Optional[bool]
+            Optional flag to only include tasks created or updated after the stream is initiated, and not any previous preexisting tasks.
+            If unset or false, the stream will include any new tasks and task updates, as well as all preexisting tasks.
+
+        task_type : typing.Optional[TaskStreamRequestTaskType]
+            Optional filter that only returns tasks with specific types. If not provided, all task types will be streamed.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[StreamTasksResponse]
+            Returns a stream of task updates as they occur.
+
+        Examples
+        --------
+        from anduril import Lattice
+
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
+        response = client.tasks.stream_tasks()
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.stream_tasks(
+            heartbeat_interval_ms=heartbeat_interval_ms,
+            rate_limit=rate_limit,
+            exclude_preexisting_tasks=exclude_preexisting_tasks,
+            task_type=task_type,
+            request_options=request_options,
+        ) as r:
+            yield from r.data
 
     def listen_as_agent(
         self,
@@ -336,7 +402,8 @@ class TasksClient:
         from anduril import Lattice
 
         client = Lattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.tasks.listen_as_agent()
         """
@@ -427,7 +494,8 @@ class AsyncTasksClient:
         from anduril import AsyncLattice
 
         client = AsyncLattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -481,7 +549,8 @@ class AsyncTasksClient:
         from anduril import AsyncLattice
 
         client = AsyncLattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -549,7 +618,8 @@ class AsyncTasksClient:
         from anduril import AsyncLattice
 
         client = AsyncLattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -626,7 +696,8 @@ class AsyncTasksClient:
         from anduril import AsyncLattice
 
         client = AsyncLattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -644,6 +715,75 @@ class AsyncTasksClient:
             request_options=request_options,
         )
         return _response.data
+
+    async def stream_tasks(
+        self,
+        *,
+        heartbeat_interval_ms: typing.Optional[int] = OMIT,
+        rate_limit: typing.Optional[int] = OMIT,
+        exclude_preexisting_tasks: typing.Optional[bool] = OMIT,
+        task_type: typing.Optional[TaskStreamRequestTaskType] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[StreamTasksResponse]:
+        """
+        Establishes a server streaming connection that delivers task updates in real-time using Server-Sent Events (SSE).
+
+        The stream delivers all existing non-terminal tasks when first connected, followed by real-time
+        updates for task creation and status changes. Additionally, heartbeat messages are sent periodically to maintain the connection.
+
+        Parameters
+        ----------
+        heartbeat_interval_ms : typing.Optional[int]
+            The time interval, in milliseconds, that determines the frequency at which to send heartbeat events. Defaults to 30000 (30 seconds).
+
+        rate_limit : typing.Optional[int]
+            The time interval, in milliseconds, after an update for a given task before another one will be sent for the same task.
+            If set, value must be >= 250.
+
+        exclude_preexisting_tasks : typing.Optional[bool]
+            Optional flag to only include tasks created or updated after the stream is initiated, and not any previous preexisting tasks.
+            If unset or false, the stream will include any new tasks and task updates, as well as all preexisting tasks.
+
+        task_type : typing.Optional[TaskStreamRequestTaskType]
+            Optional filter that only returns tasks with specific types. If not provided, all task types will be streamed.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[StreamTasksResponse]
+            Returns a stream of task updates as they occur.
+
+        Examples
+        --------
+        import asyncio
+
+        from anduril import AsyncLattice
+
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
+
+
+        async def main() -> None:
+            response = await client.tasks.stream_tasks()
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.stream_tasks(
+            heartbeat_interval_ms=heartbeat_interval_ms,
+            rate_limit=rate_limit,
+            exclude_preexisting_tasks=exclude_preexisting_tasks,
+            task_type=task_type,
+            request_options=request_options,
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
 
     async def listen_as_agent(
         self,
@@ -693,7 +833,8 @@ class AsyncTasksClient:
         from anduril import AsyncLattice
 
         client = AsyncLattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
