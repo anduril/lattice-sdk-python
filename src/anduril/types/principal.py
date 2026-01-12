@@ -22,7 +22,7 @@ class Principal(UniversalBaseModel):
     user: typing.Optional[User] = None
     team: typing.Optional[Team] = None
     on_behalf_of: typing_extensions.Annotated[typing.Optional["Principal"], FieldMetadata(alias="onBehalfOf")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="onBehalfOf", default=None)
     )
     """
     The Principal _this_ Principal is acting on behalf of.

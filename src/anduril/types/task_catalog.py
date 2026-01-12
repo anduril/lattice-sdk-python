@@ -16,7 +16,7 @@ class TaskCatalog(UniversalBaseModel):
 
     task_definitions: typing_extensions.Annotated[
         typing.Optional[typing.List[TaskDefinition]], FieldMetadata(alias="taskDefinitions")
-    ] = None
+    ] = pydantic.Field(alias="taskDefinitions", default=None)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

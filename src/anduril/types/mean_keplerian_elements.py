@@ -16,14 +16,14 @@ class MeanKeplerianElements(UniversalBaseModel):
     """
 
     semi_major_axis_km: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="semiMajorAxisKm")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="semiMajorAxisKm", default=None)
     )
     """
     Preferred: semi major axis in kilometers
     """
 
     mean_motion: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="meanMotion")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="meanMotion", default=None)
     )
     """
     If using SGP/SGP4, provide the Keplerian Mean Motion in revolutions per day
@@ -31,14 +31,14 @@ class MeanKeplerianElements(UniversalBaseModel):
 
     eccentricity: typing.Optional[float] = None
     inclination_deg: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="inclinationDeg")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="inclinationDeg", default=None)
     )
     """
     Angle of inclination in deg
     """
 
     ra_of_asc_node_deg: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="raOfAscNodeDeg")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="raOfAscNodeDeg", default=None)
     )
     """
     Right ascension of the ascending node in deg
@@ -46,13 +46,13 @@ class MeanKeplerianElements(UniversalBaseModel):
 
     arg_of_pericenter_deg: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="argOfPericenterDeg")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="argOfPericenterDeg", default=None)
     """
     Argument of pericenter in deg
     """
 
     mean_anomaly_deg: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="meanAnomalyDeg")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="meanAnomalyDeg", default=None)
     )
     """
     Mean anomaly in deg

@@ -16,7 +16,7 @@ class Aliases(UniversalBaseModel):
 
     alternate_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[AlternateId]], FieldMetadata(alias="alternateIds")
-    ] = None
+    ] = pydantic.Field(alias="alternateIds", default=None)
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     The best available version of the entity's display name.

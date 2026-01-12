@@ -18,7 +18,7 @@ class Alert(UniversalBaseModel):
     """
 
     alert_code: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="alertCode")] = pydantic.Field(
-        default=None
+        alias="alertCode", default=None
     )
     """
     Short, machine-readable code that describes this alert. This code is intended to provide systems off-asset
@@ -38,7 +38,7 @@ class Alert(UniversalBaseModel):
     """
 
     activated_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="activatedTime")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="activatedTime", default=None)
     )
     """
     Time at which this alert was activated.
@@ -46,7 +46,7 @@ class Alert(UniversalBaseModel):
 
     active_conditions: typing_extensions.Annotated[
         typing.Optional[typing.List[AlertCondition]], FieldMetadata(alias="activeConditions")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="activeConditions", default=None)
     """
     Set of conditions which have activated this alert.
     """

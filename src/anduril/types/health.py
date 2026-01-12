@@ -20,14 +20,14 @@ class Health(UniversalBaseModel):
 
     connection_status: typing_extensions.Annotated[
         typing.Optional[HealthConnectionStatus], FieldMetadata(alias="connectionStatus")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="connectionStatus", default=None)
     """
     Status indicating whether the entity is able to communicate with Entity Manager.
     """
 
     health_status: typing_extensions.Annotated[
         typing.Optional[HealthHealthStatus], FieldMetadata(alias="healthStatus")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="healthStatus", default=None)
     """
     Top-level health status; typically a roll-up of individual component healths.
     """
@@ -38,7 +38,7 @@ class Health(UniversalBaseModel):
     """
 
     update_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updateTime")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="updateTime", default=None)
     )
     """
     The update time for the top-level health information.
@@ -47,7 +47,7 @@ class Health(UniversalBaseModel):
 
     active_alerts: typing_extensions.Annotated[
         typing.Optional[typing.List[Alert]], FieldMetadata(alias="activeAlerts")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="activeAlerts", default=None)
     """
     Active alerts indicate a critical change in system state sent by the asset
      that must be made known to an operator or consumer of the common operating picture.

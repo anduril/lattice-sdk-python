@@ -21,7 +21,7 @@ class Schedule(UniversalBaseModel):
     """
 
     schedule_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="scheduleId")] = pydantic.Field(
-        default=None
+        alias="scheduleId", default=None
     )
     """
     A unique identifier for this schedule.
@@ -29,7 +29,7 @@ class Schedule(UniversalBaseModel):
 
     schedule_type: typing_extensions.Annotated[
         typing.Optional[ScheduleScheduleType], FieldMetadata(alias="scheduleType")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="scheduleType", default=None)
     """
     The schedule type
     """

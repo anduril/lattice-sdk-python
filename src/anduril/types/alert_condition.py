@@ -14,7 +14,7 @@ class AlertCondition(UniversalBaseModel):
     """
 
     condition_code: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="conditionCode")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="conditionCode", default=None)
     )
     """
     Short, machine-readable code that describes this condition. This code is intended to provide systems off-asset

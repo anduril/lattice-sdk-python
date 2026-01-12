@@ -14,14 +14,14 @@ class System(UniversalBaseModel):
     """
 
     service_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="serviceName")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="serviceName", default=None)
     )
     """
     Name of the service associated with this System.
     """
 
     entity_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="entityId")] = pydantic.Field(
-        default=None
+        alias="entityId", default=None
     )
     """
     The Entity ID of the System.
@@ -29,7 +29,7 @@ class System(UniversalBaseModel):
 
     manages_own_scheduling: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="managesOwnScheduling")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="managesOwnScheduling", default=None)
     """
     Whether the System Principal (for example, an Asset) can own scheduling.
      This means we bypass manager-owned scheduling and defer to the system

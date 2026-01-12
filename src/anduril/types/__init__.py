@@ -11,6 +11,13 @@ if typing.TYPE_CHECKING:
     from .active_target import ActiveTarget
     from .agent import Agent
     from .agent_request import AgentRequest
+    from .agent_stream_event import AgentStreamEvent
+    from .agent_stream_event_event import AgentStreamEventEvent
+    from .agent_stream_heartbeat import AgentStreamHeartbeat
+    from .agent_stream_heartbeat_data import AgentStreamHeartbeatData
+    from .agent_stream_heartbeat_event import AgentStreamHeartbeatEvent
+    from .agent_stream_request import AgentStreamRequest
+    from .agent_task_request import AgentTaskRequest
     from .alert import Alert
     from .alert_condition import AlertCondition
     from .alert_level import AlertLevel
@@ -19,6 +26,7 @@ if typing.TYPE_CHECKING:
     from .alternate_id import AlternateId
     from .alternate_id_type import AlternateIdType
     from .angle_of_arrival import AngleOfArrival
+    from .bad_request_error_body import BadRequestErrorBody
     from .bandwidth import Bandwidth
     from .bandwidth_range import BandwidthRange
     from .cancel_request import CancelRequest
@@ -184,6 +192,7 @@ if typing.TYPE_CHECKING:
     from .transponder_codes import TransponderCodes
     from .transponder_codes_mode4interrogation_response import TransponderCodesMode4InterrogationResponse
     from .u_int32range import UInt32Range
+    from .unauthorized_error_body import UnauthorizedErrorBody
     from .user import User
     from .visual_details import VisualDetails
 _dynamic_imports: typing.Dict[str, str] = {
@@ -192,6 +201,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ActiveTarget": ".active_target",
     "Agent": ".agent",
     "AgentRequest": ".agent_request",
+    "AgentStreamEvent": ".agent_stream_event",
+    "AgentStreamEventEvent": ".agent_stream_event_event",
+    "AgentStreamHeartbeat": ".agent_stream_heartbeat",
+    "AgentStreamHeartbeatData": ".agent_stream_heartbeat_data",
+    "AgentStreamHeartbeatEvent": ".agent_stream_heartbeat_event",
+    "AgentStreamRequest": ".agent_stream_request",
+    "AgentTaskRequest": ".agent_task_request",
     "Alert": ".alert",
     "AlertCondition": ".alert_condition",
     "AlertLevel": ".alert_level",
@@ -200,6 +216,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AlternateId": ".alternate_id",
     "AlternateIdType": ".alternate_id_type",
     "AngleOfArrival": ".angle_of_arrival",
+    "BadRequestErrorBody": ".bad_request_error_body",
     "Bandwidth": ".bandwidth",
     "BandwidthRange": ".bandwidth_range",
     "CancelRequest": ".cancel_request",
@@ -365,6 +382,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransponderCodes": ".transponder_codes",
     "TransponderCodesMode4InterrogationResponse": ".transponder_codes_mode4interrogation_response",
     "UInt32Range": ".u_int32range",
+    "UnauthorizedErrorBody": ".unauthorized_error_body",
     "User": ".user",
     "VisualDetails": ".visual_details",
 }
@@ -397,6 +415,13 @@ __all__ = [
     "ActiveTarget",
     "Agent",
     "AgentRequest",
+    "AgentStreamEvent",
+    "AgentStreamEventEvent",
+    "AgentStreamHeartbeat",
+    "AgentStreamHeartbeatData",
+    "AgentStreamHeartbeatEvent",
+    "AgentStreamRequest",
+    "AgentTaskRequest",
     "Alert",
     "AlertCondition",
     "AlertLevel",
@@ -405,6 +430,7 @@ __all__ = [
     "AlternateId",
     "AlternateIdType",
     "AngleOfArrival",
+    "BadRequestErrorBody",
     "Bandwidth",
     "BandwidthRange",
     "CancelRequest",
@@ -570,6 +596,7 @@ __all__ = [
     "TransponderCodes",
     "TransponderCodesMode4InterrogationResponse",
     "UInt32Range",
+    "UnauthorizedErrorBody",
     "User",
     "VisualDetails",
 ]
