@@ -10,7 +10,7 @@ from ..core.serialization import FieldMetadata
 
 class TleParameters(UniversalBaseModel):
     ephemeris_type: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="ephemerisType")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="ephemerisType", default=None)
     )
     """
     Integer specifying TLE ephemeris type
@@ -18,21 +18,23 @@ class TleParameters(UniversalBaseModel):
 
     classification_type: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="classificationType")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="classificationType", default=None)
     """
     User-defined free-text message classification/caveats of this TLE
     """
 
     norad_cat_id: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="noradCatId")] = pydantic.Field(
-        default=None
+        alias="noradCatId", default=None
     )
     """
     Norad catalog number: integer up to nine digits.
     """
 
-    element_set_no: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="elementSetNo")] = None
+    element_set_no: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="elementSetNo")] = (
+        pydantic.Field(alias="elementSetNo", default=None)
+    )
     rev_at_epoch: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="revAtEpoch")] = pydantic.Field(
-        default=None
+        alias="revAtEpoch", default=None
     )
     """
     Optional: revolution number
@@ -49,14 +51,14 @@ class TleParameters(UniversalBaseModel):
     """
 
     mean_motion_dot: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="meanMotionDot")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="meanMotionDot", default=None)
     )
     """
     First time derivative of mean motion in rev / day^2
     """
 
     mean_motion_ddot: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="meanMotionDdot")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="meanMotionDdot", default=None)
     )
     """
     Second time derivative of mean motion in rev / day^3. For use with SGP or PPT3.

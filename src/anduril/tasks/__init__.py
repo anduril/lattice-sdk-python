@@ -6,11 +6,27 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import TaskQueryStatusFilter, TaskQueryStatusFilterStatus, TaskQueryUpdateTimeRange
+    from .types import (
+        StreamTasksResponse,
+        StreamTasksResponse_Heartbeat,
+        StreamTasksResponse_TaskEvent,
+        TaskQueryStatusFilter,
+        TaskQueryStatusFilterStatus,
+        TaskQueryUpdateTimeRange,
+        TaskStreamRequestTaskType,
+        TaskStreamRequestTaskTypeTaskTypePrefix,
+        TaskStreamRequestTaskTypeTaskTypeUrls,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
+    "StreamTasksResponse": ".types",
+    "StreamTasksResponse_Heartbeat": ".types",
+    "StreamTasksResponse_TaskEvent": ".types",
     "TaskQueryStatusFilter": ".types",
     "TaskQueryStatusFilterStatus": ".types",
     "TaskQueryUpdateTimeRange": ".types",
+    "TaskStreamRequestTaskType": ".types",
+    "TaskStreamRequestTaskTypeTaskTypePrefix": ".types",
+    "TaskStreamRequestTaskTypeTaskTypeUrls": ".types",
 }
 
 
@@ -35,4 +51,14 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["TaskQueryStatusFilter", "TaskQueryStatusFilterStatus", "TaskQueryUpdateTimeRange"]
+__all__ = [
+    "StreamTasksResponse",
+    "StreamTasksResponse_Heartbeat",
+    "StreamTasksResponse_TaskEvent",
+    "TaskQueryStatusFilter",
+    "TaskQueryStatusFilterStatus",
+    "TaskQueryUpdateTimeRange",
+    "TaskStreamRequestTaskType",
+    "TaskStreamRequestTaskTypeTaskTypePrefix",
+    "TaskStreamRequestTaskTypeTaskTypeUrls",
+]

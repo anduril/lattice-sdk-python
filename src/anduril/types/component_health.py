@@ -37,7 +37,7 @@ class ComponentHealth(UniversalBaseModel):
     """
 
     update_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updateTime")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="updateTime", default=None)
     )
     """
     The last update time for this specific component.

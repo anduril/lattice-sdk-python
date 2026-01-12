@@ -15,14 +15,14 @@ class Ontology(UniversalBaseModel):
     """
 
     platform_type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="platformType")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="platformType", default=None)
     )
     """
     A string that describes the entity's high-level type with natural language.
     """
 
     specific_type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="specificType")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="specificType", default=None)
     )
     """
     A string that describes the entity's exact model or type.

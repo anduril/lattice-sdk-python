@@ -14,14 +14,14 @@ class TaskQueryUpdateTimeRange(UniversalBaseModel):
     """
 
     start_time: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="startTime")] = pydantic.Field(
-        default=None
+        alias="startTime", default=None
     )
     """
     If provided, returns Tasks only updated after this time.
     """
 
     end_time: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="endTime")] = pydantic.Field(
-        default=None
+        alias="endTime", default=None
     )
     """
     If provided, returns Tasks only updated before this time.

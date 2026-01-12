@@ -16,7 +16,7 @@ class AngleOfArrival(UniversalBaseModel):
     """
 
     relative_pose: typing_extensions.Annotated[typing.Optional[Pose], FieldMetadata(alias="relativePose")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="relativePose", default=None)
     )
     """
     Origin (LLA) and attitude (relative to ENU) of a ray pointing towards the detection. The attitude represents a
@@ -25,7 +25,7 @@ class AngleOfArrival(UniversalBaseModel):
 
     bearing_elevation_covariance_rad2: typing_extensions.Annotated[
         typing.Optional[TMat2], FieldMetadata(alias="bearingElevationCovarianceRad2")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="bearingElevationCovarianceRad2", default=None)
     """
     Bearing/elevation covariance matrix where bearing is defined in radians CCW+ about the z-axis from the x-axis of FLU frame
      and elevation is positive down from the FL/XY plane.

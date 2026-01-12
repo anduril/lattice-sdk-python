@@ -18,20 +18,20 @@ class PowerSource(UniversalBaseModel):
 
     power_status: typing_extensions.Annotated[
         typing.Optional[PowerSourcePowerStatus], FieldMetadata(alias="powerStatus")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="powerStatus", default=None)
     """
     Status of the power source.
     """
 
     power_type: typing_extensions.Annotated[typing.Optional[PowerSourcePowerType], FieldMetadata(alias="powerType")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="powerType", default=None)
     )
     """
     Used to determine the type of power source.
     """
 
     power_level: typing_extensions.Annotated[typing.Optional[PowerLevel], FieldMetadata(alias="powerLevel")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="powerLevel", default=None)
     )
     """
     Power level of the system. If absent, the power level is assumed to be unknown.

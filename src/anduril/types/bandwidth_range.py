@@ -16,10 +16,10 @@ class BandwidthRange(UniversalBaseModel):
 
     minimum_bandwidth: typing_extensions.Annotated[
         typing.Optional[Bandwidth], FieldMetadata(alias="minimumBandwidth")
-    ] = None
+    ] = pydantic.Field(alias="minimumBandwidth", default=None)
     maximum_bandwidth: typing_extensions.Annotated[
         typing.Optional[Bandwidth], FieldMetadata(alias="maximumBandwidth")
-    ] = None
+    ] = pydantic.Field(alias="maximumBandwidth", default=None)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
