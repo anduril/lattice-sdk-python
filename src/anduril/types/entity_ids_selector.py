@@ -10,7 +10,7 @@ from ..core.serialization import FieldMetadata
 
 class EntityIdsSelector(UniversalBaseModel):
     entity_ids: typing_extensions.Annotated[typing.Optional[typing.List[str]], FieldMetadata(alias="entityIds")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="entityIds", default=None)
     )
     """
     Receive tasks as an assignee for one or more of the supplied entity ids.

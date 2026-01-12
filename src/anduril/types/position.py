@@ -18,14 +18,14 @@ class Position(UniversalBaseModel):
     """
 
     latitude_degrees: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="latitudeDegrees")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="latitudeDegrees", default=None)
     )
     """
     WGS84 geodetic latitude in decimal degrees.
     """
 
     longitude_degrees: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="longitudeDegrees")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="longitudeDegrees", default=None)
     )
     """
     WGS84 longitude in decimal degrees.
@@ -33,7 +33,7 @@ class Position(UniversalBaseModel):
 
     altitude_hae_meters: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="altitudeHaeMeters")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="altitudeHaeMeters", default=None)
     """
     altitude as height above ellipsoid (WGS84) in meters. DoubleValue wrapper is used to distinguish optional from
      default 0.
@@ -41,7 +41,7 @@ class Position(UniversalBaseModel):
 
     altitude_agl_meters: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="altitudeAglMeters")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="altitudeAglMeters", default=None)
     """
     Altitude as AGL (Above Ground Level) if the upstream data source has this value set. This value represents the
      entity's height above the terrain. This is typically measured with a radar altimeter or by using a terrain tile
@@ -50,7 +50,7 @@ class Position(UniversalBaseModel):
 
     altitude_asf_meters: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="altitudeAsfMeters")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="altitudeAsfMeters", default=None)
     """
     Altitude as ASF (Above Sea Floor) if the upstream data source has this value set. If the value is not set from the upstream, this value is
      not set.
@@ -58,7 +58,7 @@ class Position(UniversalBaseModel):
 
     pressure_depth_meters: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="pressureDepthMeters")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="pressureDepthMeters", default=None)
     """
     The depth of the entity from the surface of the water through sensor measurements based on differential pressure
      between the interior and exterior of the vessel. If the value is not set from the upstream, this value is not set.

@@ -12,7 +12,7 @@ from .decorrelated_single import DecorrelatedSingle
 
 class Decorrelation(UniversalBaseModel):
     all_: typing_extensions.Annotated[typing.Optional[DecorrelatedAll], FieldMetadata(alias="all")] = pydantic.Field(
-        default=None
+        alias="all", default=None
     )
     """
     This will be specified if this entity was decorrelated against all other entities.
@@ -20,7 +20,7 @@ class Decorrelation(UniversalBaseModel):
 
     decorrelated_entities: typing_extensions.Annotated[
         typing.Optional[typing.List[DecorrelatedSingle]], FieldMetadata(alias="decorrelatedEntities")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="decorrelatedEntities", default=None)
     """
     A list of decorrelated entities that have been explicitly decorrelated against this entity
      which prevents lower precedence correlations from overriding it in the future.

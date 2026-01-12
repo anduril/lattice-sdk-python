@@ -15,21 +15,21 @@ class Provenance(UniversalBaseModel):
     """
 
     integration_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="integrationName")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="integrationName", default=None)
     )
     """
     Name of the integration that produced this entity
     """
 
     data_type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="dataType")] = pydantic.Field(
-        default=None
+        alias="dataType", default=None
     )
     """
     Source data type of this entity. Examples: ADSB, Link16, etc.
     """
 
     source_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sourceId")] = pydantic.Field(
-        default=None
+        alias="sourceId", default=None
     )
     """
     An ID that allows an element from a source to be uniquely identified
@@ -37,7 +37,7 @@ class Provenance(UniversalBaseModel):
 
     source_update_time: typing_extensions.Annotated[
         typing.Optional[dt.datetime], FieldMetadata(alias="sourceUpdateTime")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="sourceUpdateTime", default=None)
     """
     The time, according to the source system, that the data in the entity was last modified. Generally, this should
      be the time that the source-reported time of validity of the data in the entity. This field must be
@@ -45,7 +45,7 @@ class Provenance(UniversalBaseModel):
     """
 
     source_description: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sourceDescription")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="sourceDescription", default=None)
     )
     """
     Description of the modification source. In the case of a user this is the email address.

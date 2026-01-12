@@ -15,7 +15,7 @@ class VisualDetails(UniversalBaseModel):
     """
 
     range_rings: typing_extensions.Annotated[typing.Optional[RangeRings], FieldMetadata(alias="rangeRings")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="rangeRings", default=None)
     )
     """
     The range rings to display around an entity.
