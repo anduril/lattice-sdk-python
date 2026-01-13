@@ -13,7 +13,7 @@ from .orbit_mean_elements_metadata_ref_frame import OrbitMeanElementsMetadataRef
 
 class OrbitMeanElementsMetadata(UniversalBaseModel):
     creation_date: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="creationDate")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="creationDate", default=None)
     )
     """
     Creation date/time in UTC
@@ -25,7 +25,7 @@ class OrbitMeanElementsMetadata(UniversalBaseModel):
     """
 
     message_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="messageId")] = pydantic.Field(
-        default=None
+        alias="messageId", default=None
     )
     """
     ID that uniquely identifies a message from a given originator.
@@ -33,13 +33,13 @@ class OrbitMeanElementsMetadata(UniversalBaseModel):
 
     ref_frame: typing_extensions.Annotated[
         typing.Optional[OrbitMeanElementsMetadataRefFrame], FieldMetadata(alias="refFrame")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="refFrame", default=None)
     """
     Reference frame, assumed to be Earth-centered
     """
 
     ref_frame_epoch: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="refFrameEpoch")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="refFrameEpoch", default=None)
     )
     """
     Reference frame epoch in UTC - mandatory only if not intrinsic to frame definition
@@ -47,7 +47,7 @@ class OrbitMeanElementsMetadata(UniversalBaseModel):
 
     mean_element_theory: typing_extensions.Annotated[
         typing.Optional[OrbitMeanElementsMetadataMeanElementTheory], FieldMetadata(alias="meanElementTheory")
-    ] = None
+    ] = pydantic.Field(alias="meanElementTheory", default=None)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

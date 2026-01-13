@@ -17,7 +17,7 @@ class Pose(UniversalBaseModel):
     """
 
     att_enu: typing_extensions.Annotated[typing.Optional[Quaternion], FieldMetadata(alias="attEnu")] = pydantic.Field(
-        default=None
+        alias="attEnu", default=None
     )
     """
     The quaternion to transform a point in the Pose frame to the ENU frame. The Pose frame could be Body, Turret,

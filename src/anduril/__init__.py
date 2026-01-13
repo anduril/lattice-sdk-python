@@ -12,6 +12,7 @@ if typing.TYPE_CHECKING:
         ActiveTarget,
         Agent,
         AgentRequest,
+        AgentTaskRequest,
         Alert,
         AlertCondition,
         AlertLevel,
@@ -20,6 +21,7 @@ if typing.TYPE_CHECKING:
         AlternateId,
         AlternateIdType,
         AngleOfArrival,
+        BadRequestErrorBody,
         Bandwidth,
         BandwidthRange,
         CancelRequest,
@@ -185,6 +187,7 @@ if typing.TYPE_CHECKING:
         TransponderCodes,
         TransponderCodesMode4InterrogationResponse,
         UInt32Range,
+        UnauthorizedErrorBody,
         User,
         VisualDetails,
     )
@@ -198,10 +201,11 @@ if typing.TYPE_CHECKING:
         TooManyRequestsError,
         UnauthorizedError,
     )
-    from . import entities, entity, object, objects, task, tasks
+    from . import entities, entity, oauth, object, objects, task, tasks
     from .client import AsyncLattice, Lattice
     from .entities import StreamEntitiesResponse, StreamEntitiesResponse_Entity, StreamEntitiesResponse_Heartbeat
     from .environment import LatticeEnvironment
+    from .oauth import GetTokenResponse
     from .objects import GetObjectRequestAcceptEncoding
     from .tasks import TaskQueryStatusFilter, TaskQueryStatusFilterStatus, TaskQueryUpdateTimeRange
     from .version import __version__
@@ -211,6 +215,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ActiveTarget": ".types",
     "Agent": ".types",
     "AgentRequest": ".types",
+    "AgentTaskRequest": ".types",
     "Alert": ".types",
     "AlertCondition": ".types",
     "AlertLevel": ".types",
@@ -221,6 +226,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AngleOfArrival": ".types",
     "AsyncLattice": ".client",
     "BadRequestError": ".errors",
+    "BadRequestErrorBody": ".types",
     "Bandwidth": ".types",
     "BandwidthRange": ".types",
     "CancelRequest": ".types",
@@ -279,6 +285,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GeoPolygonPosition": ".types",
     "GeoShape": ".types",
     "GetObjectRequestAcceptEncoding": ".objects",
+    "GetTokenResponse": ".oauth",
     "GoogleProtobufAny": ".types",
     "GroupChild": ".types",
     "GroupDetails": ".types",
@@ -402,11 +409,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TransponderCodesMode4InterrogationResponse": ".types",
     "UInt32Range": ".types",
     "UnauthorizedError": ".errors",
+    "UnauthorizedErrorBody": ".types",
     "User": ".types",
     "VisualDetails": ".types",
     "__version__": ".version",
     "entities": ".entities",
     "entity": ".entity",
+    "oauth": ".oauth",
     "object": ".object",
     "objects": ".objects",
     "task": ".task",
@@ -441,6 +450,7 @@ __all__ = [
     "ActiveTarget",
     "Agent",
     "AgentRequest",
+    "AgentTaskRequest",
     "Alert",
     "AlertCondition",
     "AlertLevel",
@@ -451,6 +461,7 @@ __all__ = [
     "AngleOfArrival",
     "AsyncLattice",
     "BadRequestError",
+    "BadRequestErrorBody",
     "Bandwidth",
     "BandwidthRange",
     "CancelRequest",
@@ -509,6 +520,7 @@ __all__ = [
     "GeoPolygonPosition",
     "GeoShape",
     "GetObjectRequestAcceptEncoding",
+    "GetTokenResponse",
     "GoogleProtobufAny",
     "GroupChild",
     "GroupDetails",
@@ -632,11 +644,13 @@ __all__ = [
     "TransponderCodesMode4InterrogationResponse",
     "UInt32Range",
     "UnauthorizedError",
+    "UnauthorizedErrorBody",
     "User",
     "VisualDetails",
     "__version__",
     "entities",
     "entity",
+    "oauth",
     "object",
     "objects",
     "task",

@@ -18,14 +18,14 @@ class TaskVersion(UniversalBaseModel):
     """
 
     task_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="taskId")] = pydantic.Field(
-        default=None
+        alias="taskId", default=None
     )
     """
     The unique identifier for this task, used to distinguish it from all other tasks in the system.
     """
 
     definition_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="definitionVersion")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="definitionVersion", default=None)
     )
     """
     Counter that increments on changes to the task definition.
@@ -33,7 +33,7 @@ class TaskVersion(UniversalBaseModel):
     """
 
     status_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="statusVersion")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="statusVersion", default=None)
     )
     """
     Counter that increments on changes to TaskStatus.

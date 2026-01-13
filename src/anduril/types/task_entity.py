@@ -38,5 +38,7 @@ class TaskEntity(UniversalBaseModel):
 
 
 from .entity import Entity  # noqa: E402, I001
+from .override import Override  # noqa: E402, I001
+from .overrides import Overrides  # noqa: E402, I001
 
-update_forward_refs(TaskEntity)
+update_forward_refs(TaskEntity, Entity=Entity, Override=Override, Overrides=Overrides)
