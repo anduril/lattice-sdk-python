@@ -17,7 +17,7 @@ class CancelRequest(UniversalBaseModel):
     """
 
     task_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="taskId")] = pydantic.Field(
-        default=None
+        alias="taskId", default=None
     )
     """
     The unique task ID of the task to cancel.
@@ -41,4 +41,4 @@ class CancelRequest(UniversalBaseModel):
 
 from .principal import Principal  # noqa: E402, I001
 
-update_forward_refs(CancelRequest)
+update_forward_refs(CancelRequest, Principal=Principal)

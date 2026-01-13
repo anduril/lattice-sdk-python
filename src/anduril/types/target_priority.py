@@ -17,7 +17,7 @@ class TargetPriority(UniversalBaseModel):
 
     high_value_target: typing_extensions.Annotated[
         typing.Optional[HighValueTarget], FieldMetadata(alias="highValueTarget")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="highValueTarget", default=None)
     """
     Describes the target priority in relation to high value target lists.
     """

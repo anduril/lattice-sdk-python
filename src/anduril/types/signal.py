@@ -22,12 +22,12 @@ class Signal(UniversalBaseModel):
 
     frequency_center: typing_extensions.Annotated[
         typing.Optional[Frequency], FieldMetadata(alias="frequencyCenter")
-    ] = None
+    ] = pydantic.Field(alias="frequencyCenter", default=None)
     frequency_range: typing_extensions.Annotated[
         typing.Optional[FrequencyRange], FieldMetadata(alias="frequencyRange")
-    ] = None
+    ] = pydantic.Field(alias="frequencyRange", default=None)
     bandwidth_hz: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="bandwidthHz")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="bandwidthHz", default=None)
     )
     """
     Indicates the bandwidth of a signal (Hz).
@@ -35,24 +35,24 @@ class Signal(UniversalBaseModel):
 
     signal_to_noise_ratio: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="signalToNoiseRatio")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="signalToNoiseRatio", default=None)
     """
     Indicates the signal to noise (SNR) of this signal.
     """
 
     line_of_bearing: typing_extensions.Annotated[
         typing.Optional[LineOfBearing], FieldMetadata(alias="lineOfBearing")
-    ] = None
+    ] = pydantic.Field(alias="lineOfBearing", default=None)
     fixed: typing.Optional[Fixed] = None
     emitter_notations: typing_extensions.Annotated[
         typing.Optional[typing.List[EmitterNotation]], FieldMetadata(alias="emitterNotations")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="emitterNotations", default=None)
     """
     Emitter notations associated with this entity.
     """
 
     pulse_width_s: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="pulseWidthS")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="pulseWidthS", default=None)
     )
     """
     length in time of a single pulse
@@ -60,14 +60,14 @@ class Signal(UniversalBaseModel):
 
     pulse_repetition_interval: typing_extensions.Annotated[
         typing.Optional[PulseRepetitionInterval], FieldMetadata(alias="pulseRepetitionInterval")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="pulseRepetitionInterval", default=None)
     """
     length in time between the start of two pulses
     """
 
     scan_characteristics: typing_extensions.Annotated[
         typing.Optional[ScanCharacteristics], FieldMetadata(alias="scanCharacteristics")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="scanCharacteristics", default=None)
     """
     describes how a signal is observing the environment
     """

@@ -17,7 +17,7 @@ class LocationUncertainty(UniversalBaseModel):
 
     position_enu_cov: typing_extensions.Annotated[
         typing.Optional[EntityManagerTMat3], FieldMetadata(alias="positionEnuCov")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="positionEnuCov", default=None)
     """
     Positional covariance represented by the upper triangle of the covariance matrix. It is valid to populate
      only the diagonal of the matrix if the full covariance matrix is unknown.
@@ -25,7 +25,7 @@ class LocationUncertainty(UniversalBaseModel):
 
     velocity_enu_cov: typing_extensions.Annotated[
         typing.Optional[EntityManagerTMat3], FieldMetadata(alias="velocityEnuCov")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="velocityEnuCov", default=None)
     """
     Velocity covariance represented by the upper triangle of the covariance matrix. It is valid to populate
      only the diagonal of the matrix if the full covariance matrix is unknown.
@@ -33,7 +33,7 @@ class LocationUncertainty(UniversalBaseModel):
 
     position_error_ellipse: typing_extensions.Annotated[
         typing.Optional[ErrorEllipse], FieldMetadata(alias="positionErrorEllipse")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="positionErrorEllipse", default=None)
     """
     An ellipse that describes the certainty probability and error boundary for a given geolocation.
     """

@@ -16,7 +16,7 @@ class Fuel(UniversalBaseModel):
     """
 
     fuel_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="fuelId")] = pydantic.Field(
-        default=None
+        alias="fuelId", default=None
     )
     """
     unique fuel identifier
@@ -28,14 +28,14 @@ class Fuel(UniversalBaseModel):
     """
 
     reported_date: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="reportedDate")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="reportedDate", default=None)
     )
     """
     timestamp the information was reported
     """
 
     amount_gallons: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="amountGallons")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="amountGallons", default=None)
     )
     """
     amount of gallons on hand
@@ -43,28 +43,28 @@ class Fuel(UniversalBaseModel):
 
     max_authorized_capacity_gallons: typing_extensions.Annotated[
         typing.Optional[int], FieldMetadata(alias="maxAuthorizedCapacityGallons")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="maxAuthorizedCapacityGallons", default=None)
     """
     how much the asset is allowed to have available (in gallons)
     """
 
     operational_requirement_gallons: typing_extensions.Annotated[
         typing.Optional[int], FieldMetadata(alias="operationalRequirementGallons")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="operationalRequirementGallons", default=None)
     """
     minimum required for operations (in gallons)
     """
 
     data_classification: typing_extensions.Annotated[
         typing.Optional[Classification], FieldMetadata(alias="dataClassification")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="dataClassification", default=None)
     """
     fuel in a single asset may have different levels of classification
      use case: fuel for a SECRET asset while diesel fuel may be UNCLASSIFIED
     """
 
     data_source: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="dataSource")] = pydantic.Field(
-        default=None
+        alias="dataSource", default=None
     )
     """
     source of information

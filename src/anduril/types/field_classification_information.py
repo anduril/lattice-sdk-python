@@ -15,7 +15,7 @@ class FieldClassificationInformation(UniversalBaseModel):
     """
 
     field_path: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="fieldPath")] = pydantic.Field(
-        default=None
+        alias="fieldPath", default=None
     )
     """
     Proto field path which is the string representation of a field.
@@ -24,7 +24,7 @@ class FieldClassificationInformation(UniversalBaseModel):
 
     classification_information: typing_extensions.Annotated[
         typing.Optional[ClassificationInformation], FieldMetadata(alias="classificationInformation")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="classificationInformation", default=None)
     """
     The information which makes up the field level classification marking.
     """

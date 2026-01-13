@@ -15,14 +15,14 @@ class Relationship(UniversalBaseModel):
     """
 
     related_entity_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="relatedEntityId")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="relatedEntityId", default=None)
     )
     """
     The entity ID to which this entity is related.
     """
 
     relationship_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="relationshipId")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="relationshipId", default=None)
     )
     """
     A unique identifier for this relationship. Allows removing or updating relationships.
@@ -30,7 +30,7 @@ class Relationship(UniversalBaseModel):
 
     relationship_type: typing_extensions.Annotated[
         typing.Optional[RelationshipType], FieldMetadata(alias="relationshipType")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="relationshipType", default=None)
     """
     The relationship type
     """

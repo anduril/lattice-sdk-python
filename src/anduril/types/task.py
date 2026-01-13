@@ -37,7 +37,7 @@ class Task(UniversalBaseModel):
     """
 
     display_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="displayName")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="displayName", default=None)
     )
     """
     DEPRECATED: Human readable display name for this task, should be short (<100 chars).
@@ -49,14 +49,14 @@ class Task(UniversalBaseModel):
     """
 
     created_by: typing_extensions.Annotated[typing.Optional["Principal"], FieldMetadata(alias="createdBy")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="createdBy", default=None)
     )
     """
     Records who created this task. This field will not change after the task has been created.
     """
 
     last_updated_by: typing_extensions.Annotated[typing.Optional["Principal"], FieldMetadata(alias="lastUpdatedBy")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="lastUpdatedBy", default=None)
     )
     """
     Records who updated this task last.
@@ -64,7 +64,7 @@ class Task(UniversalBaseModel):
 
     last_update_time: typing_extensions.Annotated[
         typing.Optional[dt.datetime], FieldMetadata(alias="lastUpdateTime")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="lastUpdateTime", default=None)
     """
     Records the time of last update.
     """
@@ -75,7 +75,7 @@ class Task(UniversalBaseModel):
     """
 
     scheduled_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="scheduledTime")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="scheduledTime", default=None)
     )
     """
     If the task has been scheduled to execute, what time it should execute at.
@@ -93,14 +93,14 @@ class Task(UniversalBaseModel):
 
     is_executed_elsewhere: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="isExecutedElsewhere")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="isExecutedElsewhere", default=None)
     """
     If set, execution of this task is managed elsewhere, not by Task Manager.
      In other words, task manager will not attempt to update the assigned agent with execution instructions.
     """
 
     create_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createTime")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="createTime", default=None)
     )
     """
     Time of task creation.
@@ -113,7 +113,7 @@ class Task(UniversalBaseModel):
 
     initial_entities: typing_extensions.Annotated[
         typing.Optional[typing.List[TaskEntity]], FieldMetadata(alias="initialEntities")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="initialEntities", default=None)
     """
     If populated, indicates an initial set of entities that can be used to execute an entity aware task
      For example, an entity Objective, an entity Keep In Zone, etc.
@@ -139,4 +139,4 @@ class Task(UniversalBaseModel):
 
 from .principal import Principal  # noqa: E402, I001
 
-update_forward_refs(Task)
+update_forward_refs(Task, Principal=Principal)

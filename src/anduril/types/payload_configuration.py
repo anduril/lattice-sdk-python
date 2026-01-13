@@ -12,7 +12,7 @@ from .payload_configuration_payload_operational_state import PayloadConfiguratio
 
 class PayloadConfiguration(UniversalBaseModel):
     capability_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="capabilityId")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="capabilityId", default=None)
     )
     """
     Identifying ID for the capability.
@@ -27,21 +27,21 @@ class PayloadConfiguration(UniversalBaseModel):
     effective_environment: typing_extensions.Annotated[
         typing.Optional[typing.List[PayloadConfigurationEffectiveEnvironmentItem]],
         FieldMetadata(alias="effectiveEnvironment"),
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="effectiveEnvironment", default=None)
     """
     The target environments the configuration is effective against.
     """
 
     payload_operational_state: typing_extensions.Annotated[
         typing.Optional[PayloadConfigurationPayloadOperationalState], FieldMetadata(alias="payloadOperationalState")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="payloadOperationalState", default=None)
     """
     The operational state of this payload.
     """
 
     payload_description: typing_extensions.Annotated[
         typing.Optional[str], FieldMetadata(alias="payloadDescription")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="payloadDescription", default=None)
     """
     A human readable description of the payload
     """

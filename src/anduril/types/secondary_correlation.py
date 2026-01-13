@@ -11,7 +11,7 @@ from .correlation_metadata import CorrelationMetadata
 
 class SecondaryCorrelation(UniversalBaseModel):
     primary_entity_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="primaryEntityId")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="primaryEntityId", default=None)
     )
     """
     The primary of this correlation.

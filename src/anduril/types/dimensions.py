@@ -10,7 +10,7 @@ from ..core.serialization import FieldMetadata
 
 class Dimensions(UniversalBaseModel):
     length_m: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="lengthM")] = pydantic.Field(
-        default=None
+        alias="lengthM", default=None
     )
     """
     Length of the entity in meters
