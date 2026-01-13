@@ -11,7 +11,7 @@ from ..core.serialization import FieldMetadata
 
 class RouteDetails(UniversalBaseModel):
     destination_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="destinationName")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="destinationName", default=None)
     )
     """
     Free form text giving the name of the entity's destination
@@ -19,7 +19,7 @@ class RouteDetails(UniversalBaseModel):
 
     estimated_arrival_time: typing_extensions.Annotated[
         typing.Optional[dt.datetime], FieldMetadata(alias="estimatedArrivalTime")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="estimatedArrivalTime", default=None)
     """
     Estimated time of arrival at destination
     """

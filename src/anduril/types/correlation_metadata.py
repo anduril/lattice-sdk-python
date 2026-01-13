@@ -19,7 +19,7 @@ class CorrelationMetadata(UniversalBaseModel):
 
     replication_mode: typing_extensions.Annotated[
         typing.Optional[CorrelationMetadataReplicationMode], FieldMetadata(alias="replicationMode")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="replicationMode", default=None)
     """
     Indicates how the correlation will be distributed. Because a correlation is composed of
      multiple secondaries, each of which may have been correlated with different replication

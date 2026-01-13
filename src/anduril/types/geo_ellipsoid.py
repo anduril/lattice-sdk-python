@@ -16,21 +16,21 @@ class GeoEllipsoid(UniversalBaseModel):
     """
 
     forward_axis_m: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="forwardAxisM")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="forwardAxisM", default=None)
     )
     """
     Defines the distance from the center point to the surface along the forward axis
     """
 
     side_axis_m: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="sideAxisM")] = pydantic.Field(
-        default=None
+        alias="sideAxisM", default=None
     )
     """
     Defines the distance from the center point to the surface along the side axis
     """
 
     up_axis_m: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="upAxisM")] = pydantic.Field(
-        default=None
+        alias="upAxisM", default=None
     )
     """
     Defines the distance from the center point to the surface along the up axis

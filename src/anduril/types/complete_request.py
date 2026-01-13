@@ -15,7 +15,7 @@ class CompleteRequest(UniversalBaseModel):
     """
 
     task_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="taskId")] = pydantic.Field(
-        default=None
+        alias="taskId", default=None
     )
     """
     ID of the task to complete.

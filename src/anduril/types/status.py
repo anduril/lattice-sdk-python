@@ -14,7 +14,7 @@ class Status(UniversalBaseModel):
     """
 
     platform_activity: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="platformActivity")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="platformActivity", default=None)
     )
     """
     A string that describes the activity that the entity is performing.

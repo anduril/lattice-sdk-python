@@ -16,13 +16,13 @@ class HighValueTarget(UniversalBaseModel):
 
     is_high_value_target: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="isHighValueTarget")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="isHighValueTarget", default=None)
     """
     Indicates whether the target matches any description from a high value target list.
     """
 
     target_priority: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="targetPriority")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="targetPriority", default=None)
     )
     """
     The priority associated with the target. If the target's description appears on multiple high value target lists,
@@ -34,14 +34,14 @@ class HighValueTarget(UniversalBaseModel):
 
     target_matches: typing_extensions.Annotated[
         typing.Optional[typing.List[HighValueTargetMatch]], FieldMetadata(alias="targetMatches")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="targetMatches", default=None)
     """
     All of the high value target descriptions that the target matches against.
     """
 
     is_high_payoff_target: typing_extensions.Annotated[
         typing.Optional[bool], FieldMetadata(alias="isHighPayoffTarget")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="isHighPayoffTarget", default=None)
     """
     Indicates whether the target is a 'High Payoff Target'. Targets can be one or both of high value and high payoff.
     """

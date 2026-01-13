@@ -18,7 +18,7 @@ class FieldOfView(UniversalBaseModel):
     """
 
     fov_id: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="fovId")] = pydantic.Field(
-        default=None
+        alias="fovId", default=None
     )
     """
     The Id for one instance of a FieldOfView, persisted across multiple updates to provide continuity during
@@ -27,7 +27,7 @@ class FieldOfView(UniversalBaseModel):
     """
 
     mount_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="mountId")] = pydantic.Field(
-        default=None
+        alias="mountId", default=None
     )
     """
     The Id of the mount the sensor is on.
@@ -35,21 +35,21 @@ class FieldOfView(UniversalBaseModel):
 
     projected_frustum: typing_extensions.Annotated[
         typing.Optional[ProjectedFrustum], FieldMetadata(alias="projectedFrustum")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="projectedFrustum", default=None)
     """
     The field of view the sensor projected onto the ground.
     """
 
     projected_center_ray: typing_extensions.Annotated[
         typing.Optional[Position], FieldMetadata(alias="projectedCenterRay")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="projectedCenterRay", default=None)
     """
     Center ray of the frustum projected onto the ground.
     """
 
     center_ray_pose: typing_extensions.Annotated[
         typing.Optional[EntityManagerPose], FieldMetadata(alias="centerRayPose")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="centerRayPose", default=None)
     """
     The origin and direction of the center ray for this sensor relative to the ENU frame. A ray which is aligned with
      the positive X axis in the sensor frame will be transformed into the ray along the sensor direction in the ENU
@@ -57,14 +57,14 @@ class FieldOfView(UniversalBaseModel):
     """
 
     horizontal_fov: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="horizontalFov")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="horizontalFov", default=None)
     )
     """
     Horizontal field of view in radians.
     """
 
     vertical_fov: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="verticalFov")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="verticalFov", default=None)
     )
     """
     Vertical field of view in radians.

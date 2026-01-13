@@ -11,7 +11,7 @@ from ..core.serialization import FieldMetadata
 class PrimaryCorrelation(UniversalBaseModel):
     secondary_entity_ids: typing_extensions.Annotated[
         typing.Optional[typing.List[str]], FieldMetadata(alias="secondaryEntityIds")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="secondaryEntityIds", default=None)
     """
     The secondary entity IDs part of this correlation.
     """

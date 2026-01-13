@@ -12,7 +12,7 @@ from .orbit_mean_elements import OrbitMeanElements
 class Orbit(UniversalBaseModel):
     orbit_mean_elements: typing_extensions.Annotated[
         typing.Optional[OrbitMeanElements], FieldMetadata(alias="orbitMeanElements")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="orbitMeanElements", default=None)
     """
     Orbit Mean Elements data, analogous to the Orbit Mean Elements Message in CCSDS 502.0-B-3
     """
