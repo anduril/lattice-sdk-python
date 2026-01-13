@@ -14,7 +14,7 @@ class User(UniversalBaseModel):
     """
 
     user_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="userId")] = pydantic.Field(
-        default=None
+        alias="userId", default=None
     )
     """
     The User ID associated with this User.

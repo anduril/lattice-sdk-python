@@ -11,7 +11,7 @@ from .correlation_metadata import CorrelationMetadata
 
 class DecorrelatedSingle(UniversalBaseModel):
     entity_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="entityId")] = pydantic.Field(
-        default=None
+        alias="entityId", default=None
     )
     """
     The entity that was decorrelated against.

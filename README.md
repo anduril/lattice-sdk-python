@@ -18,6 +18,7 @@ The Lattice SDK Python library provides convenient access to the Lattice SDK API
 - [Exception Handling](#exception-handling)
 - [Streaming](#streaming)
 - [Pagination](#pagination)
+- [Oauth Token Override](#oauth-token-override)
 - [Advanced](#advanced)
   - [Access Raw Response Data](#access-raw-response-data)
   - [Retries](#retries)
@@ -56,7 +57,8 @@ Instantiate and use the client with the following:
 from anduril import Lattice
 
 client = Lattice(
-    token="YOUR_TOKEN",
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
 )
 client.entities.long_poll_entity_events(
     session_token="sessionToken",
@@ -73,7 +75,8 @@ import asyncio
 from anduril import AsyncLattice
 
 client = AsyncLattice(
-    token="YOUR_TOKEN",
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
 )
 
 
@@ -109,7 +112,8 @@ The SDK supports streaming responses, as well, the response will be a generator 
 from anduril import Lattice
 
 client = Lattice(
-    token="YOUR_TOKEN",
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
 )
 response = client.entities.stream_entities()
 for chunk in response.data:
@@ -124,7 +128,8 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 from anduril import Lattice
 
 client = Lattice(
-    token="YOUR_TOKEN",
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
 )
 response = client.objects.list_objects()
 for item in response:
@@ -141,6 +146,24 @@ for page in pager.iter_pages():
     print(page.response)  # access the typed response for each page
     for item in page:
         print(item)
+```
+
+## Oauth Token Override
+
+This SDK supports two authentication methods: OAuth client credentials flow (automatic token management) or direct bearer token authentication. You can choose between these options when initializing the client:
+
+```python
+from anduril import Lattice
+
+# Option 1: Direct bearer token (bypass OAuth flow)
+client = Lattice(..., token="my-pre-generated-bearer-token")
+
+from anduril import Lattice
+
+# Option 2: OAuth client credentials flow (automatic token management)
+client = Lattice(
+    ..., client_id="your-client-id", client_secret="your-client-secret"
+)
 ```
 
 ## Advanced

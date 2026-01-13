@@ -13,7 +13,7 @@ from .entity_event import EntityEvent
 
 class EntityEventResponse(UniversalBaseModel):
     session_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sessionToken")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="sessionToken", default=None)
     )
     """
     Long-poll session identifier. Use this token to resume polling on subsequent requests.
@@ -21,7 +21,7 @@ class EntityEventResponse(UniversalBaseModel):
 
     entity_events: typing_extensions.Annotated[
         typing.Optional[typing.List[EntityEvent]], FieldMetadata(alias="entityEvents")
-    ] = None
+    ] = pydantic.Field(alias="entityEvents", default=None)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

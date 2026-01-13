@@ -15,7 +15,7 @@ class Frequency(UniversalBaseModel):
     """
 
     frequency_hz: typing_extensions.Annotated[typing.Optional[Measurement], FieldMetadata(alias="frequencyHz")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="frequencyHz", default=None)
     )
     """
     Indicates a frequency of a signal (Hz) with its standard deviation.

@@ -21,7 +21,7 @@ class GeoPolygon(UniversalBaseModel):
     """
 
     is_rectangle: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isRectangle")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="isRectangle", default=None)
     )
     """
     An extension hint that this polygon is a rectangle. When true this implies several things:

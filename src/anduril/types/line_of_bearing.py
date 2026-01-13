@@ -17,20 +17,20 @@ class LineOfBearing(UniversalBaseModel):
 
     angle_of_arrival: typing_extensions.Annotated[
         typing.Optional[AngleOfArrival], FieldMetadata(alias="angleOfArrival")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="angleOfArrival", default=None)
     """
     The direction pointing from this entity to the detection
     """
 
     range_estimate_m: typing_extensions.Annotated[
         typing.Optional[Measurement], FieldMetadata(alias="rangeEstimateM")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="rangeEstimateM", default=None)
     """
     The estimated distance of the detection
     """
 
     max_range_m: typing_extensions.Annotated[typing.Optional[Measurement], FieldMetadata(alias="maxRangeM")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="maxRangeM", default=None)
     )
     """
     The maximum distance of the detection

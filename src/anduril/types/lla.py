@@ -16,7 +16,7 @@ class Lla(UniversalBaseModel):
     is2d: typing.Optional[bool] = None
     altitude_reference: typing_extensions.Annotated[
         typing.Optional[LlaAltitudeReference], FieldMetadata(alias="altitudeReference")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="altitudeReference", default=None)
     """
     Meaning of alt.
      altitude in meters above either WGS84 or EGM96, use altitude_reference to

@@ -17,14 +17,14 @@ class RfConfiguration(UniversalBaseModel):
 
     frequency_range_hz: typing_extensions.Annotated[
         typing.Optional[typing.List[FrequencyRange]], FieldMetadata(alias="frequencyRangeHz")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="frequencyRangeHz", default=None)
     """
     Frequency ranges that are available for this sensor.
     """
 
     bandwidth_range_hz: typing_extensions.Annotated[
         typing.Optional[typing.List[BandwidthRange]], FieldMetadata(alias="bandwidthRangeHz")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="bandwidthRangeHz", default=None)
     """
     Bandwidth ranges that are available for this sensor.
     """
