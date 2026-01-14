@@ -31,7 +31,7 @@ class TaskError(UniversalBaseModel):
 
     error_details: typing_extensions.Annotated[
         typing.Optional[GoogleProtobufAny], FieldMetadata(alias="errorDetails")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="errorDetails", default=None)
     """
     Any additional details regarding this error.
     """

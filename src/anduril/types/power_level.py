@@ -24,7 +24,7 @@ class PowerLevel(UniversalBaseModel):
     """
 
     percent_remaining: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="percentRemaining")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="percentRemaining", default=None)
     )
     """
     Percent of power remaining.
@@ -37,7 +37,7 @@ class PowerLevel(UniversalBaseModel):
     """
 
     current_amps: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="currentAmps")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="currentAmps", default=None)
     )
     """
     Current in amps of the power source subsystem, as reported by the power source. If the source does not
@@ -46,7 +46,7 @@ class PowerLevel(UniversalBaseModel):
 
     run_time_to_empty_mins: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="runTimeToEmptyMins")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="runTimeToEmptyMins", default=None)
     """
     Estimated minutes until empty. Calculated with consumption at the moment, as reported by the power source. If the source does not
      report this value this field will be null.
@@ -54,7 +54,7 @@ class PowerLevel(UniversalBaseModel):
 
     consumption_rate_l_per_s: typing_extensions.Annotated[
         typing.Optional[float], FieldMetadata(alias="consumptionRateLPerS")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="consumptionRateLPerS", default=None)
     """
     Fuel consumption rate in liters per second.
     """

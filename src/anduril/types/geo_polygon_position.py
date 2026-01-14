@@ -20,7 +20,7 @@ class GeoPolygonPosition(UniversalBaseModel):
     """
 
     height_m: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="heightM")] = pydantic.Field(
-        default=None
+        alias="heightM", default=None
     )
     """
     optional height above base position to extrude in meters.

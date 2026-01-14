@@ -19,7 +19,7 @@ class Sensor(UniversalBaseModel):
     """
 
     sensor_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sensorId")] = pydantic.Field(
-        default=None
+        alias="sensorId", default=None
     )
     """
     This generally is used to indicate a specific type at a more detailed granularity. E.g. COMInt or LWIR
@@ -27,16 +27,16 @@ class Sensor(UniversalBaseModel):
 
     operational_state: typing_extensions.Annotated[
         typing.Optional[SensorOperationalState], FieldMetadata(alias="operationalState")
-    ] = None
+    ] = pydantic.Field(alias="operationalState", default=None)
     sensor_type: typing_extensions.Annotated[typing.Optional[SensorSensorType], FieldMetadata(alias="sensorType")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="sensorType", default=None)
     )
     """
     The type of sensor
     """
 
     sensor_description: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sensorDescription")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="sensorDescription", default=None)
     )
     """
     A human readable description of the sensor
@@ -44,21 +44,21 @@ class Sensor(UniversalBaseModel):
 
     rf_configuraton: typing_extensions.Annotated[
         typing.Optional[RfConfiguration], FieldMetadata(alias="rfConfiguraton")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="rfConfiguraton", default=None)
     """
     RF configuration details of the sensor
     """
 
     last_detection_timestamp: typing_extensions.Annotated[
         typing.Optional[dt.datetime], FieldMetadata(alias="lastDetectionTimestamp")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="lastDetectionTimestamp", default=None)
     """
     Time of the latest detection from the sensor
     """
 
     fields_of_view: typing_extensions.Annotated[
         typing.Optional[typing.List[FieldOfView]], FieldMetadata(alias="fieldsOfView")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="fieldsOfView", default=None)
     """
     Multiple fields of view for a single sensor component
     """

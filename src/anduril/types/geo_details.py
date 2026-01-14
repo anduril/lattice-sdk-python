@@ -19,7 +19,7 @@ class GeoDetails(UniversalBaseModel):
     type: typing.Optional[GeoDetailsType] = None
     control_area: typing_extensions.Annotated[
         typing.Optional[ControlAreaDetails], FieldMetadata(alias="controlArea")
-    ] = None
+    ] = pydantic.Field(alias="controlArea", default=None)
     acm: typing.Optional[AcmDetails] = None
 
     if IS_PYDANTIC_V2:

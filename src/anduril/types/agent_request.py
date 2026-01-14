@@ -29,13 +29,13 @@ class AgentRequest(UniversalBaseModel):
 
     execute_request: typing_extensions.Annotated[
         typing.Optional[ExecuteRequest], FieldMetadata(alias="executeRequest")
-    ] = None
+    ] = pydantic.Field(alias="executeRequest", default=None)
     cancel_request: typing_extensions.Annotated[
         typing.Optional[CancelRequest], FieldMetadata(alias="cancelRequest")
-    ] = None
+    ] = pydantic.Field(alias="cancelRequest", default=None)
     complete_request: typing_extensions.Annotated[
         typing.Optional[CompleteRequest], FieldMetadata(alias="completeRequest")
-    ] = None
+    ] = pydantic.Field(alias="completeRequest", default=None)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

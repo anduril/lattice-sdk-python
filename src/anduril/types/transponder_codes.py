@@ -33,7 +33,7 @@ class TransponderCodes(UniversalBaseModel):
 
     mode4interrogation_response: typing_extensions.Annotated[
         typing.Optional[TransponderCodesMode4InterrogationResponse], FieldMetadata(alias="mode4InterrogationResponse")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="mode4InterrogationResponse", default=None)
     """
     The validity of the response from the Mode 4 interrogation.
     """
@@ -44,7 +44,7 @@ class TransponderCodes(UniversalBaseModel):
     """
 
     mode_s: typing_extensions.Annotated[typing.Optional[ModeS], FieldMetadata(alias="modeS")] = pydantic.Field(
-        default=None
+        alias="modeS", default=None
     )
     """
     The Mode S transponder codes.
