@@ -4,7 +4,7 @@ dynamic = ["version"]
 
 [tool.poetry]
 name = "anduril-lattice-sdk"
-version = "5.0.0"
+version = "4.1.0"
 description = "HTTP clients for the Anduril Lattice SDK"
 readme = "README.md"
 authors = [
