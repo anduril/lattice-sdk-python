@@ -22,14 +22,14 @@ class Location(UniversalBaseModel):
     """
 
     velocity_enu: typing_extensions.Annotated[typing.Optional[Enu], FieldMetadata(alias="velocityEnu")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="velocityEnu", default=None)
     )
     """
     Velocity in an ENU reference frame centered on the corresponding position. All units are meters per second.
     """
 
     speed_mps: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="speedMps")] = pydantic.Field(
-        default=None
+        alias="speedMps", default=None
     )
     """
     Speed is the magnitude of velocity_enu vector [sqrt(e^2 + n^2 + u^2)] when present, measured in m/s.
@@ -41,7 +41,7 @@ class Location(UniversalBaseModel):
     """
 
     attitude_enu: typing_extensions.Annotated[typing.Optional[Quaternion], FieldMetadata(alias="attitudeEnu")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="attitudeEnu", default=None)
     )
     """
     quaternion to translate from entity body frame to it's ENU frame

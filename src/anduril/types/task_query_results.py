@@ -24,7 +24,7 @@ class TaskQueryResults(UniversalBaseModel):
 
     tasks: typing.Optional[typing.List[Task]] = None
     next_page_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="nextPageToken")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="nextPageToken", default=None)
     )
     """
     Incomplete results can be detected by a non-empty nextPageToken field in the query results. In order to retrieve 

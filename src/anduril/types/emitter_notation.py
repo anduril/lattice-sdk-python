@@ -13,7 +13,9 @@ class EmitterNotation(UniversalBaseModel):
     A representation of a single emitter notation.
     """
 
-    emitter_notation: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="emitterNotation")] = None
+    emitter_notation: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="emitterNotation")] = (
+        pydantic.Field(alias="emitterNotation", default=None)
+    )
     confidence: typing.Optional[float] = pydantic.Field(default=None)
     """
     confidence as a percentage that the emitter notation in this component is accurate

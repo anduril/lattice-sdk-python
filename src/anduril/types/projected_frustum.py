@@ -16,28 +16,28 @@ class ProjectedFrustum(UniversalBaseModel):
     """
 
     upper_left: typing_extensions.Annotated[typing.Optional[Position], FieldMetadata(alias="upperLeft")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="upperLeft", default=None)
     )
     """
     Upper left point of the frustum.
     """
 
     upper_right: typing_extensions.Annotated[typing.Optional[Position], FieldMetadata(alias="upperRight")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="upperRight", default=None)
     )
     """
     Upper right point of the frustum.
     """
 
     bottom_right: typing_extensions.Annotated[typing.Optional[Position], FieldMetadata(alias="bottomRight")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="bottomRight", default=None)
     )
     """
     Bottom right point of the frustum.
     """
 
     bottom_left: typing_extensions.Annotated[typing.Optional[Position], FieldMetadata(alias="bottomLeft")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="bottomLeft", default=None)
     )
     """
     Bottom left point of the frustum.

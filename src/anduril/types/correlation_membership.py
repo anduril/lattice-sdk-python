@@ -13,7 +13,7 @@ from .primary_membership import PrimaryMembership
 
 class CorrelationMembership(UniversalBaseModel):
     correlation_set_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="correlationSetId")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="correlationSetId", default=None)
     )
     """
     The ID of the correlation set this entity belongs to.
@@ -27,7 +27,7 @@ class CorrelationMembership(UniversalBaseModel):
 
     non_primary: typing_extensions.Annotated[
         typing.Optional[NonPrimaryMembership], FieldMetadata(alias="nonPrimary")
-    ] = pydantic.Field(default=None)
+    ] = pydantic.Field(alias="nonPrimary", default=None)
     """
     This entity is not the primary of the correlation set. Note that there may not
      be a primary at all.

@@ -69,7 +69,8 @@ class ObjectsClient:
         from anduril import Lattice
 
         client = Lattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         response = client.objects.list_objects()
         for item in response:
@@ -121,7 +122,8 @@ class ObjectsClient:
         from anduril import Lattice
 
         client = Lattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.objects.get_object(
             object_path="objectPath",
@@ -156,6 +158,16 @@ class ObjectsClient:
         -------
         PathMetadata
             Successful upload
+
+        Examples
+        --------
+        from anduril import Lattice
+
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
+        client.objects.upload_object()
         """
         _response = self._raw_client.upload_object(object_path, request=request, request_options=request_options)
         return _response.data
@@ -181,7 +193,8 @@ class ObjectsClient:
         from anduril import Lattice
 
         client = Lattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.objects.delete_object(
             object_path="objectPath",
@@ -213,7 +226,8 @@ class ObjectsClient:
         from anduril import Lattice
 
         client = Lattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
         client.objects.get_object_metadata(
             object_path="objectPath",
@@ -279,7 +293,8 @@ class AsyncObjectsClient:
         from anduril import AsyncLattice
 
         client = AsyncLattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -340,7 +355,8 @@ class AsyncObjectsClient:
         from anduril import AsyncLattice
 
         client = AsyncLattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -382,6 +398,24 @@ class AsyncObjectsClient:
         -------
         PathMetadata
             Successful upload
+
+        Examples
+        --------
+        import asyncio
+
+        from anduril import AsyncLattice
+
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
+
+
+        async def main() -> None:
+            await client.objects.upload_object()
+
+
+        asyncio.run(main())
         """
         _response = await self._raw_client.upload_object(object_path, request=request, request_options=request_options)
         return _response.data
@@ -409,7 +443,8 @@ class AsyncObjectsClient:
         from anduril import AsyncLattice
 
         client = AsyncLattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 
@@ -449,7 +484,8 @@ class AsyncObjectsClient:
         from anduril import AsyncLattice
 
         client = AsyncLattice(
-            token="YOUR_TOKEN",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
         )
 
 

@@ -18,12 +18,20 @@ class RelationshipType(UniversalBaseModel):
     Determines the type of relationship between this entity and another.
     """
 
-    tracked_by: typing_extensions.Annotated[typing.Optional[TrackedBy], FieldMetadata(alias="trackedBy")] = None
-    group_child: typing_extensions.Annotated[typing.Optional[GroupChild], FieldMetadata(alias="groupChild")] = None
-    group_parent: typing_extensions.Annotated[typing.Optional[GroupParent], FieldMetadata(alias="groupParent")] = None
-    merged_from: typing_extensions.Annotated[typing.Optional[MergedFrom], FieldMetadata(alias="mergedFrom")] = None
+    tracked_by: typing_extensions.Annotated[typing.Optional[TrackedBy], FieldMetadata(alias="trackedBy")] = (
+        pydantic.Field(alias="trackedBy", default=None)
+    )
+    group_child: typing_extensions.Annotated[typing.Optional[GroupChild], FieldMetadata(alias="groupChild")] = (
+        pydantic.Field(alias="groupChild", default=None)
+    )
+    group_parent: typing_extensions.Annotated[typing.Optional[GroupParent], FieldMetadata(alias="groupParent")] = (
+        pydantic.Field(alias="groupParent", default=None)
+    )
+    merged_from: typing_extensions.Annotated[typing.Optional[MergedFrom], FieldMetadata(alias="mergedFrom")] = (
+        pydantic.Field(alias="mergedFrom", default=None)
+    )
     active_target: typing_extensions.Annotated[typing.Optional[ActiveTarget], FieldMetadata(alias="activeTarget")] = (
-        None
+        pydantic.Field(alias="activeTarget", default=None)
     )
 
     if IS_PYDANTIC_V2:

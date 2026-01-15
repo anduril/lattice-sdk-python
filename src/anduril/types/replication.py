@@ -15,7 +15,7 @@ class Replication(UniversalBaseModel):
     """
 
     stale_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="staleTime")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="staleTime", default=None)
     )
     """
     The time by which this task should be assumed to be stale.

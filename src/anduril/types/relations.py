@@ -22,7 +22,7 @@ class Relations(UniversalBaseModel):
     """
 
     parent_task_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="parentTaskId")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="parentTaskId", default=None)
     )
     """
     Identifies the parent task if the task is a sub-task.
@@ -40,4 +40,4 @@ class Relations(UniversalBaseModel):
 
 from .principal import Principal  # noqa: E402, I001
 
-update_forward_refs(Relations)
+update_forward_refs(Relations, Principal=Principal)

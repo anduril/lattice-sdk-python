@@ -12,7 +12,7 @@ from .media_item_type import MediaItemType
 class MediaItem(UniversalBaseModel):
     type: typing.Optional[MediaItemType] = None
     relative_path: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="relativePath")] = (
-        pydantic.Field(default=None)
+        pydantic.Field(alias="relativePath", default=None)
     )
     """
     The path, relative to the environment base URL, where media related to an entity can be accessed

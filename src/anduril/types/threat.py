@@ -14,7 +14,7 @@ class Threat(UniversalBaseModel):
     """
 
     is_threat: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isThreat")] = pydantic.Field(
-        default=None
+        alias="isThreat", default=None
     )
     """
     Indicates that the entity has been determined to be a threat.
