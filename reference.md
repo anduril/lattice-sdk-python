@@ -1,6 +1,6 @@
 # Reference
 ## Entities
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">publish_entity</a>(...) -> AsyncHttpResponse[Entity]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">publish_entity</a>(...) -&gt; AsyncHttpResponse[Entity]</code></summary>
 <dl>
 <dd>
 
@@ -405,7 +405,7 @@ Describes an entity's security classification levels at an overall classificatio
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">get_entity</a>(...) -> AsyncHttpResponse[Entity]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">get_entity</a>(...) -&gt; AsyncHttpResponse[Entity]</code></summary>
 <dl>
 <dd>
 
@@ -462,7 +462,7 @@ client.entities.get_entity(
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">override_entity</a>(...) -> AsyncHttpResponse[Entity]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">override_entity</a>(...) -&gt; AsyncHttpResponse[Entity]</code></summary>
 <dl>
 <dd>
 
@@ -567,7 +567,7 @@ the object and ignore all other fields.
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">remove_entity_override</a>(...) -> AsyncHttpResponse[Entity]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">remove_entity_override</a>(...) -&gt; AsyncHttpResponse[Entity]</code></summary>
 <dl>
 <dd>
 
@@ -647,7 +647,7 @@ client.entities.remove_entity_override(
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">long_poll_entity_events</a>(...) -> AsyncHttpResponse[EntityEventResponse]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">long_poll_entity_events</a>(...) -&gt; AsyncHttpResponse[EntityEventResponse]</code></summary>
 <dl>
 <dd>
 
@@ -734,7 +734,7 @@ client.entities.long_poll_entity_events(
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">stream_entities</a>(...) -> typing.AsyncIterator[
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">stream_entities</a>(...) -&gt; typing.AsyncIterator[
     AsyncHttpResponse[typing.AsyncIterator[StreamEntitiesResponse]]
 ]</code></summary>
 <dl>
@@ -842,7 +842,7 @@ for chunk in response.data:
 </details>
 
 ## Tasks
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">create_task</a>(...) -> AsyncHttpResponse[Task]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">create_task</a>(...) -&gt; AsyncHttpResponse[Task]</code></summary>
 <dl>
 <dd>
 
@@ -987,7 +987,7 @@ task. For example, an entity Objective, an entity Keep In Zone, etc.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">get_task</a>(...) -> AsyncHttpResponse[Task]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">get_task</a>(...) -&gt; AsyncHttpResponse[Task]</code></summary>
 <dl>
 <dd>
 
@@ -1065,7 +1065,7 @@ client.tasks.get_task(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">update_task_status</a>(...) -> AsyncHttpResponse[Task]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">update_task_status</a>(...) -&gt; AsyncHttpResponse[Task]</code></summary>
 <dl>
 <dd>
 
@@ -1175,7 +1175,7 @@ is known are considered stale and ignored.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">query_tasks</a>(...) -> AsyncHttpResponse[TaskQueryResults]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">query_tasks</a>(...) -&gt; AsyncHttpResponse[TaskQueryResults]</code></summary>
 <dl>
 <dd>
 
@@ -1286,7 +1286,7 @@ any of the remaining parameters, but not both.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">listen_as_agent</a>(...) -> AsyncHttpResponse[AgentRequest]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">listen_as_agent</a>(...) -&gt; AsyncHttpResponse[AgentRequest]</code></summary>
 <dl>
 <dd>
 
@@ -1375,7 +1375,7 @@ client.tasks.listen_as_agent()
 </details>
 
 ## Objects
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">list_objects</a>(...) -> AsyncPager[PathMetadata, ListResponse]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">list_objects</a>(...) -&gt; AsyncPager[PathMetadata, ListResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1473,7 +1473,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">get_object</a>(...) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">get_object</a>(...) -&gt; typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
 <dl>
 <dd>
 
@@ -1560,7 +1560,7 @@ client.objects.get_object(
 </dl>
 </details>
 
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">upload_object</a>(...) -> AsyncHttpResponse[PathMetadata]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">upload_object</a>(...) -&gt; AsyncHttpResponse[PathMetadata]</code></summary>
 <dl>
 <dd>
 
@@ -1637,7 +1637,7 @@ client.objects.upload_object()
 </dl>
 </details>
 
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">delete_object</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">delete_object</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -1708,7 +1708,7 @@ client.objects.delete_object(
 </dl>
 </details>
 
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">get_object_metadata</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">get_object_metadata</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -1780,7 +1780,7 @@ client.objects.get_object_metadata(
 </details>
 
 ## oauth
-<details><summary><code>client.oauth.<a href="src/anduril/oauth/client.py">get_token</a>(...) -> AsyncHttpResponse[GetTokenResponse]</code></summary>
+<details><summary><code>client.oauth.<a href="src/anduril/oauth/client.py">get_token</a>(...) -&gt; AsyncHttpResponse[GetTokenResponse]</code></summary>
 <dl>
 <dd>
 
