@@ -11,6 +11,8 @@ if typing.TYPE_CHECKING:
     from .active_target import ActiveTarget
     from .agent import Agent
     from .agent_request import AgentRequest
+    from .agent_stream_event import AgentStreamEvent
+    from .agent_task_request import AgentTaskRequest
     from .alert import Alert
     from .alert_condition import AlertCondition
     from .alert_level import AlertLevel
@@ -161,6 +163,7 @@ if typing.TYPE_CHECKING:
     from .sensors import Sensors
     from .signal import Signal
     from .status import Status
+    from .stream_heartbeat import StreamHeartbeat
     from .supplies import Supplies
     from .symbology import Symbology
     from .system import System
@@ -172,9 +175,13 @@ if typing.TYPE_CHECKING:
     from .task_entity import TaskEntity
     from .task_error import TaskError
     from .task_error_code import TaskErrorCode
+    from .task_event_data import TaskEventData
+    from .task_event_data_task_event import TaskEventDataTaskEvent
+    from .task_event_data_task_event_event_type import TaskEventDataTaskEventEventType
     from .task_query_results import TaskQueryResults
     from .task_status import TaskStatus
     from .task_status_status import TaskStatusStatus
+    from .task_stream_event import TaskStreamEvent
     from .task_version import TaskVersion
     from .team import Team
     from .threat import Threat
@@ -194,6 +201,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ActiveTarget": ".active_target",
     "Agent": ".agent",
     "AgentRequest": ".agent_request",
+    "AgentStreamEvent": ".agent_stream_event",
+    "AgentTaskRequest": ".agent_task_request",
     "Alert": ".alert",
     "AlertCondition": ".alert_condition",
     "AlertLevel": ".alert_level",
@@ -344,6 +353,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Sensors": ".sensors",
     "Signal": ".signal",
     "Status": ".status",
+    "StreamHeartbeat": ".stream_heartbeat",
     "Supplies": ".supplies",
     "Symbology": ".symbology",
     "System": ".system",
@@ -355,9 +365,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TaskEntity": ".task_entity",
     "TaskError": ".task_error",
     "TaskErrorCode": ".task_error_code",
+    "TaskEventData": ".task_event_data",
+    "TaskEventDataTaskEvent": ".task_event_data_task_event",
+    "TaskEventDataTaskEventEventType": ".task_event_data_task_event_event_type",
     "TaskQueryResults": ".task_query_results",
     "TaskStatus": ".task_status",
     "TaskStatusStatus": ".task_status_status",
+    "TaskStreamEvent": ".task_stream_event",
     "TaskVersion": ".task_version",
     "Team": ".team",
     "Threat": ".threat",
@@ -401,6 +415,8 @@ __all__ = [
     "ActiveTarget",
     "Agent",
     "AgentRequest",
+    "AgentStreamEvent",
+    "AgentTaskRequest",
     "Alert",
     "AlertCondition",
     "AlertLevel",
@@ -551,6 +567,7 @@ __all__ = [
     "Sensors",
     "Signal",
     "Status",
+    "StreamHeartbeat",
     "Supplies",
     "Symbology",
     "System",
@@ -562,9 +579,13 @@ __all__ = [
     "TaskEntity",
     "TaskError",
     "TaskErrorCode",
+    "TaskEventData",
+    "TaskEventDataTaskEvent",
+    "TaskEventDataTaskEventEventType",
     "TaskQueryResults",
     "TaskStatus",
     "TaskStatusStatus",
+    "TaskStreamEvent",
     "TaskVersion",
     "Team",
     "Threat",
