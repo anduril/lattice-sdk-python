@@ -2,17 +2,16 @@
 
 from __future__ import annotations
 
-import datetime as dt
 import typing
 
 import pydantic
 import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ...core.serialization import FieldMetadata
-from ...types.entity_event_event_type import EntityEventEventType
+from ...types.task_event_data_task_event import TaskEventDataTaskEvent
 
 
-class StreamEntitiesResponse_Heartbeat(UniversalBaseModel):
+class StreamTasksResponse_Heartbeat(UniversalBaseModel):
     """
     The stream event response.
     """
@@ -30,17 +29,15 @@ class StreamEntitiesResponse_Heartbeat(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-class StreamEntitiesResponse_Entity(UniversalBaseModel):
+class StreamTasksResponse_TaskEvent(UniversalBaseModel):
     """
     The stream event response.
     """
 
-    event: typing.Literal["entity"] = "entity"
-    event_type: typing_extensions.Annotated[typing.Optional[EntityEventEventType], FieldMetadata(alias="eventType")] = (
-        pydantic.Field(alias="eventType", default=None)
-    )
-    time: typing.Optional[dt.datetime] = None
-    entity: typing.Optional["Entity"] = None
+    event: typing.Literal["task_event"] = "task_event"
+    task_event: typing_extensions.Annotated[
+        typing.Optional[TaskEventDataTaskEvent], FieldMetadata(alias="taskEvent")
+    ] = pydantic.Field(alias="taskEvent", default=None)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -52,11 +49,7 @@ class StreamEntitiesResponse_Entity(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-StreamEntitiesResponse = typing_extensions.Annotated[
-    typing.Union[StreamEntitiesResponse_Heartbeat, StreamEntitiesResponse_Entity], pydantic.Field(discriminator="event")
+StreamTasksResponse = typing_extensions.Annotated[
+    typing.Union[StreamTasksResponse_Heartbeat, StreamTasksResponse_TaskEvent], pydantic.Field(discriminator="event")
 ]
-from ...types.entity import Entity  # noqa: E402, I001
-from ...types.override import Override  # noqa: E402, I001
-from ...types.overrides import Overrides  # noqa: E402, I001
-
-update_forward_refs(StreamEntitiesResponse_Entity, Entity=Entity, Override=Override, Overrides=Overrides)
+update_forward_refs(StreamTasksResponse_TaskEvent)

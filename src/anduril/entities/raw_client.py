@@ -11,7 +11,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.http_sse._api import EventSource
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
+from ..core.pydantic_utilities import parse_obj_as, parse_sse_obj
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.bad_request_error import BadRequestError
@@ -839,9 +839,9 @@ class RawEntitiesClient:
                                 try:
                                     yield typing.cast(
                                         StreamEntitiesResponse,
-                                        parse_obj_as(
+                                        parse_sse_obj(
+                                            sse=_sse,
                                             type_=StreamEntitiesResponse,  # type: ignore
-                                            object_=_sse.json(),
                                         ),
                                     )
                                 except JSONDecodeError as e:
@@ -1670,9 +1670,9 @@ class AsyncRawEntitiesClient:
                                 try:
                                     yield typing.cast(
                                         StreamEntitiesResponse,
-                                        parse_obj_as(
+                                        parse_sse_obj(
+                                            sse=_sse,
                                             type_=StreamEntitiesResponse,  # type: ignore
-                                            object_=_sse.json(),
                                         ),
                                     )
                                 except JSONDecodeError as e:

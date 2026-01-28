@@ -3,15 +3,11 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from .heartbeat_object import HeartbeatObject
 
 
-class HeartbeatObject(UniversalBaseModel):
-    timestamp: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    The timestamp at which the heartbeat message was sent.
-    """
-
+class StreamHeartbeat(HeartbeatObject):
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

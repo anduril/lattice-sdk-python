@@ -1,6 +1,6 @@
 # Reference
 ## Entities
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">publish_entity</a>(...) -> AsyncHttpResponse[Entity]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">publish_entity</a>(...) -&gt; AsyncHttpResponse[Entity]</code></summary>
 <dl>
 <dd>
 
@@ -405,7 +405,7 @@ Describes an entity's security classification levels at an overall classificatio
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">get_entity</a>(...) -> AsyncHttpResponse[Entity]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">get_entity</a>(...) -&gt; AsyncHttpResponse[Entity]</code></summary>
 <dl>
 <dd>
 
@@ -462,7 +462,7 @@ client.entities.get_entity(
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">override_entity</a>(...) -> AsyncHttpResponse[Entity]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">override_entity</a>(...) -&gt; AsyncHttpResponse[Entity]</code></summary>
 <dl>
 <dd>
 
@@ -567,7 +567,7 @@ the object and ignore all other fields.
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">remove_entity_override</a>(...) -> AsyncHttpResponse[Entity]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">remove_entity_override</a>(...) -&gt; AsyncHttpResponse[Entity]</code></summary>
 <dl>
 <dd>
 
@@ -647,7 +647,7 @@ client.entities.remove_entity_override(
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">long_poll_entity_events</a>(...) -> AsyncHttpResponse[EntityEventResponse]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">long_poll_entity_events</a>(...) -&gt; AsyncHttpResponse[EntityEventResponse]</code></summary>
 <dl>
 <dd>
 
@@ -734,7 +734,7 @@ client.entities.long_poll_entity_events(
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">stream_entities</a>(...) -> typing.AsyncIterator[
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">stream_entities</a>(...) -&gt; typing.AsyncIterator[
     AsyncHttpResponse[typing.AsyncIterator[StreamEntitiesResponse]]
 ]</code></summary>
 <dl>
@@ -842,7 +842,7 @@ for chunk in response.data:
 </details>
 
 ## Tasks
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">create_task</a>(...) -> AsyncHttpResponse[Task]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">create_task</a>(...) -&gt; AsyncHttpResponse[Task]</code></summary>
 <dl>
 <dd>
 
@@ -987,7 +987,7 @@ task. For example, an entity Objective, an entity Keep In Zone, etc.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">get_task</a>(...) -> AsyncHttpResponse[Task]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">get_task</a>(...) -&gt; AsyncHttpResponse[Task]</code></summary>
 <dl>
 <dd>
 
@@ -1065,7 +1065,7 @@ client.tasks.get_task(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">update_task_status</a>(...) -> AsyncHttpResponse[Task]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">update_task_status</a>(...) -&gt; AsyncHttpResponse[Task]</code></summary>
 <dl>
 <dd>
 
@@ -1175,7 +1175,7 @@ is known are considered stale and ignored.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">query_tasks</a>(...) -> AsyncHttpResponse[TaskQueryResults]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">query_tasks</a>(...) -&gt; AsyncHttpResponse[TaskQueryResults]</code></summary>
 <dl>
 <dd>
 
@@ -1286,7 +1286,113 @@ any of the remaining parameters, but not both.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">listen_as_agent</a>(...) -> AsyncHttpResponse[AgentRequest]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">stream_tasks</a>(...) -&gt; typing.AsyncIterator[
+    AsyncHttpResponse[typing.AsyncIterator[StreamTasksResponse]]
+]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Establishes a server streaming connection that delivers task updates in real-time using Server-Sent Events (SSE).
+
+The stream delivers all existing non-terminal tasks when first connected, followed by real-time
+updates for task creation and status changes. Additionally, heartbeat messages are sent periodically to maintain the connection.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+
+client = Lattice(
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
+)
+response = client.tasks.stream_tasks()
+for chunk in response.data:
+    yield chunk
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**heartbeat_interval_ms:** `typing.Optional[int]` — The time interval, in milliseconds, that determines the frequency at which to send heartbeat events. Defaults to 30000 (30 seconds).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rate_limit:** `typing.Optional[int]` 
+
+The time interval, in milliseconds, after an update for a given task before another one will be sent for the same task. 
+If set, value must be >= 250. 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**exclude_preexisting_tasks:** `typing.Optional[bool]` 
+
+Optional flag to only include tasks created or updated after the stream is initiated, and not any previous preexisting tasks.
+If unset or false, the stream will include any new tasks and task updates, as well as all preexisting tasks.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**task_type:** `typing.Optional[TaskStreamRequestTaskType]` — Optional filter that only returns tasks with specific types. If not provided, all task types will be streamed.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">listen_as_agent</a>(...) -&gt; AsyncHttpResponse[AgentRequest]</code></summary>
 <dl>
 <dd>
 
@@ -1374,8 +1480,105 @@ client.tasks.listen_as_agent()
 </dl>
 </details>
 
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">stream_as_agent</a>(...) -&gt; typing.AsyncIterator[
+    AsyncHttpResponse[typing.AsyncIterator[StreamAsAgentResponse]]
+]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Establishes a server streaming connection that delivers tasks to taskable agents for execution
+using Server-Sent Events (SSE).
+
+This method creates a connection from the Tasks API to an agent that streams relevant tasks to the listener agent. The agent receives a stream of tasks that match the entities specified by the tasks' selector criteria.
+
+The stream delivers three types of requests:
+- `ExecuteRequest`: Contains a new task for the agent to execute
+- `CancelRequest`: Indicates a task should be canceled
+- `CompleteRequest`: Indicates a task should be completed
+
+Additionally, heartbeat messages are sent periodically to maintain the connection.
+
+This is recommended method for taskable agents to receive and process tasks in real-time.
+Agents should maintain connection to this stream and process incoming tasks according to their capabilities. 
+
+When an agent receives a task, it should update the task status using the `UpdateStatus` endpoint
+to provide progress information back to Tasks API.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+
+client = Lattice(
+    client_id="YOUR_CLIENT_ID",
+    client_secret="YOUR_CLIENT_SECRET",
+)
+response = client.tasks.stream_as_agent()
+for chunk in response.data:
+    yield chunk
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**agent_selector:** `typing.Optional[EntityIdsSelector]` — The selector criteria to determine which tasks the agent receives.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**heartbeat_interval_ms:** `typing.Optional[int]` — The time interval, defined in seconds, that determines the frequency at which to send heartbeat events. Defaults to 30s.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Objects
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">list_objects</a>(...) -> AsyncPager[PathMetadata, ListResponse]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">list_objects</a>(...) -&gt; AsyncPager[PathMetadata, ListResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1473,7 +1676,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">get_object</a>(...) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">get_object</a>(...) -&gt; typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
 <dl>
 <dd>
 
@@ -1560,7 +1763,7 @@ client.objects.get_object(
 </dl>
 </details>
 
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">upload_object</a>(...) -> AsyncHttpResponse[PathMetadata]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">upload_object</a>(...) -&gt; AsyncHttpResponse[PathMetadata]</code></summary>
 <dl>
 <dd>
 
@@ -1637,7 +1840,7 @@ client.objects.upload_object()
 </dl>
 </details>
 
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">delete_object</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">delete_object</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -1708,7 +1911,7 @@ client.objects.delete_object(
 </dl>
 </details>
 
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">get_object_metadata</a>(...) -> AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">get_object_metadata</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -1780,7 +1983,7 @@ client.objects.get_object_metadata(
 </details>
 
 ## oauth
-<details><summary><code>client.oauth.<a href="src/anduril/oauth/client.py">get_token</a>(...) -> AsyncHttpResponse[GetTokenResponse]</code></summary>
+<details><summary><code>client.oauth.<a href="src/anduril/oauth/client.py">get_token</a>(...) -&gt; AsyncHttpResponse[GetTokenResponse]</code></summary>
 <dl>
 <dd>
 
