@@ -24,12 +24,12 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "anduril-lattice-sdk/4.2.0",
+            "User-Agent": "anduril-lattice-sdk/4.3.0",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
             "X-Fern-SDK-Name": "anduril-lattice-sdk",
-            "X-Fern-SDK-Version": "4.2.0",
+            "X-Fern-SDK-Version": "4.3.0",
             **(self.get_custom_headers() or {}),
         }
         token = self._get_token()
