@@ -37,6 +37,7 @@ class ObjectsClient:
         since_timestamp: typing.Optional[dt.datetime] = None,
         page_token: typing.Optional[str] = None,
         all_objects_in_mesh: typing.Optional[bool] = None,
+        max_page_size: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[PathMetadata, ListResponse]:
         """
@@ -56,6 +57,9 @@ class ObjectsClient:
         all_objects_in_mesh : typing.Optional[bool]
             Lists objects across all environment nodes in a Lattice Mesh.
 
+        max_page_size : typing.Optional[int]
+            Sets the maximum number of items that should be returned on a single page.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -68,10 +72,7 @@ class ObjectsClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         response = client.objects.list_objects()
         for item in response:
             yield item
@@ -84,6 +85,7 @@ class ObjectsClient:
             since_timestamp=since_timestamp,
             page_token=page_token,
             all_objects_in_mesh=all_objects_in_mesh,
+            max_page_size=max_page_size,
             request_options=request_options,
         )
 
@@ -121,10 +123,7 @@ class ObjectsClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         client.objects.get_object(
             object_path="objectPath",
         )
@@ -163,10 +162,7 @@ class ObjectsClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         client.objects.upload_object()
         """
         _response = self._raw_client.upload_object(object_path, request=request, request_options=request_options)
@@ -192,10 +188,7 @@ class ObjectsClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         client.objects.delete_object(
             object_path="objectPath",
         )
@@ -225,10 +218,7 @@ class ObjectsClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         client.objects.get_object_metadata(
             object_path="objectPath",
         )
@@ -259,6 +249,7 @@ class AsyncObjectsClient:
         since_timestamp: typing.Optional[dt.datetime] = None,
         page_token: typing.Optional[str] = None,
         all_objects_in_mesh: typing.Optional[bool] = None,
+        max_page_size: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[PathMetadata, ListResponse]:
         """
@@ -278,6 +269,9 @@ class AsyncObjectsClient:
         all_objects_in_mesh : typing.Optional[bool]
             Lists objects across all environment nodes in a Lattice Mesh.
 
+        max_page_size : typing.Optional[int]
+            Sets the maximum number of items that should be returned on a single page.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -292,10 +286,7 @@ class AsyncObjectsClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -315,6 +306,7 @@ class AsyncObjectsClient:
             since_timestamp=since_timestamp,
             page_token=page_token,
             all_objects_in_mesh=all_objects_in_mesh,
+            max_page_size=max_page_size,
             request_options=request_options,
         )
 
@@ -354,10 +346,7 @@ class AsyncObjectsClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -405,10 +394,7 @@ class AsyncObjectsClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -442,10 +428,7 @@ class AsyncObjectsClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -483,10 +466,7 @@ class AsyncObjectsClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:

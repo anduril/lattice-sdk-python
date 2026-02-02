@@ -63,10 +63,7 @@ class Lattice:
     --------
     from anduril import Lattice
 
-    client = Lattice(
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
-    )
+    client = Lattice()
 
     # or ...
 
@@ -244,10 +241,7 @@ class AsyncLattice:
     --------
     from anduril import AsyncLattice
 
-    client = AsyncLattice(
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
-    )
+    client = AsyncLattice()
 
     # or ...
 

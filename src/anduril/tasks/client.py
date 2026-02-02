@@ -104,10 +104,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         client.tasks.create_task()
         """
         _response = self._raw_client.create_task(
@@ -151,10 +148,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         client.tasks.get_task(
             task_id="taskId",
         )
@@ -212,10 +206,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         client.tasks.update_task_status(
             task_id="taskId",
         )
@@ -282,10 +273,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         client.tasks.query_tasks()
         """
         _response = self._raw_client.query_tasks(
@@ -340,10 +328,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         response = client.tasks.stream_tasks()
         for chunk in response:
             yield chunk
@@ -402,10 +387,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         client.tasks.listen_as_agent()
         """
         _response = self._raw_client.listen_as_agent(agent_selector=agent_selector, request_options=request_options)
@@ -457,10 +439,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         response = client.tasks.stream_as_agent()
         for chunk in response:
             yield chunk
@@ -553,10 +532,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -608,10 +584,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -677,10 +650,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -755,10 +725,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -821,10 +788,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -892,10 +856,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -957,10 +918,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:

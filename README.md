@@ -56,10 +56,7 @@ Instantiate and use the client with the following:
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.entities.long_poll_entity_events(
     session_token="sessionToken",
 )
@@ -74,10 +71,7 @@ import asyncio
 
 from anduril import AsyncLattice
 
-client = AsyncLattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = AsyncLattice()
 
 
 async def main() -> None:
@@ -111,10 +105,7 @@ The SDK supports streaming responses, as well, the response will be a generator 
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 response = client.entities.stream_entities()
 for chunk in response.data:
     yield chunk
@@ -127,10 +118,7 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 response = client.objects.list_objects()
 for item in response:
     yield item
@@ -181,6 +169,7 @@ client = Lattice(
 )
 response = client.entities.with_raw_response.long_poll_entity_events(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
 pager = client.objects.list_objects(...)
 print(pager.response)  # access the typed response for the first page
@@ -191,7 +180,9 @@ for page in pager.iter_pages():
     for item in page:
         print(item)  # access the underlying object(s)
 with client.entities.with_raw_response.stream_entities(...) as response:
-    print(response.headers)  # access the response headers
+    print(
+        response.headers
+    )  # access the response headersprint(response.status_code)  # access the response status code
     for chunk in response.data:
         print(chunk)  # access the underlying object(s)
 ```
