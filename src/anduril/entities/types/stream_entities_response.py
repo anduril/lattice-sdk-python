@@ -36,9 +36,9 @@ class StreamEntitiesResponse_Entity(UniversalBaseModel):
     """
 
     event: typing.Literal["entity"] = "entity"
-    event_type: typing_extensions.Annotated[typing.Optional[EntityEventEventType], FieldMetadata(alias="eventType")] = (
-        pydantic.Field(alias="eventType", default=None)
-    )
+    event_type: typing_extensions.Annotated[
+        typing.Optional[EntityEventEventType], FieldMetadata(alias="eventType"), pydantic.Field(alias="eventType")
+    ] = None
     time: typing.Optional[dt.datetime] = None
     entity: typing.Optional["Entity"] = None
 

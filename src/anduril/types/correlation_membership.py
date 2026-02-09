@@ -12,13 +12,11 @@ from .primary_membership import PrimaryMembership
 
 
 class CorrelationMembership(UniversalBaseModel):
-    correlation_set_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="correlationSetId")] = (
-        pydantic.Field(alias="correlationSetId", default=None)
-    )
-    """
-    The ID of the correlation set this entity belongs to.
-    """
-
+    correlation_set_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="correlationSetId"),
+        pydantic.Field(alias="correlationSetId", description="The ID of the correlation set this entity belongs to."),
+    ] = None
     primary: typing.Optional[PrimaryMembership] = pydantic.Field(default=None)
     """
     This entity is the primary of a correlation set meaning that it serves as the representative
@@ -26,13 +24,13 @@ class CorrelationMembership(UniversalBaseModel):
     """
 
     non_primary: typing_extensions.Annotated[
-        typing.Optional[NonPrimaryMembership], FieldMetadata(alias="nonPrimary")
-    ] = pydantic.Field(alias="nonPrimary", default=None)
-    """
-    This entity is not the primary of the correlation set. Note that there may not
-     be a primary at all.
-    """
-
+        typing.Optional[NonPrimaryMembership],
+        FieldMetadata(alias="nonPrimary"),
+        pydantic.Field(
+            alias="nonPrimary",
+            description="This entity is not the primary of the correlation set. Note that there may not\n be a primary at all.",
+        ),
+    ] = None
     metadata: typing.Optional[CorrelationMetadata] = pydantic.Field(default=None)
     """
     Additional metadata on this correlation.

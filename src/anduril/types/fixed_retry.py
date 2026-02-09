@@ -8,15 +8,18 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
 
 
-class Owner(UniversalBaseModel):
+class FixedRetry(UniversalBaseModel):
     """
-    Owner designates the entity responsible for writes of task data.
+    Defaults to an interval of 5 seconds. If the DeliverBefore field in the task's DeliveryConstraints isn't populated, Lattice does not retry delivery and instead logs a warning.
     """
 
-    entity_id: typing_extensions.Annotated[
+    retry_interval: typing_extensions.Annotated[
         typing.Optional[str],
-        FieldMetadata(alias="entityId"),
-        pydantic.Field(alias="entityId", description="Entity ID of the owner."),
+        FieldMetadata(alias="retryInterval"),
+        pydantic.Field(
+            alias="retryInterval",
+            description="Specifies the interval between retries. A default interval of 5 seconds is used if this field is not set.",
+        ),
     ] = None
 
     if IS_PYDANTIC_V2:

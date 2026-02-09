@@ -6,17 +6,18 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .fixed_retry import FixedRetry
 
 
-class Owner(UniversalBaseModel):
+class RetryStrategy(UniversalBaseModel):
     """
-    Owner designates the entity responsible for writes of task data.
+    Sets an optional try strategy for tasks. Use this option to control how Lattice attempts to retry delivery of tasks to assets with intermittent access or network connectivity to your environment.
     """
 
-    entity_id: typing_extensions.Annotated[
-        typing.Optional[str],
-        FieldMetadata(alias="entityId"),
-        pydantic.Field(alias="entityId", description="Entity ID of the owner."),
+    fixed_retry_strategy: typing_extensions.Annotated[
+        typing.Optional[FixedRetry],
+        FieldMetadata(alias="fixedRetryStrategy"),
+        pydantic.Field(alias="fixedRetryStrategy"),
     ] = None
 
     if IS_PYDANTIC_V2:

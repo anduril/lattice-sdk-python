@@ -38,14 +38,16 @@ class StreamAsAgentResponse_AgentRequest(UniversalBaseModel):
 
     event: typing.Literal["agent_request"] = "agent_request"
     execute_request: typing_extensions.Annotated[
-        typing.Optional[ExecuteRequest], FieldMetadata(alias="executeRequest")
-    ] = pydantic.Field(alias="executeRequest", default=None)
+        typing.Optional[ExecuteRequest], FieldMetadata(alias="executeRequest"), pydantic.Field(alias="executeRequest")
+    ] = None
     cancel_request: typing_extensions.Annotated[
-        typing.Optional[CancelRequest], FieldMetadata(alias="cancelRequest")
-    ] = pydantic.Field(alias="cancelRequest", default=None)
+        typing.Optional[CancelRequest], FieldMetadata(alias="cancelRequest"), pydantic.Field(alias="cancelRequest")
+    ] = None
     complete_request: typing_extensions.Annotated[
-        typing.Optional[CompleteRequest], FieldMetadata(alias="completeRequest")
-    ] = pydantic.Field(alias="completeRequest", default=None)
+        typing.Optional[CompleteRequest],
+        FieldMetadata(alias="completeRequest"),
+        pydantic.Field(alias="completeRequest"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -17,28 +17,30 @@ class TaskVersion(UniversalBaseModel):
      optimistic concurrency control, ensuring that updates from multiple sources don't conflict.
     """
 
-    task_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="taskId")] = pydantic.Field(
-        alias="taskId", default=None
-    )
-    """
-    The unique identifier for this task, used to distinguish it from all other tasks in the system.
-    """
-
-    definition_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="definitionVersion")] = (
-        pydantic.Field(alias="definitionVersion", default=None)
-    )
-    """
-    Counter that increments on changes to the task definition.
-     Unset (0) initially, starts at 1 on creation, and increments with each update to task fields.
-    """
-
-    status_version: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="statusVersion")] = (
-        pydantic.Field(alias="statusVersion", default=None)
-    )
-    """
-    Counter that increments on changes to TaskStatus.
-     Unset (0) initially, starts at 1 on creation, and increments with each status update.
-    """
+    task_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="taskId"),
+        pydantic.Field(
+            alias="taskId",
+            description="The unique identifier for this task, used to distinguish it from all other tasks in the system.",
+        ),
+    ] = None
+    definition_version: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="definitionVersion"),
+        pydantic.Field(
+            alias="definitionVersion",
+            description="Counter that increments on changes to the task definition.\n Unset (0) initially, starts at 1 on creation, and increments with each update to task fields.",
+        ),
+    ] = None
+    status_version: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="statusVersion"),
+        pydantic.Field(
+            alias="statusVersion",
+            description="Counter that increments on changes to TaskStatus.\n Unset (0) initially, starts at 1 on creation, and increments with each status update.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

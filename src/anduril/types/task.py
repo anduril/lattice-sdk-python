@@ -9,10 +9,12 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ..core.serialization import FieldMetadata
+from .delivery_state import DeliveryState
 from .google_protobuf_any import GoogleProtobufAny
 from .owner import Owner
 from .relations import Relations
 from .replication import Replication
+from .retry_strategy import RetryStrategy
 from .task_entity import TaskEntity
 from .task_status import TaskStatus
 from .task_version import TaskVersion
@@ -36,51 +38,50 @@ class Task(UniversalBaseModel):
     Version of this task.
     """
 
-    display_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="displayName")] = (
-        pydantic.Field(alias="displayName", default=None)
-    )
-    """
-    DEPRECATED: Human readable display name for this task, should be short (<100 chars).
-    """
-
+    display_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="displayName"),
+        pydantic.Field(
+            alias="displayName",
+            description="DEPRECATED: Human readable display name for this task, should be short (<100 chars).",
+        ),
+    ] = None
     specification: typing.Optional[GoogleProtobufAny] = pydantic.Field(default=None)
     """
     The path for the Protobuf task definition, and the complete task data.
     """
 
-    created_by: typing_extensions.Annotated[typing.Optional["Principal"], FieldMetadata(alias="createdBy")] = (
-        pydantic.Field(alias="createdBy", default=None)
-    )
-    """
-    Records who created this task. This field will not change after the task has been created.
-    """
-
-    last_updated_by: typing_extensions.Annotated[typing.Optional["Principal"], FieldMetadata(alias="lastUpdatedBy")] = (
-        pydantic.Field(alias="lastUpdatedBy", default=None)
-    )
-    """
-    Records who updated this task last.
-    """
-
+    created_by: typing_extensions.Annotated[
+        typing.Optional["Principal"],
+        FieldMetadata(alias="createdBy"),
+        pydantic.Field(
+            alias="createdBy",
+            description="Records who created this task. This field will not change after the task has been created.",
+        ),
+    ] = None
+    last_updated_by: typing_extensions.Annotated[
+        typing.Optional["Principal"],
+        FieldMetadata(alias="lastUpdatedBy"),
+        pydantic.Field(alias="lastUpdatedBy", description="Records who updated this task last."),
+    ] = None
     last_update_time: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="lastUpdateTime")
-    ] = pydantic.Field(alias="lastUpdateTime", default=None)
-    """
-    Records the time of last update.
-    """
-
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="lastUpdateTime"),
+        pydantic.Field(alias="lastUpdateTime", description="Records the time of last update."),
+    ] = None
     status: typing.Optional[TaskStatus] = pydantic.Field(default=None)
     """
     The status of this task.
     """
 
-    scheduled_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="scheduledTime")] = (
-        pydantic.Field(alias="scheduledTime", default=None)
-    )
-    """
-    If the task has been scheduled to execute, what time it should execute at.
-    """
-
+    scheduled_time: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="scheduledTime"),
+        pydantic.Field(
+            alias="scheduledTime",
+            description="If the task has been scheduled to execute, what time it should execute at.",
+        ),
+    ] = None
     relations: typing.Optional[Relations] = pydantic.Field(default=None)
     """
     Any related Tasks associated with this, typically includes an assignee for this task and/or a parent.
@@ -92,40 +93,50 @@ class Task(UniversalBaseModel):
     """
 
     is_executed_elsewhere: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="isExecutedElsewhere")
-    ] = pydantic.Field(alias="isExecutedElsewhere", default=None)
-    """
-    If set, execution of this task is managed elsewhere, not by Task Manager.
-     In other words, task manager will not attempt to update the assigned agent with execution instructions.
-    """
-
-    create_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createTime")] = (
-        pydantic.Field(alias="createTime", default=None)
-    )
-    """
-    Time of task creation.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="isExecutedElsewhere"),
+        pydantic.Field(
+            alias="isExecutedElsewhere",
+            description="If set, execution of this task is managed elsewhere, not by Task Manager.\n In other words, task manager will not attempt to update the assigned agent with execution instructions.",
+        ),
+    ] = None
+    create_time: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="createTime"),
+        pydantic.Field(alias="createTime", description="Time of task creation."),
+    ] = None
     replication: typing.Optional[Replication] = pydantic.Field(default=None)
     """
     If populated, designates this to be a replicated task.
     """
 
     initial_entities: typing_extensions.Annotated[
-        typing.Optional[typing.List[TaskEntity]], FieldMetadata(alias="initialEntities")
-    ] = pydantic.Field(alias="initialEntities", default=None)
-    """
-    If populated, indicates an initial set of entities that can be used to execute an entity aware task
-     For example, an entity Objective, an entity Keep In Zone, etc.
-     These will not be updated during execution. If a taskable agent needs continuous updates on the entities from the
-     COP, can call entity-manager, or use an AlternateId escape hatch.
-    """
-
+        typing.Optional[typing.List[TaskEntity]],
+        FieldMetadata(alias="initialEntities"),
+        pydantic.Field(
+            alias="initialEntities",
+            description="If populated, indicates an initial set of entities that can be used to execute an entity aware task\n For example, an entity Objective, an entity Keep In Zone, etc.\n These will not be updated during execution. If a taskable agent needs continuous updates on the entities from the\n COP, can call entity-manager, or use an AlternateId escape hatch.",
+        ),
+    ] = None
     owner: typing.Optional[Owner] = pydantic.Field(default=None)
     """
     The networked owner of this task. It is used to ensure that linear writes occur on the node responsible
      for replication of task data to other nodes running Task Manager.
     """
+
+    retry_strategy: typing_extensions.Annotated[
+        typing.Optional[RetryStrategy],
+        FieldMetadata(alias="retryStrategy"),
+        pydantic.Field(
+            alias="retryStrategy",
+            description="Sets an optional try strategy for tasks. Use this option to control how Lattice attempts to retry delivery of tasks to assets with intermittent access or network connectivity to your environment.",
+        ),
+    ] = None
+    delivery_state: typing_extensions.Annotated[
+        typing.Optional[DeliveryState],
+        FieldMetadata(alias="deliveryState"),
+        pydantic.Field(alias="deliveryState", description="The current delivery state of a task."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

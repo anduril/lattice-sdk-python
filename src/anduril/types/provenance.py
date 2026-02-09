@@ -14,42 +14,39 @@ class Provenance(UniversalBaseModel):
     Data provenance.
     """
 
-    integration_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="integrationName")] = (
-        pydantic.Field(alias="integrationName", default=None)
-    )
-    """
-    Name of the integration that produced this entity
-    """
-
-    data_type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="dataType")] = pydantic.Field(
-        alias="dataType", default=None
-    )
-    """
-    Source data type of this entity. Examples: ADSB, Link16, etc.
-    """
-
-    source_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sourceId")] = pydantic.Field(
-        alias="sourceId", default=None
-    )
-    """
-    An ID that allows an element from a source to be uniquely identified
-    """
-
+    integration_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="integrationName"),
+        pydantic.Field(alias="integrationName", description="Name of the integration that produced this entity"),
+    ] = None
+    data_type: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="dataType"),
+        pydantic.Field(alias="dataType", description="Source data type of this entity. Examples: ADSB, Link16, etc."),
+    ] = None
+    source_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="sourceId"),
+        pydantic.Field(
+            alias="sourceId", description="An ID that allows an element from a source to be uniquely identified"
+        ),
+    ] = None
     source_update_time: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="sourceUpdateTime")
-    ] = pydantic.Field(alias="sourceUpdateTime", default=None)
-    """
-    The time, according to the source system, that the data in the entity was last modified. Generally, this should
-     be the time that the source-reported time of validity of the data in the entity. This field must be
-     updated with every change to the entity or else Entity Manager will discard the update.
-    """
-
-    source_description: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sourceDescription")] = (
-        pydantic.Field(alias="sourceDescription", default=None)
-    )
-    """
-    Description of the modification source. In the case of a user this is the email address.
-    """
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="sourceUpdateTime"),
+        pydantic.Field(
+            alias="sourceUpdateTime",
+            description="The time, according to the source system, that the data in the entity was last modified. Generally, this should\n be the time that the source-reported time of validity of the data in the entity. This field must be\n updated with every change to the entity or else Entity Manager will discard the update.",
+        ),
+    ] = None
+    source_description: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="sourceDescription"),
+        pydantic.Field(
+            alias="sourceDescription",
+            description="Description of the modification source. In the case of a user this is the email address.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

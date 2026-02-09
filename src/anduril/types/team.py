@@ -14,13 +14,11 @@ class Team(UniversalBaseModel):
     Represents a team of agents
     """
 
-    entity_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="entityId")] = pydantic.Field(
-        alias="entityId", default=None
-    )
-    """
-    Entity ID of the team
-    """
-
+    entity_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="entityId"),
+        pydantic.Field(alias="entityId", description="Entity ID of the team"),
+    ] = None
     members: typing.Optional[typing.List[Agent]] = None
 
     if IS_PYDANTIC_V2:

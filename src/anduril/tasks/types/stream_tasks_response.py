@@ -36,8 +36,8 @@ class StreamTasksResponse_TaskEvent(UniversalBaseModel):
 
     event: typing.Literal["task_event"] = "task_event"
     task_event: typing_extensions.Annotated[
-        typing.Optional[TaskEventDataTaskEvent], FieldMetadata(alias="taskEvent")
-    ] = pydantic.Field(alias="taskEvent", default=None)
+        typing.Optional[TaskEventDataTaskEvent], FieldMetadata(alias="taskEvent"), pydantic.Field(alias="taskEvent")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

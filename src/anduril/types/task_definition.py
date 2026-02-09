@@ -14,11 +14,12 @@ class TaskDefinition(UniversalBaseModel):
     """
 
     task_specification_url: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="taskSpecificationUrl")
-    ] = pydantic.Field(alias="taskSpecificationUrl", default=None)
-    """
-    Url path must be prefixed with `type.googleapis.com/`.
-    """
+        typing.Optional[str],
+        FieldMetadata(alias="taskSpecificationUrl"),
+        pydantic.Field(
+            alias="taskSpecificationUrl", description="Url path must be prefixed with `type.googleapis.com/`."
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
