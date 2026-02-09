@@ -32,23 +32,23 @@ class TransponderCodes(UniversalBaseModel):
     """
 
     mode4interrogation_response: typing_extensions.Annotated[
-        typing.Optional[TransponderCodesMode4InterrogationResponse], FieldMetadata(alias="mode4InterrogationResponse")
-    ] = pydantic.Field(alias="mode4InterrogationResponse", default=None)
-    """
-    The validity of the response from the Mode 4 interrogation.
-    """
-
+        typing.Optional[TransponderCodesMode4InterrogationResponse],
+        FieldMetadata(alias="mode4InterrogationResponse"),
+        pydantic.Field(
+            alias="mode4InterrogationResponse",
+            description="The validity of the response from the Mode 4 interrogation.",
+        ),
+    ] = None
     mode5: typing.Optional[Mode5] = pydantic.Field(default=None)
     """
     The Mode 5 transponder codes.
     """
 
-    mode_s: typing_extensions.Annotated[typing.Optional[ModeS], FieldMetadata(alias="modeS")] = pydantic.Field(
-        alias="modeS", default=None
-    )
-    """
-    The Mode S transponder codes.
-    """
+    mode_s: typing_extensions.Annotated[
+        typing.Optional[ModeS],
+        FieldMetadata(alias="modeS"),
+        pydantic.Field(alias="modeS", description="The Mode S transponder codes."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -9,12 +9,12 @@ from ..core.serialization import FieldMetadata
 
 
 class UInt32Range(UniversalBaseModel):
-    lower_bound: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="lowerBound")] = pydantic.Field(
-        alias="lowerBound", default=None
-    )
-    upper_bound: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="upperBound")] = pydantic.Field(
-        alias="upperBound", default=None
-    )
+    lower_bound: typing_extensions.Annotated[
+        typing.Optional[int], FieldMetadata(alias="lowerBound"), pydantic.Field(alias="lowerBound")
+    ] = None
+    upper_bound: typing_extensions.Annotated[
+        typing.Optional[int], FieldMetadata(alias="upperBound"), pydantic.Field(alias="upperBound")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

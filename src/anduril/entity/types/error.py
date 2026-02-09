@@ -9,7 +9,7 @@ from ...core.serialization import FieldMetadata
 
 
 class Error(UniversalBaseModel):
-    error_code: typing_extensions.Annotated[str, FieldMetadata(alias="errorCode")] = pydantic.Field(alias="errorCode")
+    error_code: typing_extensions.Annotated[str, FieldMetadata(alias="errorCode"), pydantic.Field(alias="errorCode")]
     message: str
 
     if IS_PYDANTIC_V2:

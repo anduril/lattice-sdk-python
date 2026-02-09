@@ -3,21 +3,24 @@
 import typing
 
 import pydantic
-import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ..core.serialization import FieldMetadata
+from .delivery_error_code import DeliveryErrorCode
 
 
-class Owner(UniversalBaseModel):
+class DeliveryError(UniversalBaseModel):
     """
-    Owner designates the entity responsible for writes of task data.
+    DeliveryError contains an error code and message associated with task delivery.
     """
 
-    entity_id: typing_extensions.Annotated[
-        typing.Optional[str],
-        FieldMetadata(alias="entityId"),
-        pydantic.Field(alias="entityId", description="Entity ID of the owner."),
-    ] = None
+    code: typing.Optional[DeliveryErrorCode] = pydantic.Field(default=None)
+    """
+    Error code for Delivery error.
+    """
+
+    message: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Descriptive human-readable string regarding this delivery error.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

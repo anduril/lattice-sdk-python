@@ -63,10 +63,7 @@ class Lattice:
     --------
     from anduril import Lattice
 
-    client = Lattice(
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
-    )
+    client = Lattice()
 
     # or ...
 
@@ -84,6 +81,7 @@ class Lattice:
         *,
         base_url: typing.Optional[str] = None,
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -97,6 +95,7 @@ class Lattice:
         *,
         base_url: typing.Optional[str] = None,
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -108,6 +107,7 @@ class Lattice:
         *,
         base_url: typing.Optional[str] = None,
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
@@ -120,6 +120,9 @@ class Lattice:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
+        if server is not None:
+            _server = server if server is not None else "example.developer.anduril.com"
+            base_url = "https://{server}".format(server=_server)
         if token is not None:
             self._client_wrapper = SyncClientWrapper(
                 base_url=_get_base_url(base_url=base_url, environment=environment),
@@ -244,10 +247,7 @@ class AsyncLattice:
     --------
     from anduril import AsyncLattice
 
-    client = AsyncLattice(
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
-    )
+    client = AsyncLattice()
 
     # or ...
 
@@ -265,6 +265,7 @@ class AsyncLattice:
         *,
         base_url: typing.Optional[str] = None,
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -278,6 +279,7 @@ class AsyncLattice:
         *,
         base_url: typing.Optional[str] = None,
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
@@ -289,6 +291,7 @@ class AsyncLattice:
         *,
         base_url: typing.Optional[str] = None,
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
@@ -301,6 +304,9 @@ class AsyncLattice:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
+        if server is not None:
+            _server = server if server is not None else "example.developer.anduril.com"
+            base_url = "https://{server}".format(server=_server)
         if token is not None:
             self._client_wrapper = AsyncClientWrapper(
                 base_url=_get_base_url(base_url=base_url, environment=environment),

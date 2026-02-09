@@ -29,13 +29,13 @@ class GetTokenResponse(UniversalBaseModel):
     Lifetime of the refresh token
     """
 
-    not_before_policy: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="not-before-policy")] = (
-        pydantic.Field(alias="not-before-policy", default=None)
-    )
-    """
-    Enforce that a token cannot be used before a specific unixtime
-    """
-
+    not_before_policy: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="not-before-policy"),
+        pydantic.Field(
+            alias="not-before-policy", description="Enforce that a token cannot be used before a specific unixtime"
+        ),
+    ] = None
     scope: typing.Optional[str] = pydantic.Field(default=None)
     """
     The scope of the access token

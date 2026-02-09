@@ -21,31 +21,34 @@ class Location(UniversalBaseModel):
     see Position definition for details.
     """
 
-    velocity_enu: typing_extensions.Annotated[typing.Optional[Enu], FieldMetadata(alias="velocityEnu")] = (
-        pydantic.Field(alias="velocityEnu", default=None)
-    )
-    """
-    Velocity in an ENU reference frame centered on the corresponding position. All units are meters per second.
-    """
-
-    speed_mps: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="speedMps")] = pydantic.Field(
-        alias="speedMps", default=None
-    )
-    """
-    Speed is the magnitude of velocity_enu vector [sqrt(e^2 + n^2 + u^2)] when present, measured in m/s.
-    """
-
+    velocity_enu: typing_extensions.Annotated[
+        typing.Optional[Enu],
+        FieldMetadata(alias="velocityEnu"),
+        pydantic.Field(
+            alias="velocityEnu",
+            description="Velocity in an ENU reference frame centered on the corresponding position. All units are meters per second.",
+        ),
+    ] = None
+    speed_mps: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="speedMps"),
+        pydantic.Field(
+            alias="speedMps",
+            description="Speed is the magnitude of velocity_enu vector [sqrt(e^2 + n^2 + u^2)] when present, measured in m/s.",
+        ),
+    ] = None
     acceleration: typing.Optional[Enu] = pydantic.Field(default=None)
     """
     The entity's acceleration in meters/s^2.
     """
 
-    attitude_enu: typing_extensions.Annotated[typing.Optional[Quaternion], FieldMetadata(alias="attitudeEnu")] = (
-        pydantic.Field(alias="attitudeEnu", default=None)
-    )
-    """
-    quaternion to translate from entity body frame to it's ENU frame
-    """
+    attitude_enu: typing_extensions.Annotated[
+        typing.Optional[Quaternion],
+        FieldMetadata(alias="attitudeEnu"),
+        pydantic.Field(
+            alias="attitudeEnu", description="quaternion to translate from entity body frame to it's ENU frame"
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
