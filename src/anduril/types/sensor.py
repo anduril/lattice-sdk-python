@@ -18,50 +18,44 @@ class Sensor(UniversalBaseModel):
     Individual sensor configuration.
     """
 
-    sensor_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sensorId")] = pydantic.Field(
-        default=None
-    )
-    """
-    This generally is used to indicate a specific type at a more detailed granularity. E.g. COMInt or LWIR
-    """
-
-    operational_state: typing_extensions.Annotated[
-        typing.Optional[SensorOperationalState], FieldMetadata(alias="operationalState")
+    sensor_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="sensorId"),
+        pydantic.Field(
+            alias="sensorId",
+            description="This generally is used to indicate a specific type at a more detailed granularity. E.g. COMInt or LWIR",
+        ),
     ] = None
-    sensor_type: typing_extensions.Annotated[typing.Optional[SensorSensorType], FieldMetadata(alias="sensorType")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The type of sensor
-    """
-
-    sensor_description: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sensorDescription")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    A human readable description of the sensor
-    """
-
+    operational_state: typing_extensions.Annotated[
+        typing.Optional[SensorOperationalState],
+        FieldMetadata(alias="operationalState"),
+        pydantic.Field(alias="operationalState"),
+    ] = None
+    sensor_type: typing_extensions.Annotated[
+        typing.Optional[SensorSensorType],
+        FieldMetadata(alias="sensorType"),
+        pydantic.Field(alias="sensorType", description="The type of sensor"),
+    ] = None
+    sensor_description: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="sensorDescription"),
+        pydantic.Field(alias="sensorDescription", description="A human readable description of the sensor"),
+    ] = None
     rf_configuraton: typing_extensions.Annotated[
-        typing.Optional[RfConfiguration], FieldMetadata(alias="rfConfiguraton")
-    ] = pydantic.Field(default=None)
-    """
-    RF configuration details of the sensor
-    """
-
+        typing.Optional[RfConfiguration],
+        FieldMetadata(alias="rfConfiguraton"),
+        pydantic.Field(alias="rfConfiguraton", description="RF configuration details of the sensor"),
+    ] = None
     last_detection_timestamp: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="lastDetectionTimestamp")
-    ] = pydantic.Field(default=None)
-    """
-    Time of the latest detection from the sensor
-    """
-
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="lastDetectionTimestamp"),
+        pydantic.Field(alias="lastDetectionTimestamp", description="Time of the latest detection from the sensor"),
+    ] = None
     fields_of_view: typing_extensions.Annotated[
-        typing.Optional[typing.List[FieldOfView]], FieldMetadata(alias="fieldsOfView")
-    ] = pydantic.Field(default=None)
-    """
-    Multiple fields of view for a single sensor component
-    """
+        typing.Optional[typing.List[FieldOfView]],
+        FieldMetadata(alias="fieldsOfView"),
+        pydantic.Field(alias="fieldsOfView", description="Multiple fields of view for a single sensor component"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

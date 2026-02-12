@@ -13,12 +13,11 @@ class Threat(UniversalBaseModel):
     Describes whether an entity is a threat or not.
     """
 
-    is_threat: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isThreat")] = pydantic.Field(
-        default=None
-    )
-    """
-    Indicates that the entity has been determined to be a threat.
-    """
+    is_threat: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="isThreat"),
+        pydantic.Field(alias="isThreat", description="Indicates that the entity has been determined to be a threat."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

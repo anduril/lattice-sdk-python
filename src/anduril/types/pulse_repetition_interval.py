@@ -15,7 +15,9 @@ class PulseRepetitionInterval(UniversalBaseModel):
     """
 
     pulse_repetition_interval_s: typing_extensions.Annotated[
-        typing.Optional[Measurement], FieldMetadata(alias="pulseRepetitionIntervalS")
+        typing.Optional[Measurement],
+        FieldMetadata(alias="pulseRepetitionIntervalS"),
+        pydantic.Field(alias="pulseRepetitionIntervalS"),
     ] = None
 
     if IS_PYDANTIC_V2:

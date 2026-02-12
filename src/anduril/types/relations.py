@@ -21,12 +21,11 @@ class Relations(UniversalBaseModel):
     The system, user, or team assigned to the task.
     """
 
-    parent_task_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="parentTaskId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Identifies the parent task if the task is a sub-task.
-    """
+    parent_task_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="parentTaskId"),
+        pydantic.Field(alias="parentTaskId", description="Identifies the parent task if the task is a sub-task."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
@@ -40,4 +39,4 @@ class Relations(UniversalBaseModel):
 
 from .principal import Principal  # noqa: E402, I001
 
-update_forward_refs(Relations)
+update_forward_refs(Relations, Principal=Principal)

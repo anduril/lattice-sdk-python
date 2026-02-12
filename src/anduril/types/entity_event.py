@@ -17,9 +17,9 @@ class EntityEvent(UniversalBaseModel):
     Event representing some type of entity change.
     """
 
-    event_type: typing_extensions.Annotated[typing.Optional[EntityEventEventType], FieldMetadata(alias="eventType")] = (
-        None
-    )
+    event_type: typing_extensions.Annotated[
+        typing.Optional[EntityEventEventType], FieldMetadata(alias="eventType"), pydantic.Field(alias="eventType")
+    ] = None
     time: typing.Optional[dt.datetime] = None
     entity: typing.Optional["Entity"] = None
 
@@ -34,5 +34,7 @@ class EntityEvent(UniversalBaseModel):
 
 
 from .entity import Entity  # noqa: E402, I001
+from .override import Override  # noqa: E402, I001
+from .overrides import Overrides  # noqa: E402, I001
 
-update_forward_refs(EntityEvent)
+update_forward_refs(EntityEvent, Entity=Entity, Override=Override, Overrides=Overrides)

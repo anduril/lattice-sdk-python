@@ -21,14 +21,14 @@ class Principal(UniversalBaseModel):
     system: typing.Optional[System] = None
     user: typing.Optional[User] = None
     team: typing.Optional[Team] = None
-    on_behalf_of: typing_extensions.Annotated[typing.Optional["Principal"], FieldMetadata(alias="onBehalfOf")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    The Principal _this_ Principal is acting on behalf of.
-    
-     Likely only populated once in the nesting (i.e. the "on_behalf_of" Principal would not have another "on_behalf_of" in most cases).
-    """
+    on_behalf_of: typing_extensions.Annotated[
+        typing.Optional["Principal"],
+        FieldMetadata(alias="onBehalfOf"),
+        pydantic.Field(
+            alias="onBehalfOf",
+            description='The Principal _this_ Principal is acting on behalf of.\n\n Likely only populated once in the nesting (i.e. the "on_behalf_of" Principal would not have another "on_behalf_of" in most cases).',
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

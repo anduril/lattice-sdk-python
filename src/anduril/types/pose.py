@@ -16,30 +16,14 @@ class Pose(UniversalBaseModel):
     Geospatial location defined by this Pose.
     """
 
-    att_enu: typing_extensions.Annotated[typing.Optional[Quaternion], FieldMetadata(alias="attEnu")] = pydantic.Field(
-        default=None
-    )
-    """
-    The quaternion to transform a point in the Pose frame to the ENU frame. The Pose frame could be Body, Turret,
-     etc and is determined by the context in which this Pose is used.
-     The normal convention for defining orientation is to list the frames of transformation, for example
-     att_gimbal_to_enu is the quaternion which transforms a point in the gimbal frame to the body frame, but
-     in this case we truncate to att_enu because the Pose frame isn't defined. A potentially better name for this
-     field would have been att_pose_to_enu.
-    
-     Implementations of this quaternion should left multiply this quaternion to transform a point from the Pose frame
-     to the enu frame.
-    
-     Point<Pose\\> posePt{1,0,0};
-     Rotation<Enu, Pose\\> attPoseToEnu{};
-     Point<Enu\\> = attPoseToEnu*posePt;
-    
-     This transformed point represents some vector in ENU space that is aligned with the x axis of the attPoseToEnu
-     matrix.
-    
-     An alternative matrix expression is as follows:
-     ptEnu = M x ptPose
-    """
+    att_enu: typing_extensions.Annotated[
+        typing.Optional[Quaternion],
+        FieldMetadata(alias="attEnu"),
+        pydantic.Field(
+            alias="attEnu",
+            description="The quaternion to transform a point in the Pose frame to the ENU frame. The Pose frame could be Body, Turret,\n etc and is determined by the context in which this Pose is used.\n The normal convention for defining orientation is to list the frames of transformation, for example\n att_gimbal_to_enu is the quaternion which transforms a point in the gimbal frame to the body frame, but\n in this case we truncate to att_enu because the Pose frame isn't defined. A potentially better name for this\n field would have been att_pose_to_enu.\n\n Implementations of this quaternion should left multiply this quaternion to transform a point from the Pose frame\n to the enu frame.\n\n Point<Pose\\> posePt{1,0,0};\n Rotation<Enu, Pose\\> attPoseToEnu{};\n Point<Enu\\> = attPoseToEnu*posePt;\n\n This transformed point represents some vector in ENU space that is aligned with the x axis of the attPoseToEnu\n matrix.\n\n An alternative matrix expression is as follows:\n ptEnu = M x ptPose",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

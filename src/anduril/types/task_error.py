@@ -30,11 +30,10 @@ class TaskError(UniversalBaseModel):
     """
 
     error_details: typing_extensions.Annotated[
-        typing.Optional[GoogleProtobufAny], FieldMetadata(alias="errorDetails")
-    ] = pydantic.Field(default=None)
-    """
-    Any additional details regarding this error.
-    """
+        typing.Optional[GoogleProtobufAny],
+        FieldMetadata(alias="errorDetails"),
+        pydantic.Field(alias="errorDetails", description="Any additional details regarding this error."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

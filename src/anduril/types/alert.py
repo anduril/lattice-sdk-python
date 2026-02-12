@@ -17,14 +17,14 @@ class Alert(UniversalBaseModel):
      execution. An alert is produced as a result of one or more alert conditions.
     """
 
-    alert_code: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="alertCode")] = pydantic.Field(
-        default=None
-    )
-    """
-    Short, machine-readable code that describes this alert. This code is intended to provide systems off-asset
-     with a lookup key to retrieve more detailed information about the alert.
-    """
-
+    alert_code: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="alertCode"),
+        pydantic.Field(
+            alias="alertCode",
+            description="Short, machine-readable code that describes this alert. This code is intended to provide systems off-asset\n with a lookup key to retrieve more detailed information about the alert.",
+        ),
+    ] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Human-readable description of this alert. The description is intended for display in the UI for human
@@ -37,19 +37,16 @@ class Alert(UniversalBaseModel):
     Alert level (Warning, Caution, or Advisory).
     """
 
-    activated_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="activatedTime")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Time at which this alert was activated.
-    """
-
+    activated_time: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="activatedTime"),
+        pydantic.Field(alias="activatedTime", description="Time at which this alert was activated."),
+    ] = None
     active_conditions: typing_extensions.Annotated[
-        typing.Optional[typing.List[AlertCondition]], FieldMetadata(alias="activeConditions")
-    ] = pydantic.Field(default=None)
-    """
-    Set of conditions which have activated this alert.
-    """
+        typing.Optional[typing.List[AlertCondition]],
+        FieldMetadata(alias="activeConditions"),
+        pydantic.Field(alias="activeConditions", description="Set of conditions which have activated this alert."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

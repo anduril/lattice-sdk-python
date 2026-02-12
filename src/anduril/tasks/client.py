@@ -101,9 +101,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            token="YOUR_TOKEN",
-        )
+        client = Lattice()
         client.tasks.create_task()
         """
         _response = self._raw_client.create_task(
@@ -147,9 +145,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            token="YOUR_TOKEN",
-        )
+        client = Lattice()
         client.tasks.get_task(
             task_id="taskId",
         )
@@ -207,9 +203,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            token="YOUR_TOKEN",
-        )
+        client = Lattice()
         client.tasks.update_task_status(
             task_id="taskId",
         )
@@ -276,9 +270,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            token="YOUR_TOKEN",
-        )
+        client = Lattice()
         client.tasks.query_tasks()
         """
         _response = self._raw_client.query_tasks(
@@ -335,9 +327,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            token="YOUR_TOKEN",
-        )
+        client = Lattice()
         client.tasks.listen_as_agent()
         """
         _response = self._raw_client.listen_as_agent(agent_selector=agent_selector, request_options=request_options)
@@ -426,9 +416,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            token="YOUR_TOKEN",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -480,9 +468,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            token="YOUR_TOKEN",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -548,9 +534,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            token="YOUR_TOKEN",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -625,9 +609,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            token="YOUR_TOKEN",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -692,9 +674,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            token="YOUR_TOKEN",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:

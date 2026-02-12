@@ -9,35 +9,31 @@ from ..core.serialization import FieldMetadata
 
 
 class TleParameters(UniversalBaseModel):
-    ephemeris_type: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="ephemerisType")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Integer specifying TLE ephemeris type
-    """
-
+    ephemeris_type: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="ephemerisType"),
+        pydantic.Field(alias="ephemerisType", description="Integer specifying TLE ephemeris type"),
+    ] = None
     classification_type: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="classificationType")
-    ] = pydantic.Field(default=None)
-    """
-    User-defined free-text message classification/caveats of this TLE
-    """
-
-    norad_cat_id: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="noradCatId")] = pydantic.Field(
-        default=None
-    )
-    """
-    Norad catalog number: integer up to nine digits.
-    """
-
-    element_set_no: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="elementSetNo")] = None
-    rev_at_epoch: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="revAtEpoch")] = pydantic.Field(
-        default=None
-    )
-    """
-    Optional: revolution number
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="classificationType"),
+        pydantic.Field(
+            alias="classificationType", description="User-defined free-text message classification/caveats of this TLE"
+        ),
+    ] = None
+    norad_cat_id: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="noradCatId"),
+        pydantic.Field(alias="noradCatId", description="Norad catalog number: integer up to nine digits."),
+    ] = None
+    element_set_no: typing_extensions.Annotated[
+        typing.Optional[int], FieldMetadata(alias="elementSetNo"), pydantic.Field(alias="elementSetNo")
+    ] = None
+    rev_at_epoch: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="revAtEpoch"),
+        pydantic.Field(alias="revAtEpoch", description="Optional: revolution number"),
+    ] = None
     bstar: typing.Optional[float] = pydantic.Field(default=None)
     """
     Drag parameter for SGP-4 in units 1 / Earth radii
@@ -48,20 +44,19 @@ class TleParameters(UniversalBaseModel):
     Drag parameter for SGP4-XP in units m^2 / kg
     """
 
-    mean_motion_dot: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="meanMotionDot")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    First time derivative of mean motion in rev / day^2
-    """
-
-    mean_motion_ddot: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="meanMotionDdot")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Second time derivative of mean motion in rev / day^3. For use with SGP or PPT3.
-    """
-
+    mean_motion_dot: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="meanMotionDot"),
+        pydantic.Field(alias="meanMotionDot", description="First time derivative of mean motion in rev / day^2"),
+    ] = None
+    mean_motion_ddot: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="meanMotionDdot"),
+        pydantic.Field(
+            alias="meanMotionDdot",
+            description="Second time derivative of mean motion in rev / day^3. For use with SGP or PPT3.",
+        ),
+    ] = None
     agom: typing.Optional[float] = pydantic.Field(default=None)
     """
     Solar radiation pressure coefficient A_gamma / m in m^2 / kg. For use with SGP4-XP.

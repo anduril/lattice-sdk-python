@@ -10,19 +10,21 @@ from ..core.serialization import FieldMetadata
 
 class HighValueTargetMatch(UniversalBaseModel):
     high_value_target_list_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="highValueTargetListId")
-    ] = pydantic.Field(default=None)
-    """
-    The ID of the high value target list that matches the target description.
-    """
-
+        typing.Optional[str],
+        FieldMetadata(alias="highValueTargetListId"),
+        pydantic.Field(
+            alias="highValueTargetListId",
+            description="The ID of the high value target list that matches the target description.",
+        ),
+    ] = None
     high_value_target_description_id: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="highValueTargetDescriptionId")
-    ] = pydantic.Field(default=None)
-    """
-    The ID of the specific high value target description within a high value target list that was matched against.
-     The ID is considered to be a globally unique identifier across all high value target IDs.
-    """
+        typing.Optional[str],
+        FieldMetadata(alias="highValueTargetDescriptionId"),
+        pydantic.Field(
+            alias="highValueTargetDescriptionId",
+            description="The ID of the specific high value target description within a high value target list that was matched against.\n The ID is considered to be a globally unique identifier across all high value target IDs.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

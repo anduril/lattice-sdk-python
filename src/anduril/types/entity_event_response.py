@@ -12,15 +12,18 @@ from .entity_event import EntityEvent
 
 
 class EntityEventResponse(UniversalBaseModel):
-    session_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="sessionToken")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Long-poll session identifier. Use this token to resume polling on subsequent requests.
-    """
-
+    session_token: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="sessionToken"),
+        pydantic.Field(
+            alias="sessionToken",
+            description="Long-poll session identifier. Use this token to resume polling on subsequent requests.",
+        ),
+    ] = None
     entity_events: typing_extensions.Annotated[
-        typing.Optional[typing.List[EntityEvent]], FieldMetadata(alias="entityEvents")
+        typing.Optional[typing.List[EntityEvent]],
+        FieldMetadata(alias="entityEvents"),
+        pydantic.Field(alias="entityEvents"),
     ] = None
 
     if IS_PYDANTIC_V2:

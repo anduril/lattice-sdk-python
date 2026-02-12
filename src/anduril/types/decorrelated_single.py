@@ -10,13 +10,11 @@ from .correlation_metadata import CorrelationMetadata
 
 
 class DecorrelatedSingle(UniversalBaseModel):
-    entity_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="entityId")] = pydantic.Field(
-        default=None
-    )
-    """
-    The entity that was decorrelated against.
-    """
-
+    entity_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="entityId"),
+        pydantic.Field(alias="entityId", description="The entity that was decorrelated against."),
+    ] = None
     metadata: typing.Optional[CorrelationMetadata] = pydantic.Field(default=None)
     """
     Metadata about the decorrelation.

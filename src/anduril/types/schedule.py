@@ -20,19 +20,16 @@ class Schedule(UniversalBaseModel):
     expression that represents this schedule's "ON" state
     """
 
-    schedule_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="scheduleId")] = pydantic.Field(
-        default=None
-    )
-    """
-    A unique identifier for this schedule.
-    """
-
+    schedule_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="scheduleId"),
+        pydantic.Field(alias="scheduleId", description="A unique identifier for this schedule."),
+    ] = None
     schedule_type: typing_extensions.Annotated[
-        typing.Optional[ScheduleScheduleType], FieldMetadata(alias="scheduleType")
-    ] = pydantic.Field(default=None)
-    """
-    The schedule type
-    """
+        typing.Optional[ScheduleScheduleType],
+        FieldMetadata(alias="scheduleType"),
+        pydantic.Field(alias="scheduleType", description="The schedule type"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

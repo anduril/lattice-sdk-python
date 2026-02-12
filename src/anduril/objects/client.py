@@ -68,9 +68,7 @@ class ObjectsClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            token="YOUR_TOKEN",
-        )
+        client = Lattice()
         response = client.objects.list_objects()
         for item in response:
             yield item
@@ -120,9 +118,7 @@ class ObjectsClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            token="YOUR_TOKEN",
-        )
+        client = Lattice()
         client.objects.get_object(
             object_path="objectPath",
         )
@@ -180,9 +176,7 @@ class ObjectsClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            token="YOUR_TOKEN",
-        )
+        client = Lattice()
         client.objects.delete_object(
             object_path="objectPath",
         )
@@ -212,9 +206,7 @@ class ObjectsClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            token="YOUR_TOKEN",
-        )
+        client = Lattice()
         client.objects.get_object_metadata(
             object_path="objectPath",
         )
@@ -278,9 +270,7 @@ class AsyncObjectsClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            token="YOUR_TOKEN",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -339,9 +329,7 @@ class AsyncObjectsClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            token="YOUR_TOKEN",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -408,9 +396,7 @@ class AsyncObjectsClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            token="YOUR_TOKEN",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -448,9 +434,7 @@ class AsyncObjectsClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            token="YOUR_TOKEN",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:

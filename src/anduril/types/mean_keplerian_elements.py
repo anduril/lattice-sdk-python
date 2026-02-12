@@ -15,49 +15,40 @@ class MeanKeplerianElements(UniversalBaseModel):
     UTC time of validity
     """
 
-    semi_major_axis_km: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="semiMajorAxisKm")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Preferred: semi major axis in kilometers
-    """
-
-    mean_motion: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="meanMotion")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    If using SGP/SGP4, provide the Keplerian Mean Motion in revolutions per day
-    """
-
+    semi_major_axis_km: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="semiMajorAxisKm"),
+        pydantic.Field(alias="semiMajorAxisKm", description="Preferred: semi major axis in kilometers"),
+    ] = None
+    mean_motion: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="meanMotion"),
+        pydantic.Field(
+            alias="meanMotion",
+            description="If using SGP/SGP4, provide the Keplerian Mean Motion in revolutions per day",
+        ),
+    ] = None
     eccentricity: typing.Optional[float] = None
-    inclination_deg: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="inclinationDeg")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Angle of inclination in deg
-    """
-
-    ra_of_asc_node_deg: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="raOfAscNodeDeg")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Right ascension of the ascending node in deg
-    """
-
+    inclination_deg: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="inclinationDeg"),
+        pydantic.Field(alias="inclinationDeg", description="Angle of inclination in deg"),
+    ] = None
+    ra_of_asc_node_deg: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="raOfAscNodeDeg"),
+        pydantic.Field(alias="raOfAscNodeDeg", description="Right ascension of the ascending node in deg"),
+    ] = None
     arg_of_pericenter_deg: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="argOfPericenterDeg")
-    ] = pydantic.Field(default=None)
-    """
-    Argument of pericenter in deg
-    """
-
-    mean_anomaly_deg: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="meanAnomalyDeg")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Mean anomaly in deg
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="argOfPericenterDeg"),
+        pydantic.Field(alias="argOfPericenterDeg", description="Argument of pericenter in deg"),
+    ] = None
+    mean_anomaly_deg: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="meanAnomalyDeg"),
+        pydantic.Field(alias="meanAnomalyDeg", description="Mean anomaly in deg"),
+    ] = None
     gm: typing.Optional[float] = pydantic.Field(default=None)
     """
     Optional: gravitational coefficient (Gravitational Constant x central mass) in kg^3 / s^2

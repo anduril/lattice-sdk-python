@@ -15,60 +15,54 @@ class Fuel(UniversalBaseModel):
     Fuel describes an entity's repository of fuels stores including current amount, operational requirements, and maximum authorized capacity
     """
 
-    fuel_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="fuelId")] = pydantic.Field(
-        default=None
-    )
-    """
-    unique fuel identifier
-    """
-
+    fuel_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="fuelId"),
+        pydantic.Field(alias="fuelId", description="unique fuel identifier"),
+    ] = None
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     long form name of the fuel source.
     """
 
-    reported_date: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="reportedDate")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    timestamp the information was reported
-    """
-
-    amount_gallons: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="amountGallons")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    amount of gallons on hand
-    """
-
+    reported_date: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="reportedDate"),
+        pydantic.Field(alias="reportedDate", description="timestamp the information was reported"),
+    ] = None
+    amount_gallons: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="amountGallons"),
+        pydantic.Field(alias="amountGallons", description="amount of gallons on hand"),
+    ] = None
     max_authorized_capacity_gallons: typing_extensions.Annotated[
-        typing.Optional[int], FieldMetadata(alias="maxAuthorizedCapacityGallons")
-    ] = pydantic.Field(default=None)
-    """
-    how much the asset is allowed to have available (in gallons)
-    """
-
+        typing.Optional[int],
+        FieldMetadata(alias="maxAuthorizedCapacityGallons"),
+        pydantic.Field(
+            alias="maxAuthorizedCapacityGallons",
+            description="how much the asset is allowed to have available (in gallons)",
+        ),
+    ] = None
     operational_requirement_gallons: typing_extensions.Annotated[
-        typing.Optional[int], FieldMetadata(alias="operationalRequirementGallons")
-    ] = pydantic.Field(default=None)
-    """
-    minimum required for operations (in gallons)
-    """
-
+        typing.Optional[int],
+        FieldMetadata(alias="operationalRequirementGallons"),
+        pydantic.Field(
+            alias="operationalRequirementGallons", description="minimum required for operations (in gallons)"
+        ),
+    ] = None
     data_classification: typing_extensions.Annotated[
-        typing.Optional[Classification], FieldMetadata(alias="dataClassification")
-    ] = pydantic.Field(default=None)
-    """
-    fuel in a single asset may have different levels of classification
-     use case: fuel for a SECRET asset while diesel fuel may be UNCLASSIFIED
-    """
-
-    data_source: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="dataSource")] = pydantic.Field(
-        default=None
-    )
-    """
-    source of information
-    """
+        typing.Optional[Classification],
+        FieldMetadata(alias="dataClassification"),
+        pydantic.Field(
+            alias="dataClassification",
+            description="fuel in a single asset may have different levels of classification\n use case: fuel for a SECRET asset while diesel fuel may be UNCLASSIFIED",
+        ),
+    ] = None
+    data_source: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="dataSource"),
+        pydantic.Field(alias="dataSource", description="source of information"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

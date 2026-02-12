@@ -11,24 +11,22 @@ from .decorrelated_single import DecorrelatedSingle
 
 
 class Decorrelation(UniversalBaseModel):
-    all_: typing_extensions.Annotated[typing.Optional[DecorrelatedAll], FieldMetadata(alias="all")] = pydantic.Field(
-        default=None
-    )
-    """
-    This will be specified if this entity was decorrelated against all other entities.
-    """
-
+    all_: typing_extensions.Annotated[
+        typing.Optional[DecorrelatedAll],
+        FieldMetadata(alias="all"),
+        pydantic.Field(
+            alias="all",
+            description="This will be specified if this entity was decorrelated against all other entities.",
+        ),
+    ] = None
     decorrelated_entities: typing_extensions.Annotated[
-        typing.Optional[typing.List[DecorrelatedSingle]], FieldMetadata(alias="decorrelatedEntities")
-    ] = pydantic.Field(default=None)
-    """
-    A list of decorrelated entities that have been explicitly decorrelated against this entity
-     which prevents lower precedence correlations from overriding it in the future.
-     For example, if an operator in the UI decorrelated tracks A and B, any automated
-     correlators would be unable to correlate them since manual decorrelations have
-     higher precedence than automatic ones. Precedence is determined by both correlation
-     type and replication mode.
-    """
+        typing.Optional[typing.List[DecorrelatedSingle]],
+        FieldMetadata(alias="decorrelatedEntities"),
+        pydantic.Field(
+            alias="decorrelatedEntities",
+            description="A list of decorrelated entities that have been explicitly decorrelated against this entity\n which prevents lower precedence correlations from overriding it in the future.\n For example, if an operator in the UI decorrelated tracks A and B, any automated\n correlators would be unable to correlate them since manual decorrelations have\n higher precedence than automatic ones. Precedence is determined by both correlation\n type and replication mode.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

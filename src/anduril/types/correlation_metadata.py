@@ -18,18 +18,13 @@ class CorrelationMetadata(UniversalBaseModel):
     """
 
     replication_mode: typing_extensions.Annotated[
-        typing.Optional[CorrelationMetadataReplicationMode], FieldMetadata(alias="replicationMode")
-    ] = pydantic.Field(default=None)
-    """
-    Indicates how the correlation will be distributed. Because a correlation is composed of
-     multiple secondaries, each of which may have been correlated with different replication
-     modes, the distribution of the correlation is composed of distributions of the individual
-     entities within the correlation set.
-     For example, if there are two secondary entities A and B correlated against a primary C,
-     with A having been correlated globally and B having been correlated locally, then the
-     correlation set that is distributed globally than what is known locally in the node.
-    """
-
+        typing.Optional[CorrelationMetadataReplicationMode],
+        FieldMetadata(alias="replicationMode"),
+        pydantic.Field(
+            alias="replicationMode",
+            description="Indicates how the correlation will be distributed. Because a correlation is composed of\n multiple secondaries, each of which may have been correlated with different replication\n modes, the distribution of the correlation is composed of distributions of the individual\n entities within the correlation set.\n For example, if there are two secondary entities A and B correlated against a primary C,\n with A having been correlated globally and B having been correlated locally, then the\n correlation set that is distributed globally than what is known locally in the node.",
+        ),
+    ] = None
     type: typing.Optional[CorrelationMetadataType] = pydantic.Field(default=None)
     """
     What type of (de)correlation was this entity added with.

@@ -15,11 +15,10 @@ class Allocation(UniversalBaseModel):
     """
 
     active_agents: typing_extensions.Annotated[
-        typing.Optional[typing.List[Agent]], FieldMetadata(alias="activeAgents")
-    ] = pydantic.Field(default=None)
-    """
-    Agents actively being utilized in a task.
-    """
+        typing.Optional[typing.List[Agent]],
+        FieldMetadata(alias="activeAgents"),
+        pydantic.Field(alias="activeAgents", description="Agents actively being utilized in a task."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

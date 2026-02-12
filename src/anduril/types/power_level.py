@@ -23,41 +23,38 @@ class PowerLevel(UniversalBaseModel):
     Remaining power capacity of the system.
     """
 
-    percent_remaining: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="percentRemaining")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Percent of power remaining.
-    """
-
+    percent_remaining: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="percentRemaining"),
+        pydantic.Field(alias="percentRemaining", description="Percent of power remaining."),
+    ] = None
     voltage: typing.Optional[float] = pydantic.Field(default=None)
     """
     Voltage of the power source subsystem, as reported by the power source. If the source does not report this value
      this field will be null.
     """
 
-    current_amps: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="currentAmps")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Current in amps of the power source subsystem, as reported by the power source. If the source does not
-     report this value this field will be null.
-    """
-
+    current_amps: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="currentAmps"),
+        pydantic.Field(
+            alias="currentAmps",
+            description="Current in amps of the power source subsystem, as reported by the power source. If the source does not\n report this value this field will be null.",
+        ),
+    ] = None
     run_time_to_empty_mins: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="runTimeToEmptyMins")
-    ] = pydantic.Field(default=None)
-    """
-    Estimated minutes until empty. Calculated with consumption at the moment, as reported by the power source. If the source does not
-     report this value this field will be null.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="runTimeToEmptyMins"),
+        pydantic.Field(
+            alias="runTimeToEmptyMins",
+            description="Estimated minutes until empty. Calculated with consumption at the moment, as reported by the power source. If the source does not\n report this value this field will be null.",
+        ),
+    ] = None
     consumption_rate_l_per_s: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="consumptionRateLPerS")
-    ] = pydantic.Field(default=None)
-    """
-    Fuel consumption rate in liters per second.
-    """
+        typing.Optional[float],
+        FieldMetadata(alias="consumptionRateLPerS"),
+        pydantic.Field(alias="consumptionRateLPerS", description="Fuel consumption rate in liters per second."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

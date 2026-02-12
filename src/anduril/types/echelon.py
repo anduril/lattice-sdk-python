@@ -17,7 +17,7 @@ class Echelon(UniversalBaseModel):
     """
 
     army_echelon: typing_extensions.Annotated[
-        typing.Optional[EchelonArmyEchelon], FieldMetadata(alias="armyEchelon")
+        typing.Optional[EchelonArmyEchelon], FieldMetadata(alias="armyEchelon"), pydantic.Field(alias="armyEchelon")
     ] = None
 
     if IS_PYDANTIC_V2:

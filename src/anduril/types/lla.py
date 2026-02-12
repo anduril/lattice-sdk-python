@@ -13,15 +13,17 @@ class Lla(UniversalBaseModel):
     lon: typing.Optional[float] = None
     lat: typing.Optional[float] = None
     alt: typing.Optional[float] = None
-    is2d: typing.Optional[bool] = None
+    is_2_d: typing_extensions.Annotated[
+        typing.Optional[bool], FieldMetadata(alias="is2d"), pydantic.Field(alias="is2d")
+    ] = None
     altitude_reference: typing_extensions.Annotated[
-        typing.Optional[LlaAltitudeReference], FieldMetadata(alias="altitudeReference")
-    ] = pydantic.Field(default=None)
-    """
-    Meaning of alt.
-     altitude in meters above either WGS84 or EGM96, use altitude_reference to
-     determine what zero means.
-    """
+        typing.Optional[LlaAltitudeReference],
+        FieldMetadata(alias="altitudeReference"),
+        pydantic.Field(
+            alias="altitudeReference",
+            description="Meaning of alt.\n altitude in meters above either WGS84 or EGM96, use altitude_reference to\n determine what zero means.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

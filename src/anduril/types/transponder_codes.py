@@ -6,9 +6,9 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .mode5 import Mode5
+from .mode_5 import Mode5
 from .mode_s import ModeS
-from .transponder_codes_mode4interrogation_response import TransponderCodesMode4InterrogationResponse
+from .transponder_codes_mode_4_interrogation_response import TransponderCodesMode4InterrogationResponse
 
 
 class TransponderCodes(UniversalBaseModel):
@@ -16,39 +16,39 @@ class TransponderCodes(UniversalBaseModel):
     A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S interrogations.
     """
 
-    mode1: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    The mode 1 code assigned to military assets.
-    """
-
-    mode2: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    The Mode 2 code assigned to military assets.
-    """
-
-    mode3: typing.Optional[int] = pydantic.Field(default=None)
-    """
-    The Mode 3 code assigned by ATC to the asset.
-    """
-
-    mode4interrogation_response: typing_extensions.Annotated[
-        typing.Optional[TransponderCodesMode4InterrogationResponse], FieldMetadata(alias="mode4InterrogationResponse")
-    ] = pydantic.Field(default=None)
-    """
-    The validity of the response from the Mode 4 interrogation.
-    """
-
-    mode5: typing.Optional[Mode5] = pydantic.Field(default=None)
-    """
-    The Mode 5 transponder codes.
-    """
-
-    mode_s: typing_extensions.Annotated[typing.Optional[ModeS], FieldMetadata(alias="modeS")] = pydantic.Field(
-        default=None
-    )
-    """
-    The Mode S transponder codes.
-    """
+    mode_1: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="mode1"),
+        pydantic.Field(alias="mode1", description="The mode 1 code assigned to military assets."),
+    ] = None
+    mode_2: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="mode2"),
+        pydantic.Field(alias="mode2", description="The Mode 2 code assigned to military assets."),
+    ] = None
+    mode_3: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="mode3"),
+        pydantic.Field(alias="mode3", description="The Mode 3 code assigned by ATC to the asset."),
+    ] = None
+    mode_4_interrogation_response: typing_extensions.Annotated[
+        typing.Optional[TransponderCodesMode4InterrogationResponse],
+        FieldMetadata(alias="mode4InterrogationResponse"),
+        pydantic.Field(
+            alias="mode4InterrogationResponse",
+            description="The validity of the response from the Mode 4 interrogation.",
+        ),
+    ] = None
+    mode_5: typing_extensions.Annotated[
+        typing.Optional[Mode5],
+        FieldMetadata(alias="mode5"),
+        pydantic.Field(alias="mode5", description="The Mode 5 transponder codes."),
+    ] = None
+    mode_s: typing_extensions.Annotated[
+        typing.Optional[ModeS],
+        FieldMetadata(alias="modeS"),
+        pydantic.Field(alias="modeS", description="The Mode S transponder codes."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

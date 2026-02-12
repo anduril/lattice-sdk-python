@@ -6,7 +6,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
-from .entity_manager_t_mat3 import EntityManagerTMat3
+from .entity_manager_t_mat_3 import EntityManagerTMat3
 from .error_ellipse import ErrorEllipse
 
 
@@ -16,27 +16,29 @@ class LocationUncertainty(UniversalBaseModel):
     """
 
     position_enu_cov: typing_extensions.Annotated[
-        typing.Optional[EntityManagerTMat3], FieldMetadata(alias="positionEnuCov")
-    ] = pydantic.Field(default=None)
-    """
-    Positional covariance represented by the upper triangle of the covariance matrix. It is valid to populate
-     only the diagonal of the matrix if the full covariance matrix is unknown.
-    """
-
+        typing.Optional[EntityManagerTMat3],
+        FieldMetadata(alias="positionEnuCov"),
+        pydantic.Field(
+            alias="positionEnuCov",
+            description="Positional covariance represented by the upper triangle of the covariance matrix. It is valid to populate\n only the diagonal of the matrix if the full covariance matrix is unknown.",
+        ),
+    ] = None
     velocity_enu_cov: typing_extensions.Annotated[
-        typing.Optional[EntityManagerTMat3], FieldMetadata(alias="velocityEnuCov")
-    ] = pydantic.Field(default=None)
-    """
-    Velocity covariance represented by the upper triangle of the covariance matrix. It is valid to populate
-     only the diagonal of the matrix if the full covariance matrix is unknown.
-    """
-
+        typing.Optional[EntityManagerTMat3],
+        FieldMetadata(alias="velocityEnuCov"),
+        pydantic.Field(
+            alias="velocityEnuCov",
+            description="Velocity covariance represented by the upper triangle of the covariance matrix. It is valid to populate\n only the diagonal of the matrix if the full covariance matrix is unknown.",
+        ),
+    ] = None
     position_error_ellipse: typing_extensions.Annotated[
-        typing.Optional[ErrorEllipse], FieldMetadata(alias="positionErrorEllipse")
-    ] = pydantic.Field(default=None)
-    """
-    An ellipse that describes the certainty probability and error boundary for a given geolocation.
-    """
+        typing.Optional[ErrorEllipse],
+        FieldMetadata(alias="positionErrorEllipse"),
+        pydantic.Field(
+            alias="positionErrorEllipse",
+            description="An ellipse that describes the certainty probability and error boundary for a given geolocation.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

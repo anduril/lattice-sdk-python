@@ -5,11 +5,14 @@ from __future__ import annotations
 import typing
 
 import httpx
+from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.oauth_token_provider import AsyncOAuthTokenProvider, OAuthTokenProvider
 from .environment import LatticeEnvironment
 
 if typing.TYPE_CHECKING:
     from .entities.client import AsyncEntitiesClient, EntitiesClient
+    from .o_auth_2.client import AsyncOAuth2Client, OAuth2Client
     from .objects.client import AsyncObjectsClient, ObjectsClient
     from .tasks.client import AsyncTasksClient, TasksClient
 
@@ -20,21 +23,32 @@ class Lattice:
 
     Parameters
     ----------
+
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : LatticeEnvironment
-        The environment to use for requests from the client. from .environment import LatticeEnvironment
+    client_id : str
+        The client identifier used for authentication.
 
+    client_secret : str
+        The client secret used for authentication.
 
+    timeout : typing.Optional[float]
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
-        Defaults to LatticeEnvironment.DEFAULT
+    follow_redirects : typing.Optional[bool]
+        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
+    httpx_client : typing.Optional[httpx.Client]
+        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    # or ...
 
-    token : typing.Union[str, typing.Callable[[], str]]
-    headers : typing.Optional[typing.Dict[str, str]]
-        Additional headers to send with every request.
+    base_url : typing.Optional[str]
+        The base url to use for requests from the client.
+
+    token : typing.Callable[[], str]
+        Authenticate by providing a callable that returns a pre-generated bearer token. In this mode, OAuth client credentials are not required.
 
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
@@ -49,18 +63,56 @@ class Lattice:
     --------
     from anduril import Lattice
 
+    client = Lattice()
+
+    # or ...
+
+    from anduril import Lattice
+
     client = Lattice(
-        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+        token="YOUR_BEARER_TOKEN",
     )
     """
 
+    @typing.overload
     def __init__(
         self,
         *,
         base_url: typing.Optional[str] = None,
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
-        token: typing.Union[str, typing.Callable[[], str]],
+        server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.Client] = None,
+        client_id: str,
+        client_secret: str,
+    ): ...
+    @typing.overload
+    def __init__(
+        self,
+        *,
+        base_url: typing.Optional[str] = None,
+        environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
+        timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.Client] = None,
+        token: typing.Callable[[], str],
+    ): ...
+    def __init__(
+        self,
+        *,
+        base_url: typing.Optional[str] = None,
+        environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
+        client_id: typing.Optional[str] = None,
+        client_secret: typing.Optional[str] = None,
+        token: typing.Optional[typing.Callable[[], str]] = None,
+        _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
@@ -68,20 +120,61 @@ class Lattice:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        self._client_wrapper = SyncClientWrapper(
-            base_url=_get_base_url(base_url=base_url, environment=environment),
-            token=token,
-            headers=headers,
-            httpx_client=httpx_client
-            if httpx_client is not None
-            else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
-            if follow_redirects is not None
-            else httpx.Client(timeout=_defaulted_timeout),
-            timeout=_defaulted_timeout,
-        )
+        if server is not None:
+            _server = server if server is not None else "example.developer.anduril.com"
+            base_url = "https://{server}".format(server=_server)
+        if token is not None:
+            self._client_wrapper = SyncClientWrapper(
+                base_url=_get_base_url(base_url=base_url, environment=environment),
+                headers=headers,
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                if follow_redirects is not None
+                else httpx.Client(timeout=_defaulted_timeout),
+                timeout=_defaulted_timeout,
+                token=_token_getter_override if _token_getter_override is not None else token,
+            )
+        elif client_id is not None and client_secret is not None:
+            oauth_token_provider = OAuthTokenProvider(
+                client_id=client_id,
+                client_secret=client_secret,
+                client_wrapper=SyncClientWrapper(
+                    base_url=_get_base_url(base_url=base_url, environment=environment),
+                    headers=headers,
+                    httpx_client=httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                    if follow_redirects is not None
+                    else httpx.Client(timeout=_defaulted_timeout),
+                    timeout=_defaulted_timeout,
+                ),
+            )
+            self._client_wrapper = SyncClientWrapper(
+                base_url=_get_base_url(base_url=base_url, environment=environment),
+                headers=headers,
+                token=_token_getter_override if _token_getter_override is not None else oauth_token_provider.get_token,
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                if follow_redirects is not None
+                else httpx.Client(timeout=_defaulted_timeout),
+                timeout=_defaulted_timeout,
+            )
+        else:
+            raise ApiError(
+                body="The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'"
+            )
+        self._o_auth_2: typing.Optional[OAuth2Client] = None
         self._entities: typing.Optional[EntitiesClient] = None
         self._tasks: typing.Optional[TasksClient] = None
         self._objects: typing.Optional[ObjectsClient] = None
+
+    @property
+    def o_auth_2(self):
+        if self._o_auth_2 is None:
+            from .o_auth_2.client import OAuth2Client  # noqa: E402
+
+            self._o_auth_2 = OAuth2Client(client_wrapper=self._client_wrapper)
+        return self._o_auth_2
 
     @property
     def entities(self):
@@ -114,21 +207,32 @@ class AsyncLattice:
 
     Parameters
     ----------
+
     base_url : typing.Optional[str]
         The base url to use for requests from the client.
 
-    environment : LatticeEnvironment
-        The environment to use for requests from the client. from .environment import LatticeEnvironment
+    client_id : str
+        The client identifier used for authentication.
 
+    client_secret : str
+        The client secret used for authentication.
 
+    timeout : typing.Optional[float]
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
-        Defaults to LatticeEnvironment.DEFAULT
+    follow_redirects : typing.Optional[bool]
+        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
+    httpx_client : typing.Optional[httpx.AsyncClient]
+        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    # or ...
 
-    token : typing.Union[str, typing.Callable[[], str]]
-    headers : typing.Optional[typing.Dict[str, str]]
-        Additional headers to send with every request.
+    base_url : typing.Optional[str]
+        The base url to use for requests from the client.
+
+    token : typing.Callable[[], str]
+        Authenticate by providing a callable that returns a pre-generated bearer token. In this mode, OAuth client credentials are not required.
 
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
@@ -143,18 +247,56 @@ class AsyncLattice:
     --------
     from anduril import AsyncLattice
 
+    client = AsyncLattice()
+
+    # or ...
+
+    from anduril import AsyncLattice
+
     client = AsyncLattice(
-        token="YOUR_TOKEN",
+        base_url="https://yourhost.com/path/to/api",
+        token="YOUR_BEARER_TOKEN",
     )
     """
 
+    @typing.overload
     def __init__(
         self,
         *,
         base_url: typing.Optional[str] = None,
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
-        token: typing.Union[str, typing.Callable[[], str]],
+        server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        client_id: str,
+        client_secret: str,
+    ): ...
+    @typing.overload
+    def __init__(
+        self,
+        *,
+        base_url: typing.Optional[str] = None,
+        environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
+        timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        token: typing.Callable[[], str],
+    ): ...
+    def __init__(
+        self,
+        *,
+        base_url: typing.Optional[str] = None,
+        environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
+        client_id: typing.Optional[str] = None,
+        client_secret: typing.Optional[str] = None,
+        token: typing.Optional[typing.Callable[[], str]] = None,
+        _token_getter_override: typing.Optional[typing.Callable[[], str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
@@ -162,20 +304,62 @@ class AsyncLattice:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        self._client_wrapper = AsyncClientWrapper(
-            base_url=_get_base_url(base_url=base_url, environment=environment),
-            token=token,
-            headers=headers,
-            httpx_client=httpx_client
-            if httpx_client is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
-            if follow_redirects is not None
-            else httpx.AsyncClient(timeout=_defaulted_timeout),
-            timeout=_defaulted_timeout,
-        )
+        if server is not None:
+            _server = server if server is not None else "example.developer.anduril.com"
+            base_url = "https://{server}".format(server=_server)
+        if token is not None:
+            self._client_wrapper = AsyncClientWrapper(
+                base_url=_get_base_url(base_url=base_url, environment=environment),
+                headers=headers,
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                if follow_redirects is not None
+                else httpx.AsyncClient(timeout=_defaulted_timeout),
+                timeout=_defaulted_timeout,
+                token=_token_getter_override if _token_getter_override is not None else token,
+            )
+        elif client_id is not None and client_secret is not None:
+            oauth_token_provider = AsyncOAuthTokenProvider(
+                client_id=client_id,
+                client_secret=client_secret,
+                client_wrapper=AsyncClientWrapper(
+                    base_url=_get_base_url(base_url=base_url, environment=environment),
+                    headers=headers,
+                    httpx_client=httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                    if follow_redirects is not None
+                    else httpx.AsyncClient(timeout=_defaulted_timeout),
+                    timeout=_defaulted_timeout,
+                ),
+            )
+            self._client_wrapper = AsyncClientWrapper(
+                base_url=_get_base_url(base_url=base_url, environment=environment),
+                headers=headers,
+                token=_token_getter_override,
+                async_token=oauth_token_provider.get_token,
+                httpx_client=httpx_client
+                if httpx_client is not None
+                else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                if follow_redirects is not None
+                else httpx.AsyncClient(timeout=_defaulted_timeout),
+                timeout=_defaulted_timeout,
+            )
+        else:
+            raise ApiError(
+                body="The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'"
+            )
+        self._o_auth_2: typing.Optional[AsyncOAuth2Client] = None
         self._entities: typing.Optional[AsyncEntitiesClient] = None
         self._tasks: typing.Optional[AsyncTasksClient] = None
         self._objects: typing.Optional[AsyncObjectsClient] = None
+
+    @property
+    def o_auth_2(self):
+        if self._o_auth_2 is None:
+            from .o_auth_2.client import AsyncOAuth2Client  # noqa: E402
+
+            self._o_auth_2 = AsyncOAuth2Client(client_wrapper=self._client_wrapper)
+        return self._o_auth_2
 
     @property
     def entities(self):

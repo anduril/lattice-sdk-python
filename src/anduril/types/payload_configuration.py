@@ -11,14 +11,14 @@ from .payload_configuration_payload_operational_state import PayloadConfiguratio
 
 
 class PayloadConfiguration(UniversalBaseModel):
-    capability_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="capabilityId")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Identifying ID for the capability.
-     This ID may be used multiple times to represent payloads that are the same capability but have different operational states
-    """
-
+    capability_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="capabilityId"),
+        pydantic.Field(
+            alias="capabilityId",
+            description="Identifying ID for the capability.\n This ID may be used multiple times to represent payloads that are the same capability but have different operational states",
+        ),
+    ] = None
     quantity: typing.Optional[int] = pydantic.Field(default=None)
     """
     The number of payloads currently available in the configuration.
@@ -27,24 +27,20 @@ class PayloadConfiguration(UniversalBaseModel):
     effective_environment: typing_extensions.Annotated[
         typing.Optional[typing.List[PayloadConfigurationEffectiveEnvironmentItem]],
         FieldMetadata(alias="effectiveEnvironment"),
-    ] = pydantic.Field(default=None)
-    """
-    The target environments the configuration is effective against.
-    """
-
+        pydantic.Field(
+            alias="effectiveEnvironment", description="The target environments the configuration is effective against."
+        ),
+    ] = None
     payload_operational_state: typing_extensions.Annotated[
-        typing.Optional[PayloadConfigurationPayloadOperationalState], FieldMetadata(alias="payloadOperationalState")
-    ] = pydantic.Field(default=None)
-    """
-    The operational state of this payload.
-    """
-
+        typing.Optional[PayloadConfigurationPayloadOperationalState],
+        FieldMetadata(alias="payloadOperationalState"),
+        pydantic.Field(alias="payloadOperationalState", description="The operational state of this payload."),
+    ] = None
     payload_description: typing_extensions.Annotated[
-        typing.Optional[str], FieldMetadata(alias="payloadDescription")
-    ] = pydantic.Field(default=None)
-    """
-    A human readable description of the payload
-    """
+        typing.Optional[str],
+        FieldMetadata(alias="payloadDescription"),
+        pydantic.Field(alias="payloadDescription", description="A human readable description of the payload"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

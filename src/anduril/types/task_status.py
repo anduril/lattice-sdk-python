@@ -28,13 +28,11 @@ class TaskStatus(UniversalBaseModel):
     Status of the task.
     """
 
-    task_error: typing_extensions.Annotated[typing.Optional[TaskError], FieldMetadata(alias="taskError")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Any errors associated with the task.
-    """
-
+    task_error: typing_extensions.Annotated[
+        typing.Optional[TaskError],
+        FieldMetadata(alias="taskError"),
+        pydantic.Field(alias="taskError", description="Any errors associated with the task."),
+    ] = None
     progress: typing.Optional[GoogleProtobufAny] = pydantic.Field(default=None)
     """
     Any incremental progress on the task, should be from the tasks/v* /progress folder.
@@ -45,13 +43,13 @@ class TaskStatus(UniversalBaseModel):
     Any final result of the task, should be from tasks/v* /result folder.
     """
 
-    start_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="startTime")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Time the task began execution, may not be known even for executing Tasks.
-    """
-
+    start_time: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="startTime"),
+        pydantic.Field(
+            alias="startTime", description="Time the task began execution, may not be known even for executing Tasks."
+        ),
+    ] = None
     estimate: typing.Optional[GoogleProtobufAny] = pydantic.Field(default=None)
     """
     Any estimate for how the task will progress, should be from tasks/v* /estimates folder.

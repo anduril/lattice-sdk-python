@@ -13,14 +13,14 @@ class Status(UniversalBaseModel):
     Contains status of entities.
     """
 
-    platform_activity: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="platformActivity")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    A string that describes the activity that the entity is performing.
-     Examples include "RECONNAISSANCE", "INTERDICTION", "RETURN TO BASE (RTB)", "PREPARING FOR LAUNCH".
-    """
-
+    platform_activity: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="platformActivity"),
+        pydantic.Field(
+            alias="platformActivity",
+            description='A string that describes the activity that the entity is performing.\n Examples include "RECONNAISSANCE", "INTERDICTION", "RETURN TO BASE (RTB)", "PREPARING FOR LAUNCH".',
+        ),
+    ] = None
     role: typing.Optional[str] = pydantic.Field(default=None)
     """
     A human-readable string that describes the role the entity is currently performing. E.g. "Team Member", "Commander".

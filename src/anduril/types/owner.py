@@ -13,12 +13,11 @@ class Owner(UniversalBaseModel):
     Owner designates the entity responsible for writes of task data.
     """
 
-    entity_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="entityId")] = pydantic.Field(
-        default=None
-    )
-    """
-    Entity ID of the owner.
-    """
+    entity_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="entityId"),
+        pydantic.Field(alias="entityId", description="Entity ID of the owner."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

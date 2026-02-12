@@ -20,15 +20,14 @@ class GeoPolygon(UniversalBaseModel):
     An array of LinearRings where the first item is the exterior ring and subsequent items are interior rings.
     """
 
-    is_rectangle: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isRectangle")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    An extension hint that this polygon is a rectangle. When true this implies several things:
-     * exactly 1 linear ring with 5 points (starting corner, 3 other corners and start again)
-     * each point has the same altitude corresponding with the plane of the rectangle
-     * each point has the same height (either all present and equal, or all not present)
-    """
+    is_rectangle: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="isRectangle"),
+        pydantic.Field(
+            alias="isRectangle",
+            description="An extension hint that this polygon is a rectangle. When true this implies several things:\n * exactly 1 linear ring with 5 points (starting corner, 3 other corners and start again)\n * each point has the same altitude corresponding with the plane of the rectangle\n * each point has the same height (either all present and equal, or all not present)",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

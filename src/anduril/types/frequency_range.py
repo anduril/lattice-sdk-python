@@ -15,18 +15,19 @@ class FrequencyRange(UniversalBaseModel):
     """
 
     minimum_frequency_hz: typing_extensions.Annotated[
-        typing.Optional[Frequency], FieldMetadata(alias="minimumFrequencyHz")
-    ] = pydantic.Field(default=None)
-    """
-    Indicates the lowest measured frequency of a signal (Hz).
-    """
-
+        typing.Optional[Frequency],
+        FieldMetadata(alias="minimumFrequencyHz"),
+        pydantic.Field(
+            alias="minimumFrequencyHz", description="Indicates the lowest measured frequency of a signal (Hz)."
+        ),
+    ] = None
     maximum_frequency_hz: typing_extensions.Annotated[
-        typing.Optional[Frequency], FieldMetadata(alias="maximumFrequencyHz")
-    ] = pydantic.Field(default=None)
-    """
-    Indicates the maximum measured frequency of a signal (Hz).
-    """
+        typing.Optional[Frequency],
+        FieldMetadata(alias="maximumFrequencyHz"),
+        pydantic.Field(
+            alias="maximumFrequencyHz", description="Indicates the maximum measured frequency of a signal (Hz)."
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

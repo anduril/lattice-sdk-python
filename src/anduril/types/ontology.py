@@ -14,20 +14,19 @@ class Ontology(UniversalBaseModel):
     Ontology of the entity.
     """
 
-    platform_type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="platformType")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    A string that describes the entity's high-level type with natural language.
-    """
-
-    specific_type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="specificType")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    A string that describes the entity's exact model or type.
-    """
-
+    platform_type: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="platformType"),
+        pydantic.Field(
+            alias="platformType",
+            description="A string that describes the entity's high-level type with natural language.",
+        ),
+    ] = None
+    specific_type: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="specificType"),
+        pydantic.Field(alias="specificType", description="A string that describes the entity's exact model or type."),
+    ] = None
     template: typing.Optional[OntologyTemplate] = pydantic.Field(default=None)
     """
     The template used when creating this entity. Specifies minimum required components.

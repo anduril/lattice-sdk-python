@@ -1,9 +1,10 @@
 [project]
 name = "anduril-lattice-sdk"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "anduril-lattice-sdk"
-version = "4.0.0"
+version = "4.2.1"
 description = "HTTP clients for the Anduril Lattice SDK"
 readme = "README.md"
 authors = [
@@ -23,6 +24,9 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Operating System :: OS Independent",
     "Operating System :: POSIX",
     "Operating System :: MacOS",
@@ -38,7 +42,7 @@ packages = [
 [tool.poetry.urls]
 Documentation = 'https://developer.anduril.com'
 Homepage = 'https://www.anduril.com/lattice-sdk/'
-Repository = 'https://github.com/anduril/lattice-sdk-python'
+Repository = 'https://github.com/fern-support/lattice-sdk-python'
 
 [tool.poetry.dependencies]
 python = "^3.8"

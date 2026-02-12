@@ -19,6 +19,7 @@ if typing.TYPE_CHECKING:
     from .alternate_id import AlternateId
     from .alternate_id_type import AlternateIdType
     from .angle_of_arrival import AngleOfArrival
+    from .bad_request_error_body import BadRequestErrorBody
     from .bandwidth import Bandwidth
     from .bandwidth_range import BandwidthRange
     from .cancel_request import CancelRequest
@@ -53,7 +54,7 @@ if typing.TYPE_CHECKING:
     from .entity_event_response import EntityEventResponse
     from .entity_ids_selector import EntityIdsSelector
     from .entity_manager_pose import EntityManagerPose
-    from .entity_manager_t_mat3 import EntityManagerTMat3
+    from .entity_manager_t_mat_3 import EntityManagerTMat3
     from .entity_stream_event import EntityStreamEvent
     from .entity_stream_heartbeat import EntityStreamHeartbeat
     from .enu import Enu
@@ -99,13 +100,13 @@ if typing.TYPE_CHECKING:
     from .media_item import MediaItem
     from .media_item_type import MediaItemType
     from .merged_from import MergedFrom
-    from .mil_std2525c import MilStd2525C
+    from .mil_std_2525_c import MilStd2525C
     from .mil_view import MilView
     from .mil_view_disposition import MilViewDisposition
     from .mil_view_environment import MilViewEnvironment
     from .mil_view_nationality import MilViewNationality
-    from .mode5 import Mode5
-    from .mode5mode5interrogation_response import Mode5Mode5InterrogationResponse
+    from .mode_5 import Mode5
+    from .mode_5_mode_5_interrogation_response import Mode5Mode5InterrogationResponse
     from .mode_s import ModeS
     from .non_primary_membership import NonPrimaryMembership
     from .ontology import Ontology
@@ -163,7 +164,7 @@ if typing.TYPE_CHECKING:
     from .supplies import Supplies
     from .symbology import Symbology
     from .system import System
-    from .t_mat2 import TMat2
+    from .t_mat_2 import TMat2
     from .target_priority import TargetPriority
     from .task import Task
     from .task_catalog import TaskCatalog
@@ -182,8 +183,9 @@ if typing.TYPE_CHECKING:
     from .tracked import Tracked
     from .tracked_by import TrackedBy
     from .transponder_codes import TransponderCodes
-    from .transponder_codes_mode4interrogation_response import TransponderCodesMode4InterrogationResponse
-    from .u_int32range import UInt32Range
+    from .transponder_codes_mode_4_interrogation_response import TransponderCodesMode4InterrogationResponse
+    from .u_int_32_range import UInt32Range
+    from .unauthorized_error_body import UnauthorizedErrorBody
     from .user import User
     from .visual_details import VisualDetails
 _dynamic_imports: typing.Dict[str, str] = {
@@ -200,6 +202,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AlternateId": ".alternate_id",
     "AlternateIdType": ".alternate_id_type",
     "AngleOfArrival": ".angle_of_arrival",
+    "BadRequestErrorBody": ".bad_request_error_body",
     "Bandwidth": ".bandwidth",
     "BandwidthRange": ".bandwidth_range",
     "CancelRequest": ".cancel_request",
@@ -234,7 +237,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EntityEventResponse": ".entity_event_response",
     "EntityIdsSelector": ".entity_ids_selector",
     "EntityManagerPose": ".entity_manager_pose",
-    "EntityManagerTMat3": ".entity_manager_t_mat3",
+    "EntityManagerTMat3": ".entity_manager_t_mat_3",
     "EntityStreamEvent": ".entity_stream_event",
     "EntityStreamHeartbeat": ".entity_stream_heartbeat",
     "Enu": ".enu",
@@ -280,13 +283,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MediaItem": ".media_item",
     "MediaItemType": ".media_item_type",
     "MergedFrom": ".merged_from",
-    "MilStd2525C": ".mil_std2525c",
+    "MilStd2525C": ".mil_std_2525_c",
     "MilView": ".mil_view",
     "MilViewDisposition": ".mil_view_disposition",
     "MilViewEnvironment": ".mil_view_environment",
     "MilViewNationality": ".mil_view_nationality",
-    "Mode5": ".mode5",
-    "Mode5Mode5InterrogationResponse": ".mode5mode5interrogation_response",
+    "Mode5": ".mode_5",
+    "Mode5Mode5InterrogationResponse": ".mode_5_mode_5_interrogation_response",
     "ModeS": ".mode_s",
     "NonPrimaryMembership": ".non_primary_membership",
     "Ontology": ".ontology",
@@ -344,7 +347,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Supplies": ".supplies",
     "Symbology": ".symbology",
     "System": ".system",
-    "TMat2": ".t_mat2",
+    "TMat2": ".t_mat_2",
     "TargetPriority": ".target_priority",
     "Task": ".task",
     "TaskCatalog": ".task_catalog",
@@ -363,8 +366,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Tracked": ".tracked",
     "TrackedBy": ".tracked_by",
     "TransponderCodes": ".transponder_codes",
-    "TransponderCodesMode4InterrogationResponse": ".transponder_codes_mode4interrogation_response",
-    "UInt32Range": ".u_int32range",
+    "TransponderCodesMode4InterrogationResponse": ".transponder_codes_mode_4_interrogation_response",
+    "UInt32Range": ".u_int_32_range",
+    "UnauthorizedErrorBody": ".unauthorized_error_body",
     "User": ".user",
     "VisualDetails": ".visual_details",
 }
@@ -405,6 +409,7 @@ __all__ = [
     "AlternateId",
     "AlternateIdType",
     "AngleOfArrival",
+    "BadRequestErrorBody",
     "Bandwidth",
     "BandwidthRange",
     "CancelRequest",
@@ -570,6 +575,7 @@ __all__ = [
     "TransponderCodes",
     "TransponderCodesMode4InterrogationResponse",
     "UInt32Range",
+    "UnauthorizedErrorBody",
     "User",
     "VisualDetails",
 ]

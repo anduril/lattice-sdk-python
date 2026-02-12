@@ -15,9 +15,11 @@ class ScanCharacteristics(UniversalBaseModel):
     """
 
     scan_type: typing_extensions.Annotated[
-        typing.Optional[ScanCharacteristicsScanType], FieldMetadata(alias="scanType")
+        typing.Optional[ScanCharacteristicsScanType], FieldMetadata(alias="scanType"), pydantic.Field(alias="scanType")
     ] = None
-    scan_period_s: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="scanPeriodS")] = None
+    scan_period_s: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="scanPeriodS"), pydantic.Field(alias="scanPeriodS")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

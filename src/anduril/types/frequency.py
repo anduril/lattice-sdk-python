@@ -14,12 +14,13 @@ class Frequency(UniversalBaseModel):
     A component for describing frequency.
     """
 
-    frequency_hz: typing_extensions.Annotated[typing.Optional[Measurement], FieldMetadata(alias="frequencyHz")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Indicates a frequency of a signal (Hz) with its standard deviation.
-    """
+    frequency_hz: typing_extensions.Annotated[
+        typing.Optional[Measurement],
+        FieldMetadata(alias="frequencyHz"),
+        pydantic.Field(
+            alias="frequencyHz", description="Indicates a frequency of a signal (Hz) with its standard deviation."
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -23,15 +23,14 @@ class TaskQueryResults(UniversalBaseModel):
     """
 
     tasks: typing.Optional[typing.List[Task]] = None
-    next_page_token: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="nextPageToken")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Incomplete results can be detected by a non-empty nextPageToken field in the query results. In order to retrieve 
-    the next page, perform the exact same request as previously and append a pageToken field with the value of 
-    nextPageToken from the previous page. A new nextPageToken is provided on the following pages until all the 
-    results are retrieved.
-    """
+    next_page_token: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="nextPageToken"),
+        pydantic.Field(
+            alias="nextPageToken",
+            description="Incomplete results can be detected by a non-empty nextPageToken field in the query results. In order to retrieve \nthe next page, perform the exact same request as previously and append a pageToken field with the value of \nnextPageToken from the previous page. A new nextPageToken is provided on the following pages until all the \nresults are retrieved.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

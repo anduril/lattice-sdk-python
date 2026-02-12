@@ -36,51 +36,50 @@ class Task(UniversalBaseModel):
     Version of this task.
     """
 
-    display_name: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="displayName")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    DEPRECATED: Human readable display name for this task, should be short (<100 chars).
-    """
-
+    display_name: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="displayName"),
+        pydantic.Field(
+            alias="displayName",
+            description="DEPRECATED: Human readable display name for this task, should be short (<100 chars).",
+        ),
+    ] = None
     specification: typing.Optional[GoogleProtobufAny] = pydantic.Field(default=None)
     """
     The path for the Protobuf task definition, and the complete task data.
     """
 
-    created_by: typing_extensions.Annotated[typing.Optional["Principal"], FieldMetadata(alias="createdBy")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Records who created this task. This field will not change after the task has been created.
-    """
-
-    last_updated_by: typing_extensions.Annotated[typing.Optional["Principal"], FieldMetadata(alias="lastUpdatedBy")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Records who updated this task last.
-    """
-
+    created_by: typing_extensions.Annotated[
+        typing.Optional["Principal"],
+        FieldMetadata(alias="createdBy"),
+        pydantic.Field(
+            alias="createdBy",
+            description="Records who created this task. This field will not change after the task has been created.",
+        ),
+    ] = None
+    last_updated_by: typing_extensions.Annotated[
+        typing.Optional["Principal"],
+        FieldMetadata(alias="lastUpdatedBy"),
+        pydantic.Field(alias="lastUpdatedBy", description="Records who updated this task last."),
+    ] = None
     last_update_time: typing_extensions.Annotated[
-        typing.Optional[dt.datetime], FieldMetadata(alias="lastUpdateTime")
-    ] = pydantic.Field(default=None)
-    """
-    Records the time of last update.
-    """
-
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="lastUpdateTime"),
+        pydantic.Field(alias="lastUpdateTime", description="Records the time of last update."),
+    ] = None
     status: typing.Optional[TaskStatus] = pydantic.Field(default=None)
     """
     The status of this task.
     """
 
-    scheduled_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="scheduledTime")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    If the task has been scheduled to execute, what time it should execute at.
-    """
-
+    scheduled_time: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="scheduledTime"),
+        pydantic.Field(
+            alias="scheduledTime",
+            description="If the task has been scheduled to execute, what time it should execute at.",
+        ),
+    ] = None
     relations: typing.Optional[Relations] = pydantic.Field(default=None)
     """
     Any related Tasks associated with this, typically includes an assignee for this task and/or a parent.
@@ -92,35 +91,31 @@ class Task(UniversalBaseModel):
     """
 
     is_executed_elsewhere: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="isExecutedElsewhere")
-    ] = pydantic.Field(default=None)
-    """
-    If set, execution of this task is managed elsewhere, not by Task Manager.
-     In other words, task manager will not attempt to update the assigned agent with execution instructions.
-    """
-
-    create_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createTime")] = (
-        pydantic.Field(default=None)
-    )
-    """
-    Time of task creation.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="isExecutedElsewhere"),
+        pydantic.Field(
+            alias="isExecutedElsewhere",
+            description="If set, execution of this task is managed elsewhere, not by Task Manager.\n In other words, task manager will not attempt to update the assigned agent with execution instructions.",
+        ),
+    ] = None
+    create_time: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="createTime"),
+        pydantic.Field(alias="createTime", description="Time of task creation."),
+    ] = None
     replication: typing.Optional[Replication] = pydantic.Field(default=None)
     """
     If populated, designates this to be a replicated task.
     """
 
     initial_entities: typing_extensions.Annotated[
-        typing.Optional[typing.List[TaskEntity]], FieldMetadata(alias="initialEntities")
-    ] = pydantic.Field(default=None)
-    """
-    If populated, indicates an initial set of entities that can be used to execute an entity aware task
-     For example, an entity Objective, an entity Keep In Zone, etc.
-     These will not be updated during execution. If a taskable agent needs continuous updates on the entities from the
-     COP, can call entity-manager, or use an AlternateId escape hatch.
-    """
-
+        typing.Optional[typing.List[TaskEntity]],
+        FieldMetadata(alias="initialEntities"),
+        pydantic.Field(
+            alias="initialEntities",
+            description="If populated, indicates an initial set of entities that can be used to execute an entity aware task\n For example, an entity Objective, an entity Keep In Zone, etc.\n These will not be updated during execution. If a taskable agent needs continuous updates on the entities from the\n COP, can call entity-manager, or use an AlternateId escape hatch.",
+        ),
+    ] = None
     owner: typing.Optional[Owner] = pydantic.Field(default=None)
     """
     The networked owner of this task. It is used to ensure that linear writes occur on the node responsible
@@ -139,4 +134,4 @@ class Task(UniversalBaseModel):
 
 from .principal import Principal  # noqa: E402, I001
 
-update_forward_refs(Task)
+update_forward_refs(Task, Principal=Principal)
