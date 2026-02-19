@@ -7,6 +7,7 @@ import typing
 import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .core.logging import LogConfig, Logger
 from .core.oauth_token_provider import AsyncOAuthTokenProvider, OAuthTokenProvider
 from .environment import LatticeEnvironment
 
@@ -63,10 +64,7 @@ class Lattice:
     --------
     from anduril import Lattice
 
-    client = Lattice(
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
-    )
+    client = Lattice()
 
     # or ...
 
@@ -84,10 +82,12 @@ class Lattice:
         *,
         base_url: typing.Optional[str] = None,
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         client_id: str,
         client_secret: str,
     ): ...
@@ -97,10 +97,12 @@ class Lattice:
         *,
         base_url: typing.Optional[str] = None,
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         token: typing.Callable[[], str],
     ): ...
     def __init__(
@@ -108,6 +110,7 @@ class Lattice:
         *,
         base_url: typing.Optional[str] = None,
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
@@ -116,10 +119,14 @@ class Lattice:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
+        if server is not None:
+            _server = server if server is not None else "example.developer.anduril.com"
+            base_url = "https://{server}".format(server=_server)
         if token is not None:
             self._client_wrapper = SyncClientWrapper(
                 base_url=_get_base_url(base_url=base_url, environment=environment),
@@ -130,6 +137,7 @@ class Lattice:
                 if follow_redirects is not None
                 else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
+                logging=logging,
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
         elif client_id is not None and client_secret is not None:
@@ -143,6 +151,7 @@ class Lattice:
                     if follow_redirects is not None
                     else httpx.Client(timeout=_defaulted_timeout),
                     timeout=_defaulted_timeout,
+                    logging=logging,
                 ),
             )
             self._client_wrapper = SyncClientWrapper(
@@ -155,6 +164,7 @@ class Lattice:
                 if follow_redirects is not None
                 else httpx.Client(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
+                logging=logging,
             )
         else:
             raise ApiError(
@@ -244,10 +254,7 @@ class AsyncLattice:
     --------
     from anduril import AsyncLattice
 
-    client = AsyncLattice(
-        client_id="YOUR_CLIENT_ID",
-        client_secret="YOUR_CLIENT_SECRET",
-    )
+    client = AsyncLattice()
 
     # or ...
 
@@ -265,10 +272,12 @@ class AsyncLattice:
         *,
         base_url: typing.Optional[str] = None,
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         client_id: str,
         client_secret: str,
     ): ...
@@ -278,10 +287,12 @@ class AsyncLattice:
         *,
         base_url: typing.Optional[str] = None,
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         token: typing.Callable[[], str],
     ): ...
     def __init__(
@@ -289,6 +300,7 @@ class AsyncLattice:
         *,
         base_url: typing.Optional[str] = None,
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
@@ -297,10 +309,14 @@ class AsyncLattice:
         timeout: typing.Optional[float] = None,
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
     ):
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
+        if server is not None:
+            _server = server if server is not None else "example.developer.anduril.com"
+            base_url = "https://{server}".format(server=_server)
         if token is not None:
             self._client_wrapper = AsyncClientWrapper(
                 base_url=_get_base_url(base_url=base_url, environment=environment),
@@ -311,6 +327,7 @@ class AsyncLattice:
                 if follow_redirects is not None
                 else httpx.AsyncClient(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
+                logging=logging,
                 token=_token_getter_override if _token_getter_override is not None else token,
             )
         elif client_id is not None and client_secret is not None:
@@ -324,6 +341,7 @@ class AsyncLattice:
                     if follow_redirects is not None
                     else httpx.AsyncClient(timeout=_defaulted_timeout),
                     timeout=_defaulted_timeout,
+                    logging=logging,
                 ),
             )
             self._client_wrapper = AsyncClientWrapper(
@@ -337,6 +355,7 @@ class AsyncLattice:
                 if follow_redirects is not None
                 else httpx.AsyncClient(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
+                logging=logging,
             )
         else:
             raise ApiError(

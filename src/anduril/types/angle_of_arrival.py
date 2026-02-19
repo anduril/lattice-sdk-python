@@ -15,24 +15,22 @@ class AngleOfArrival(UniversalBaseModel):
     The direction from which the signal is received
     """
 
-    relative_pose: typing_extensions.Annotated[typing.Optional[Pose], FieldMetadata(alias="relativePose")] = (
-        pydantic.Field(alias="relativePose", default=None)
-    )
-    """
-    Origin (LLA) and attitude (relative to ENU) of a ray pointing towards the detection. The attitude represents a
-     forward-left-up (FLU) frame where the x-axis (1, 0, 0) is pointing towards the target.
-    """
-
+    relative_pose: typing_extensions.Annotated[
+        typing.Optional[Pose],
+        FieldMetadata(alias="relativePose"),
+        pydantic.Field(
+            alias="relativePose",
+            description="Origin (LLA) and attitude (relative to ENU) of a ray pointing towards the detection. The attitude represents a\n forward-left-up (FLU) frame where the x-axis (1, 0, 0) is pointing towards the target.",
+        ),
+    ] = None
     bearing_elevation_covariance_rad2: typing_extensions.Annotated[
-        typing.Optional[TMat2], FieldMetadata(alias="bearingElevationCovarianceRad2")
-    ] = pydantic.Field(alias="bearingElevationCovarianceRad2", default=None)
-    """
-    Bearing/elevation covariance matrix where bearing is defined in radians CCW+ about the z-axis from the x-axis of FLU frame
-     and elevation is positive down from the FL/XY plane.
-     mxx = bearing variance in rad^2
-     mxy = bearing/elevation covariance in rad^2
-     myy = elevation variance in rad^2
-    """
+        typing.Optional[TMat2],
+        FieldMetadata(alias="bearingElevationCovarianceRad2"),
+        pydantic.Field(
+            alias="bearingElevationCovarianceRad2",
+            description="Bearing/elevation covariance matrix where bearing is defined in radians CCW+ about the z-axis from the x-axis of FLU frame\n and elevation is positive down from the FL/XY plane.\n mxx = bearing variance in rad^2\n mxy = bearing/elevation covariance in rad^2\n myy = elevation variance in rad^2",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -13,14 +13,14 @@ class AlertCondition(UniversalBaseModel):
     A condition which may trigger an alert.
     """
 
-    condition_code: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="conditionCode")] = (
-        pydantic.Field(alias="conditionCode", default=None)
-    )
-    """
-    Short, machine-readable code that describes this condition. This code is intended to provide systems off-asset
-     with a lookup key to retrieve more detailed information about the condition.
-    """
-
+    condition_code: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="conditionCode"),
+        pydantic.Field(
+            alias="conditionCode",
+            description="Short, machine-readable code that describes this condition. This code is intended to provide systems off-asset\n with a lookup key to retrieve more detailed information about the condition.",
+        ),
+    ] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Human-readable description of this condition. The description is intended for display in the UI for human

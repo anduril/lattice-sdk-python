@@ -14,9 +14,9 @@ class Symbology(UniversalBaseModel):
     Symbology associated with an entity.
     """
 
-    mil_std2525c: typing_extensions.Annotated[typing.Optional[MilStd2525C], FieldMetadata(alias="milStd2525C")] = (
-        pydantic.Field(alias="milStd2525C", default=None)
-    )
+    mil_std2525c: typing_extensions.Annotated[
+        typing.Optional[MilStd2525C], FieldMetadata(alias="milStd2525C"), pydantic.Field(alias="milStd2525C")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

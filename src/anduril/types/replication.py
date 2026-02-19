@@ -14,12 +14,11 @@ class Replication(UniversalBaseModel):
     Any metadata associated with the replication of a task.
     """
 
-    stale_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="staleTime")] = (
-        pydantic.Field(alias="staleTime", default=None)
-    )
-    """
-    The time by which this task should be assumed to be stale.
-    """
+    stale_time: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="staleTime"),
+        pydantic.Field(alias="staleTime", description="The time by which this task should be assumed to be stale."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
