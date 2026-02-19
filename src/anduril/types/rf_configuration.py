@@ -16,18 +16,15 @@ class RfConfiguration(UniversalBaseModel):
     """
 
     frequency_range_hz: typing_extensions.Annotated[
-        typing.Optional[typing.List[FrequencyRange]], FieldMetadata(alias="frequencyRangeHz")
-    ] = pydantic.Field(alias="frequencyRangeHz", default=None)
-    """
-    Frequency ranges that are available for this sensor.
-    """
-
+        typing.Optional[typing.List[FrequencyRange]],
+        FieldMetadata(alias="frequencyRangeHz"),
+        pydantic.Field(alias="frequencyRangeHz", description="Frequency ranges that are available for this sensor."),
+    ] = None
     bandwidth_range_hz: typing_extensions.Annotated[
-        typing.Optional[typing.List[BandwidthRange]], FieldMetadata(alias="bandwidthRangeHz")
-    ] = pydantic.Field(alias="bandwidthRangeHz", default=None)
-    """
-    Bandwidth ranges that are available for this sensor.
-    """
+        typing.Optional[typing.List[BandwidthRange]],
+        FieldMetadata(alias="bandwidthRangeHz"),
+        pydantic.Field(alias="bandwidthRangeHz", description="Bandwidth ranges that are available for this sensor."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

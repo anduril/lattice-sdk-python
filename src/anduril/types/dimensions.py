@@ -9,12 +9,11 @@ from ..core.serialization import FieldMetadata
 
 
 class Dimensions(UniversalBaseModel):
-    length_m: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="lengthM")] = pydantic.Field(
-        alias="lengthM", default=None
-    )
-    """
-    Length of the entity in meters
-    """
+    length_m: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="lengthM"),
+        pydantic.Field(alias="lengthM", description="Length of the entity in meters"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

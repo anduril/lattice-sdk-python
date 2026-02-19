@@ -12,42 +12,39 @@ from .orbit_mean_elements_metadata_ref_frame import OrbitMeanElementsMetadataRef
 
 
 class OrbitMeanElementsMetadata(UniversalBaseModel):
-    creation_date: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="creationDate")] = (
-        pydantic.Field(alias="creationDate", default=None)
-    )
-    """
-    Creation date/time in UTC
-    """
-
+    creation_date: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="creationDate"),
+        pydantic.Field(alias="creationDate", description="Creation date/time in UTC"),
+    ] = None
     originator: typing.Optional[str] = pydantic.Field(default=None)
     """
     Creating agency or operator
     """
 
-    message_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="messageId")] = pydantic.Field(
-        alias="messageId", default=None
-    )
-    """
-    ID that uniquely identifies a message from a given originator.
-    """
-
+    message_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="messageId"),
+        pydantic.Field(alias="messageId", description="ID that uniquely identifies a message from a given originator."),
+    ] = None
     ref_frame: typing_extensions.Annotated[
-        typing.Optional[OrbitMeanElementsMetadataRefFrame], FieldMetadata(alias="refFrame")
-    ] = pydantic.Field(alias="refFrame", default=None)
-    """
-    Reference frame, assumed to be Earth-centered
-    """
-
-    ref_frame_epoch: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="refFrameEpoch")] = (
-        pydantic.Field(alias="refFrameEpoch", default=None)
-    )
-    """
-    Reference frame epoch in UTC - mandatory only if not intrinsic to frame definition
-    """
-
+        typing.Optional[OrbitMeanElementsMetadataRefFrame],
+        FieldMetadata(alias="refFrame"),
+        pydantic.Field(alias="refFrame", description="Reference frame, assumed to be Earth-centered"),
+    ] = None
+    ref_frame_epoch: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="refFrameEpoch"),
+        pydantic.Field(
+            alias="refFrameEpoch",
+            description="Reference frame epoch in UTC - mandatory only if not intrinsic to frame definition",
+        ),
+    ] = None
     mean_element_theory: typing_extensions.Annotated[
-        typing.Optional[OrbitMeanElementsMetadataMeanElementTheory], FieldMetadata(alias="meanElementTheory")
-    ] = pydantic.Field(alias="meanElementTheory", default=None)
+        typing.Optional[OrbitMeanElementsMetadataMeanElementTheory],
+        FieldMetadata(alias="meanElementTheory"),
+        pydantic.Field(alias="meanElementTheory"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

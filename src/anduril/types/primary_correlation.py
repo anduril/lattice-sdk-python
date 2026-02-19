@@ -10,11 +10,10 @@ from ..core.serialization import FieldMetadata
 
 class PrimaryCorrelation(UniversalBaseModel):
     secondary_entity_ids: typing_extensions.Annotated[
-        typing.Optional[typing.List[str]], FieldMetadata(alias="secondaryEntityIds")
-    ] = pydantic.Field(alias="secondaryEntityIds", default=None)
-    """
-    The secondary entity IDs part of this correlation.
-    """
+        typing.Optional[typing.List[str]],
+        FieldMetadata(alias="secondaryEntityIds"),
+        pydantic.Field(alias="secondaryEntityIds", description="The secondary entity IDs part of this correlation."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

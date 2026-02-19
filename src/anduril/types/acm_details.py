@@ -10,16 +10,17 @@ from .acm_details_acm_type import AcmDetailsAcmType
 
 
 class AcmDetails(UniversalBaseModel):
-    acm_type: typing_extensions.Annotated[typing.Optional[AcmDetailsAcmType], FieldMetadata(alias="acmType")] = (
-        pydantic.Field(alias="acmType", default=None)
-    )
-    acm_description: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="acmDescription")] = (
-        pydantic.Field(alias="acmDescription", default=None)
-    )
-    """
-    Used for loosely typed associations, such as assignment to a specific fires unit.
-     Limit to 150 characters.
-    """
+    acm_type: typing_extensions.Annotated[
+        typing.Optional[AcmDetailsAcmType], FieldMetadata(alias="acmType"), pydantic.Field(alias="acmType")
+    ] = None
+    acm_description: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="acmDescription"),
+        pydantic.Field(
+            alias="acmDescription",
+            description="Used for loosely typed associations, such as assignment to a specific fires unit.\n Limit to 150 characters.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

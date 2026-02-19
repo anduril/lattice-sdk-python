@@ -14,20 +14,22 @@ class FieldClassificationInformation(UniversalBaseModel):
     A field specific classification information definition.
     """
 
-    field_path: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="fieldPath")] = pydantic.Field(
-        alias="fieldPath", default=None
-    )
-    """
-    Proto field path which is the string representation of a field.
-     > example: signal.bandwidth_hz would be bandwidth_hz in the signal component
-    """
-
+    field_path: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="fieldPath"),
+        pydantic.Field(
+            alias="fieldPath",
+            description="Proto field path which is the string representation of a field.\n > example: signal.bandwidth_hz would be bandwidth_hz in the signal component",
+        ),
+    ] = None
     classification_information: typing_extensions.Annotated[
-        typing.Optional[ClassificationInformation], FieldMetadata(alias="classificationInformation")
-    ] = pydantic.Field(alias="classificationInformation", default=None)
-    """
-    The information which makes up the field level classification marking.
-    """
+        typing.Optional[ClassificationInformation],
+        FieldMetadata(alias="classificationInformation"),
+        pydantic.Field(
+            alias="classificationInformation",
+            description="The information which makes up the field level classification marking.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

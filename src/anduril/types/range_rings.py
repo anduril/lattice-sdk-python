@@ -14,33 +14,26 @@ class RangeRings(UniversalBaseModel):
     Range rings allow visual assessment of map distance at varying zoom levels.
     """
 
-    min_distance_m: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="minDistanceM")] = (
-        pydantic.Field(alias="minDistanceM", default=None)
-    )
-    """
-    The minimum range ring distance, specified in meters.
-    """
-
-    max_distance_m: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="maxDistanceM")] = (
-        pydantic.Field(alias="maxDistanceM", default=None)
-    )
-    """
-    The maximum range ring distance, specified in meters.
-    """
-
-    ring_count: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="ringCount")] = pydantic.Field(
-        alias="ringCount", default=None
-    )
-    """
-    The count of range rings.
-    """
-
-    ring_line_color: typing_extensions.Annotated[typing.Optional[Color], FieldMetadata(alias="ringLineColor")] = (
-        pydantic.Field(alias="ringLineColor", default=None)
-    )
-    """
-    The color of range rings, specified in hex string.
-    """
+    min_distance_m: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="minDistanceM"),
+        pydantic.Field(alias="minDistanceM", description="The minimum range ring distance, specified in meters."),
+    ] = None
+    max_distance_m: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="maxDistanceM"),
+        pydantic.Field(alias="maxDistanceM", description="The maximum range ring distance, specified in meters."),
+    ] = None
+    ring_count: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="ringCount"),
+        pydantic.Field(alias="ringCount", description="The count of range rings."),
+    ] = None
+    ring_line_color: typing_extensions.Annotated[
+        typing.Optional[Color],
+        FieldMetadata(alias="ringLineColor"),
+        pydantic.Field(alias="ringLineColor", description="The color of range rings, specified in hex string."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
