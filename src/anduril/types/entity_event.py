@@ -17,9 +17,9 @@ class EntityEvent(UniversalBaseModel):
     Event representing some type of entity change.
     """
 
-    event_type: typing_extensions.Annotated[typing.Optional[EntityEventEventType], FieldMetadata(alias="eventType")] = (
-        pydantic.Field(alias="eventType", default=None)
-    )
+    event_type: typing_extensions.Annotated[
+        typing.Optional[EntityEventEventType], FieldMetadata(alias="eventType"), pydantic.Field(alias="eventType")
+    ] = None
     time: typing.Optional[dt.datetime] = None
     entity: typing.Optional["Entity"] = None
 

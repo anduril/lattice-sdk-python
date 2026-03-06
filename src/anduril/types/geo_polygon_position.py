@@ -19,14 +19,14 @@ class GeoPolygonPosition(UniversalBaseModel):
     base position. if no altitude set, its on the ground.
     """
 
-    height_m: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="heightM")] = pydantic.Field(
-        alias="heightM", default=None
-    )
-    """
-    optional height above base position to extrude in meters.
-     for a given polygon, all points should have a height or none of them.
-     strictly GeoJSON compatible polygons will not have this set.
-    """
+    height_m: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="heightM"),
+        pydantic.Field(
+            alias="heightM",
+            description="optional height above base position to extrude in meters.\n for a given polygon, all points should have a height or none of them.\n strictly GeoJSON compatible polygons will not have this set.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
