@@ -17,52 +17,48 @@ class Position(UniversalBaseModel):
      Height Above Ellipsoid (HAE) and populate the altitude_hae_meters field.
     """
 
-    latitude_degrees: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="latitudeDegrees")] = (
-        pydantic.Field(alias="latitudeDegrees", default=None)
-    )
-    """
-    WGS84 geodetic latitude in decimal degrees.
-    """
-
-    longitude_degrees: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="longitudeDegrees")] = (
-        pydantic.Field(alias="longitudeDegrees", default=None)
-    )
-    """
-    WGS84 longitude in decimal degrees.
-    """
-
+    latitude_degrees: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="latitudeDegrees"),
+        pydantic.Field(alias="latitudeDegrees", description="WGS84 geodetic latitude in decimal degrees."),
+    ] = None
+    longitude_degrees: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="longitudeDegrees"),
+        pydantic.Field(alias="longitudeDegrees", description="WGS84 longitude in decimal degrees."),
+    ] = None
     altitude_hae_meters: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="altitudeHaeMeters")
-    ] = pydantic.Field(alias="altitudeHaeMeters", default=None)
-    """
-    altitude as height above ellipsoid (WGS84) in meters. DoubleValue wrapper is used to distinguish optional from
-     default 0.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="altitudeHaeMeters"),
+        pydantic.Field(
+            alias="altitudeHaeMeters",
+            description="altitude as height above ellipsoid (WGS84) in meters. DoubleValue wrapper is used to distinguish optional from\n default 0.",
+        ),
+    ] = None
     altitude_agl_meters: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="altitudeAglMeters")
-    ] = pydantic.Field(alias="altitudeAglMeters", default=None)
-    """
-    Altitude as AGL (Above Ground Level) if the upstream data source has this value set. This value represents the
-     entity's height above the terrain. This is typically measured with a radar altimeter or by using a terrain tile
-     set lookup. If the value is not set from the upstream, this value is not set.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="altitudeAglMeters"),
+        pydantic.Field(
+            alias="altitudeAglMeters",
+            description="Altitude as AGL (Above Ground Level) if the upstream data source has this value set. This value represents the\n entity's height above the terrain. This is typically measured with a radar altimeter or by using a terrain tile\n set lookup. If the value is not set from the upstream, this value is not set.",
+        ),
+    ] = None
     altitude_asf_meters: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="altitudeAsfMeters")
-    ] = pydantic.Field(alias="altitudeAsfMeters", default=None)
-    """
-    Altitude as ASF (Above Sea Floor) if the upstream data source has this value set. If the value is not set from the upstream, this value is
-     not set.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="altitudeAsfMeters"),
+        pydantic.Field(
+            alias="altitudeAsfMeters",
+            description="Altitude as ASF (Above Sea Floor) if the upstream data source has this value set. If the value is not set from the upstream, this value is\n not set.",
+        ),
+    ] = None
     pressure_depth_meters: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="pressureDepthMeters")
-    ] = pydantic.Field(alias="pressureDepthMeters", default=None)
-    """
-    The depth of the entity from the surface of the water through sensor measurements based on differential pressure
-     between the interior and exterior of the vessel. If the value is not set from the upstream, this value is not set.
-    """
+        typing.Optional[float],
+        FieldMetadata(alias="pressureDepthMeters"),
+        pydantic.Field(
+            alias="pressureDepthMeters",
+            description="The depth of the entity from the surface of the water through sensor measurements based on differential pressure\n between the interior and exterior of the vessel. If the value is not set from the upstream, this value is not set.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

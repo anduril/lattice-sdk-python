@@ -35,10 +35,7 @@ provenance.sourceUpdateTime is greater than the provenance.sourceUpdateTime of t
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.entities.publish_entity()
 
 ```
@@ -420,10 +417,7 @@ Describes an entity's security classification levels at an overall classificatio
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.entities.get_entity(
     entity_id="entityId",
 )
@@ -497,10 +491,7 @@ concurrently for the same field path, the last writer wins.
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.entities.override_entity(
     entity_id="entityId",
     field_path="mil_view.disposition",
@@ -596,10 +587,7 @@ This operation clears the override value from the specified field path on the en
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.entities.remove_entity_override(
     entity_id="entityId",
     field_path="mil_view.disposition",
@@ -684,10 +672,7 @@ In this case you must start a new session by sending a request with an empty ses
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.entities.long_poll_entity_events(
     session_token="sessionToken",
 )
@@ -783,10 +768,7 @@ this provides real-time updates with minimal latency and reduced server load.
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 response = client.entities.stream_entities()
 for chunk in response.data:
     yield chunk
@@ -878,10 +860,7 @@ through other Tasks API endpoints.
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.tasks.create_task()
 
 ```
@@ -1023,10 +1002,7 @@ perspective.
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.tasks.get_task(
     task_id="taskId",
 )
@@ -1104,10 +1080,7 @@ reaches these states, no further updates are allowed.
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.tasks.update_task_status(
     task_id="taskId",
 )
@@ -1175,6 +1148,92 @@ is known are considered stale and ignored.
 </dl>
 </details>
 
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">cancel_task</a>(...) -&gt; AsyncHttpResponse[Task]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancels a task by marking it for cancellation in the system.
+
+This method initiates task cancellation based on the task's current state:
+- If the task has not been sent to an agent, it cancels immediately and transitions the task
+  to a terminal state (`STATUS_DONE_NOT_OK` with `ERROR_CODE_CANCELLED`).
+- If the task has already been sent to an agent, the cancellation request is routed to the agent with a delivery status of `DELIVERY_STATUS_PENDING_CANCEL`.
+  The agent is responsible for determining whether cancellation is possible and updating
+  the task status accordingly via the `UpdateStatus` endpoint:
+  - If the task can be cancelled, the agent should update the task status to `STATUS_DONE_NOT_OK`.
+  - If the task cannot be cancelled, the agent should attach an error to the task stating why cancellation is not possible using `UpdateStatus`
+    or the returned task object.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+
+client = Lattice()
+client.tasks.cancel_task(
+    task_id="taskId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**task_id:** `str` — The ID of task to cancel
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**author:** `typing.Optional[Principal]` — Who or what is requesting to cancel this task.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">query_tasks</a>(...) -&gt; AsyncHttpResponse[TaskQueryResults]</code></summary>
 <dl>
 <dd>
@@ -1218,10 +1277,7 @@ By default, this returns the latest task version for each matching task from the
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.tasks.query_tasks()
 
 ```
@@ -1320,10 +1376,7 @@ updates for task creation and status changes. Additionally, heartbeat messages a
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 response = client.tasks.stream_tasks()
 for chunk in response.data:
     yield chunk
@@ -1440,10 +1493,7 @@ period you will be expected to reinitiate a new request.
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.tasks.listen_as_agent()
 
 ```
@@ -1527,10 +1577,7 @@ to provide progress information back to Tasks API.
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 response = client.tasks.stream_as_agent()
 for chunk in response.data:
     yield chunk
@@ -1607,10 +1654,7 @@ Lists objects in your environment. You can define a prefix to list a subset of y
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 response = client.objects.list_objects()
 for item in response:
     yield item
@@ -1664,6 +1708,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**max_page_size:** `typing.Optional[int]` — Sets the maximum number of items that should be returned on a single page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1705,10 +1757,7 @@ Fetches an object from your environment using the objectPath path parameter.
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.objects.get_object(
     object_path="objectPath",
 )
@@ -1792,10 +1841,7 @@ Uploads an object. The object must be 1 GiB or smaller.
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.objects.upload_object()
 
 ```
@@ -1869,10 +1915,7 @@ Deletes an object from your environment given the objectPath path parameter.
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.objects.delete_object(
     object_path="objectPath",
 )
@@ -1940,10 +1983,7 @@ Returns metadata for a specified object path. Use this to fetch metadata such as
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.objects.get_object_metadata(
     object_path="objectPath",
 )
@@ -2012,10 +2052,7 @@ Gets a new short-lived token using the specified client credentials
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
-)
+client = Lattice()
 client.oauth.get_token()
 
 ```

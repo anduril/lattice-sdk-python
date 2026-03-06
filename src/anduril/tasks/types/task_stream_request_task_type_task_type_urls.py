@@ -9,12 +9,11 @@ from ...core.serialization import FieldMetadata
 
 
 class TaskStreamRequestTaskTypeTaskTypeUrls(UniversalBaseModel):
-    task_type_urls: typing_extensions.Annotated[typing.List[str], FieldMetadata(alias="taskTypeUrls")] = pydantic.Field(
-        alias="taskTypeUrls"
-    )
-    """
-    List of exact task type URLs to match.
-    """
+    task_type_urls: typing_extensions.Annotated[
+        typing.List[str],
+        FieldMetadata(alias="taskTypeUrls"),
+        pydantic.Field(alias="taskTypeUrls", description="List of exact task type URLs to match."),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
