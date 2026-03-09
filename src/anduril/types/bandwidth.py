@@ -13,9 +13,9 @@ class Bandwidth(UniversalBaseModel):
     Describes the bandwidth of a signal
     """
 
-    bandwidth_hz: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="bandwidthHz")] = (
-        pydantic.Field(alias="bandwidthHz", default=None)
-    )
+    bandwidth_hz: typing_extensions.Annotated[
+        typing.Optional[float], FieldMetadata(alias="bandwidthHz"), pydantic.Field(alias="bandwidthHz")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -353,6 +353,104 @@ class RawTasksClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def cancel_task(
+        self,
+        task_id: str,
+        *,
+        author: typing.Optional[Principal] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Task]:
+        """
+        Cancels a task by marking it for cancellation in the system.
+
+        This method initiates task cancellation based on the task's current state:
+        - If the task has not been sent to an agent, it cancels immediately and transitions the task
+          to a terminal state (`STATUS_DONE_NOT_OK` with `ERROR_CODE_CANCELLED`).
+        - If the task has already been sent to an agent, the cancellation request is routed to the agent with a delivery status of `DELIVERY_STATUS_PENDING_CANCEL`.
+          The agent is responsible for determining whether cancellation is possible and updating
+          the task status accordingly via the `UpdateStatus` endpoint:
+          - If the task can be cancelled, the agent should update the task status to `STATUS_DONE_NOT_OK`.
+          - If the task cannot be cancelled, the agent should attach an error to the task stating why cancellation is not possible using `UpdateStatus`
+            or the returned task object.
+
+        Parameters
+        ----------
+        task_id : str
+            The ID of task to cancel
+
+        author : typing.Optional[Principal]
+            Who or what is requesting to cancel this task.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Task]
+            Task cancellation was successful.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/v1/tasks/{jsonable_encoder(task_id)}/cancel",
+            method="PUT",
+            json={
+                "author": convert_and_respect_annotation_metadata(
+                    object_=author, annotation=Principal, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Task,
+                    parse_obj_as(
+                        type_=Task,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def query_tasks(
         self,
         *,
@@ -1065,6 +1163,104 @@ class AsyncRawTasksClient:
                 "newStatus": convert_and_respect_annotation_metadata(
                     object_=new_status, annotation=TaskStatus, direction="write"
                 ),
+                "author": convert_and_respect_annotation_metadata(
+                    object_=author, annotation=Principal, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Task,
+                    parse_obj_as(
+                        type_=Task,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def cancel_task(
+        self,
+        task_id: str,
+        *,
+        author: typing.Optional[Principal] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[Task]:
+        """
+        Cancels a task by marking it for cancellation in the system.
+
+        This method initiates task cancellation based on the task's current state:
+        - If the task has not been sent to an agent, it cancels immediately and transitions the task
+          to a terminal state (`STATUS_DONE_NOT_OK` with `ERROR_CODE_CANCELLED`).
+        - If the task has already been sent to an agent, the cancellation request is routed to the agent with a delivery status of `DELIVERY_STATUS_PENDING_CANCEL`.
+          The agent is responsible for determining whether cancellation is possible and updating
+          the task status accordingly via the `UpdateStatus` endpoint:
+          - If the task can be cancelled, the agent should update the task status to `STATUS_DONE_NOT_OK`.
+          - If the task cannot be cancelled, the agent should attach an error to the task stating why cancellation is not possible using `UpdateStatus`
+            or the returned task object.
+
+        Parameters
+        ----------
+        task_id : str
+            The ID of task to cancel
+
+        author : typing.Optional[Principal]
+            Who or what is requesting to cancel this task.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Task]
+            Task cancellation was successful.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/v1/tasks/{jsonable_encoder(task_id)}/cancel",
+            method="PUT",
+            json={
                 "author": convert_and_respect_annotation_metadata(
                     object_=author, annotation=Principal, direction="write"
                 ),

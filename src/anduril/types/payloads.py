@@ -15,8 +15,10 @@ class Payloads(UniversalBaseModel):
     """
 
     payload_configurations: typing_extensions.Annotated[
-        typing.Optional[typing.List[Payload]], FieldMetadata(alias="payloadConfigurations")
-    ] = pydantic.Field(alias="payloadConfigurations", default=None)
+        typing.Optional[typing.List[Payload]],
+        FieldMetadata(alias="payloadConfigurations"),
+        pydantic.Field(alias="payloadConfigurations"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -14,12 +14,11 @@ class VisualDetails(UniversalBaseModel):
     Visual details associated with the display of an entity in the client.
     """
 
-    range_rings: typing_extensions.Annotated[typing.Optional[RangeRings], FieldMetadata(alias="rangeRings")] = (
-        pydantic.Field(alias="rangeRings", default=None)
-    )
-    """
-    The range rings to display around an entity.
-    """
+    range_rings: typing_extensions.Annotated[
+        typing.Optional[RangeRings],
+        FieldMetadata(alias="rangeRings"),
+        pydantic.Field(alias="rangeRings", description="The range rings to display around an entity."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
