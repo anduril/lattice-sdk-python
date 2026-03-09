@@ -1,6 +1,6 @@
 # Reference
 ## Entities
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">publish_entity</a>(...) -&gt; AsyncHttpResponse[Entity]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">publish_entity</a>(...) -> Entity</code></summary>
 <dl>
 <dd>
 
@@ -34,11 +34,14 @@ provenance.sourceUpdateTime is greater than the provenance.sourceUpdateTime of t
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.entities.publish_entity()
 
 ```
@@ -55,337 +58,7 @@ client.entities.publish_entity()
 <dl>
 <dd>
 
-**entity_id:** `typing.Optional[str]` 
-
-A Globally Unique Identifier (GUID) for your entity. This is a required
- field.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**description:** `typing.Optional[str]` 
-
-A human-readable entity description that's helpful for debugging purposes and human
- traceability. If this field is empty, the Entity Manager API generates one for you.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**is_live:** `typing.Optional[bool]` 
-
-Indicates the entity is active and should have a lifecycle state of CREATE or UPDATE.
- Set this field to true when publishing an entity.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**created_time:** `typing.Optional[dt.datetime]` 
-
-The time when the entity was first known to the entity producer. If this field is empty, the Entity Manager API uses the
- current timestamp of when the entity is first received.
- For example, when a drone is first powered on, it might report its startup time as the created time.
- The timestamp doesn't change for the lifetime of an entity.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**expiry_time:** `typing.Optional[dt.datetime]` 
-
-Future time that expires an entity and updates the is_live flag.
- For entities that are constantly updating, the expiry time also updates.
- In some cases, this may differ from is_live.
- Example: Entities with tasks exported to an external system must remain
- active even after they expire.
- This field is required when publishing a prepopulated entity.
- The expiry time must be in the future, but less than 30 days from the current time.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**no_expiry:** `typing.Optional[bool]` 
-
-Use noExpiry only when the entity contains information that should be available to other
- tasks or integrations beyond its immediate operational context. For example, use noExpiry
- for long-living geographical entities that maintain persistent relevance across multiple
- operations or tasks.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `typing.Optional[Status]` — Human-readable descriptions of what the entity is currently doing.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**location:** `typing.Optional[Location]` — Geospatial data related to the entity, including its position, kinematics, and orientation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**location_uncertainty:** `typing.Optional[LocationUncertainty]` — Indicates uncertainty of the entity's position and kinematics.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**geo_shape:** `typing.Optional[GeoShape]` — Geospatial representation of the entity, including entities that cover an area rather than a fixed point.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**geo_details:** `typing.Optional[GeoDetails]` — Additional details on what the geospatial area or point represents, along with visual display details.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**aliases:** `typing.Optional[Aliases]` — Entity name displayed in the Lattice UI side panel. Also includes identifiers that other systems can use to reference the same entity.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**tracked:** `typing.Optional[Tracked]` — If this entity is tracked by another entity, this component contains data related to how it's being tracked.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**correlation:** `typing.Optional[Correlation]` — If this entity has been correlated or decorrelated to another one, this component contains information on the correlation or decorrelation.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**mil_view:** `typing.Optional[MilView]` — View of the entity.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ontology:** `typing.Optional[Ontology]` — Ontology defines an entity's categorization in Lattice, and improves data retrieval and integration. Builds a standardized representation of the entity.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sensors:** `typing.Optional[Sensors]` — Details an entity's available sensors.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**payloads:** `typing.Optional[Payloads]` — Details an entity's available payloads.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**power_state:** `typing.Optional[PowerState]` — Details the entity's power source.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**provenance:** `typing.Optional[Provenance]` — The primary data source provenance for this entity.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**overrides:** `typing.Optional[Overrides]` — Provenance of override data.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**indicators:** `typing.Optional[Indicators]` 
-
-Describes an entity's specific characteristics and the operations that can be performed on the entity.
- For example, "simulated" informs the operator that the entity is from a simulation, and "deletable"
- informs the operator (and system) that the delete operation is valid against the entity.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**target_priority:** `typing.Optional[TargetPriority]` — The prioritization associated with an entity, such as if it's a threat or a high-value target.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**signal:** `typing.Optional[Signal]` — Describes an entity's signal characteristics, primarily used when an entity is a signal of interest.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**transponder_codes:** `typing.Optional[TransponderCodes]` — A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S interrogations. These are related to ADS-B modes.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**data_classification:** `typing.Optional[Classification]` 
-
-Describes an entity's security classification levels at an overall classification level and on a per
- field level.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**task_catalog:** `typing.Optional[TaskCatalog]` — A catalog of tasks that can be performed by an entity.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**media:** `typing.Optional[Media]` — Media associated with an entity, such as videos, images, or thumbnails.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**relationships:** `typing.Optional[Relationships]` — The relationships between this entity and other entities in the common operational picture (COP).
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**visual_details:** `typing.Optional[VisualDetails]` — Visual details associated with the display of an entity in the client.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**dimensions:** `typing.Optional[Dimensions]` — Physical dimensions of the entity.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**route_details:** `typing.Optional[RouteDetails]` — Additional information about an entity's route.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**schedules:** `typing.Optional[Schedules]` — Schedules associated with this entity.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**health:** `typing.Optional[Health]` — Health metrics or connection status reported by the entity.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**group_details:** `typing.Optional[GroupDetails]` — Details for the group associated with this entity.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**supplies:** `typing.Optional[Supplies]` — Contains relevant supply information for the entity, such as fuel.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**orbit:** `typing.Optional[Orbit]` — Orbit information for space objects.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**symbology:** `typing.Optional[Symbology]` — Symbology/iconography for the entity respecting an existing standard.
+**request:** `Entity` 
     
 </dd>
 </dl>
@@ -405,7 +78,7 @@ Describes an entity's security classification levels at an overall classificatio
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">get_entity</a>(...) -&gt; AsyncHttpResponse[Entity]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">get_entity</a>(...) -> Entity</code></summary>
 <dl>
 <dd>
 
@@ -419,11 +92,14 @@ Describes an entity's security classification levels at an overall classificatio
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.entities.get_entity(
     entity_id="entityId",
 )
@@ -462,7 +138,7 @@ client.entities.get_entity(
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">override_entity</a>(...) -&gt; AsyncHttpResponse[Entity]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">override_entity</a>(...) -> Entity</code></summary>
 <dl>
 <dd>
 
@@ -496,11 +172,14 @@ concurrently for the same field path, the last writer wins.
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.entities.override_entity(
     entity_id="entityId",
     field_path="mil_view.disposition",
@@ -567,7 +246,7 @@ the object and ignore all other fields.
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">remove_entity_override</a>(...) -&gt; AsyncHttpResponse[Entity]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">remove_entity_override</a>(...) -> Entity</code></summary>
 <dl>
 <dd>
 
@@ -595,11 +274,14 @@ This operation clears the override value from the specified field path on the en
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.entities.remove_entity_override(
     entity_id="entityId",
     field_path="mil_view.disposition",
@@ -647,7 +329,7 @@ client.entities.remove_entity_override(
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">long_poll_entity_events</a>(...) -&gt; AsyncHttpResponse[EntityEventResponse]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">long_poll_entity_events</a>(...) -> EntityEventResponse</code></summary>
 <dl>
 <dd>
 
@@ -683,11 +365,14 @@ In this case you must start a new session by sending a request with an empty ses
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.entities.long_poll_entity_events(
     session_token="sessionToken",
 )
@@ -734,9 +419,7 @@ client.entities.long_poll_entity_events(
 </dl>
 </details>
 
-<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">stream_entities</a>(...) -&gt; typing.AsyncIterator[
-    AsyncHttpResponse[typing.AsyncIterator[StreamEntitiesResponse]]
-]</code></summary>
+<details><summary><code>client.entities.<a href="src/anduril/entities/client.py">stream_entities</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -782,14 +465,15 @@ this provides real-time updates with minimal latency and reduced server load.
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
-response = client.entities.stream_entities()
-for chunk in response.data:
-    yield chunk
+
+client.entities.stream_entities()
 
 ```
 </dd>
@@ -821,7 +505,7 @@ for chunk in response.data:
 <dl>
 <dd>
 
-**components_to_include:** `typing.Optional[typing.Sequence[str]]` — list of components to include, leave empty to include all components.
+**components_to_include:** `typing.Optional[typing.List[str]]` — list of components to include, leave empty to include all components.
     
 </dd>
 </dl>
@@ -842,7 +526,7 @@ for chunk in response.data:
 </details>
 
 ## Tasks
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">create_task</a>(...) -&gt; AsyncHttpResponse[Task]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">create_task</a>(...) -> Task</code></summary>
 <dl>
 <dd>
 
@@ -877,11 +561,14 @@ through other Tasks API endpoints.
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.tasks.create_task()
 
 ```
@@ -964,7 +651,7 @@ on agents.
 <dl>
 <dd>
 
-**initial_entities:** `typing.Optional[typing.Sequence[TaskEntity]]` 
+**initial_entities:** `typing.Optional[typing.List[TaskEntity]]` 
 
 Indicates an initial set of entities that can be used to execute an entity aware
 task. For example, an entity Objective, an entity Keep In Zone, etc.
@@ -987,7 +674,7 @@ task. For example, an entity Objective, an entity Keep In Zone, etc.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">get_task</a>(...) -&gt; AsyncHttpResponse[Task]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">get_task</a>(...) -> Task</code></summary>
 <dl>
 <dd>
 
@@ -1022,11 +709,14 @@ perspective.
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.tasks.get_task(
     task_id="taskId",
 )
@@ -1065,7 +755,7 @@ client.tasks.get_task(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">update_task_status</a>(...) -&gt; AsyncHttpResponse[Task]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">update_task_status</a>(...) -> Task</code></summary>
 <dl>
 <dd>
 
@@ -1103,11 +793,14 @@ reaches these states, no further updates are allowed.
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.tasks.update_task_status(
     task_id="taskId",
 )
@@ -1175,7 +868,99 @@ is known are considered stale and ignored.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">query_tasks</a>(...) -&gt; AsyncHttpResponse[TaskQueryResults]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">cancel_task</a>(...) -> Task</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancels a task by marking it for cancellation in the system.
+
+This method initiates task cancellation based on the task's current state:
+- If the task has not been sent to an agent, it cancels immediately and transitions the task
+  to a terminal state (`STATUS_DONE_NOT_OK` with `ERROR_CODE_CANCELLED`).
+- If the task has already been sent to an agent, the cancellation request is routed to the agent with a delivery status of `DELIVERY_STATUS_PENDING_CANCEL`.
+  The agent is responsible for determining whether cancellation is possible and updating
+  the task status accordingly via the `UpdateStatus` endpoint:
+  - If the task can be cancelled, the agent should update the task status to `STATUS_DONE_NOT_OK`.
+  - If the task cannot be cancelled, the agent should attach an error to the task stating why cancellation is not possible using `UpdateStatus`
+    or the returned task object.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+from anduril.environment import LatticeEnvironment
+
+client = Lattice(
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
+)
+
+client.tasks.cancel_task(
+    task_id="taskId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**task_id:** `str` — The ID of task to cancel
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**author:** `typing.Optional[Principal]` — Who or what is requesting to cancel this task.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">query_tasks</a>(...) -> TaskQueryResults</code></summary>
 <dl>
 <dd>
 
@@ -1217,11 +1002,14 @@ By default, this returns the latest task version for each matching task from the
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.tasks.query_tasks()
 
 ```
@@ -1286,9 +1074,7 @@ any of the remaining parameters, but not both.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">stream_tasks</a>(...) -&gt; typing.AsyncIterator[
-    AsyncHttpResponse[typing.AsyncIterator[StreamTasksResponse]]
-]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">stream_tasks</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1319,14 +1105,15 @@ updates for task creation and status changes. Additionally, heartbeat messages a
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
-response = client.tasks.stream_tasks()
-for chunk in response.data:
-    yield chunk
+
+client.tasks.stream_tasks()
 
 ```
 </dd>
@@ -1392,7 +1179,7 @@ If unset or false, the stream will include any new tasks and task updates, as we
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">listen_as_agent</a>(...) -&gt; AsyncHttpResponse[AgentRequest]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">listen_as_agent</a>(...) -> AgentRequest</code></summary>
 <dl>
 <dd>
 
@@ -1439,11 +1226,14 @@ period you will be expected to reinitiate a new request.
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.tasks.listen_as_agent()
 
 ```
@@ -1480,9 +1270,7 @@ client.tasks.listen_as_agent()
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">stream_as_agent</a>(...) -&gt; typing.AsyncIterator[
-    AsyncHttpResponse[typing.AsyncIterator[StreamAsAgentResponse]]
-]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">stream_as_agent</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1526,14 +1314,15 @@ to provide progress information back to Tasks API.
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
-response = client.tasks.stream_as_agent()
-for chunk in response.data:
-    yield chunk
+
+client.tasks.stream_as_agent()
 
 ```
 </dd>
@@ -1578,7 +1367,7 @@ for chunk in response.data:
 </details>
 
 ## Objects
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">list_objects</a>(...) -&gt; AsyncPager[PathMetadata, ListResponse]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">list_objects</a>(...) -> ListResponse</code></summary>
 <dl>
 <dd>
 
@@ -1606,17 +1395,15 @@ Lists objects in your environment. You can define a prefix to list a subset of y
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
-response = client.objects.list_objects()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+
+client.objects.list_objects()
 
 ```
 </dd>
@@ -1640,7 +1427,7 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
-**since_timestamp:** `typing.Optional[dt.datetime]` — Sets the age for the oldest objects to query across the environment.
+**since_timestamp:** `typing.Optional[datetime.datetime]` — Sets the age for the oldest objects to query across the environment.
     
 </dd>
 </dl>
@@ -1664,6 +1451,14 @@ for page in response.iter_pages():
 <dl>
 <dd>
 
+**max_page_size:** `typing.Optional[int]` — Sets the maximum number of items that should be returned on a single page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1676,7 +1471,7 @@ for page in response.iter_pages():
 </dl>
 </details>
 
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">get_object</a>(...) -&gt; typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">get_object</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1704,11 +1499,14 @@ Fetches an object from your environment using the objectPath path parameter.
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.objects.get_object(
     object_path="objectPath",
 )
@@ -1751,7 +1549,7 @@ client.objects.get_object(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -1763,7 +1561,7 @@ client.objects.get_object(
 </dl>
 </details>
 
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">upload_object</a>(...) -&gt; AsyncHttpResponse[PathMetadata]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">upload_object</a>(...) -> PathMetadata</code></summary>
 <dl>
 <dd>
 
@@ -1791,11 +1589,14 @@ Uploads an object. The object must be 1 GiB or smaller.
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.objects.upload_object()
 
 ```
@@ -1840,7 +1641,7 @@ client.objects.upload_object()
 </dl>
 </details>
 
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">delete_object</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">delete_object</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1868,11 +1669,14 @@ Deletes an object from your environment given the objectPath path parameter.
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.objects.delete_object(
     object_path="objectPath",
 )
@@ -1911,7 +1715,7 @@ client.objects.delete_object(
 </dl>
 </details>
 
-<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">get_object_metadata</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.objects.<a href="src/anduril/objects/client.py">get_object_metadata</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1939,11 +1743,14 @@ Returns metadata for a specified object path. Use this to fetch metadata such as
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.objects.get_object_metadata(
     object_path="objectPath",
 )
@@ -1983,7 +1790,7 @@ client.objects.get_object_metadata(
 </details>
 
 ## oauth
-<details><summary><code>client.oauth.<a href="src/anduril/oauth/client.py">get_token</a>(...) -&gt; AsyncHttpResponse[GetTokenResponse]</code></summary>
+<details><summary><code>client.oauth.<a href="src/anduril/oauth/client.py">get_token</a>(...) -> GetTokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -2011,11 +1818,14 @@ Gets a new short-lived token using the specified client credentials
 
 ```python
 from anduril import Lattice
+from anduril.environment import LatticeEnvironment
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
 )
+
 client.oauth.get_token()
 
 ```
@@ -2028,6 +1838,14 @@ client.oauth.get_token()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**grant_type:** `typing.Literal` — The type of grant being requested
+    
+</dd>
+</dl>
 
 <dl>
 <dd>

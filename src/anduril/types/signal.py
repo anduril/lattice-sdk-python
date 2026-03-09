@@ -21,56 +21,45 @@ class Signal(UniversalBaseModel):
     """
 
     frequency_center: typing_extensions.Annotated[
-        typing.Optional[Frequency], FieldMetadata(alias="frequencyCenter")
-    ] = pydantic.Field(alias="frequencyCenter", default=None)
+        typing.Optional[Frequency], FieldMetadata(alias="frequencyCenter"), pydantic.Field(alias="frequencyCenter")
+    ] = None
     frequency_range: typing_extensions.Annotated[
-        typing.Optional[FrequencyRange], FieldMetadata(alias="frequencyRange")
-    ] = pydantic.Field(alias="frequencyRange", default=None)
-    bandwidth_hz: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="bandwidthHz")] = (
-        pydantic.Field(alias="bandwidthHz", default=None)
-    )
-    """
-    Indicates the bandwidth of a signal (Hz).
-    """
-
+        typing.Optional[FrequencyRange], FieldMetadata(alias="frequencyRange"), pydantic.Field(alias="frequencyRange")
+    ] = None
+    bandwidth_hz: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="bandwidthHz"),
+        pydantic.Field(alias="bandwidthHz", description="Indicates the bandwidth of a signal (Hz)."),
+    ] = None
     signal_to_noise_ratio: typing_extensions.Annotated[
-        typing.Optional[float], FieldMetadata(alias="signalToNoiseRatio")
-    ] = pydantic.Field(alias="signalToNoiseRatio", default=None)
-    """
-    Indicates the signal to noise (SNR) of this signal.
-    """
-
+        typing.Optional[float],
+        FieldMetadata(alias="signalToNoiseRatio"),
+        pydantic.Field(alias="signalToNoiseRatio", description="Indicates the signal to noise (SNR) of this signal."),
+    ] = None
     line_of_bearing: typing_extensions.Annotated[
-        typing.Optional[LineOfBearing], FieldMetadata(alias="lineOfBearing")
-    ] = pydantic.Field(alias="lineOfBearing", default=None)
+        typing.Optional[LineOfBearing], FieldMetadata(alias="lineOfBearing"), pydantic.Field(alias="lineOfBearing")
+    ] = None
     fixed: typing.Optional[Fixed] = None
     emitter_notations: typing_extensions.Annotated[
-        typing.Optional[typing.List[EmitterNotation]], FieldMetadata(alias="emitterNotations")
-    ] = pydantic.Field(alias="emitterNotations", default=None)
-    """
-    Emitter notations associated with this entity.
-    """
-
-    pulse_width_s: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="pulseWidthS")] = (
-        pydantic.Field(alias="pulseWidthS", default=None)
-    )
-    """
-    length in time of a single pulse
-    """
-
+        typing.Optional[typing.List[EmitterNotation]],
+        FieldMetadata(alias="emitterNotations"),
+        pydantic.Field(alias="emitterNotations", description="Emitter notations associated with this entity."),
+    ] = None
+    pulse_width_s: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="pulseWidthS"),
+        pydantic.Field(alias="pulseWidthS", description="length in time of a single pulse"),
+    ] = None
     pulse_repetition_interval: typing_extensions.Annotated[
-        typing.Optional[PulseRepetitionInterval], FieldMetadata(alias="pulseRepetitionInterval")
-    ] = pydantic.Field(alias="pulseRepetitionInterval", default=None)
-    """
-    length in time between the start of two pulses
-    """
-
+        typing.Optional[PulseRepetitionInterval],
+        FieldMetadata(alias="pulseRepetitionInterval"),
+        pydantic.Field(alias="pulseRepetitionInterval", description="length in time between the start of two pulses"),
+    ] = None
     scan_characteristics: typing_extensions.Annotated[
-        typing.Optional[ScanCharacteristics], FieldMetadata(alias="scanCharacteristics")
-    ] = pydantic.Field(alias="scanCharacteristics", default=None)
-    """
-    describes how a signal is observing the environment
-    """
+        typing.Optional[ScanCharacteristics],
+        FieldMetadata(alias="scanCharacteristics"),
+        pydantic.Field(alias="scanCharacteristics", description="describes how a signal is observing the environment"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

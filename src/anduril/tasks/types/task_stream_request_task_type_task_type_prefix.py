@@ -9,12 +9,14 @@ from ...core.serialization import FieldMetadata
 
 
 class TaskStreamRequestTaskTypeTaskTypePrefix(UniversalBaseModel):
-    task_type_prefix: typing_extensions.Annotated[str, FieldMetadata(alias="taskTypePrefix")] = pydantic.Field(
-        alias="taskTypePrefix"
-    )
-    """
-    Prefix string to match task types. Any task with a type that starts with this prefix will be included.
-    """
+    task_type_prefix: typing_extensions.Annotated[
+        str,
+        FieldMetadata(alias="taskTypePrefix"),
+        pydantic.Field(
+            alias="taskTypePrefix",
+            description="Prefix string to match task types. Any task with a type that starts with this prefix will be included.",
+        ),
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
