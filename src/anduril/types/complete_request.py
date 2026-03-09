@@ -14,12 +14,11 @@ class CompleteRequest(UniversalBaseModel):
      Contains the unique ID of the task to complete.
     """
 
-    task_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="taskId")] = pydantic.Field(
-        alias="taskId", default=None
-    )
-    """
-    ID of the task to complete.
-    """
+    task_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="taskId"),
+        pydantic.Field(alias="taskId", description="ID of the task to complete."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

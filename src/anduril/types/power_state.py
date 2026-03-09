@@ -15,12 +15,13 @@ class PowerState(UniversalBaseModel):
     """
 
     source_id_to_state: typing_extensions.Annotated[
-        typing.Optional[typing.Dict[str, PowerSource]], FieldMetadata(alias="sourceIdToState")
-    ] = pydantic.Field(alias="sourceIdToState", default=None)
-    """
-    This is a map where the key is a unique id of the power source and the value is additional information about the
-     power source.
-    """
+        typing.Optional[typing.Dict[str, PowerSource]],
+        FieldMetadata(alias="sourceIdToState"),
+        pydantic.Field(
+            alias="sourceIdToState",
+            description="This is a map where the key is a unique id of the power source and the value is additional information about the\n power source.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

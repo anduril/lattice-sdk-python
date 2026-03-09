@@ -15,33 +15,38 @@ class GeoEllipse(UniversalBaseModel):
      This shape is NOT Geo-JSON compatible.
     """
 
-    semi_major_axis_m: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="semiMajorAxisM")] = (
-        pydantic.Field(alias="semiMajorAxisM", default=None)
-    )
-    """
-    Defines the distance from the center point of the ellipse to the furthest distance on the perimeter in meters.
-    """
-
-    semi_minor_axis_m: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="semiMinorAxisM")] = (
-        pydantic.Field(alias="semiMinorAxisM", default=None)
-    )
-    """
-    Defines the distance from the center point of the ellipse to the shortest distance on the perimeter in meters.
-    """
-
-    orientation_d: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="orientationD")] = (
-        pydantic.Field(alias="orientationD", default=None)
-    )
-    """
-    The orientation of the semi-major relative to true north in degrees from clockwise: 0-180 due to symmetry across the semi-minor axis.
-    """
-
-    height_m: typing_extensions.Annotated[typing.Optional[float], FieldMetadata(alias="heightM")] = pydantic.Field(
-        alias="heightM", default=None
-    )
-    """
-    Optional height above entity position to extrude in meters. A non-zero value creates an elliptic cylinder
-    """
+    semi_major_axis_m: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="semiMajorAxisM"),
+        pydantic.Field(
+            alias="semiMajorAxisM",
+            description="Defines the distance from the center point of the ellipse to the furthest distance on the perimeter in meters.",
+        ),
+    ] = None
+    semi_minor_axis_m: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="semiMinorAxisM"),
+        pydantic.Field(
+            alias="semiMinorAxisM",
+            description="Defines the distance from the center point of the ellipse to the shortest distance on the perimeter in meters.",
+        ),
+    ] = None
+    orientation_d: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="orientationD"),
+        pydantic.Field(
+            alias="orientationD",
+            description="The orientation of the semi-major relative to true north in degrees from clockwise: 0-180 due to symmetry across the semi-minor axis.",
+        ),
+    ] = None
+    height_m: typing_extensions.Annotated[
+        typing.Optional[float],
+        FieldMetadata(alias="heightM"),
+        pydantic.Field(
+            alias="heightM",
+            description="Optional height above entity position to extrude in meters. A non-zero value creates an elliptic cylinder",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -104,10 +104,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         client.tasks.create_task()
         """
         _response = self._raw_client.create_task(
@@ -151,10 +148,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         client.tasks.get_task(
             task_id="taskId",
         )
@@ -212,10 +206,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         client.tasks.update_task_status(
             task_id="taskId",
         )
@@ -227,6 +218,54 @@ class TasksClient:
             author=author,
             request_options=request_options,
         )
+        return _response.data
+
+    def cancel_task(
+        self,
+        task_id: str,
+        *,
+        author: typing.Optional[Principal] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Task:
+        """
+        Cancels a task by marking it for cancellation in the system.
+
+        This method initiates task cancellation based on the task's current state:
+        - If the task has not been sent to an agent, it cancels immediately and transitions the task
+          to a terminal state (`STATUS_DONE_NOT_OK` with `ERROR_CODE_CANCELLED`).
+        - If the task has already been sent to an agent, the cancellation request is routed to the agent with a delivery status of `DELIVERY_STATUS_PENDING_CANCEL`.
+          The agent is responsible for determining whether cancellation is possible and updating
+          the task status accordingly via the `UpdateStatus` endpoint:
+          - If the task can be cancelled, the agent should update the task status to `STATUS_DONE_NOT_OK`.
+          - If the task cannot be cancelled, the agent should attach an error to the task stating why cancellation is not possible using `UpdateStatus`
+            or the returned task object.
+
+        Parameters
+        ----------
+        task_id : str
+            The ID of task to cancel
+
+        author : typing.Optional[Principal]
+            Who or what is requesting to cancel this task.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Task
+            Task cancellation was successful.
+
+        Examples
+        --------
+        from anduril import Lattice
+
+        client = Lattice()
+        client.tasks.cancel_task(
+            task_id="taskId",
+        )
+        """
+        _response = self._raw_client.cancel_task(task_id, author=author, request_options=request_options)
         return _response.data
 
     def query_tasks(
@@ -282,10 +321,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         client.tasks.query_tasks()
         """
         _response = self._raw_client.query_tasks(
@@ -340,10 +376,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         response = client.tasks.stream_tasks()
         for chunk in response:
             yield chunk
@@ -402,10 +435,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         client.tasks.listen_as_agent()
         """
         _response = self._raw_client.listen_as_agent(agent_selector=agent_selector, request_options=request_options)
@@ -457,10 +487,7 @@ class TasksClient:
         --------
         from anduril import Lattice
 
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = Lattice()
         response = client.tasks.stream_as_agent()
         for chunk in response:
             yield chunk
@@ -553,10 +580,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -608,10 +632,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -677,10 +698,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -698,6 +716,62 @@ class AsyncTasksClient:
             author=author,
             request_options=request_options,
         )
+        return _response.data
+
+    async def cancel_task(
+        self,
+        task_id: str,
+        *,
+        author: typing.Optional[Principal] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Task:
+        """
+        Cancels a task by marking it for cancellation in the system.
+
+        This method initiates task cancellation based on the task's current state:
+        - If the task has not been sent to an agent, it cancels immediately and transitions the task
+          to a terminal state (`STATUS_DONE_NOT_OK` with `ERROR_CODE_CANCELLED`).
+        - If the task has already been sent to an agent, the cancellation request is routed to the agent with a delivery status of `DELIVERY_STATUS_PENDING_CANCEL`.
+          The agent is responsible for determining whether cancellation is possible and updating
+          the task status accordingly via the `UpdateStatus` endpoint:
+          - If the task can be cancelled, the agent should update the task status to `STATUS_DONE_NOT_OK`.
+          - If the task cannot be cancelled, the agent should attach an error to the task stating why cancellation is not possible using `UpdateStatus`
+            or the returned task object.
+
+        Parameters
+        ----------
+        task_id : str
+            The ID of task to cancel
+
+        author : typing.Optional[Principal]
+            Who or what is requesting to cancel this task.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Task
+            Task cancellation was successful.
+
+        Examples
+        --------
+        import asyncio
+
+        from anduril import AsyncLattice
+
+        client = AsyncLattice()
+
+
+        async def main() -> None:
+            await client.tasks.cancel_task(
+                task_id="taskId",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.cancel_task(task_id, author=author, request_options=request_options)
         return _response.data
 
     async def query_tasks(
@@ -755,10 +829,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -821,10 +892,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -892,10 +960,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:
@@ -957,10 +1022,7 @@ class AsyncTasksClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
+        client = AsyncLattice()
 
 
         async def main() -> None:

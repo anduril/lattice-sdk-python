@@ -15,23 +15,23 @@ class Mode5(UniversalBaseModel):
     """
 
     mode5interrogation_response: typing_extensions.Annotated[
-        typing.Optional[Mode5Mode5InterrogationResponse], FieldMetadata(alias="mode5InterrogationResponse")
-    ] = pydantic.Field(alias="mode5InterrogationResponse", default=None)
-    """
-    The validity of the response from the Mode 5 interrogation.
-    """
-
+        typing.Optional[Mode5Mode5InterrogationResponse],
+        FieldMetadata(alias="mode5InterrogationResponse"),
+        pydantic.Field(
+            alias="mode5InterrogationResponse",
+            description="The validity of the response from the Mode 5 interrogation.",
+        ),
+    ] = None
     mode5: typing.Optional[int] = pydantic.Field(default=None)
     """
     The Mode 5 code assigned to military assets.
     """
 
-    mode5platform_id: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="mode5PlatformId")] = (
-        pydantic.Field(alias="mode5PlatformId", default=None)
-    )
-    """
-    The Mode 5 platform identification code.
-    """
+    mode5platform_id: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="mode5PlatformId"),
+        pydantic.Field(alias="mode5PlatformId", description="The Mode 5 platform identification code."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
