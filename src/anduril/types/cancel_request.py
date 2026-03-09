@@ -16,17 +16,20 @@ class CancelRequest(UniversalBaseModel):
      Contains the task, and the assignee of the request to cancel the task.
     """
 
-    task_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="taskId")] = pydantic.Field(
-        alias="taskId", default=None
-    )
-    """
-    The unique task ID of the task to cancel.
-    """
-
+    task_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="taskId"),
+        pydantic.Field(alias="taskId", description="The unique task ID of the task to cancel."),
+    ] = None
     assignee: typing.Optional["Principal"] = pydantic.Field(default=None)
     """
     The assignee of the Task. Useful for agent routing where an endpoint owns multiple agents,
      especially onBehalfOf assignees.
+    """
+
+    author: typing.Optional["Principal"] = pydantic.Field(default=None)
+    """
+    The principal that requested to cancel the task.
     """
 
     if IS_PYDANTIC_V2:

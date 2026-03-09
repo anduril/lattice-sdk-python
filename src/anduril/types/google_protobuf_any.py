@@ -13,12 +13,11 @@ class GoogleProtobufAny(UniversalBaseModel):
     Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
     """
 
-    type: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="@type")] = pydantic.Field(
-        alias="@type", default=None
-    )
-    """
-    The type of the serialized message.
-    """
+    type: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="@type"),
+        pydantic.Field(alias="@type", description="The type of the serialized message."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

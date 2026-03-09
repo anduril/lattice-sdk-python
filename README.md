@@ -57,9 +57,10 @@ Instantiate and use the client with the following:
 from anduril import Lattice
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
 )
+
 client.entities.long_poll_entity_events(
     session_token="sessionToken",
 )
@@ -75,8 +76,8 @@ import asyncio
 from anduril import AsyncLattice
 
 client = AsyncLattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
 )
 
 
@@ -112,12 +113,11 @@ The SDK supports streaming responses, as well, the response will be a generator 
 from anduril import Lattice
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
 )
-response = client.entities.stream_entities()
-for chunk in response.data:
-    yield chunk
+
+client.entities.stream_entities()
 ```
 
 ## Pagination
@@ -128,15 +128,11 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 from anduril import Lattice
 
 client = Lattice(
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
 )
-response = client.objects.list_objects()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+
+client.objects.list_objects()
 ```
 
 ```python
@@ -156,13 +152,16 @@ This SDK supports two authentication methods: OAuth client credentials flow (aut
 from anduril import Lattice
 
 # Option 1: Direct bearer token (bypass OAuth flow)
-client = Lattice(..., token="my-pre-generated-bearer-token")
-
-from anduril import Lattice
+client = Lattice(
+    ...,
+    token="my-pre-generated-bearer-token",
+)
 
 # Option 2: OAuth client credentials flow (automatic token management)
 client = Lattice(
-    ..., client_id="your-client-id", client_secret="your-client-secret"
+    ...,
+    client_id="your-client-id",
+    client_secret="your-client-secret",
 )
 ```
 
@@ -176,24 +175,11 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from anduril import Lattice
 
-client = Lattice(
-    ...,
-)
+client = Lattice(...)
 response = client.entities.with_raw_response.long_poll_entity_events(...)
 print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
-pager = client.objects.list_objects(...)
-print(pager.response)  # access the typed response for the first page
-for item in pager:
-    print(item)  # access the underlying object(s)
-for page in pager.iter_pages():
-    print(page.response)  # access the typed response for each page
-    for item in page:
-        print(item)  # access the underlying object(s)
-with client.entities.with_raw_response.stream_entities(...) as response:
-    print(response.headers)  # access the response headers
-    for chunk in response.data:
-        print(chunk)  # access the underlying object(s)
 ```
 
 ### Retries
@@ -221,14 +207,9 @@ client.entities.long_poll_entity_events(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from anduril import Lattice
 
-client = Lattice(
-    ...,
-    timeout=20.0,
-)
-
+client = Lattice(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.entities.long_poll_entity_events(..., request_options={

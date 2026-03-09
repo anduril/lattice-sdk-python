@@ -18,12 +18,10 @@ class TaskEventDataTaskEvent(UniversalBaseModel):
     """
 
     event_type: typing_extensions.Annotated[
-        typing.Optional[TaskEventDataTaskEventEventType], FieldMetadata(alias="eventType")
-    ] = pydantic.Field(alias="eventType", default=None)
-    """
-    The type of event that occurred for this task.
-    """
-
+        typing.Optional[TaskEventDataTaskEventEventType],
+        FieldMetadata(alias="eventType"),
+        pydantic.Field(alias="eventType", description="The type of event that occurred for this task."),
+    ] = None
     task: typing.Optional[Task] = pydantic.Field(default=None)
     """
     The task associated with this event.

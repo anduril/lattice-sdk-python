@@ -18,11 +18,13 @@ class OrbitMeanElements(UniversalBaseModel):
 
     metadata: typing.Optional[OrbitMeanElementsMetadata] = None
     mean_keplerian_elements: typing_extensions.Annotated[
-        typing.Optional[MeanKeplerianElements], FieldMetadata(alias="meanKeplerianElements")
-    ] = pydantic.Field(alias="meanKeplerianElements", default=None)
+        typing.Optional[MeanKeplerianElements],
+        FieldMetadata(alias="meanKeplerianElements"),
+        pydantic.Field(alias="meanKeplerianElements"),
+    ] = None
     tle_parameters: typing_extensions.Annotated[
-        typing.Optional[TleParameters], FieldMetadata(alias="tleParameters")
-    ] = pydantic.Field(alias="tleParameters", default=None)
+        typing.Optional[TleParameters], FieldMetadata(alias="tleParameters"), pydantic.Field(alias="tleParameters")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
