@@ -17,11 +17,10 @@ class TaskEventData(UniversalBaseModel):
     """
 
     task_event: typing_extensions.Annotated[
-        typing.Optional[TaskEventDataTaskEvent], FieldMetadata(alias="taskEvent")
-    ] = pydantic.Field(alias="taskEvent", default=None)
-    """
-    The task event that occurred.
-    """
+        typing.Optional[TaskEventDataTaskEvent],
+        FieldMetadata(alias="taskEvent"),
+        pydantic.Field(alias="taskEvent", description="The task event that occurred."),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

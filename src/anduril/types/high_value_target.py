@@ -15,36 +15,37 @@ class HighValueTarget(UniversalBaseModel):
     """
 
     is_high_value_target: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="isHighValueTarget")
-    ] = pydantic.Field(alias="isHighValueTarget", default=None)
-    """
-    Indicates whether the target matches any description from a high value target list.
-    """
-
-    target_priority: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="targetPriority")] = (
-        pydantic.Field(alias="targetPriority", default=None)
-    )
-    """
-    The priority associated with the target. If the target's description appears on multiple high value target lists,
-     the priority will be a reflection of the highest priority of all of those list's target description.
-    
-     A lower value indicates the target is of a higher priority, with 1 being the highest possible priority. A value of
-     0 indicates there is no priority associated with this target.
-    """
-
+        typing.Optional[bool],
+        FieldMetadata(alias="isHighValueTarget"),
+        pydantic.Field(
+            alias="isHighValueTarget",
+            description="Indicates whether the target matches any description from a high value target list.",
+        ),
+    ] = None
+    target_priority: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="targetPriority"),
+        pydantic.Field(
+            alias="targetPriority",
+            description="The priority associated with the target. If the target's description appears on multiple high value target lists,\n the priority will be a reflection of the highest priority of all of those list's target description.\n\n A lower value indicates the target is of a higher priority, with 1 being the highest possible priority. A value of\n 0 indicates there is no priority associated with this target.",
+        ),
+    ] = None
     target_matches: typing_extensions.Annotated[
-        typing.Optional[typing.List[HighValueTargetMatch]], FieldMetadata(alias="targetMatches")
-    ] = pydantic.Field(alias="targetMatches", default=None)
-    """
-    All of the high value target descriptions that the target matches against.
-    """
-
+        typing.Optional[typing.List[HighValueTargetMatch]],
+        FieldMetadata(alias="targetMatches"),
+        pydantic.Field(
+            alias="targetMatches",
+            description="All of the high value target descriptions that the target matches against.",
+        ),
+    ] = None
     is_high_payoff_target: typing_extensions.Annotated[
-        typing.Optional[bool], FieldMetadata(alias="isHighPayoffTarget")
-    ] = pydantic.Field(alias="isHighPayoffTarget", default=None)
-    """
-    Indicates whether the target is a 'High Payoff Target'. Targets can be one or both of high value and high payoff.
-    """
+        typing.Optional[bool],
+        FieldMetadata(alias="isHighPayoffTarget"),
+        pydantic.Field(
+            alias="isHighPayoffTarget",
+            description="Indicates whether the target is a 'High Payoff Target'. Targets can be one or both of high value and high payoff.",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

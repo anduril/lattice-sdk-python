@@ -48,61 +48,52 @@ class Entity(UniversalBaseModel):
      all data associated with the entity, such as its name, ID, and other relevant components.
     """
 
-    entity_id: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="entityId")] = pydantic.Field(
-        alias="entityId", default=None
-    )
-    """
-    A Globally Unique Identifier (GUID) for your entity. This is a required
-     field.
-    """
-
+    entity_id: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="entityId"),
+        pydantic.Field(
+            alias="entityId",
+            description="A Globally Unique Identifier (GUID) for your entity. This is a required\n field.",
+        ),
+    ] = None
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     A human-readable entity description that's helpful for debugging purposes and human
      traceability. If this field is empty, the Entity Manager API generates one for you.
     """
 
-    is_live: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="isLive")] = pydantic.Field(
-        alias="isLive", default=None
-    )
-    """
-    Indicates the entity is active and should have a lifecycle state of CREATE or UPDATE.
-     Set this field to true when publishing an entity.
-    """
-
-    created_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="createdTime")] = (
-        pydantic.Field(alias="createdTime", default=None)
-    )
-    """
-    The time when the entity was first known to the entity producer. If this field is empty, the Entity Manager API uses the
-     current timestamp of when the entity is first received.
-     For example, when a drone is first powered on, it might report its startup time as the created time.
-     The timestamp doesn't change for the lifetime of an entity.
-    """
-
-    expiry_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="expiryTime")] = (
-        pydantic.Field(alias="expiryTime", default=None)
-    )
-    """
-    Future time that expires an entity and updates the is_live flag.
-     For entities that are constantly updating, the expiry time also updates.
-     In some cases, this may differ from is_live.
-     Example: Entities with tasks exported to an external system must remain
-     active even after they expire.
-     This field is required when publishing a prepopulated entity.
-     The expiry time must be in the future, but less than 30 days from the current time.
-    """
-
-    no_expiry: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="noExpiry")] = pydantic.Field(
-        alias="noExpiry", default=None
-    )
-    """
-    Use noExpiry only when the entity contains information that should be available to other
-     tasks or integrations beyond its immediate operational context. For example, use noExpiry
-     for long-living geographical entities that maintain persistent relevance across multiple
-     operations or tasks.
-    """
-
+    is_live: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="isLive"),
+        pydantic.Field(
+            alias="isLive",
+            description="Indicates the entity is active and should have a lifecycle state of CREATE or UPDATE.\n Set this field to true when publishing an entity.",
+        ),
+    ] = None
+    created_time: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="createdTime"),
+        pydantic.Field(
+            alias="createdTime",
+            description="The time when the entity was first known to the entity producer. If this field is empty, the Entity Manager API uses the\n current timestamp of when the entity is first received.\n For example, when a drone is first powered on, it might report its startup time as the created time.\n The timestamp doesn't change for the lifetime of an entity.",
+        ),
+    ] = None
+    expiry_time: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="expiryTime"),
+        pydantic.Field(
+            alias="expiryTime",
+            description="Future time that expires an entity and updates the is_live flag.\n For entities that are constantly updating, the expiry time also updates.\n In some cases, this may differ from is_live.\n Example: Entities with tasks exported to an external system must remain\n active even after they expire.\n This field is required when publishing a prepopulated entity.\n The expiry time must be in the future, but less than 30 days from the current time.",
+        ),
+    ] = None
+    no_expiry: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="noExpiry"),
+        pydantic.Field(
+            alias="noExpiry",
+            description="Use noExpiry only when the entity contains information that should be available to other\n tasks or integrations beyond its immediate operational context. For example, use noExpiry\n for long-living geographical entities that maintain persistent relevance across multiple\n operations or tasks.",
+        ),
+    ] = None
     status: typing.Optional[Status] = pydantic.Field(default=None)
     """
     Human-readable descriptions of what the entity is currently doing.
@@ -114,26 +105,28 @@ class Entity(UniversalBaseModel):
     """
 
     location_uncertainty: typing_extensions.Annotated[
-        typing.Optional[LocationUncertainty], FieldMetadata(alias="locationUncertainty")
-    ] = pydantic.Field(alias="locationUncertainty", default=None)
-    """
-    Indicates uncertainty of the entity's position and kinematics.
-    """
-
-    geo_shape: typing_extensions.Annotated[typing.Optional[GeoShape], FieldMetadata(alias="geoShape")] = pydantic.Field(
-        alias="geoShape", default=None
-    )
-    """
-    Geospatial representation of the entity, including entities that cover an area rather than a fixed point.
-    """
-
-    geo_details: typing_extensions.Annotated[typing.Optional[GeoDetails], FieldMetadata(alias="geoDetails")] = (
-        pydantic.Field(alias="geoDetails", default=None)
-    )
-    """
-    Additional details on what the geospatial area or point represents, along with visual display details.
-    """
-
+        typing.Optional[LocationUncertainty],
+        FieldMetadata(alias="locationUncertainty"),
+        pydantic.Field(
+            alias="locationUncertainty", description="Indicates uncertainty of the entity's position and kinematics."
+        ),
+    ] = None
+    geo_shape: typing_extensions.Annotated[
+        typing.Optional[GeoShape],
+        FieldMetadata(alias="geoShape"),
+        pydantic.Field(
+            alias="geoShape",
+            description="Geospatial representation of the entity, including entities that cover an area rather than a fixed point.",
+        ),
+    ] = None
+    geo_details: typing_extensions.Annotated[
+        typing.Optional[GeoDetails],
+        FieldMetadata(alias="geoDetails"),
+        pydantic.Field(
+            alias="geoDetails",
+            description="Additional details on what the geospatial area or point represents, along with visual display details.",
+        ),
+    ] = None
     aliases: typing.Optional[Aliases] = pydantic.Field(default=None)
     """
     Entity name displayed in the Lattice UI side panel. Also includes identifiers that other systems can use to reference the same entity.
@@ -149,13 +142,11 @@ class Entity(UniversalBaseModel):
     If this entity has been correlated or decorrelated to another one, this component contains information on the correlation or decorrelation.
     """
 
-    mil_view: typing_extensions.Annotated[typing.Optional[MilView], FieldMetadata(alias="milView")] = pydantic.Field(
-        alias="milView", default=None
-    )
-    """
-    View of the entity.
-    """
-
+    mil_view: typing_extensions.Annotated[
+        typing.Optional[MilView],
+        FieldMetadata(alias="milView"),
+        pydantic.Field(alias="milView", description="View of the entity."),
+    ] = None
     ontology: typing.Optional[Ontology] = pydantic.Field(default=None)
     """
     Ontology defines an entity's categorization in Lattice, and improves data retrieval and integration. Builds a standardized representation of the entity.
@@ -171,13 +162,11 @@ class Entity(UniversalBaseModel):
     Details an entity's available payloads.
     """
 
-    power_state: typing_extensions.Annotated[typing.Optional[PowerState], FieldMetadata(alias="powerState")] = (
-        pydantic.Field(alias="powerState", default=None)
-    )
-    """
-    Details the entity's power source.
-    """
-
+    power_state: typing_extensions.Annotated[
+        typing.Optional[PowerState],
+        FieldMetadata(alias="powerState"),
+        pydantic.Field(alias="powerState", description="Details the entity's power source."),
+    ] = None
     provenance: typing.Optional[Provenance] = pydantic.Field(default=None)
     """
     The primary data source provenance for this entity.
@@ -196,39 +185,39 @@ class Entity(UniversalBaseModel):
     """
 
     target_priority: typing_extensions.Annotated[
-        typing.Optional[TargetPriority], FieldMetadata(alias="targetPriority")
-    ] = pydantic.Field(alias="targetPriority", default=None)
-    """
-    The prioritization associated with an entity, such as if it's a threat or a high-value target.
-    """
-
+        typing.Optional[TargetPriority],
+        FieldMetadata(alias="targetPriority"),
+        pydantic.Field(
+            alias="targetPriority",
+            description="The prioritization associated with an entity, such as if it's a threat or a high-value target.",
+        ),
+    ] = None
     signal: typing.Optional[Signal] = pydantic.Field(default=None)
     """
     Describes an entity's signal characteristics, primarily used when an entity is a signal of interest.
     """
 
     transponder_codes: typing_extensions.Annotated[
-        typing.Optional[TransponderCodes], FieldMetadata(alias="transponderCodes")
-    ] = pydantic.Field(alias="transponderCodes", default=None)
-    """
-    A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S interrogations. These are related to ADS-B modes.
-    """
-
+        typing.Optional[TransponderCodes],
+        FieldMetadata(alias="transponderCodes"),
+        pydantic.Field(
+            alias="transponderCodes",
+            description="A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S interrogations. These are related to ADS-B modes.",
+        ),
+    ] = None
     data_classification: typing_extensions.Annotated[
-        typing.Optional[Classification], FieldMetadata(alias="dataClassification")
-    ] = pydantic.Field(alias="dataClassification", default=None)
-    """
-    Describes an entity's security classification levels at an overall classification level and on a per
-     field level.
-    """
-
-    task_catalog: typing_extensions.Annotated[typing.Optional[TaskCatalog], FieldMetadata(alias="taskCatalog")] = (
-        pydantic.Field(alias="taskCatalog", default=None)
-    )
-    """
-    A catalog of tasks that can be performed by an entity.
-    """
-
+        typing.Optional[Classification],
+        FieldMetadata(alias="dataClassification"),
+        pydantic.Field(
+            alias="dataClassification",
+            description="Describes an entity's security classification levels at an overall classification level and on a per\n field level.",
+        ),
+    ] = None
+    task_catalog: typing_extensions.Annotated[
+        typing.Optional[TaskCatalog],
+        FieldMetadata(alias="taskCatalog"),
+        pydantic.Field(alias="taskCatalog", description="A catalog of tasks that can be performed by an entity."),
+    ] = None
     media: typing.Optional[Media] = pydantic.Field(default=None)
     """
     Media associated with an entity, such as videos, images, or thumbnails.
@@ -240,24 +229,22 @@ class Entity(UniversalBaseModel):
     """
 
     visual_details: typing_extensions.Annotated[
-        typing.Optional[VisualDetails], FieldMetadata(alias="visualDetails")
-    ] = pydantic.Field(alias="visualDetails", default=None)
-    """
-    Visual details associated with the display of an entity in the client.
-    """
-
+        typing.Optional[VisualDetails],
+        FieldMetadata(alias="visualDetails"),
+        pydantic.Field(
+            alias="visualDetails", description="Visual details associated with the display of an entity in the client."
+        ),
+    ] = None
     dimensions: typing.Optional[Dimensions] = pydantic.Field(default=None)
     """
     Physical dimensions of the entity.
     """
 
-    route_details: typing_extensions.Annotated[typing.Optional[RouteDetails], FieldMetadata(alias="routeDetails")] = (
-        pydantic.Field(alias="routeDetails", default=None)
-    )
-    """
-    Additional information about an entity's route.
-    """
-
+    route_details: typing_extensions.Annotated[
+        typing.Optional[RouteDetails],
+        FieldMetadata(alias="routeDetails"),
+        pydantic.Field(alias="routeDetails", description="Additional information about an entity's route."),
+    ] = None
     schedules: typing.Optional[Schedules] = pydantic.Field(default=None)
     """
     Schedules associated with this entity.
@@ -268,13 +255,11 @@ class Entity(UniversalBaseModel):
     Health metrics or connection status reported by the entity.
     """
 
-    group_details: typing_extensions.Annotated[typing.Optional[GroupDetails], FieldMetadata(alias="groupDetails")] = (
-        pydantic.Field(alias="groupDetails", default=None)
-    )
-    """
-    Details for the group associated with this entity.
-    """
-
+    group_details: typing_extensions.Annotated[
+        typing.Optional[GroupDetails],
+        FieldMetadata(alias="groupDetails"),
+        pydantic.Field(alias="groupDetails", description="Details for the group associated with this entity."),
+    ] = None
     supplies: typing.Optional[Supplies] = pydantic.Field(default=None)
     """
     Contains relevant supply information for the entity, such as fuel.

@@ -11,6 +11,7 @@ from ..core.datetime_utils import serialize_datetime
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, SyncPager
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.bad_request_error import BadRequestError
@@ -19,9 +20,11 @@ from ..errors.insufficient_storage_error import InsufficientStorageError
 from ..errors.internal_server_error import InternalServerError
 from ..errors.not_found_error import NotFoundError
 from ..errors.unauthorized_error import UnauthorizedError
+from ..object.types.error import Error
 from ..types.list_response import ListResponse
 from ..types.path_metadata import PathMetadata
 from .types.get_object_request_accept_encoding import GetObjectRequestAcceptEncoding
+from pydantic import ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -38,6 +41,7 @@ class RawObjectsClient:
         since_timestamp: typing.Optional[dt.datetime] = None,
         page_token: typing.Optional[str] = None,
         all_objects_in_mesh: typing.Optional[bool] = None,
+        max_page_size: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SyncPager[PathMetadata, ListResponse]:
         """
@@ -57,6 +61,9 @@ class RawObjectsClient:
         all_objects_in_mesh : typing.Optional[bool]
             Lists objects across all environment nodes in a Lattice Mesh.
 
+        max_page_size : typing.Optional[int]
+            Sets the maximum number of items that should be returned on a single page.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -73,6 +80,7 @@ class RawObjectsClient:
                 "sinceTimestamp": serialize_datetime(since_timestamp) if since_timestamp is not None else None,
                 "pageToken": page_token,
                 "allObjectsInMesh": all_objects_in_mesh,
+                "maxPageSize": max_page_size,
             },
             request_options=request_options,
         )
@@ -93,6 +101,7 @@ class RawObjectsClient:
                     since_timestamp=since_timestamp,
                     page_token=_parsed_next,
                     all_objects_in_mesh=all_objects_in_mesh,
+                    max_page_size=max_page_size,
                     request_options=request_options,
                 )
                 return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
@@ -132,6 +141,10 @@ class RawObjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.contextmanager
@@ -232,6 +245,13 @@ class RawObjectsClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield _stream()
@@ -307,9 +327,9 @@ class RawObjectsClient:
                 raise ContentTooLargeError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Any,
+                        Error,
                         parse_obj_as(
-                            type_=typing.Any,  # type: ignore
+                            type_=Error,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -329,9 +349,9 @@ class RawObjectsClient:
                 raise InsufficientStorageError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Any,
+                        Error,
                         parse_obj_as(
-                            type_=typing.Any,  # type: ignore
+                            type_=Error,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -339,6 +359,10 @@ class RawObjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete_object(
@@ -414,6 +438,10 @@ class RawObjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_object_metadata(
@@ -478,6 +506,10 @@ class RawObjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -492,6 +524,7 @@ class AsyncRawObjectsClient:
         since_timestamp: typing.Optional[dt.datetime] = None,
         page_token: typing.Optional[str] = None,
         all_objects_in_mesh: typing.Optional[bool] = None,
+        max_page_size: typing.Optional[int] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncPager[PathMetadata, ListResponse]:
         """
@@ -511,6 +544,9 @@ class AsyncRawObjectsClient:
         all_objects_in_mesh : typing.Optional[bool]
             Lists objects across all environment nodes in a Lattice Mesh.
 
+        max_page_size : typing.Optional[int]
+            Sets the maximum number of items that should be returned on a single page.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -527,6 +563,7 @@ class AsyncRawObjectsClient:
                 "sinceTimestamp": serialize_datetime(since_timestamp) if since_timestamp is not None else None,
                 "pageToken": page_token,
                 "allObjectsInMesh": all_objects_in_mesh,
+                "maxPageSize": max_page_size,
             },
             request_options=request_options,
         )
@@ -549,6 +586,7 @@ class AsyncRawObjectsClient:
                         since_timestamp=since_timestamp,
                         page_token=_parsed_next,
                         all_objects_in_mesh=all_objects_in_mesh,
+                        max_page_size=max_page_size,
                         request_options=request_options,
                     )
 
@@ -589,6 +627,10 @@ class AsyncRawObjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.asynccontextmanager
@@ -690,6 +732,13 @@ class AsyncRawObjectsClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield await _stream()
@@ -765,9 +814,9 @@ class AsyncRawObjectsClient:
                 raise ContentTooLargeError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Any,
+                        Error,
                         parse_obj_as(
-                            type_=typing.Any,  # type: ignore
+                            type_=Error,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -787,9 +836,9 @@ class AsyncRawObjectsClient:
                 raise InsufficientStorageError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        typing.Any,
+                        Error,
                         parse_obj_as(
-                            type_=typing.Any,  # type: ignore
+                            type_=Error,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -797,6 +846,10 @@ class AsyncRawObjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete_object(
@@ -872,6 +925,10 @@ class AsyncRawObjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_object_metadata(
@@ -936,4 +993,8 @@ class AsyncRawObjectsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

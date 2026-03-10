@@ -36,13 +36,14 @@ class ComponentHealth(UniversalBaseModel):
     Human-readable describing the component state. These messages should be understandable by end users.
     """
 
-    update_time: typing_extensions.Annotated[typing.Optional[dt.datetime], FieldMetadata(alias="updateTime")] = (
-        pydantic.Field(alias="updateTime", default=None)
-    )
-    """
-    The last update time for this specific component.
-     If this timestamp is unset, the data is assumed to be most recent
-    """
+    update_time: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="updateTime"),
+        pydantic.Field(
+            alias="updateTime",
+            description="The last update time for this specific component.\n If this timestamp is unset, the data is assumed to be most recent",
+        ),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
