@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .fuel import Fuel
+from .munition import Munition
 
 
 class Supplies(UniversalBaseModel):
@@ -12,6 +13,7 @@ class Supplies(UniversalBaseModel):
     Represents the state of supplies associated with an entity (available but not in condition to use immediately)
     """
 
+    munitions: typing.Optional[typing.List[Munition]] = None
     fuel: typing.Optional[typing.List[Fuel]] = None
 
     if IS_PYDANTIC_V2:

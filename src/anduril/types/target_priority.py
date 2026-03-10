@@ -16,12 +16,12 @@ class TargetPriority(UniversalBaseModel):
     """
 
     high_value_target: typing_extensions.Annotated[
-        typing.Optional[HighValueTarget], FieldMetadata(alias="highValueTarget")
-    ] = pydantic.Field(alias="highValueTarget", default=None)
-    """
-    Describes the target priority in relation to high value target lists.
-    """
-
+        typing.Optional[HighValueTarget],
+        FieldMetadata(alias="highValueTarget"),
+        pydantic.Field(
+            alias="highValueTarget", description="Describes the target priority in relation to high value target lists."
+        ),
+    ] = None
     threat: typing.Optional[Threat] = pydantic.Field(default=None)
     """
     Describes whether the entity should be treated as a threat

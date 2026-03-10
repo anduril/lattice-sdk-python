@@ -16,25 +16,20 @@ class LineOfBearing(UniversalBaseModel):
     """
 
     angle_of_arrival: typing_extensions.Annotated[
-        typing.Optional[AngleOfArrival], FieldMetadata(alias="angleOfArrival")
-    ] = pydantic.Field(alias="angleOfArrival", default=None)
-    """
-    The direction pointing from this entity to the detection
-    """
-
+        typing.Optional[AngleOfArrival],
+        FieldMetadata(alias="angleOfArrival"),
+        pydantic.Field(alias="angleOfArrival", description="The direction pointing from this entity to the detection"),
+    ] = None
     range_estimate_m: typing_extensions.Annotated[
-        typing.Optional[Measurement], FieldMetadata(alias="rangeEstimateM")
-    ] = pydantic.Field(alias="rangeEstimateM", default=None)
-    """
-    The estimated distance of the detection
-    """
-
-    max_range_m: typing_extensions.Annotated[typing.Optional[Measurement], FieldMetadata(alias="maxRangeM")] = (
-        pydantic.Field(alias="maxRangeM", default=None)
-    )
-    """
-    The maximum distance of the detection
-    """
+        typing.Optional[Measurement],
+        FieldMetadata(alias="rangeEstimateM"),
+        pydantic.Field(alias="rangeEstimateM", description="The estimated distance of the detection"),
+    ] = None
+    max_range_m: typing_extensions.Annotated[
+        typing.Optional[Measurement],
+        FieldMetadata(alias="maxRangeM"),
+        pydantic.Field(alias="maxRangeM", description="The maximum distance of the detection"),
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
