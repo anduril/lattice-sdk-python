@@ -1,11 +1,11 @@
 {
-  "cliVersion": "4.37.1",
+  "cliVersion": "4.45.0",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "5.0.3",
+  "generatorVersion": "5.0.7",
   "generatorConfig": {
     "client_class_name": "Lattice",
     "package_name": "anduril"
   },
-  "originGitCommit": "29307856257fbfa7999bf8b4fbf1f73a1bd67af8",
+  "originGitCommit": "9cb515443a827945c8b9432de931e5775f03d9f5",
   "sdkVersion": "4.4.0"
 }
