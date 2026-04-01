@@ -14,6 +14,7 @@ The Lattice SDK Python library provides convenient access to the Lattice SDK API
 - [Support](#support)
 - [Reference](#reference)
 - [Usage](#usage)
+- [Environments](#environments)
 - [Async Client](#async-client)
 - [Exception Handling](#exception-handling)
 - [Streaming](#streaming)
@@ -63,6 +64,19 @@ client = Lattice(
 
 client.entities.long_poll_entity_events(
     session_token="sessionToken",
+)
+```
+
+## Environments
+
+This SDK allows you to configure different environments for API requests.
+
+```python
+from anduril import Lattice
+from anduril.environment import LatticeEnvironment
+
+client = Lattice(
+    environment=LatticeEnvironment.DEFAULT,
 )
 ```
 
