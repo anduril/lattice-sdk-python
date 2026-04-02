@@ -26,10 +26,12 @@ from ..types.task import Task
 from ..types.task_entity import TaskEntity
 from ..types.task_query_results import TaskQueryResults
 from ..types.task_status import TaskStatus
+from ..types.timestamp import Timestamp
 from .types.stream_as_agent_response import StreamAsAgentResponse
 from .types.stream_tasks_response import StreamTasksResponse
 from .types.task_query_status_filter import TaskQueryStatusFilter
 from .types.task_query_update_time_range import TaskQueryUpdateTimeRange
+from .types.task_stream_request_status_filter import TaskStreamRequestStatusFilter
 from .types.task_stream_request_task_type import TaskStreamRequestTaskType
 from pydantic import ValidationError
 
@@ -380,12 +382,11 @@ class RawTasksClient:
         This method initiates task cancellation based on the task's current state:
         - If the task has not been sent to an agent, it cancels immediately and transitions the task
           to a terminal state (`STATUS_DONE_NOT_OK` with `ERROR_CODE_CANCELLED`).
-        - If the task has already been sent to an agent, the cancellation request is routed to the agent with a delivery status of `DELIVERY_STATUS_PENDING_CANCEL`.
-          The agent is responsible for determining whether cancellation is possible and updating
-          the task status accordingly via the `UpdateStatus` endpoint:
-          - If the task can be cancelled, the agent should update the task status to `STATUS_DONE_NOT_OK`.
-          - If the task cannot be cancelled, the agent should attach an error to the task stating why cancellation is not possible using `UpdateStatus`
-            or the returned task object.
+        - If the task has already been sent to an agent, the cancellation request is routed to the agent.
+          The agent is then responsible for deciding whether cancellation is possible or not:
+          - If the task can be cancelled, the agent must use `UpdateTaskStatus` and set the task status to `STATUS_DONE_NOT_OK`.
+          - If the task cannot be cancelled, the agent must use `UpdateTaskStatus` to attach a `TaskError` to the task with the error code `ERROR_CODE_REJECTED`
+            and a `message` explaining why the task cannot be cancelled.
 
         Parameters
         ----------
@@ -597,6 +598,10 @@ class RawTasksClient:
         rate_limit: typing.Optional[int] = OMIT,
         exclude_preexisting_tasks: typing.Optional[bool] = OMIT,
         task_type: typing.Optional[TaskStreamRequestTaskType] = OMIT,
+        update_start_time: typing.Optional[Timestamp] = OMIT,
+        parent_task_id: typing.Optional[str] = OMIT,
+        assignee: typing.Optional[Principal] = OMIT,
+        status_filter: typing.Optional[TaskStreamRequestStatusFilter] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[StreamTasksResponse]]]:
         """
@@ -621,6 +626,20 @@ class RawTasksClient:
         task_type : typing.Optional[TaskStreamRequestTaskType]
             Optional filter that only returns tasks with specific types. If not provided, all task types will be streamed.
 
+        update_start_time : typing.Optional[Timestamp]
+            If provided, returns tasks which have been updated since the given time.
+
+        parent_task_id : typing.Optional[str]
+            A filter for tasks with a specific parent task ID.
+            Note: This filter is mutually exclusive with all other filter fields (`updateStartTime`, `assignee`, `statusFilter`, `taskType`).
+            Either provide `parentTaskId` or any combination of the other filters, but not both.
+
+        assignee : typing.Optional[Principal]
+            A filter for tasks assigned to a specific principal.
+
+        status_filter : typing.Optional[TaskStreamRequestStatusFilter]
+            A filter for task statuses (inclusive or exclusive).
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -638,6 +657,14 @@ class RawTasksClient:
                 "excludePreexistingTasks": exclude_preexisting_tasks,
                 "taskType": convert_and_respect_annotation_metadata(
                     object_=task_type, annotation=TaskStreamRequestTaskType, direction="write"
+                ),
+                "updateStartTime": update_start_time,
+                "parentTaskId": parent_task_id,
+                "assignee": convert_and_respect_annotation_metadata(
+                    object_=assignee, annotation=Principal, direction="write"
+                ),
+                "statusFilter": convert_and_respect_annotation_metadata(
+                    object_=status_filter, annotation=TaskStreamRequestStatusFilter, direction="write"
                 ),
             },
             headers={
@@ -1286,12 +1313,11 @@ class AsyncRawTasksClient:
         This method initiates task cancellation based on the task's current state:
         - If the task has not been sent to an agent, it cancels immediately and transitions the task
           to a terminal state (`STATUS_DONE_NOT_OK` with `ERROR_CODE_CANCELLED`).
-        - If the task has already been sent to an agent, the cancellation request is routed to the agent with a delivery status of `DELIVERY_STATUS_PENDING_CANCEL`.
-          The agent is responsible for determining whether cancellation is possible and updating
-          the task status accordingly via the `UpdateStatus` endpoint:
-          - If the task can be cancelled, the agent should update the task status to `STATUS_DONE_NOT_OK`.
-          - If the task cannot be cancelled, the agent should attach an error to the task stating why cancellation is not possible using `UpdateStatus`
-            or the returned task object.
+        - If the task has already been sent to an agent, the cancellation request is routed to the agent.
+          The agent is then responsible for deciding whether cancellation is possible or not:
+          - If the task can be cancelled, the agent must use `UpdateTaskStatus` and set the task status to `STATUS_DONE_NOT_OK`.
+          - If the task cannot be cancelled, the agent must use `UpdateTaskStatus` to attach a `TaskError` to the task with the error code `ERROR_CODE_REJECTED`
+            and a `message` explaining why the task cannot be cancelled.
 
         Parameters
         ----------
@@ -1503,6 +1529,10 @@ class AsyncRawTasksClient:
         rate_limit: typing.Optional[int] = OMIT,
         exclude_preexisting_tasks: typing.Optional[bool] = OMIT,
         task_type: typing.Optional[TaskStreamRequestTaskType] = OMIT,
+        update_start_time: typing.Optional[Timestamp] = OMIT,
+        parent_task_id: typing.Optional[str] = OMIT,
+        assignee: typing.Optional[Principal] = OMIT,
+        status_filter: typing.Optional[TaskStreamRequestStatusFilter] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamTasksResponse]]]:
         """
@@ -1527,6 +1557,20 @@ class AsyncRawTasksClient:
         task_type : typing.Optional[TaskStreamRequestTaskType]
             Optional filter that only returns tasks with specific types. If not provided, all task types will be streamed.
 
+        update_start_time : typing.Optional[Timestamp]
+            If provided, returns tasks which have been updated since the given time.
+
+        parent_task_id : typing.Optional[str]
+            A filter for tasks with a specific parent task ID.
+            Note: This filter is mutually exclusive with all other filter fields (`updateStartTime`, `assignee`, `statusFilter`, `taskType`).
+            Either provide `parentTaskId` or any combination of the other filters, but not both.
+
+        assignee : typing.Optional[Principal]
+            A filter for tasks assigned to a specific principal.
+
+        status_filter : typing.Optional[TaskStreamRequestStatusFilter]
+            A filter for task statuses (inclusive or exclusive).
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1544,6 +1588,14 @@ class AsyncRawTasksClient:
                 "excludePreexistingTasks": exclude_preexisting_tasks,
                 "taskType": convert_and_respect_annotation_metadata(
                     object_=task_type, annotation=TaskStreamRequestTaskType, direction="write"
+                ),
+                "updateStartTime": update_start_time,
+                "parentTaskId": parent_task_id,
+                "assignee": convert_and_respect_annotation_metadata(
+                    object_=assignee, annotation=Principal, direction="write"
+                ),
+                "statusFilter": convert_and_respect_annotation_metadata(
+                    object_=status_filter, annotation=TaskStreamRequestStatusFilter, direction="write"
                 ),
             },
             headers={

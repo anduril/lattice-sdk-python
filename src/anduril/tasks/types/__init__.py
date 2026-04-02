@@ -15,6 +15,9 @@ if typing.TYPE_CHECKING:
     from .task_query_status_filter import TaskQueryStatusFilter
     from .task_query_status_filter_status import TaskQueryStatusFilterStatus
     from .task_query_update_time_range import TaskQueryUpdateTimeRange
+    from .task_stream_request_status_filter import TaskStreamRequestStatusFilter
+    from .task_stream_request_status_filter_filter_type import TaskStreamRequestStatusFilterFilterType
+    from .task_stream_request_status_filter_statuses_item import TaskStreamRequestStatusFilterStatusesItem
     from .task_stream_request_task_type import TaskStreamRequestTaskType
     from .task_stream_request_task_type_task_type_prefix import TaskStreamRequestTaskTypeTaskTypePrefix
     from .task_stream_request_task_type_task_type_urls import TaskStreamRequestTaskTypeTaskTypeUrls
@@ -28,6 +31,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TaskQueryStatusFilter": ".task_query_status_filter",
     "TaskQueryStatusFilterStatus": ".task_query_status_filter_status",
     "TaskQueryUpdateTimeRange": ".task_query_update_time_range",
+    "TaskStreamRequestStatusFilter": ".task_stream_request_status_filter",
+    "TaskStreamRequestStatusFilterFilterType": ".task_stream_request_status_filter_filter_type",
+    "TaskStreamRequestStatusFilterStatusesItem": ".task_stream_request_status_filter_statuses_item",
     "TaskStreamRequestTaskType": ".task_stream_request_task_type",
     "TaskStreamRequestTaskTypeTaskTypePrefix": ".task_stream_request_task_type_task_type_prefix",
     "TaskStreamRequestTaskTypeTaskTypeUrls": ".task_stream_request_task_type_task_type_urls",
@@ -65,6 +71,9 @@ __all__ = [
     "TaskQueryStatusFilter",
     "TaskQueryStatusFilterStatus",
     "TaskQueryUpdateTimeRange",
+    "TaskStreamRequestStatusFilter",
+    "TaskStreamRequestStatusFilterFilterType",
+    "TaskStreamRequestStatusFilterStatusesItem",
     "TaskStreamRequestTaskType",
     "TaskStreamRequestTaskTypeTaskTypePrefix",
     "TaskStreamRequestTaskTypeTaskTypeUrls",
