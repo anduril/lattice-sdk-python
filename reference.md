@@ -885,12 +885,11 @@ Cancels a task by marking it for cancellation in the system.
 This method initiates task cancellation based on the task's current state:
 - If the task has not been sent to an agent, it cancels immediately and transitions the task
   to a terminal state (`STATUS_DONE_NOT_OK` with `ERROR_CODE_CANCELLED`).
-- If the task has already been sent to an agent, the cancellation request is routed to the agent with a delivery status of `DELIVERY_STATUS_PENDING_CANCEL`.
-  The agent is responsible for determining whether cancellation is possible and updating
-  the task status accordingly via the `UpdateStatus` endpoint:
-  - If the task can be cancelled, the agent should update the task status to `STATUS_DONE_NOT_OK`.
-  - If the task cannot be cancelled, the agent should attach an error to the task stating why cancellation is not possible using `UpdateStatus`
-    or the returned task object.
+- If the task has already been sent to an agent, the cancellation request is routed to the agent.
+  The agent is then responsible for deciding whether cancellation is possible or not:
+  - If the task can be cancelled, the agent must use `UpdateTaskStatus` and set the task status to `STATUS_DONE_NOT_OK`.
+  - If the task cannot be cancelled, the agent must use `UpdateTaskStatus` to attach a `TaskError` to the task with the error code `ERROR_CODE_REJECTED`
+    and a `message` explaining why the task cannot be cancelled.
 </dd>
 </dl>
 </dd>
@@ -1139,8 +1138,8 @@ client.tasks.stream_tasks()
 
 **rate_limit:** `typing.Optional[int]` 
 
-The time interval, in milliseconds, after an update for a given task before another one will be sent for the same task. 
-If set, value must be >= 250. 
+The time interval, in milliseconds, after an update for a given task before another one will be sent for the same task.
+If set, value must be >= 250.
     
 </dd>
 </dl>
@@ -1160,6 +1159,42 @@ If unset or false, the stream will include any new tasks and task updates, as we
 <dd>
 
 **task_type:** `typing.Optional[TaskStreamRequestTaskType]` — Optional filter that only returns tasks with specific types. If not provided, all task types will be streamed.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**update_start_time:** `typing.Optional[Timestamp]` — If provided, returns tasks which have been updated since the given time.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parent_task_id:** `typing.Optional[str]` 
+
+A filter for tasks with a specific parent task ID.
+Note: This filter is mutually exclusive with all other filter fields (`updateStartTime`, `assignee`, `statusFilter`, `taskType`).
+Either provide `parentTaskId` or any combination of the other filters, but not both.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**assignee:** `typing.Optional[Principal]` — A filter for tasks assigned to a specific principal.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status_filter:** `typing.Optional[TaskStreamRequestStatusFilter]` — A filter for task statuses (inclusive or exclusive).
     
 </dd>
 </dl>
