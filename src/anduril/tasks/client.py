@@ -16,6 +16,7 @@ from ..types.task_status import TaskStatus
 from ..types.timestamp import Timestamp
 from .raw_client import AsyncRawTasksClient, RawTasksClient
 from .types.stream_as_agent_response import StreamAsAgentResponse
+from .types.stream_manual_control_frames_response import StreamManualControlFramesResponse
 from .types.stream_tasks_response import StreamTasksResponse
 from .types.task_query_status_filter import TaskQueryStatusFilter
 from .types.task_query_update_time_range import TaskQueryUpdateTimeRange
@@ -517,6 +518,60 @@ class TasksClient:
         """
         with self._raw_client.stream_as_agent(
             agent_selector=agent_selector, heartbeat_interval_ms=heartbeat_interval_ms, request_options=request_options
+        ) as r:
+            yield from r.data
+
+    def stream_manual_control_frames(
+        self,
+        task_id: str,
+        *,
+        heartbeat_interval_ms: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[StreamManualControlFramesResponse]:
+        """
+        Establishes a server streaming connection that delivers manual control frames to agents
+        using server-sent events (SSE).
+
+        This endpoint streams manual control frames, for example, for joystick movements, for a specific task
+        to the executing agent. The agent should open this stream before reporting `STATUS_EXECUTING`
+        to ensure it is ready to receive control input when the operator begins sending frames.
+
+        Each frame includes epoch and sequence metadata for handling concurrent control sessions
+        and detecting stale or out-of-order frames. Heartbeat messages are sent periodically to
+        maintain the connection.
+
+        The stream terminates automatically when the task reaches a terminal state
+        (`STATUS_DONE_OK` or `STATUS_DONE_NOT_OK`).
+
+        Parameters
+        ----------
+        task_id : str
+            The ID of the manual control task to receive frames for.
+
+        heartbeat_interval_ms : typing.Optional[int]
+            The time interval, in milliseconds, that determines the frequency at which to send heartbeat events. Defaults to 30000 (30 seconds).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[StreamManualControlFramesResponse]
+            Returns a stream of manual control frames as they are sent by the operator.
+
+        Examples
+        --------
+        from anduril import Lattice
+
+        client = Lattice()
+        response = client.tasks.stream_manual_control_frames(
+            task_id="taskId",
+        )
+        for chunk in response:
+            yield chunk
+        """
+        with self._raw_client.stream_manual_control_frames(
+            task_id, heartbeat_interval_ms=heartbeat_interval_ms, request_options=request_options
         ) as r:
             yield from r.data
 
@@ -1079,6 +1134,69 @@ class AsyncTasksClient:
         """
         async with self._raw_client.stream_as_agent(
             agent_selector=agent_selector, heartbeat_interval_ms=heartbeat_interval_ms, request_options=request_options
+        ) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def stream_manual_control_frames(
+        self,
+        task_id: str,
+        *,
+        heartbeat_interval_ms: typing.Optional[int] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[StreamManualControlFramesResponse]:
+        """
+        Establishes a server streaming connection that delivers manual control frames to agents
+        using server-sent events (SSE).
+
+        This endpoint streams manual control frames, for example, for joystick movements, for a specific task
+        to the executing agent. The agent should open this stream before reporting `STATUS_EXECUTING`
+        to ensure it is ready to receive control input when the operator begins sending frames.
+
+        Each frame includes epoch and sequence metadata for handling concurrent control sessions
+        and detecting stale or out-of-order frames. Heartbeat messages are sent periodically to
+        maintain the connection.
+
+        The stream terminates automatically when the task reaches a terminal state
+        (`STATUS_DONE_OK` or `STATUS_DONE_NOT_OK`).
+
+        Parameters
+        ----------
+        task_id : str
+            The ID of the manual control task to receive frames for.
+
+        heartbeat_interval_ms : typing.Optional[int]
+            The time interval, in milliseconds, that determines the frequency at which to send heartbeat events. Defaults to 30000 (30 seconds).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[StreamManualControlFramesResponse]
+            Returns a stream of manual control frames as they are sent by the operator.
+
+        Examples
+        --------
+        import asyncio
+
+        from anduril import AsyncLattice
+
+        client = AsyncLattice()
+
+
+        async def main() -> None:
+            response = await client.tasks.stream_manual_control_frames(
+                task_id="taskId",
+            )
+            async for chunk in response:
+                yield chunk
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.stream_manual_control_frames(
+            task_id, heartbeat_interval_ms=heartbeat_interval_ms, request_options=request_options
         ) as r:
             async for _chunk in r.data:
                 yield _chunk
