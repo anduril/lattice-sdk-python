@@ -11,6 +11,11 @@ if typing.TYPE_CHECKING:
         StreamAsAgentResponse_AgentRequest,
         StreamAsAgentResponse_Heartbeat,
     )
+    from .stream_manual_control_frames_response import (
+        StreamManualControlFramesResponse,
+        StreamManualControlFramesResponse_Heartbeat,
+        StreamManualControlFramesResponse_ManualControlFrame,
+    )
     from .stream_tasks_response import StreamTasksResponse, StreamTasksResponse_Heartbeat, StreamTasksResponse_TaskEvent
     from .task_query_status_filter import TaskQueryStatusFilter
     from .task_query_status_filter_status import TaskQueryStatusFilterStatus
@@ -25,6 +30,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "StreamAsAgentResponse": ".stream_as_agent_response",
     "StreamAsAgentResponse_AgentRequest": ".stream_as_agent_response",
     "StreamAsAgentResponse_Heartbeat": ".stream_as_agent_response",
+    "StreamManualControlFramesResponse": ".stream_manual_control_frames_response",
+    "StreamManualControlFramesResponse_Heartbeat": ".stream_manual_control_frames_response",
+    "StreamManualControlFramesResponse_ManualControlFrame": ".stream_manual_control_frames_response",
     "StreamTasksResponse": ".stream_tasks_response",
     "StreamTasksResponse_Heartbeat": ".stream_tasks_response",
     "StreamTasksResponse_TaskEvent": ".stream_tasks_response",
@@ -65,6 +73,9 @@ __all__ = [
     "StreamAsAgentResponse",
     "StreamAsAgentResponse_AgentRequest",
     "StreamAsAgentResponse_Heartbeat",
+    "StreamManualControlFramesResponse",
+    "StreamManualControlFramesResponse_Heartbeat",
+    "StreamManualControlFramesResponse_ManualControlFrame",
     "StreamTasksResponse",
     "StreamTasksResponse_Heartbeat",
     "StreamTasksResponse_TaskEvent",

@@ -102,6 +102,8 @@ if typing.TYPE_CHECKING:
     from .lla_altitude_reference import LlaAltitudeReference
     from .location import Location
     from .location_uncertainty import LocationUncertainty
+    from .manual_control_frame import ManualControlFrame
+    from .manual_control_frame_event import ManualControlFrameEvent
     from .mean_keplerian_elements import MeanKeplerianElements
     from .measurement import Measurement
     from .media import Media
@@ -300,6 +302,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LlaAltitudeReference": ".lla_altitude_reference",
     "Location": ".location",
     "LocationUncertainty": ".location_uncertainty",
+    "ManualControlFrame": ".manual_control_frame",
+    "ManualControlFrameEvent": ".manual_control_frame_event",
     "MeanKeplerianElements": ".mean_keplerian_elements",
     "Measurement": ".measurement",
     "Media": ".media",
@@ -522,6 +526,8 @@ __all__ = [
     "LlaAltitudeReference",
     "Location",
     "LocationUncertainty",
+    "ManualControlFrame",
+    "ManualControlFrameEvent",
     "MeanKeplerianElements",
     "Measurement",
     "Media",
