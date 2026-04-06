@@ -1401,6 +1401,100 @@ client.tasks.stream_as_agent()
 </dl>
 </details>
 
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py">stream_manual_control_frames</a>(...) -> typing.Iterator[bytes]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Establishes a server streaming connection that delivers manual control frames to agents
+using server-sent events (SSE).
+
+This endpoint streams manual control frames, for example, for joystick movements, for a specific task
+to the executing agent. The agent should open this stream before reporting `STATUS_EXECUTING`
+to ensure it is ready to receive control input when the operator begins sending frames.
+
+Each frame includes epoch and sequence metadata for handling concurrent control sessions
+and detecting stale or out-of-order frames. Heartbeat messages are sent periodically to
+maintain the connection.
+
+The stream terminates automatically when the task reaches a terminal state
+(`STATUS_DONE_OK` or `STATUS_DONE_NOT_OK`).
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+from anduril.environment import LatticeEnvironment
+
+client = Lattice(
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
+)
+
+client.tasks.stream_manual_control_frames(
+    task_id="taskId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**task_id:** `str` — The ID of the manual control task to receive frames for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**heartbeat_interval_ms:** `typing.Optional[int]` — The time interval, in milliseconds, that determines the frequency at which to send heartbeat events. Defaults to 30000 (30 seconds).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Objects
 <details><summary><code>client.objects.<a href="src/anduril/objects/client.py">list_objects</a>(...) -> ListResponse</code></summary>
 <dl>
