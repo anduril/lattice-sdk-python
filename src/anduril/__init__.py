@@ -223,7 +223,7 @@ if typing.TYPE_CHECKING:
     from .entities import StreamEntitiesResponse, StreamEntitiesResponse_Entity, StreamEntitiesResponse_Heartbeat
     from .environment import LatticeEnvironment
     from .oauth import GetTokenResponse
-    from .objects import GetObjectRequestAcceptEncoding
+    from .objects import GetObjectRequestAcceptEncoding, UploadObjectRequestDistributionMode
     from .tasks import (
         StreamAsAgentResponse,
         StreamAsAgentResponse_AgentRequest,
@@ -479,6 +479,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UInt32Range": ".types",
     "UnauthorizedError": ".errors",
     "UnauthorizedErrorBody": ".types",
+    "UploadObjectRequestDistributionMode": ".objects",
     "User": ".types",
     "VisualDetails": ".types",
     "__version__": ".version",
@@ -747,6 +748,7 @@ __all__ = [
     "UInt32Range",
     "UnauthorizedError",
     "UnauthorizedErrorBody",
+    "UploadObjectRequestDistributionMode",
     "User",
     "VisualDetails",
     "__version__",
