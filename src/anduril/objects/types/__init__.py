@@ -7,7 +7,11 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .get_object_request_accept_encoding import GetObjectRequestAcceptEncoding
-_dynamic_imports: typing.Dict[str, str] = {"GetObjectRequestAcceptEncoding": ".get_object_request_accept_encoding"}
+    from .upload_object_request_distribution_mode import UploadObjectRequestDistributionMode
+_dynamic_imports: typing.Dict[str, str] = {
+    "GetObjectRequestAcceptEncoding": ".get_object_request_accept_encoding",
+    "UploadObjectRequestDistributionMode": ".upload_object_request_distribution_mode",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +35,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["GetObjectRequestAcceptEncoding"]
+__all__ = ["GetObjectRequestAcceptEncoding", "UploadObjectRequestDistributionMode"]

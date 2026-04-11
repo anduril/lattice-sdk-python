@@ -56,7 +56,10 @@ class OauthClient:
         --------
         from anduril import Lattice
 
-        client = Lattice()
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
         client.oauth.get_token()
         """
         _response = self._raw_client.get_token(
@@ -112,7 +115,10 @@ class AsyncOauthClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice()
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
 
 
         async def main() -> None:
