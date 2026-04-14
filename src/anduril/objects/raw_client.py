@@ -9,7 +9,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.datetime_utils import serialize_datetime
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
@@ -179,7 +179,7 @@ class RawObjectsClient:
             Successful operation
         """
         with self._client_wrapper.httpx_client.stream(
-            f"api/v1/objects/{jsonable_encoder(object_path)}",
+            f"api/v1/objects/{encode_path_param(object_path)}",
             method="GET",
             headers={
                 "Accept-Encoding": str(accept_encoding) if accept_encoding is not None else None,
@@ -282,7 +282,7 @@ class RawObjectsClient:
             Successful upload
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/v1/objects/{jsonable_encoder(object_path)}",
+            f"api/v1/objects/{encode_path_param(object_path)}",
             method="POST",
             content=request,
             headers={
@@ -384,7 +384,7 @@ class RawObjectsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/v1/objects/{jsonable_encoder(object_path)}",
+            f"api/v1/objects/{encode_path_param(object_path)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -463,7 +463,7 @@ class RawObjectsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/v1/objects/{jsonable_encoder(object_path)}",
+            f"api/v1/objects/{encode_path_param(object_path)}",
             method="HEAD",
             request_options=request_options,
         )
@@ -665,7 +665,7 @@ class AsyncRawObjectsClient:
             Successful operation
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"api/v1/objects/{jsonable_encoder(object_path)}",
+            f"api/v1/objects/{encode_path_param(object_path)}",
             method="GET",
             headers={
                 "Accept-Encoding": str(accept_encoding) if accept_encoding is not None else None,
@@ -769,7 +769,7 @@ class AsyncRawObjectsClient:
             Successful upload
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/v1/objects/{jsonable_encoder(object_path)}",
+            f"api/v1/objects/{encode_path_param(object_path)}",
             method="POST",
             content=request,
             headers={
@@ -871,7 +871,7 @@ class AsyncRawObjectsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/v1/objects/{jsonable_encoder(object_path)}",
+            f"api/v1/objects/{encode_path_param(object_path)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -950,7 +950,7 @@ class AsyncRawObjectsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/v1/objects/{jsonable_encoder(object_path)}",
+            f"api/v1/objects/{encode_path_param(object_path)}",
             method="HEAD",
             request_options=request_options,
         )

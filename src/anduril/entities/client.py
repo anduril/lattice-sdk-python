@@ -259,7 +259,10 @@ class EntitiesClient:
         --------
         from anduril import Lattice
 
-        client = Lattice()
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
         client.entities.publish_entity()
         """
         _response = self._raw_client.publish_entity(
@@ -324,7 +327,10 @@ class EntitiesClient:
         --------
         from anduril import Lattice
 
-        client = Lattice()
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
         client.entities.get_entity(
             entity_id="entityId",
         )
@@ -377,7 +383,10 @@ class EntitiesClient:
         --------
         from anduril import Lattice
 
-        client = Lattice()
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
         client.entities.override_entity(
             entity_id="entityId",
             field_path="mil_view.disposition",
@@ -414,7 +423,10 @@ class EntitiesClient:
         --------
         from anduril import Lattice
 
-        client = Lattice()
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
         client.entities.remove_entity_override(
             entity_id="entityId",
             field_path="mil_view.disposition",
@@ -461,7 +473,10 @@ class EntitiesClient:
         --------
         from anduril import Lattice
 
-        client = Lattice()
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
         client.entities.long_poll_entity_events(
             session_token="sessionToken",
         )
@@ -523,7 +538,10 @@ class EntitiesClient:
         --------
         from anduril import Lattice
 
-        client = Lattice()
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
         response = client.entities.stream_entities()
         for chunk in response:
             yield chunk
@@ -752,7 +770,10 @@ class AsyncEntitiesClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice()
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
 
 
         async def main() -> None:
@@ -825,7 +846,10 @@ class AsyncEntitiesClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice()
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
 
 
         async def main() -> None:
@@ -886,7 +910,10 @@ class AsyncEntitiesClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice()
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
 
 
         async def main() -> None:
@@ -931,7 +958,10 @@ class AsyncEntitiesClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice()
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
 
 
         async def main() -> None:
@@ -988,7 +1018,10 @@ class AsyncEntitiesClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice()
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
 
 
         async def main() -> None:
@@ -1058,7 +1091,10 @@ class AsyncEntitiesClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice()
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
 
 
         async def main() -> None:
