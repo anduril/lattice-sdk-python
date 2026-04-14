@@ -6,8 +6,11 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import GetObjectRequestAcceptEncoding
-_dynamic_imports: typing.Dict[str, str] = {"GetObjectRequestAcceptEncoding": ".types"}
+    from .types import GetObjectRequestAcceptEncoding, UploadObjectRequestDistributionMode
+_dynamic_imports: typing.Dict[str, str] = {
+    "GetObjectRequestAcceptEncoding": ".types",
+    "UploadObjectRequestDistributionMode": ".types",
+}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +34,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["GetObjectRequestAcceptEncoding"]
+__all__ = ["GetObjectRequestAcceptEncoding", "UploadObjectRequestDistributionMode"]

@@ -72,7 +72,10 @@ class ObjectsClient:
         --------
         from anduril import Lattice
 
-        client = Lattice()
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
         response = client.objects.list_objects()
         for item in response:
             yield item
@@ -123,7 +126,10 @@ class ObjectsClient:
         --------
         from anduril import Lattice
 
-        client = Lattice()
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
         client.objects.get_object(
             object_path="objectPath",
         )
@@ -162,7 +168,10 @@ class ObjectsClient:
         --------
         from anduril import Lattice
 
-        client = Lattice()
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
         client.objects.upload_object()
         """
         _response = self._raw_client.upload_object(object_path, request=request, request_options=request_options)
@@ -188,7 +197,10 @@ class ObjectsClient:
         --------
         from anduril import Lattice
 
-        client = Lattice()
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
         client.objects.delete_object(
             object_path="objectPath",
         )
@@ -218,7 +230,10 @@ class ObjectsClient:
         --------
         from anduril import Lattice
 
-        client = Lattice()
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
         client.objects.get_object_metadata(
             object_path="objectPath",
         )
@@ -286,7 +301,10 @@ class AsyncObjectsClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice()
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
 
 
         async def main() -> None:
@@ -346,7 +364,10 @@ class AsyncObjectsClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice()
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
 
 
         async def main() -> None:
@@ -394,7 +415,10 @@ class AsyncObjectsClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice()
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
 
 
         async def main() -> None:
@@ -428,7 +452,10 @@ class AsyncObjectsClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice()
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
 
 
         async def main() -> None:
@@ -466,7 +493,10 @@ class AsyncObjectsClient:
 
         from anduril import AsyncLattice
 
-        client = AsyncLattice()
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
 
 
         async def main() -> None:

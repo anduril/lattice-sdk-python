@@ -10,7 +10,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.http_sse._api import EventSource
-from ..core.jsonable_encoder import jsonable_encoder
+from ..core.jsonable_encoder import encode_path_param
 from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as, parse_sse_obj
 from ..core.request_options import RequestOptions
@@ -422,7 +422,7 @@ class RawEntitiesClient:
             Entity retrieval was successful
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/v1/entities/{jsonable_encoder(entity_id)}",
+            f"api/v1/entities/{encode_path_param(entity_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -520,7 +520,7 @@ class RawEntitiesClient:
             The Entities API accepts the override.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/v1/entities/{jsonable_encoder(entity_id)}/override/{jsonable_encoder(field_path)}",
+            f"api/v1/entities/{encode_path_param(entity_id)}/override/{encode_path_param(field_path)}",
             method="PUT",
             json={
                 "entity": convert_and_respect_annotation_metadata(object_=entity, annotation=Entity, direction="write"),
@@ -609,7 +609,7 @@ class RawEntitiesClient:
             The removal of entity override was successful.
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"api/v1/entities/{jsonable_encoder(entity_id)}/override/{jsonable_encoder(field_path)}",
+            f"api/v1/entities/{encode_path_param(entity_id)}/override/{encode_path_param(field_path)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -1280,7 +1280,7 @@ class AsyncRawEntitiesClient:
             Entity retrieval was successful
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/v1/entities/{jsonable_encoder(entity_id)}",
+            f"api/v1/entities/{encode_path_param(entity_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -1378,7 +1378,7 @@ class AsyncRawEntitiesClient:
             The Entities API accepts the override.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/v1/entities/{jsonable_encoder(entity_id)}/override/{jsonable_encoder(field_path)}",
+            f"api/v1/entities/{encode_path_param(entity_id)}/override/{encode_path_param(field_path)}",
             method="PUT",
             json={
                 "entity": convert_and_respect_annotation_metadata(object_=entity, annotation=Entity, direction="write"),
@@ -1467,7 +1467,7 @@ class AsyncRawEntitiesClient:
             The removal of entity override was successful.
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"api/v1/entities/{jsonable_encoder(entity_id)}/override/{jsonable_encoder(field_path)}",
+            f"api/v1/entities/{encode_path_param(entity_id)}/override/{encode_path_param(field_path)}",
             method="DELETE",
             request_options=request_options,
         )
