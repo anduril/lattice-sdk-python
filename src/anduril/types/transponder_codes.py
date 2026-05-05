@@ -13,7 +13,7 @@ from .transponder_codes_mode4interrogation_response import TransponderCodesMode4
 
 class TransponderCodes(UniversalBaseModel):
     """
-    A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S interrogations.
+    A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S, C interrogations.
     """
 
     mode1: typing.Optional[int] = pydantic.Field(default=None)
@@ -48,6 +48,14 @@ class TransponderCodes(UniversalBaseModel):
         typing.Optional[ModeS],
         FieldMetadata(alias="modeS"),
         pydantic.Field(alias="modeS", description="The Mode S transponder codes."),
+    ] = None
+    mode_c_altitude_ft: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="modeCAltitudeFt"),
+        pydantic.Field(
+            alias="modeCAltitudeFt",
+            description="The Mode C altitude reported by the transponder in feet. Mode C provides pressure altitude\n in 100-foot increments up to 10,000 feet MSL. A zero value indicates No Statement.",
+        ),
     ] = None
 
     if IS_PYDANTIC_V2:
