@@ -210,7 +210,7 @@ class RawEntitiesClient:
             Describes an entity's signal characteristics, primarily used when an entity is a signal of interest.
 
         transponder_codes : typing.Optional[TransponderCodes]
-            A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S interrogations. These are related to ADS-B modes.
+            A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S, C interrogations. These are related to ADS-B modes.
 
         data_classification : typing.Optional[Classification]
             Describes an entity's security classification levels at an overall classification level and on a per
@@ -1068,7 +1068,7 @@ class AsyncRawEntitiesClient:
             Describes an entity's signal characteristics, primarily used when an entity is a signal of interest.
 
         transponder_codes : typing.Optional[TransponderCodes]
-            A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S interrogations. These are related to ADS-B modes.
+            A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S, C interrogations. These are related to ADS-B modes.
 
         data_classification : typing.Optional[Classification]
             Describes an entity's security classification levels at an overall classification level and on a per
