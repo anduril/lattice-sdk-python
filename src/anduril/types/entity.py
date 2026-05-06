@@ -202,7 +202,7 @@ class Entity(UniversalBaseModel):
         FieldMetadata(alias="transponderCodes"),
         pydantic.Field(
             alias="transponderCodes",
-            description="A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S interrogations. These are related to ADS-B modes.",
+            description="A message describing any transponder codes associated with Mode 1, 2, 3, 4, 5, S, C interrogations. These are related to ADS-B modes.",
         ),
     ] = None
     data_classification: typing_extensions.Annotated[
