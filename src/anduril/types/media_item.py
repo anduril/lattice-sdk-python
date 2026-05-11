@@ -10,7 +10,16 @@ from .media_item_type import MediaItemType
 
 
 class MediaItem(UniversalBaseModel):
-    type: typing.Optional[MediaItemType] = None
+    item_identifier: typing_extensions.Annotated[
+        typing.Optional[str],
+        FieldMetadata(alias="itemIdentifier"),
+        pydantic.Field(alias="itemIdentifier", description="A unique identifier for this mediaItem."),
+    ] = None
+    type: typing.Optional[MediaItemType] = pydantic.Field(default=None)
+    """
+    The type of media for this item.
+    """
+
     relative_path: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="relativePath"),
