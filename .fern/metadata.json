@@ -6,10 +6,10 @@
     "client_class_name": "Lattice",
     "package_name": "anduril"
   },
-  "originGitCommit": "ead25bae2c820291c586c27723d3e8f8350301e0",
+  "originGitCommit": "a0183c740519d7f39160d165e890636f5bddab84",
   "originGitCommitIsDirty": false,
   "invokedBy": "ci",
-  "requestedVersion": "4.11.0",
+  "requestedVersion": "5.0.0",
   "ciProvider": "circleci",
-  "sdkVersion": "4.11.0"
+  "sdkVersion": "5.0.0"
 }
