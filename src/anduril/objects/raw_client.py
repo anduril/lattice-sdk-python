@@ -21,6 +21,8 @@ from ..errors.internal_server_error import InternalServerError
 from ..errors.not_found_error import NotFoundError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..object.types.error import Error
+from ..types.deleted_object_entry import DeletedObjectEntry
+from ..types.list_deleted_objects_response import ListDeletedObjectsResponse
 from ..types.list_response import ListResponse
 from ..types.path_metadata import PathMetadata
 from .types.get_object_request_accept_encoding import GetObjectRequestAcceptEncoding
@@ -101,6 +103,105 @@ class RawObjectsClient:
                     since_timestamp=since_timestamp,
                     page_token=_parsed_next,
                     all_objects_in_mesh=all_objects_in_mesh,
+                    max_page_size=max_page_size,
+                    request_options=request_options,
+                )
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list_deleted_objects(
+        self,
+        *,
+        page_token: typing.Optional[str] = None,
+        max_page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[DeletedObjectEntry, ListDeletedObjectsResponse]:
+        """
+        Returns paginated records of force-distributed objects deleted on the
+        local node. Useful for operators diagnosing why an object visible on
+        one node is missing on another. Each record identifies the exact
+        `(path, checksum)` pair suppressed from re-sync by the distribution
+        manager. Node-scoped: each node returns only its own records.
+
+        Parameters
+        ----------
+        page_token : typing.Optional[str]
+            Opaque cursor returned by a prior response to continue paging.
+
+        max_page_size : typing.Optional[int]
+            Maximum number of records to return in a single response. Server enforces an upper bound.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[DeletedObjectEntry, ListDeletedObjectsResponse]
+            Successful operation
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/v1/debug/deleted-objects",
+            method="GET",
+            params={
+                "pageToken": page_token,
+                "maxPageSize": max_page_size,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListDeletedObjectsResponse,
+                    parse_obj_as(
+                        type_=ListDeletedObjectsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.deleted_objects
+                _parsed_next = _parsed_response.next_page_token
+                _has_next = _parsed_next is not None and _parsed_next != ""
+                _get_next = lambda: self.list_deleted_objects(
+                    page_token=_parsed_next,
                     max_page_size=max_page_size,
                     request_options=request_options,
                 )
@@ -586,6 +687,108 @@ class AsyncRawObjectsClient:
                         since_timestamp=since_timestamp,
                         page_token=_parsed_next,
                         all_objects_in_mesh=all_objects_in_mesh,
+                        max_page_size=max_page_size,
+                        request_options=request_options,
+                    )
+
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next, response=_parsed_response)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_deleted_objects(
+        self,
+        *,
+        page_token: typing.Optional[str] = None,
+        max_page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncPager[DeletedObjectEntry, ListDeletedObjectsResponse]:
+        """
+        Returns paginated records of force-distributed objects deleted on the
+        local node. Useful for operators diagnosing why an object visible on
+        one node is missing on another. Each record identifies the exact
+        `(path, checksum)` pair suppressed from re-sync by the distribution
+        manager. Node-scoped: each node returns only its own records.
+
+        Parameters
+        ----------
+        page_token : typing.Optional[str]
+            Opaque cursor returned by a prior response to continue paging.
+
+        max_page_size : typing.Optional[int]
+            Maximum number of records to return in a single response. Server enforces an upper bound.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[DeletedObjectEntry, ListDeletedObjectsResponse]
+            Successful operation
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/v1/debug/deleted-objects",
+            method="GET",
+            params={
+                "pageToken": page_token,
+                "maxPageSize": max_page_size,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _parsed_response = typing.cast(
+                    ListDeletedObjectsResponse,
+                    parse_obj_as(
+                        type_=ListDeletedObjectsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                _items = _parsed_response.deleted_objects
+                _parsed_next = _parsed_response.next_page_token
+                _has_next = _parsed_next is not None and _parsed_next != ""
+
+                async def _get_next():
+                    return await self.list_deleted_objects(
+                        page_token=_parsed_next,
                         max_page_size=max_page_size,
                         request_options=request_options,
                     )
