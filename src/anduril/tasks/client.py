@@ -518,7 +518,7 @@ class TasksClient:
             The selector criteria to determine which tasks the agent receives.
 
         heartbeat_interval_ms : typing.Optional[int]
-            The time interval, defined in seconds, that determines the frequency at which to send heartbeat events. Defaults to 30s.
+            The time interval, in milliseconds, that determines the frequency at which to send heartbeat events. Defaults to 30000 (30 seconds).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1153,7 +1153,7 @@ class AsyncTasksClient:
             The selector criteria to determine which tasks the agent receives.
 
         heartbeat_interval_ms : typing.Optional[int]
-            The time interval, defined in seconds, that determines the frequency at which to send heartbeat events. Defaults to 30s.
+            The time interval, in milliseconds, that determines the frequency at which to send heartbeat events. Defaults to 30000 (30 seconds).
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

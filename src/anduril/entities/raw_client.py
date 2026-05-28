@@ -357,9 +357,6 @@ class RawEntitiesClient:
                     object_=symbology, annotation=Symbology, direction="write"
                 ),
             },
-            headers={
-                "content-type": "application/json",
-            },
             request_options=request_options,
             omit=OMIT,
         )
@@ -1214,9 +1211,6 @@ class AsyncRawEntitiesClient:
                 "symbology": convert_and_respect_annotation_metadata(
                     object_=symbology, annotation=Symbology, direction="write"
                 ),
-            },
-            headers={
-                "content-type": "application/json",
             },
             request_options=request_options,
             omit=OMIT,
