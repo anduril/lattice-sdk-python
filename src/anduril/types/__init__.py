@@ -46,7 +46,6 @@ if typing.TYPE_CHECKING:
     from .decorrelated_all import DecorrelatedAll
     from .decorrelated_single import DecorrelatedSingle
     from .decorrelation import Decorrelation
-    from .deleted_object_entry import DeletedObjectEntry
     from .delivery_constraints import DeliveryConstraints
     from .delivery_error import DeliveryError
     from .delivery_error_code import DeliveryErrorCode
@@ -98,7 +97,6 @@ if typing.TYPE_CHECKING:
     from .indicators import Indicators
     from .line_of_bearing import LineOfBearing
     from .linear_ring import LinearRing
-    from .list_deleted_objects_response import ListDeletedObjectsResponse
     from .list_response import ListResponse
     from .lla import Lla
     from .lla_altitude_reference import LlaAltitudeReference
@@ -248,7 +246,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DecorrelatedAll": ".decorrelated_all",
     "DecorrelatedSingle": ".decorrelated_single",
     "Decorrelation": ".decorrelation",
-    "DeletedObjectEntry": ".deleted_object_entry",
     "DeliveryConstraints": ".delivery_constraints",
     "DeliveryError": ".delivery_error",
     "DeliveryErrorCode": ".delivery_error_code",
@@ -300,7 +297,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Indicators": ".indicators",
     "LineOfBearing": ".line_of_bearing",
     "LinearRing": ".linear_ring",
-    "ListDeletedObjectsResponse": ".list_deleted_objects_response",
     "ListResponse": ".list_response",
     "Lla": ".lla",
     "LlaAltitudeReference": ".lla_altitude_reference",
@@ -474,7 +470,6 @@ __all__ = [
     "DecorrelatedAll",
     "DecorrelatedSingle",
     "Decorrelation",
-    "DeletedObjectEntry",
     "DeliveryConstraints",
     "DeliveryError",
     "DeliveryErrorCode",
@@ -526,7 +521,6 @@ __all__ = [
     "Indicators",
     "LineOfBearing",
     "LinearRing",
-    "ListDeletedObjectsResponse",
     "ListResponse",
     "Lla",
     "LlaAltitudeReference",

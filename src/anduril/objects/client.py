@@ -6,8 +6,6 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
-from ..types.deleted_object_entry import DeletedObjectEntry
-from ..types.list_deleted_objects_response import ListDeletedObjectsResponse
 from ..types.list_response import ListResponse
 from ..types.path_metadata import PathMetadata
 from .raw_client import AsyncRawObjectsClient, RawObjectsClient
@@ -92,55 +90,6 @@ class ObjectsClient:
             all_objects_in_mesh=all_objects_in_mesh,
             max_page_size=max_page_size,
             request_options=request_options,
-        )
-
-    def list_deleted_objects(
-        self,
-        *,
-        page_token: typing.Optional[str] = None,
-        max_page_size: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[DeletedObjectEntry, ListDeletedObjectsResponse]:
-        """
-        Returns paginated records of force-distributed objects deleted on the
-        local node. Useful for operators diagnosing why an object visible on
-        one node is missing on another. Each record identifies the exact
-        `(path, checksum)` pair suppressed from re-sync by the distribution
-        manager. Node-scoped: each node returns only its own records.
-
-        Parameters
-        ----------
-        page_token : typing.Optional[str]
-            Opaque cursor returned by a prior response to continue paging.
-
-        max_page_size : typing.Optional[int]
-            Maximum number of records to return in a single response. Server enforces an upper bound.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        SyncPager[DeletedObjectEntry, ListDeletedObjectsResponse]
-            Successful operation
-
-        Examples
-        --------
-        from anduril import Lattice
-
-        client = Lattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
-        response = client.objects.list_deleted_objects()
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
-        """
-        return self._raw_client.list_deleted_objects(
-            page_token=page_token, max_page_size=max_page_size, request_options=request_options
         )
 
     def get_object(
@@ -377,64 +326,6 @@ class AsyncObjectsClient:
             all_objects_in_mesh=all_objects_in_mesh,
             max_page_size=max_page_size,
             request_options=request_options,
-        )
-
-    async def list_deleted_objects(
-        self,
-        *,
-        page_token: typing.Optional[str] = None,
-        max_page_size: typing.Optional[int] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[DeletedObjectEntry, ListDeletedObjectsResponse]:
-        """
-        Returns paginated records of force-distributed objects deleted on the
-        local node. Useful for operators diagnosing why an object visible on
-        one node is missing on another. Each record identifies the exact
-        `(path, checksum)` pair suppressed from re-sync by the distribution
-        manager. Node-scoped: each node returns only its own records.
-
-        Parameters
-        ----------
-        page_token : typing.Optional[str]
-            Opaque cursor returned by a prior response to continue paging.
-
-        max_page_size : typing.Optional[int]
-            Maximum number of records to return in a single response. Server enforces an upper bound.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncPager[DeletedObjectEntry, ListDeletedObjectsResponse]
-            Successful operation
-
-        Examples
-        --------
-        import asyncio
-
-        from anduril import AsyncLattice
-
-        client = AsyncLattice(
-            client_id="YOUR_CLIENT_ID",
-            client_secret="YOUR_CLIENT_SECRET",
-        )
-
-
-        async def main() -> None:
-            response = await client.objects.list_deleted_objects()
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
-
-
-        asyncio.run(main())
-        """
-        return await self._raw_client.list_deleted_objects(
-            page_token=page_token, max_page_size=max_page_size, request_options=request_options
         )
 
     async def get_object(
