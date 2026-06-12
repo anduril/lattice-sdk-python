@@ -1,15 +1,14 @@
 {
-  "cliVersion": "5.40.0",
+  "cliVersion": "5.47.1",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "5.14.4",
+  "generatorVersion": "5.14.14",
   "generatorConfig": {
     "client_class_name": "Lattice",
     "package_name": "anduril"
   },
-  "originGitCommit": "3701de7160b40bbf98bfa071c191177e2ac6be0b",
+  "originGitCommit": "503a7e7025c7bfb24b70f47f2ee9264d97f3e89d",
   "originGitCommitIsDirty": false,
-  "invokedBy": "ci",
-  "requestedVersion": "4.13.0",
-  "ciProvider": "circleci",
-  "sdkVersion": "4.13.0"
+  "invokedBy": "manual",
+  "requestedVersion": "4.14.0",
+  "sdkVersion": "4.14.0"
 }
