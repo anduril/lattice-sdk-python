@@ -4,7 +4,7 @@ dynamic = ["version"]
 
 [tool.poetry]
 name = "anduril-lattice-sdk"
-version = "4.14.0"
+version = "4.15.0"
 description = "HTTP clients for the Anduril Lattice SDK"
 readme = "README.md"
 authors = [
@@ -44,7 +44,7 @@ Repository = 'https://github.com/anduril/lattice-sdk-python'
 
 [tool.poetry.dependencies]
 python = "^3.10"
-aiohttp = { version = ">=3.14.0,<4", optional = true, python = ">=3.10"}
+aiohttp = { version = ">=3.14.1,<4", optional = true, python = ">=3.10"}
 httpx = ">=0.21.2"
 httpx-aiohttp = { version = "0.1.8", optional = true, python = ">=3.10"}
 pydantic = ">= 1.9.2"
@@ -64,6 +64,7 @@ ruff = "==0.11.5"
 [tool.pytest.ini_options]
 testpaths = [ "tests" ]
 asyncio_mode = "auto"
+norecursedirs = [ "src" ]
 markers = [
     "aiohttp: tests that require httpx_aiohttp to be installed",
 ]

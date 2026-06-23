@@ -9,17 +9,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 class Color(UniversalBaseModel):
     red: typing.Optional[float] = pydantic.Field(default=None)
     """
-    The amount of red in the color as a value in the interval [0, 1].
+    The amount of red in the color as a value in the interval [0, 255].
     """
 
     green: typing.Optional[float] = pydantic.Field(default=None)
     """
-    The amount of green in the color as a value in the interval [0, 1].
+    The amount of green in the color as a value in the interval [0, 255].
     """
 
     blue: typing.Optional[float] = pydantic.Field(default=None)
     """
-    The amount of blue in the color as a value in the interval [0, 1].
+    The amount of blue in the color as a value in the interval [0, 255].
     """
 
     alpha: typing.Optional[float] = pydantic.Field(default=None)

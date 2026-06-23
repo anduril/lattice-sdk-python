@@ -84,6 +84,7 @@ if typing.TYPE_CHECKING:
     from .geo_polygon import GeoPolygon
     from .geo_polygon_position import GeoPolygonPosition
     from .geo_shape import GeoShape
+    from .geo_visual_details import GeoVisualDetails
     from .google_protobuf_any import GoogleProtobufAny
     from .group_child import GroupChild
     from .group_details import GroupDetails
@@ -284,6 +285,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GeoPolygon": ".geo_polygon",
     "GeoPolygonPosition": ".geo_polygon_position",
     "GeoShape": ".geo_shape",
+    "GeoVisualDetails": ".geo_visual_details",
     "GoogleProtobufAny": ".google_protobuf_any",
     "GroupChild": ".group_child",
     "GroupDetails": ".group_details",
@@ -508,6 +510,7 @@ __all__ = [
     "GeoPolygon",
     "GeoPolygonPosition",
     "GeoShape",
+    "GeoVisualDetails",
     "GoogleProtobufAny",
     "GroupChild",
     "GroupDetails",
