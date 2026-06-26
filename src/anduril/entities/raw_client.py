@@ -47,6 +47,7 @@ from ..types.route_details import RouteDetails
 from ..types.schedules import Schedules
 from ..types.sensors import Sensors
 from ..types.signal import Signal
+from ..types.statement import Statement
 from ..types.status import Status
 from ..types.supplies import Supplies
 from ..types.symbology import Symbology
@@ -790,6 +791,7 @@ class RawEntitiesClient:
         heartbeat_interval_ms: typing.Optional[int] = OMIT,
         pre_existing_only: typing.Optional[bool] = OMIT,
         components_to_include: typing.Optional[typing.Sequence[str]] = OMIT,
+        filter: typing.Optional[Statement] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[HttpResponse[typing.Iterator[StreamEntitiesResponse]]]:
         """
@@ -824,6 +826,12 @@ class RawEntitiesClient:
         components_to_include : typing.Optional[typing.Sequence[str]]
             list of components to include, leave empty to include all components.
 
+        filter : typing.Optional[Statement]
+            Optional root of a Statement filter expression tree. If provided, only entities matching
+            the filter are streamed. Applied dynamically: an entity that begins matching is delivered
+            as a CREATE, and one that stops matching is delivered as a DELETE. Mirrors the filter on
+            the gRPC StreamEntityComponents endpoint.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -839,6 +847,9 @@ class RawEntitiesClient:
                 "heartbeatIntervalMS": heartbeat_interval_ms,
                 "preExistingOnly": pre_existing_only,
                 "componentsToInclude": components_to_include,
+                "filter": convert_and_respect_annotation_metadata(
+                    object_=filter, annotation=Statement, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",
@@ -1645,6 +1656,7 @@ class AsyncRawEntitiesClient:
         heartbeat_interval_ms: typing.Optional[int] = OMIT,
         pre_existing_only: typing.Optional[bool] = OMIT,
         components_to_include: typing.Optional[typing.Sequence[str]] = OMIT,
+        filter: typing.Optional[Statement] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[StreamEntitiesResponse]]]:
         """
@@ -1679,6 +1691,12 @@ class AsyncRawEntitiesClient:
         components_to_include : typing.Optional[typing.Sequence[str]]
             list of components to include, leave empty to include all components.
 
+        filter : typing.Optional[Statement]
+            Optional root of a Statement filter expression tree. If provided, only entities matching
+            the filter are streamed. Applied dynamically: an entity that begins matching is delivered
+            as a CREATE, and one that stops matching is delivered as a DELETE. Mirrors the filter on
+            the gRPC StreamEntityComponents endpoint.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1694,6 +1712,9 @@ class AsyncRawEntitiesClient:
                 "heartbeatIntervalMS": heartbeat_interval_ms,
                 "preExistingOnly": pre_existing_only,
                 "componentsToInclude": components_to_include,
+                "filter": convert_and_respect_annotation_metadata(
+                    object_=filter, annotation=Statement, direction="write"
+                ),
             },
             headers={
                 "content-type": "application/json",

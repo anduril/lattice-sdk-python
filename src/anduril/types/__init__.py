@@ -20,10 +20,13 @@ if typing.TYPE_CHECKING:
     from .allocation import Allocation
     from .alternate_id import AlternateId
     from .alternate_id_type import AlternateIdType
+    from .and_operation import AndOperation
     from .angle_of_arrival import AngleOfArrival
     from .bad_request_error_body import BadRequestErrorBody
     from .bandwidth import Bandwidth
     from .bandwidth_range import BandwidthRange
+    from .boolean_type import BooleanType
+    from .bounded_shape_type import BoundedShapeType
     from .cancel_request import CancelRequest
     from .classification import Classification
     from .classification_information import ClassificationInformation
@@ -65,6 +68,7 @@ if typing.TYPE_CHECKING:
     from .entity_stream_event import EntityStreamEvent
     from .entity_stream_heartbeat import EntityStreamHeartbeat
     from .enu import Enu
+    from .enum_type import EnumType
     from .error_ellipse import ErrorEllipse
     from .execute_request import ExecuteRequest
     from .field_classification_information import FieldClassificationInformation
@@ -89,6 +93,7 @@ if typing.TYPE_CHECKING:
     from .group_child import GroupChild
     from .group_details import GroupDetails
     from .group_parent import GroupParent
+    from .heading_type import HeadingType
     from .health import Health
     from .health_connection_status import HealthConnectionStatus
     from .health_health_status import HealthHealthStatus
@@ -98,7 +103,10 @@ if typing.TYPE_CHECKING:
     from .indicators import Indicators
     from .line_of_bearing import LineOfBearing
     from .linear_ring import LinearRing
+    from .list_operation import ListOperation
+    from .list_operation_list_comparator import ListOperationListComparator
     from .list_response import ListResponse
+    from .list_type import ListType
     from .lla import Lla
     from .lla_altitude_reference import LlaAltitudeReference
     from .location import Location
@@ -121,8 +129,11 @@ if typing.TYPE_CHECKING:
     from .mode_s import ModeS
     from .munition import Munition
     from .non_primary_membership import NonPrimaryMembership
+    from .not_operation import NotOperation
+    from .numeric_type import NumericType
     from .ontology import Ontology
     from .ontology_template import OntologyTemplate
+    from .or_operation import OrOperation
     from .orbit import Orbit
     from .orbit_mean_elements import OrbitMeanElements
     from .orbit_mean_elements_metadata import OrbitMeanElementsMetadata
@@ -141,11 +152,15 @@ if typing.TYPE_CHECKING:
     from .payloads import Payloads
     from .pose import Pose
     from .position import Position
+    from .position_type import PositionType
     from .power_level import PowerLevel
     from .power_source import PowerSource
     from .power_source_power_status import PowerSourcePowerStatus
     from .power_source_power_type import PowerSourcePowerType
     from .power_state import PowerState
+    from .predicate import Predicate
+    from .predicate_comparator import PredicateComparator
+    from .predicate_set import PredicateSet
     from .primary_correlation import PrimaryCorrelation
     from .primary_membership import PrimaryMembership
     from .principal import Principal
@@ -154,6 +169,7 @@ if typing.TYPE_CHECKING:
     from .pulse_repetition_interval import PulseRepetitionInterval
     from .quaternion import Quaternion
     from .range_rings import RangeRings
+    from .range_type import RangeType
     from .relations import Relations
     from .relationship import Relationship
     from .relationship_type import RelationshipType
@@ -173,8 +189,11 @@ if typing.TYPE_CHECKING:
     from .sensor_sensor_type import SensorSensorType
     from .sensors import Sensors
     from .signal import Signal
+    from .statement import Statement
+    from .statement_set import StatementSet
     from .status import Status
     from .stream_heartbeat import StreamHeartbeat
+    from .string_type import StringType
     from .supplies import Supplies
     from .symbology import Symbology
     from .system import System
@@ -197,6 +216,7 @@ if typing.TYPE_CHECKING:
     from .team import Team
     from .threat import Threat
     from .timestamp import Timestamp
+    from .timestamp_type import TimestampType
     from .tle_parameters import TleParameters
     from .tracked import Tracked
     from .tracked_by import TrackedBy
@@ -205,6 +225,7 @@ if typing.TYPE_CHECKING:
     from .u_int32range import UInt32Range
     from .unauthorized_error_body import UnauthorizedErrorBody
     from .user import User
+    from .value import Value
     from .visual_details import VisualDetails
 _dynamic_imports: typing.Dict[str, str] = {
     "AcmDetails": ".acm_details",
@@ -221,10 +242,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Allocation": ".allocation",
     "AlternateId": ".alternate_id",
     "AlternateIdType": ".alternate_id_type",
+    "AndOperation": ".and_operation",
     "AngleOfArrival": ".angle_of_arrival",
     "BadRequestErrorBody": ".bad_request_error_body",
     "Bandwidth": ".bandwidth",
     "BandwidthRange": ".bandwidth_range",
+    "BooleanType": ".boolean_type",
+    "BoundedShapeType": ".bounded_shape_type",
     "CancelRequest": ".cancel_request",
     "Classification": ".classification",
     "ClassificationInformation": ".classification_information",
@@ -266,6 +290,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EntityStreamEvent": ".entity_stream_event",
     "EntityStreamHeartbeat": ".entity_stream_heartbeat",
     "Enu": ".enu",
+    "EnumType": ".enum_type",
     "ErrorEllipse": ".error_ellipse",
     "ExecuteRequest": ".execute_request",
     "FieldClassificationInformation": ".field_classification_information",
@@ -290,6 +315,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GroupChild": ".group_child",
     "GroupDetails": ".group_details",
     "GroupParent": ".group_parent",
+    "HeadingType": ".heading_type",
     "Health": ".health",
     "HealthConnectionStatus": ".health_connection_status",
     "HealthHealthStatus": ".health_health_status",
@@ -299,7 +325,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Indicators": ".indicators",
     "LineOfBearing": ".line_of_bearing",
     "LinearRing": ".linear_ring",
+    "ListOperation": ".list_operation",
+    "ListOperationListComparator": ".list_operation_list_comparator",
     "ListResponse": ".list_response",
+    "ListType": ".list_type",
     "Lla": ".lla",
     "LlaAltitudeReference": ".lla_altitude_reference",
     "Location": ".location",
@@ -322,8 +351,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ModeS": ".mode_s",
     "Munition": ".munition",
     "NonPrimaryMembership": ".non_primary_membership",
+    "NotOperation": ".not_operation",
+    "NumericType": ".numeric_type",
     "Ontology": ".ontology",
     "OntologyTemplate": ".ontology_template",
+    "OrOperation": ".or_operation",
     "Orbit": ".orbit",
     "OrbitMeanElements": ".orbit_mean_elements",
     "OrbitMeanElementsMetadata": ".orbit_mean_elements_metadata",
@@ -342,11 +374,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Payloads": ".payloads",
     "Pose": ".pose",
     "Position": ".position",
+    "PositionType": ".position_type",
     "PowerLevel": ".power_level",
     "PowerSource": ".power_source",
     "PowerSourcePowerStatus": ".power_source_power_status",
     "PowerSourcePowerType": ".power_source_power_type",
     "PowerState": ".power_state",
+    "Predicate": ".predicate",
+    "PredicateComparator": ".predicate_comparator",
+    "PredicateSet": ".predicate_set",
     "PrimaryCorrelation": ".primary_correlation",
     "PrimaryMembership": ".primary_membership",
     "Principal": ".principal",
@@ -355,6 +391,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PulseRepetitionInterval": ".pulse_repetition_interval",
     "Quaternion": ".quaternion",
     "RangeRings": ".range_rings",
+    "RangeType": ".range_type",
     "Relations": ".relations",
     "Relationship": ".relationship",
     "RelationshipType": ".relationship_type",
@@ -374,8 +411,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SensorSensorType": ".sensor_sensor_type",
     "Sensors": ".sensors",
     "Signal": ".signal",
+    "Statement": ".statement",
+    "StatementSet": ".statement_set",
     "Status": ".status",
     "StreamHeartbeat": ".stream_heartbeat",
+    "StringType": ".string_type",
     "Supplies": ".supplies",
     "Symbology": ".symbology",
     "System": ".system",
@@ -398,6 +438,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Team": ".team",
     "Threat": ".threat",
     "Timestamp": ".timestamp",
+    "TimestampType": ".timestamp_type",
     "TleParameters": ".tle_parameters",
     "Tracked": ".tracked",
     "TrackedBy": ".tracked_by",
@@ -406,6 +447,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UInt32Range": ".u_int32range",
     "UnauthorizedErrorBody": ".unauthorized_error_body",
     "User": ".user",
+    "Value": ".value",
     "VisualDetails": ".visual_details",
 }
 
@@ -446,10 +488,13 @@ __all__ = [
     "Allocation",
     "AlternateId",
     "AlternateIdType",
+    "AndOperation",
     "AngleOfArrival",
     "BadRequestErrorBody",
     "Bandwidth",
     "BandwidthRange",
+    "BooleanType",
+    "BoundedShapeType",
     "CancelRequest",
     "Classification",
     "ClassificationInformation",
@@ -491,6 +536,7 @@ __all__ = [
     "EntityStreamEvent",
     "EntityStreamHeartbeat",
     "Enu",
+    "EnumType",
     "ErrorEllipse",
     "ExecuteRequest",
     "FieldClassificationInformation",
@@ -515,6 +561,7 @@ __all__ = [
     "GroupChild",
     "GroupDetails",
     "GroupParent",
+    "HeadingType",
     "Health",
     "HealthConnectionStatus",
     "HealthHealthStatus",
@@ -524,7 +571,10 @@ __all__ = [
     "Indicators",
     "LineOfBearing",
     "LinearRing",
+    "ListOperation",
+    "ListOperationListComparator",
     "ListResponse",
+    "ListType",
     "Lla",
     "LlaAltitudeReference",
     "Location",
@@ -547,8 +597,11 @@ __all__ = [
     "ModeS",
     "Munition",
     "NonPrimaryMembership",
+    "NotOperation",
+    "NumericType",
     "Ontology",
     "OntologyTemplate",
+    "OrOperation",
     "Orbit",
     "OrbitMeanElements",
     "OrbitMeanElementsMetadata",
@@ -567,11 +620,15 @@ __all__ = [
     "Payloads",
     "Pose",
     "Position",
+    "PositionType",
     "PowerLevel",
     "PowerSource",
     "PowerSourcePowerStatus",
     "PowerSourcePowerType",
     "PowerState",
+    "Predicate",
+    "PredicateComparator",
+    "PredicateSet",
     "PrimaryCorrelation",
     "PrimaryMembership",
     "Principal",
@@ -580,6 +637,7 @@ __all__ = [
     "PulseRepetitionInterval",
     "Quaternion",
     "RangeRings",
+    "RangeType",
     "Relations",
     "Relationship",
     "RelationshipType",
@@ -599,8 +657,11 @@ __all__ = [
     "SensorSensorType",
     "Sensors",
     "Signal",
+    "Statement",
+    "StatementSet",
     "Status",
     "StreamHeartbeat",
+    "StringType",
     "Supplies",
     "Symbology",
     "System",
@@ -623,6 +684,7 @@ __all__ = [
     "Team",
     "Threat",
     "Timestamp",
+    "TimestampType",
     "TleParameters",
     "Tracked",
     "TrackedBy",
@@ -631,5 +693,6 @@ __all__ = [
     "UInt32Range",
     "UnauthorizedErrorBody",
     "User",
+    "Value",
     "VisualDetails",
 ]
