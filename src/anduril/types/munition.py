@@ -18,6 +18,10 @@ class Munition(UniversalBaseModel):
         FieldMetadata(alias="munitionId"),
         pydantic.Field(alias="munitionId", description="Unique munition identifier"),
     ] = None
+    """
+    Unique munition identifier
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Long form name of the munition
@@ -28,6 +32,9 @@ class Munition(UniversalBaseModel):
         FieldMetadata(alias="quantityUnits"),
         pydantic.Field(alias="quantityUnits", description="Number of units"),
     ] = None
+    """
+    Number of units
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

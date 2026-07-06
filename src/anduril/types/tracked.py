@@ -21,11 +21,19 @@ class Tracked(UniversalBaseModel):
         FieldMetadata(alias="trackQualityWrapper"),
         pydantic.Field(alias="trackQualityWrapper", description="Quality score, 0-15, nil if none"),
     ] = None
+    """
+    Quality score, 0-15, nil if none
+    """
+
     sensor_hits: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="sensorHits"),
         pydantic.Field(alias="sensorHits", description="Sensor hits aggregation on the tracked entity."),
     ] = None
+    """
+    Sensor hits aggregation on the tracked entity.
+    """
+
     number_of_objects: typing_extensions.Annotated[
         typing.Optional[UInt32Range],
         FieldMetadata(alias="numberOfObjects"),
@@ -34,6 +42,15 @@ class Tracked(UniversalBaseModel):
             description='Estimated number of objects or units that are represented by this entity. Known as Strength in certain contexts (Link16)\n if UpperBound == LowerBound; (strength = LowerBound)\n If both UpperBound and LowerBound are defined; strength is between LowerBound and UpperBound (represented as string "Strength: 4-5")\n If UpperBound is defined only (LowerBound unset), Strength ≤ UpperBound\n If LowerBound is defined only (UpperBound unset), LowerBound ≤ Strength\n 0 indicates unset.',
         ),
     ] = None
+    """
+    Estimated number of objects or units that are represented by this entity. Known as Strength in certain contexts (Link16)
+     if UpperBound == LowerBound; (strength = LowerBound)
+     If both UpperBound and LowerBound are defined; strength is between LowerBound and UpperBound (represented as string "Strength: 4-5")
+     If UpperBound is defined only (LowerBound unset), Strength ≤ UpperBound
+     If LowerBound is defined only (UpperBound unset), LowerBound ≤ Strength
+     0 indicates unset.
+    """
+
     radar_cross_section: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="radarCrossSection"),
@@ -42,6 +59,11 @@ class Tracked(UniversalBaseModel):
             description="The radar cross section (RCS) is a measure of how detectable an object is by radar. A large RCS indicates an object is more easily\n detected. The unit is “decibels per square meter,” or dBsm",
         ),
     ] = None
+    """
+    The radar cross section (RCS) is a measure of how detectable an object is by radar. A large RCS indicates an object is more easily
+     detected. The unit is “decibels per square meter,” or dBsm
+    """
+
     last_measurement_time: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="lastMeasurementTime"),
@@ -49,6 +71,10 @@ class Tracked(UniversalBaseModel):
             alias="lastMeasurementTime", description="Timestamp of the latest tracking measurement for this entity."
         ),
     ] = None
+    """
+    Timestamp of the latest tracking measurement for this entity.
+    """
+
     line_of_bearing: typing_extensions.Annotated[
         typing.Optional[LineOfBearing],
         FieldMetadata(alias="lineOfBearing"),
@@ -57,6 +83,10 @@ class Tracked(UniversalBaseModel):
             description="The relative position of a track with respect to the entity that is tracking it. Used for tracks that do not yet have a 3D position.\n For this entity (A), being tracked by some entity (B), this LineOfBearing would express a ray from B to A.",
         ),
     ] = None
+    """
+    The relative position of a track with respect to the entity that is tracking it. Used for tracks that do not yet have a 3D position.
+     For this entity (A), being tracked by some entity (B), this LineOfBearing would express a ray from B to A.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

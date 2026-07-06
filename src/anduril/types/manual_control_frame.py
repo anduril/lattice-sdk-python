@@ -28,6 +28,10 @@ class ManualControlFrame(UniversalBaseModel):
         FieldMetadata(alias="taskId"),
         pydantic.Field(alias="taskId", description="The ID of the manual control task this frame belongs to."),
     ] = None
+    """
+    The ID of the manual control task this frame belongs to.
+    """
+
     epoch_micros: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="epochMicros"),
@@ -36,6 +40,13 @@ class ManualControlFrame(UniversalBaseModel):
             description="Unix timestamp in microseconds identifying the control session.\n Increments each time a client opens a new stream for this task.\n Agents should ignore frames with a lower epoch to handle stale streams\n or operator handoffs.",
         ),
     ] = None
+    """
+    Unix timestamp in microseconds identifying the control session.
+     Increments each time a client opens a new stream for this task.
+     Agents should ignore frames with a lower epoch to handle stale streams
+     or operator handoffs.
+    """
+
     sequence: typing.Optional[str] = pydantic.Field(default=None)
     """
     The sequence number for a stream, incremented for each frame.
@@ -50,6 +61,11 @@ class ManualControlFrame(UniversalBaseModel):
             description="The time at which this frame was created.\n Agents can use this to detect stale frame data.",
         ),
     ] = None
+    """
+    The time at which this frame was created.
+     Agents can use this to detect stale frame data.
+    """
+
     specification: typing.Optional[GoogleProtobufAny] = pydantic.Field(default=None)
     """
     The control instructions for this frame, passed through from the client.

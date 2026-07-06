@@ -18,6 +18,9 @@ class User(UniversalBaseModel):
         FieldMetadata(alias="userId"),
         pydantic.Field(alias="userId", description="The User ID associated with this User."),
     ] = None
+    """
+    The User ID associated with this User.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

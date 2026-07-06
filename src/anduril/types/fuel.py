@@ -20,6 +20,10 @@ class Fuel(UniversalBaseModel):
         FieldMetadata(alias="fuelId"),
         pydantic.Field(alias="fuelId", description="Unique fuel identifier"),
     ] = None
+    """
+    Unique fuel identifier
+    """
+
     name: typing.Optional[str] = pydantic.Field(default=None)
     """
     Long form name of the fuel source.
@@ -30,11 +34,19 @@ class Fuel(UniversalBaseModel):
         FieldMetadata(alias="reportedDate"),
         pydantic.Field(alias="reportedDate", description="Timestamp the information was reported"),
     ] = None
+    """
+    Timestamp the information was reported
+    """
+
     amount_gallons: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="amountGallons"),
         pydantic.Field(alias="amountGallons", description="Amount of gallons on hand"),
     ] = None
+    """
+    Amount of gallons on hand
+    """
+
     max_authorized_capacity_gallons: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="maxAuthorizedCapacityGallons"),
@@ -43,6 +55,10 @@ class Fuel(UniversalBaseModel):
             description="How much the asset is allowed to have available (in gallons)",
         ),
     ] = None
+    """
+    How much the asset is allowed to have available (in gallons)
+    """
+
     operational_requirement_gallons: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="operationalRequirementGallons"),
@@ -50,6 +66,10 @@ class Fuel(UniversalBaseModel):
             alias="operationalRequirementGallons", description="Minimum required for operations (in gallons)"
         ),
     ] = None
+    """
+    Minimum required for operations (in gallons)
+    """
+
     data_classification: typing_extensions.Annotated[
         typing.Optional[Classification],
         FieldMetadata(alias="dataClassification"),
@@ -58,11 +78,19 @@ class Fuel(UniversalBaseModel):
             description="Fuel in a single asset may have different levels of classification\n Use case: fuel for a SECRET asset while diesel fuel may be UNCLASSIFIED",
         ),
     ] = None
+    """
+    Fuel in a single asset may have different levels of classification
+     Use case: fuel for a SECRET asset while diesel fuel may be UNCLASSIFIED
+    """
+
     data_source: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="dataSource"),
         pydantic.Field(alias="dataSource", description="Source of information"),
     ] = None
+    """
+    Source of information
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

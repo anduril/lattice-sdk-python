@@ -14,6 +14,9 @@ class TaskStreamRequestTaskTypeTaskTypeUrls(UniversalBaseModel):
         FieldMetadata(alias="taskTypeUrls"),
         pydantic.Field(alias="taskTypeUrls", description="List of exact task type URLs to match."),
     ]
+    """
+    List of exact task type URLs to match.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

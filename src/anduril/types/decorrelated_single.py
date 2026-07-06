@@ -15,6 +15,10 @@ class DecorrelatedSingle(UniversalBaseModel):
         FieldMetadata(alias="entityId"),
         pydantic.Field(alias="entityId", description="The entity that was decorrelated against."),
     ] = None
+    """
+    The entity that was decorrelated against.
+    """
+
     metadata: typing.Optional[CorrelationMetadata] = pydantic.Field(default=None)
     """
     Metadata about the decorrelation.

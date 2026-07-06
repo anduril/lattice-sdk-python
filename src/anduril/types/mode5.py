@@ -22,6 +22,10 @@ class Mode5(UniversalBaseModel):
             description="The validity of the response from the Mode 5 interrogation.",
         ),
     ] = None
+    """
+    The validity of the response from the Mode 5 interrogation.
+    """
+
     mode5: typing.Optional[int] = pydantic.Field(default=None)
     """
     The Mode 5 code assigned to military assets.
@@ -32,6 +36,9 @@ class Mode5(UniversalBaseModel):
         FieldMetadata(alias="mode5PlatformId"),
         pydantic.Field(alias="mode5PlatformId", description="The Mode 5 platform identification code."),
     ] = None
+    """
+    The Mode 5 platform identification code.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

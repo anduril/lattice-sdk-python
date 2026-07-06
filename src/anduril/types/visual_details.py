@@ -19,6 +19,9 @@ class VisualDetails(UniversalBaseModel):
         FieldMetadata(alias="rangeRings"),
         pydantic.Field(alias="rangeRings", description="The range rings to display around an entity."),
     ] = None
+    """
+    The range rings to display around an entity.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

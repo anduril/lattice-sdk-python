@@ -20,6 +20,10 @@ class EntityEventResponse(UniversalBaseModel):
             description="Long-poll session identifier. Use this token to resume polling on subsequent requests.",
         ),
     ] = None
+    """
+    Long-poll session identifier. Use this token to resume polling on subsequent requests.
+    """
+
     entity_events: typing_extensions.Annotated[
         typing.Optional[typing.List[EntityEvent]],
         FieldMetadata(alias="entityEvents"),

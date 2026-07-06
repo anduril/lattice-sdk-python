@@ -34,6 +34,9 @@ class TaskError(UniversalBaseModel):
         FieldMetadata(alias="errorDetails"),
         pydantic.Field(alias="errorDetails", description="Any additional details regarding this error."),
     ] = None
+    """
+    Any additional details regarding this error.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

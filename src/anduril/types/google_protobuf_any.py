@@ -18,6 +18,9 @@ class GoogleProtobufAny(UniversalBaseModel):
         FieldMetadata(alias="@type"),
         pydantic.Field(alias="@type", description="The type of the serialized message."),
     ] = None
+    """
+    The type of the serialized message.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

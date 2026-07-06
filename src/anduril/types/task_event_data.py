@@ -21,6 +21,9 @@ class TaskEventData(UniversalBaseModel):
         FieldMetadata(alias="taskEvent"),
         pydantic.Field(alias="taskEvent", description="The task event that occurred."),
     ] = None
+    """
+    The task event that occurred.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -29,6 +29,11 @@ class Predicate(UniversalBaseModel):
             description="The field_path determines which field on an entity is being referenced in this predicate. For\n example: correlated.primary_entity_id would be primary_entity_id in correlated component.",
         ),
     ] = None
+    """
+    The field_path determines which field on an entity is being referenced in this predicate. For
+     example: correlated.primary_entity_id would be primary_entity_id in correlated component.
+    """
+
     value: typing.Optional["Value"] = pydantic.Field(default=None)
     """
     The value determines the fixed value against which the entity field is to be compared.

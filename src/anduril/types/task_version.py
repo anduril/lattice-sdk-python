@@ -25,6 +25,10 @@ class TaskVersion(UniversalBaseModel):
             description="The unique identifier for this task, used to distinguish it from all other tasks in the system.",
         ),
     ] = None
+    """
+    The unique identifier for this task, used to distinguish it from all other tasks in the system.
+    """
+
     definition_version: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="definitionVersion"),
@@ -33,6 +37,11 @@ class TaskVersion(UniversalBaseModel):
             description="Counter that increments on changes to the task definition.\n Unset (0) initially, starts at 1 on creation, and increments with each update to task fields.",
         ),
     ] = None
+    """
+    Counter that increments on changes to the task definition.
+     Unset (0) initially, starts at 1 on creation, and increments with each update to task fields.
+    """
+
     status_version: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="statusVersion"),
@@ -41,6 +50,10 @@ class TaskVersion(UniversalBaseModel):
             description="Counter that increments on changes to TaskStatus.\n Unset (0) initially, starts at 1 on creation, and increments with each status update.",
         ),
     ] = None
+    """
+    Counter that increments on changes to TaskStatus.
+     Unset (0) initially, starts at 1 on creation, and increments with each status update.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

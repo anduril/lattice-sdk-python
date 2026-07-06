@@ -25,6 +25,9 @@ class TaskStreamRequestStatusFilter(UniversalBaseModel):
         FieldMetadata(alias="filterType"),
         pydantic.Field(alias="filterType", description="The type of filter to apply."),
     ] = None
+    """
+    The type of filter to apply.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

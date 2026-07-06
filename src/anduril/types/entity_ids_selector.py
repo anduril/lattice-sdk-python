@@ -16,6 +16,9 @@ class EntityIdsSelector(UniversalBaseModel):
             alias="entityIds", description="Receive tasks as an assignee for one or more of the supplied entity ids."
         ),
     ] = None
+    """
+    Receive tasks as an assignee for one or more of the supplied entity ids.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

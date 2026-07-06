@@ -17,11 +17,18 @@ class RouteDetails(UniversalBaseModel):
             alias="destinationName", description="Free form text giving the name of the entity's destination"
         ),
     ] = None
+    """
+    Free form text giving the name of the entity's destination
+    """
+
     estimated_arrival_time: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="estimatedArrivalTime"),
         pydantic.Field(alias="estimatedArrivalTime", description="Estimated time of arrival at destination"),
     ] = None
+    """
+    Estimated time of arrival at destination
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

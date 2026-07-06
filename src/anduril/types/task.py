@@ -46,6 +46,10 @@ class Task(UniversalBaseModel):
             description="DEPRECATED: Human readable display name for this task, should be short (<100 chars).",
         ),
     ] = None
+    """
+    DEPRECATED: Human readable display name for this task, should be short (<100 chars).
+    """
+
     specification: typing.Optional[GoogleProtobufAny] = pydantic.Field(default=None)
     """
     The path for the Protobuf task definition, and the complete task data.
@@ -59,16 +63,28 @@ class Task(UniversalBaseModel):
             description="Records who created this task. This field will not change after the task has been created.",
         ),
     ] = None
+    """
+    Records who created this task. This field will not change after the task has been created.
+    """
+
     last_updated_by: typing_extensions.Annotated[
         typing.Optional["Principal"],
         FieldMetadata(alias="lastUpdatedBy"),
         pydantic.Field(alias="lastUpdatedBy", description="Records who updated this task last."),
     ] = None
+    """
+    Records who updated this task last.
+    """
+
     last_update_time: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="lastUpdateTime"),
         pydantic.Field(alias="lastUpdateTime", description="Records the time of last update."),
     ] = None
+    """
+    Records the time of last update.
+    """
+
     status: typing.Optional[TaskStatus] = pydantic.Field(default=None)
     """
     The status of this task.
@@ -82,6 +98,10 @@ class Task(UniversalBaseModel):
             description="If the task has been scheduled to execute, what time it should execute at.",
         ),
     ] = None
+    """
+    If the task has been scheduled to execute, what time it should execute at.
+    """
+
     relations: typing.Optional[Relations] = pydantic.Field(default=None)
     """
     Any related Tasks associated with this, typically includes an assignee for this task and/or a parent.
@@ -100,11 +120,20 @@ class Task(UniversalBaseModel):
             description="If set, execution of this task is managed elsewhere, not by Task Manager.\n In other words, task manager will not attempt to update the assigned agent with execution instructions.",
         ),
     ] = None
+    """
+    If set, execution of this task is managed elsewhere, not by Task Manager.
+     In other words, task manager will not attempt to update the assigned agent with execution instructions.
+    """
+
     create_time: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="createTime"),
         pydantic.Field(alias="createTime", description="Time of task creation."),
     ] = None
+    """
+    Time of task creation.
+    """
+
     replication: typing.Optional[Replication] = pydantic.Field(default=None)
     """
     If populated, designates this to be a replicated task.
@@ -118,6 +147,13 @@ class Task(UniversalBaseModel):
             description="If populated, indicates an initial set of entities that can be used to execute an entity aware task\n For example, an entity Objective, an entity Keep In Zone, etc.\n These will not be updated during execution. If a taskable agent needs continuous updates on the entities from the\n COP, can call entity-manager, or use an AlternateId escape hatch.",
         ),
     ] = None
+    """
+    If populated, indicates an initial set of entities that can be used to execute an entity aware task
+     For example, an entity Objective, an entity Keep In Zone, etc.
+     These will not be updated during execution. If a taskable agent needs continuous updates on the entities from the
+     COP, can call entity-manager, or use an AlternateId escape hatch.
+    """
+
     owner: typing.Optional[Owner] = pydantic.Field(default=None)
     """
     The networked owner of this task. It is used to ensure that linear writes occur on the node responsible
@@ -132,11 +168,18 @@ class Task(UniversalBaseModel):
             description="Sets an optional try strategy for tasks. Use this option to control how Lattice attempts to retry delivery of tasks to assets with intermittent access or network connectivity to your environment.",
         ),
     ] = None
+    """
+    Sets an optional try strategy for tasks. Use this option to control how Lattice attempts to retry delivery of tasks to assets with intermittent access or network connectivity to your environment.
+    """
+
     delivery_state: typing_extensions.Annotated[
         typing.Optional[DeliveryState],
         FieldMetadata(alias="deliveryState"),
         pydantic.Field(alias="deliveryState", description="The current delivery state of a task."),
     ] = None
+    """
+    The current delivery state of a task.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

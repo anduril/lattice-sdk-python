@@ -26,6 +26,10 @@ class Sensor(UniversalBaseModel):
             description="This generally is used to indicate a specific type at a more detailed granularity. E.g. COMInt or LWIR",
         ),
     ] = None
+    """
+    This generally is used to indicate a specific type at a more detailed granularity. E.g. COMInt or LWIR
+    """
+
     operational_state: typing_extensions.Annotated[
         typing.Optional[SensorOperationalState],
         FieldMetadata(alias="operationalState"),
@@ -36,26 +40,45 @@ class Sensor(UniversalBaseModel):
         FieldMetadata(alias="sensorType"),
         pydantic.Field(alias="sensorType", description="The type of sensor"),
     ] = None
+    """
+    The type of sensor
+    """
+
     sensor_description: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="sensorDescription"),
         pydantic.Field(alias="sensorDescription", description="A human readable description of the sensor"),
     ] = None
+    """
+    A human readable description of the sensor
+    """
+
     rf_configuraton: typing_extensions.Annotated[
         typing.Optional[RfConfiguration],
         FieldMetadata(alias="rfConfiguraton"),
         pydantic.Field(alias="rfConfiguraton", description="RF configuration details of the sensor"),
     ] = None
+    """
+    RF configuration details of the sensor
+    """
+
     last_detection_timestamp: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="lastDetectionTimestamp"),
         pydantic.Field(alias="lastDetectionTimestamp", description="Time of the latest detection from the sensor"),
     ] = None
+    """
+    Time of the latest detection from the sensor
+    """
+
     fields_of_view: typing_extensions.Annotated[
         typing.Optional[typing.List[FieldOfView]],
         FieldMetadata(alias="fieldsOfView"),
         pydantic.Field(alias="fieldsOfView", description="Multiple fields of view for a single sensor component"),
     ] = None
+    """
+    Multiple fields of view for a single sensor component
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

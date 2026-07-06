@@ -19,6 +19,9 @@ class Allocation(UniversalBaseModel):
         FieldMetadata(alias="activeAgents"),
         pydantic.Field(alias="activeAgents", description="Agents actively being utilized in a task."),
     ] = None
+    """
+    Agents actively being utilized in a task.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

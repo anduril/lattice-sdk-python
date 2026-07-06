@@ -31,6 +31,12 @@ class TaskQueryResults(UniversalBaseModel):
             description="Incomplete results can be detected by a non-empty nextPageToken field in the query results. In order to retrieve \nthe next page, perform the exact same request as previously and append a pageToken field with the value of \nnextPageToken from the previous page. A new nextPageToken is provided on the following pages until all the \nresults are retrieved.",
         ),
     ] = None
+    """
+    Incomplete results can be detected by a non-empty nextPageToken field in the query results. In order to retrieve 
+    the next page, perform the exact same request as previously and append a pageToken field with the value of 
+    nextPageToken from the previous page. A new nextPageToken is provided on the following pages until all the 
+    results are retrieved.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

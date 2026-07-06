@@ -14,6 +14,9 @@ class Dimensions(UniversalBaseModel):
         FieldMetadata(alias="lengthM"),
         pydantic.Field(alias="lengthM", description="Length of the entity in meters"),
     ] = None
+    """
+    Length of the entity in meters
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -21,6 +21,10 @@ class AcmDetails(UniversalBaseModel):
             description="Used for loosely typed associations, such as assignment to a specific fires unit.\n Limit to 150 characters.",
         ),
     ] = None
+    """
+    Used for loosely typed associations, such as assignment to a specific fires unit.
+     Limit to 150 characters.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

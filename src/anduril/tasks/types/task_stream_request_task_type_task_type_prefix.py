@@ -17,6 +17,9 @@ class TaskStreamRequestTaskTypeTaskTypePrefix(UniversalBaseModel):
             description="Prefix string to match task types. Any task with a type that starts with this prefix will be included.",
         ),
     ]
+    """
+    Prefix string to match task types. Any task with a type that starts with this prefix will be included.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

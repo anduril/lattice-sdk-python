@@ -39,6 +39,10 @@ class TransponderCodes(UniversalBaseModel):
             description="The validity of the response from the Mode 4 interrogation.",
         ),
     ] = None
+    """
+    The validity of the response from the Mode 4 interrogation.
+    """
+
     mode5: typing.Optional[Mode5] = pydantic.Field(default=None)
     """
     The Mode 5 transponder codes.
@@ -49,6 +53,10 @@ class TransponderCodes(UniversalBaseModel):
         FieldMetadata(alias="modeS"),
         pydantic.Field(alias="modeS", description="The Mode S transponder codes."),
     ] = None
+    """
+    The Mode S transponder codes.
+    """
+
     mode_c_altitude_ft: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="modeCAltitudeFt"),
@@ -57,6 +65,10 @@ class TransponderCodes(UniversalBaseModel):
             description="The Mode C altitude reported by the transponder in feet. Mode C provides pressure altitude in 100-foot increments up\n to 10,000 feet MSL. Valid altitudes include 0 ft (sea level). An unset field indicates no Mode C response was received.",
         ),
     ] = None
+    """
+    The Mode C altitude reported by the transponder in feet. Mode C provides pressure altitude in 100-foot increments up
+     to 10,000 feet MSL. Valid altitudes include 0 ft (sea level). An unset field indicates no Mode C response was received.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

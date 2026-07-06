@@ -38,6 +38,10 @@ class ListOperation(UniversalBaseModel):
             description="The list_path specifies the repeated field on an entity to which this operation applies.",
         ),
     ] = None
+    """
+    The list_path specifies the repeated field on an entity to which this operation applies.
+    """
+
     list_comparator: typing_extensions.Annotated[
         typing.Optional[ListOperationListComparator],
         FieldMetadata(alias="listComparator"),
@@ -46,6 +50,11 @@ class ListOperation(UniversalBaseModel):
             description="The list_comparator specifies how to compose the boolean results from the child statement\n for each member of the specified list.",
         ),
     ] = None
+    """
+    The list_comparator specifies how to compose the boolean results from the child statement
+     for each member of the specified list.
+    """
+
     statement: typing.Optional["Statement"] = pydantic.Field(default=None)
     """
     The statement is a new expression tree conceptually rooted at type of the list. It determines

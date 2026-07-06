@@ -15,6 +15,10 @@ class SecondaryCorrelation(UniversalBaseModel):
         FieldMetadata(alias="primaryEntityId"),
         pydantic.Field(alias="primaryEntityId", description="The primary of this correlation."),
     ] = None
+    """
+    The primary of this correlation.
+    """
+
     metadata: typing.Optional[CorrelationMetadata] = pydantic.Field(default=None)
     """
     Metadata about the correlation.

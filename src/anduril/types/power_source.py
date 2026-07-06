@@ -21,11 +21,19 @@ class PowerSource(UniversalBaseModel):
         FieldMetadata(alias="powerStatus"),
         pydantic.Field(alias="powerStatus", description="Status of the power source."),
     ] = None
+    """
+    Status of the power source.
+    """
+
     power_type: typing_extensions.Annotated[
         typing.Optional[PowerSourcePowerType],
         FieldMetadata(alias="powerType"),
         pydantic.Field(alias="powerType", description="Used to determine the type of power source."),
     ] = None
+    """
+    Used to determine the type of power source.
+    """
+
     power_level: typing_extensions.Annotated[
         typing.Optional[PowerLevel],
         FieldMetadata(alias="powerLevel"),
@@ -34,6 +42,10 @@ class PowerSource(UniversalBaseModel):
             description="Power level of the system. If absent, the power level is assumed to be unknown.",
         ),
     ] = None
+    """
+    Power level of the system. If absent, the power level is assumed to be unknown.
+    """
+
     messages: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Set of human-readable messages with status of the power system. Typically this would be used in an error state

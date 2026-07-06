@@ -26,6 +26,10 @@ class ErrorEllipse(UniversalBaseModel):
             description="Defines the distance from the center point of the ellipse to the furthest distance on the perimeter in meters.",
         ),
     ] = None
+    """
+    Defines the distance from the center point of the ellipse to the furthest distance on the perimeter in meters.
+    """
+
     semi_minor_axis_m: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="semiMinorAxisM"),
@@ -34,6 +38,10 @@ class ErrorEllipse(UniversalBaseModel):
             description="Defines the distance from the center point of the ellipse to the shortest distance on the perimeter in meters.",
         ),
     ] = None
+    """
+    Defines the distance from the center point of the ellipse to the shortest distance on the perimeter in meters.
+    """
+
     orientation_d: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="orientationD"),
@@ -42,6 +50,9 @@ class ErrorEllipse(UniversalBaseModel):
             description="The orientation of the semi-major relative to true north in degrees from clockwise: 0-180 due to symmetry across the semi-minor axis.",
         ),
     ] = None
+    """
+    The orientation of the semi-major relative to true north in degrees from clockwise: 0-180 due to symmetry across the semi-minor axis.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

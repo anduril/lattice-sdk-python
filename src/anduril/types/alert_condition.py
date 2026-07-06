@@ -21,6 +21,11 @@ class AlertCondition(UniversalBaseModel):
             description="Short, machine-readable code that describes this condition. This code is intended to provide systems off-asset\n with a lookup key to retrieve more detailed information about the condition.",
         ),
     ] = None
+    """
+    Short, machine-readable code that describes this condition. This code is intended to provide systems off-asset
+     with a lookup key to retrieve more detailed information about the condition.
+    """
+
     description: typing.Optional[str] = pydantic.Field(default=None)
     """
     Human-readable description of this condition. The description is intended for display in the UI for human

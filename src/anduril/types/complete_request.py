@@ -19,6 +19,9 @@ class CompleteRequest(UniversalBaseModel):
         FieldMetadata(alias="taskId"),
         pydantic.Field(alias="taskId", description="ID of the task to complete."),
     ] = None
+    """
+    ID of the task to complete.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

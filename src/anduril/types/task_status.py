@@ -33,6 +33,10 @@ class TaskStatus(UniversalBaseModel):
         FieldMetadata(alias="taskError"),
         pydantic.Field(alias="taskError", description="Any errors associated with the task."),
     ] = None
+    """
+    Any errors associated with the task.
+    """
+
     progress: typing.Optional[GoogleProtobufAny] = pydantic.Field(default=None)
     """
     Any incremental progress on the task, should be from the tasks/v* /progress folder.
@@ -50,6 +54,10 @@ class TaskStatus(UniversalBaseModel):
             alias="startTime", description="Time the task began execution, may not be known even for executing Tasks."
         ),
     ] = None
+    """
+    Time the task began execution, may not be known even for executing Tasks.
+    """
+
     estimate: typing.Optional[GoogleProtobufAny] = pydantic.Field(default=None)
     """
     Any estimate for how the task will progress, should be from tasks/v* /estimates folder.

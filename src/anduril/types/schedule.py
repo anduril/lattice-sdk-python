@@ -25,11 +25,18 @@ class Schedule(UniversalBaseModel):
         FieldMetadata(alias="scheduleId"),
         pydantic.Field(alias="scheduleId", description="A unique identifier for this schedule."),
     ] = None
+    """
+    A unique identifier for this schedule.
+    """
+
     schedule_type: typing_extensions.Annotated[
         typing.Optional[ScheduleScheduleType],
         FieldMetadata(alias="scheduleType"),
         pydantic.Field(alias="scheduleType", description="The schedule type"),
     ] = None
+    """
+    The schedule type
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

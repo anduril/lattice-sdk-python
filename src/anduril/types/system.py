@@ -18,11 +18,19 @@ class System(UniversalBaseModel):
         FieldMetadata(alias="serviceName"),
         pydantic.Field(alias="serviceName", description="Name of the service associated with this System."),
     ] = None
+    """
+    Name of the service associated with this System.
+    """
+
     entity_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="entityId"),
         pydantic.Field(alias="entityId", description="The Entity ID of the System."),
     ] = None
+    """
+    The Entity ID of the System.
+    """
+
     manages_own_scheduling: typing_extensions.Annotated[
         typing.Optional[bool],
         FieldMetadata(alias="managesOwnScheduling"),
@@ -31,6 +39,13 @@ class System(UniversalBaseModel):
             description="Whether the System Principal (for example, an Asset) can own scheduling.\n This means we bypass manager-owned scheduling and defer to the system\n Principal to handle scheduling and give us status updates for the task.\n Regardless of the value defined by the client, the Task Manager will\n determine and set this value appropriately.",
         ),
     ] = None
+    """
+    Whether the System Principal (for example, an Asset) can own scheduling.
+     This means we bypass manager-owned scheduling and defer to the system
+     Principal to handle scheduling and give us status updates for the task.
+     Regardless of the value defined by the client, the Task Manager will
+     determine and set this value appropriately.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

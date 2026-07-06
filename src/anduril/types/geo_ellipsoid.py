@@ -23,6 +23,10 @@ class GeoEllipsoid(UniversalBaseModel):
             description="Defines the distance from the center point to the surface along the forward axis",
         ),
     ] = None
+    """
+    Defines the distance from the center point to the surface along the forward axis
+    """
+
     side_axis_m: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="sideAxisM"),
@@ -31,6 +35,10 @@ class GeoEllipsoid(UniversalBaseModel):
             description="Defines the distance from the center point to the surface along the side axis",
         ),
     ] = None
+    """
+    Defines the distance from the center point to the surface along the side axis
+    """
+
     up_axis_m: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="upAxisM"),
@@ -38,6 +46,9 @@ class GeoEllipsoid(UniversalBaseModel):
             alias="upAxisM", description="Defines the distance from the center point to the surface along the up axis"
         ),
     ] = None
+    """
+    Defines the distance from the center point to the surface along the up axis
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

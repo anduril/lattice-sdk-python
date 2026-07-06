@@ -44,6 +44,10 @@ class ComponentHealth(UniversalBaseModel):
             description="The last update time for this specific component.\n If this timestamp is unset, the data is assumed to be most recent",
         ),
     ] = None
+    """
+    The last update time for this specific component.
+     If this timestamp is unset, the data is assumed to be most recent
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

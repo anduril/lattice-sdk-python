@@ -19,21 +19,36 @@ class RangeRings(UniversalBaseModel):
         FieldMetadata(alias="minDistanceM"),
         pydantic.Field(alias="minDistanceM", description="The minimum range ring distance, specified in meters."),
     ] = None
+    """
+    The minimum range ring distance, specified in meters.
+    """
+
     max_distance_m: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="maxDistanceM"),
         pydantic.Field(alias="maxDistanceM", description="The maximum range ring distance, specified in meters."),
     ] = None
+    """
+    The maximum range ring distance, specified in meters.
+    """
+
     ring_count: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="ringCount"),
         pydantic.Field(alias="ringCount", description="The count of range rings."),
     ] = None
+    """
+    The count of range rings.
+    """
+
     ring_line_color: typing_extensions.Annotated[
         typing.Optional[Color],
         FieldMetadata(alias="ringLineColor"),
         pydantic.Field(alias="ringLineColor", description="The color of range rings, specified in hex string."),
     ] = None
+    """
+    The color of range rings, specified in hex string.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
