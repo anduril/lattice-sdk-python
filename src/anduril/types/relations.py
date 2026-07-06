@@ -26,6 +26,9 @@ class Relations(UniversalBaseModel):
         FieldMetadata(alias="parentTaskId"),
         pydantic.Field(alias="parentTaskId", description="Identifies the parent task if the task is a sub-task."),
     ] = None
+    """
+    Identifies the parent task if the task is a sub-task.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

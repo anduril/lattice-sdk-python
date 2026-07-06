@@ -22,6 +22,11 @@ class FieldClassificationInformation(UniversalBaseModel):
             description="Proto field path which is the string representation of a field.\n > example: signal.bandwidth_hz would be bandwidth_hz in the signal component",
         ),
     ] = None
+    """
+    Proto field path which is the string representation of a field.
+     > example: signal.bandwidth_hz would be bandwidth_hz in the signal component
+    """
+
     classification_information: typing_extensions.Annotated[
         typing.Optional[ClassificationInformation],
         FieldMetadata(alias="classificationInformation"),
@@ -30,6 +35,9 @@ class FieldClassificationInformation(UniversalBaseModel):
             description="The information which makes up the field level classification marking.",
         ),
     ] = None
+    """
+    The information which makes up the field level classification marking.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

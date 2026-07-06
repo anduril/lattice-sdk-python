@@ -21,6 +21,10 @@ class DeliveryConstraints(UniversalBaseModel):
             alias="deliverAfter", description="Optional earliest time the task can attempt to be delivered."
         ),
     ] = None
+    """
+    Optional earliest time the task can attempt to be delivered.
+    """
+
     deliver_before: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="deliverBefore"),
@@ -29,6 +33,12 @@ class DeliveryConstraints(UniversalBaseModel):
             description="The latest time by which the task should be delivered.\n If this deadline passes without successful delivery of the task, then the task will time\n out with DELIVERY_ERROR_CODE_TIMEOUT.\n This field is only required for tasks with retry strategies.",
         ),
     ] = None
+    """
+    The latest time by which the task should be delivered.
+     If this deadline passes without successful delivery of the task, then the task will time
+     out with DELIVERY_ERROR_CODE_TIMEOUT.
+     This field is only required for tasks with retry strategies.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -19,6 +19,11 @@ class PayloadConfiguration(UniversalBaseModel):
             description="Identifying ID for the capability.\n This ID may be used multiple times to represent payloads that are the same capability but have different operational states",
         ),
     ] = None
+    """
+    Identifying ID for the capability.
+     This ID may be used multiple times to represent payloads that are the same capability but have different operational states
+    """
+
     quantity: typing.Optional[int] = pydantic.Field(default=None)
     """
     The number of payloads currently available in the configuration.
@@ -31,16 +36,27 @@ class PayloadConfiguration(UniversalBaseModel):
             alias="effectiveEnvironment", description="The target environments the configuration is effective against."
         ),
     ] = None
+    """
+    The target environments the configuration is effective against.
+    """
+
     payload_operational_state: typing_extensions.Annotated[
         typing.Optional[PayloadConfigurationPayloadOperationalState],
         FieldMetadata(alias="payloadOperationalState"),
         pydantic.Field(alias="payloadOperationalState", description="The operational state of this payload."),
     ] = None
+    """
+    The operational state of this payload.
+    """
+
     payload_description: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="payloadDescription"),
         pydantic.Field(alias="payloadDescription", description="A human readable description of the payload"),
     ] = None
+    """
+    A human readable description of the payload
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

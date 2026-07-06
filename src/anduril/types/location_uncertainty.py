@@ -23,6 +23,11 @@ class LocationUncertainty(UniversalBaseModel):
             description="Positional covariance represented by the upper triangle of the covariance matrix. It is valid to populate\n only the diagonal of the matrix if the full covariance matrix is unknown.",
         ),
     ] = None
+    """
+    Positional covariance represented by the upper triangle of the covariance matrix. It is valid to populate
+     only the diagonal of the matrix if the full covariance matrix is unknown.
+    """
+
     velocity_enu_cov: typing_extensions.Annotated[
         typing.Optional[EntityManagerTMat3],
         FieldMetadata(alias="velocityEnuCov"),
@@ -31,6 +36,11 @@ class LocationUncertainty(UniversalBaseModel):
             description="Velocity covariance represented by the upper triangle of the covariance matrix. It is valid to populate\n only the diagonal of the matrix if the full covariance matrix is unknown.",
         ),
     ] = None
+    """
+    Velocity covariance represented by the upper triangle of the covariance matrix. It is valid to populate
+     only the diagonal of the matrix if the full covariance matrix is unknown.
+    """
+
     position_error_ellipse: typing_extensions.Annotated[
         typing.Optional[ErrorEllipse],
         FieldMetadata(alias="positionErrorEllipse"),
@@ -39,6 +49,9 @@ class LocationUncertainty(UniversalBaseModel):
             description="An ellipse that describes the certainty probability and error boundary for a given geolocation.",
         ),
     ] = None
+    """
+    An ellipse that describes the certainty probability and error boundary for a given geolocation.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

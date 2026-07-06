@@ -24,6 +24,11 @@ class TrackedBy(UniversalBaseModel):
             description="Sensor details of the tracking entity's sensors that were active and tracking the tracked entity. This may be\n a subset of the total sensors available on the tracking entity.",
         ),
     ] = None
+    """
+    Sensor details of the tracking entity's sensors that were active and tracking the tracked entity. This may be
+     a subset of the total sensors available on the tracking entity.
+    """
+
     last_measurement_timestamp: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="lastMeasurementTimestamp"),
@@ -32,6 +37,9 @@ class TrackedBy(UniversalBaseModel):
             description="Latest time that any sensor in actively_tracking_sensors detected the tracked entity.",
         ),
     ] = None
+    """
+    Latest time that any sensor in actively_tracking_sensors detected the tracked entity.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

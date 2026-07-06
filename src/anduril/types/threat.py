@@ -18,6 +18,9 @@ class Threat(UniversalBaseModel):
         FieldMetadata(alias="isThreat"),
         pydantic.Field(alias="isThreat", description="Indicates that the entity has been determined to be a threat."),
     ] = None
+    """
+    Indicates that the entity has been determined to be a threat.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

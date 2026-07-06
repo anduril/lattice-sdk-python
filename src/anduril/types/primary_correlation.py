@@ -14,6 +14,9 @@ class PrimaryCorrelation(UniversalBaseModel):
         FieldMetadata(alias="secondaryEntityIds"),
         pydantic.Field(alias="secondaryEntityIds", description="The secondary entity IDs part of this correlation."),
     ] = None
+    """
+    The secondary entity IDs part of this correlation.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

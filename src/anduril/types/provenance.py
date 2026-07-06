@@ -19,11 +19,19 @@ class Provenance(UniversalBaseModel):
         FieldMetadata(alias="integrationName"),
         pydantic.Field(alias="integrationName", description="Name of the integration that produced this entity"),
     ] = None
+    """
+    Name of the integration that produced this entity
+    """
+
     data_type: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="dataType"),
         pydantic.Field(alias="dataType", description="Source data type of this entity. Examples: ADSB, Link16, etc."),
     ] = None
+    """
+    Source data type of this entity. Examples: ADSB, Link16, etc.
+    """
+
     source_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="sourceId"),
@@ -31,6 +39,10 @@ class Provenance(UniversalBaseModel):
             alias="sourceId", description="An ID that allows an element from a source to be uniquely identified"
         ),
     ] = None
+    """
+    An ID that allows an element from a source to be uniquely identified
+    """
+
     source_update_time: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="sourceUpdateTime"),
@@ -39,6 +51,12 @@ class Provenance(UniversalBaseModel):
             description="The time, according to the source system, that the data in the entity was last modified. Generally, this should\n be the time that the source-reported time of validity of the data in the entity. This field must be\n updated with every change to the entity or else Entity Manager will discard the update.",
         ),
     ] = None
+    """
+    The time, according to the source system, that the data in the entity was last modified. Generally, this should
+     be the time that the source-reported time of validity of the data in the entity. This field must be
+     updated with every change to the entity or else Entity Manager will discard the update.
+    """
+
     source_description: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="sourceDescription"),
@@ -47,6 +65,9 @@ class Provenance(UniversalBaseModel):
             description="Description of the modification source. In the case of a user this is the email address.",
         ),
     ] = None
+    """
+    Description of the modification source. In the case of a user this is the email address.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

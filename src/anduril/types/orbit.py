@@ -18,6 +18,9 @@ class Orbit(UniversalBaseModel):
             description="Orbit Mean Elements data, analogous to the Orbit Mean Elements Message in CCSDS 502.0-B-3",
         ),
     ] = None
+    """
+    Orbit Mean Elements data, analogous to the Orbit Mean Elements Message in CCSDS 502.0-B-3
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -15,6 +15,10 @@ class MediaItem(UniversalBaseModel):
         FieldMetadata(alias="itemIdentifier"),
         pydantic.Field(alias="itemIdentifier", description="A unique identifier for this mediaItem."),
     ] = None
+    """
+    A unique identifier for this mediaItem.
+    """
+
     type: typing.Optional[MediaItemType] = pydantic.Field(default=None)
     """
     The type of media for this item.
@@ -28,6 +32,9 @@ class MediaItem(UniversalBaseModel):
             description="The path, relative to the environment base URL, where media related to an entity can be accessed",
         ),
     ] = None
+    """
+    The path, relative to the environment base URL, where media related to an entity can be accessed
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -22,11 +22,19 @@ class Ontology(UniversalBaseModel):
             description="A string that describes the entity's high-level type with natural language.",
         ),
     ] = None
+    """
+    A string that describes the entity's high-level type with natural language.
+    """
+
     specific_type: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="specificType"),
         pydantic.Field(alias="specificType", description="A string that describes the entity's exact model or type."),
     ] = None
+    """
+    A string that describes the entity's exact model or type.
+    """
+
     template: typing.Optional[OntologyTemplate] = pydantic.Field(default=None)
     """
     The template used when creating this entity. Specifies minimum required components.

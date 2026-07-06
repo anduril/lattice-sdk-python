@@ -33,6 +33,9 @@ class DeliveryState(UniversalBaseModel):
             alias="deliveryConstraints", description="Optional scheduling constraints for Lattice delivery of the task."
         ),
     ] = None
+    """
+    Optional scheduling constraints for Lattice delivery of the task.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

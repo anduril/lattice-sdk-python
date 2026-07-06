@@ -20,6 +20,9 @@ class TaskDefinition(UniversalBaseModel):
             alias="taskSpecificationUrl", description="Url path must be prefixed with `type.googleapis.com/`."
         ),
     ] = None
+    """
+    Url path must be prefixed with `type.googleapis.com/`.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

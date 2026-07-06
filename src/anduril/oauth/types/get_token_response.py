@@ -36,6 +36,10 @@ class GetTokenResponse(UniversalBaseModel):
             alias="not-before-policy", description="Enforce that a token cannot be used before a specific unixtime"
         ),
     ] = None
+    """
+    Enforce that a token cannot be used before a specific unixtime
+    """
+
     scope: typing.Optional[str] = pydantic.Field(default=None)
     """
     The scope of the access token

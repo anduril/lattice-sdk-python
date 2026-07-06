@@ -19,6 +19,9 @@ class Replication(UniversalBaseModel):
         FieldMetadata(alias="staleTime"),
         pydantic.Field(alias="staleTime", description="The time by which this task should be assumed to be stale."),
     ] = None
+    """
+    The time by which this task should be assumed to be stale.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

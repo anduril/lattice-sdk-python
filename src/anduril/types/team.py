@@ -19,6 +19,10 @@ class Team(UniversalBaseModel):
         FieldMetadata(alias="entityId"),
         pydantic.Field(alias="entityId", description="Entity ID of the team"),
     ] = None
+    """
+    Entity ID of the team
+    """
+
     members: typing.Optional[typing.List[Agent]] = None
 
     if IS_PYDANTIC_V2:

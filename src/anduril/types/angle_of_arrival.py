@@ -23,6 +23,11 @@ class AngleOfArrival(UniversalBaseModel):
             description="Origin (LLA) and attitude (relative to ENU) of a ray pointing towards the detection. The attitude represents a\n forward-left-up (FLU) frame where the x-axis (1, 0, 0) is pointing towards the target.",
         ),
     ] = None
+    """
+    Origin (LLA) and attitude (relative to ENU) of a ray pointing towards the detection. The attitude represents a
+     forward-left-up (FLU) frame where the x-axis (1, 0, 0) is pointing towards the target.
+    """
+
     bearing_elevation_covariance_rad2: typing_extensions.Annotated[
         typing.Optional[TMat2],
         FieldMetadata(alias="bearingElevationCovarianceRad2"),
@@ -31,6 +36,13 @@ class AngleOfArrival(UniversalBaseModel):
             description="Bearing/elevation covariance matrix where bearing is defined in radians CCW+ about the z-axis from the x-axis of FLU frame\n and elevation is positive down from the FL/XY plane.\n mxx = bearing variance in rad^2\n mxy = bearing/elevation covariance in rad^2\n myy = elevation variance in rad^2",
         ),
     ] = None
+    """
+    Bearing/elevation covariance matrix where bearing is defined in radians CCW+ about the z-axis from the x-axis of FLU frame
+     and elevation is positive down from the FL/XY plane.
+     mxx = bearing variance in rad^2
+     mxy = bearing/elevation covariance in rad^2
+     myy = elevation variance in rad^2
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

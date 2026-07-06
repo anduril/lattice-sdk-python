@@ -21,6 +21,10 @@ class CancelRequest(UniversalBaseModel):
         FieldMetadata(alias="taskId"),
         pydantic.Field(alias="taskId", description="The unique task ID of the task to cancel."),
     ] = None
+    """
+    The unique task ID of the task to cancel.
+    """
+
     assignee: typing.Optional["Principal"] = pydantic.Field(default=None)
     """
     The assignee of the Task. Useful for agent routing where an endpoint owns multiple agents,

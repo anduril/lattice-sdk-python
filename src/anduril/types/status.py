@@ -21,6 +21,11 @@ class Status(UniversalBaseModel):
             description='A string that describes the activity that the entity is performing.\n Examples include "RECONNAISSANCE", "INTERDICTION", "RETURN TO BASE (RTB)", "PREPARING FOR LAUNCH".',
         ),
     ] = None
+    """
+    A string that describes the activity that the entity is performing.
+     Examples include "RECONNAISSANCE", "INTERDICTION", "RETURN TO BASE (RTB)", "PREPARING FOR LAUNCH".
+    """
+
     role: typing.Optional[str] = pydantic.Field(default=None)
     """
     A human-readable string that describes the role the entity is currently performing. E.g. "Team Member", "Commander".

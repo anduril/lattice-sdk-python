@@ -31,11 +31,19 @@ class Signal(UniversalBaseModel):
         FieldMetadata(alias="bandwidthHz"),
         pydantic.Field(alias="bandwidthHz", description="Indicates the bandwidth of a signal (Hz)."),
     ] = None
+    """
+    Indicates the bandwidth of a signal (Hz).
+    """
+
     signal_to_noise_ratio: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="signalToNoiseRatio"),
         pydantic.Field(alias="signalToNoiseRatio", description="Indicates the signal to noise (SNR) of this signal."),
     ] = None
+    """
+    Indicates the signal to noise (SNR) of this signal.
+    """
+
     line_of_bearing: typing_extensions.Annotated[
         typing.Optional[LineOfBearing], FieldMetadata(alias="lineOfBearing"), pydantic.Field(alias="lineOfBearing")
     ] = None
@@ -45,21 +53,36 @@ class Signal(UniversalBaseModel):
         FieldMetadata(alias="emitterNotations"),
         pydantic.Field(alias="emitterNotations", description="Emitter notations associated with this entity."),
     ] = None
+    """
+    Emitter notations associated with this entity.
+    """
+
     pulse_width_s: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="pulseWidthS"),
         pydantic.Field(alias="pulseWidthS", description="length in time of a single pulse"),
     ] = None
+    """
+    length in time of a single pulse
+    """
+
     pulse_repetition_interval: typing_extensions.Annotated[
         typing.Optional[PulseRepetitionInterval],
         FieldMetadata(alias="pulseRepetitionInterval"),
         pydantic.Field(alias="pulseRepetitionInterval", description="length in time between the start of two pulses"),
     ] = None
+    """
+    length in time between the start of two pulses
+    """
+
     scan_characteristics: typing_extensions.Annotated[
         typing.Optional[ScanCharacteristics],
         FieldMetadata(alias="scanCharacteristics"),
         pydantic.Field(alias="scanCharacteristics", description="describes how a signal is observing the environment"),
     ] = None
+    """
+    describes how a signal is observing the environment
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

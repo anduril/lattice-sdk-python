@@ -22,6 +22,10 @@ class TargetPriority(UniversalBaseModel):
             alias="highValueTarget", description="Describes the target priority in relation to high value target lists."
         ),
     ] = None
+    """
+    Describes the target priority in relation to high value target lists.
+    """
+
     threat: typing.Optional[Threat] = pydantic.Field(default=None)
     """
     Describes whether the entity should be treated as a threat

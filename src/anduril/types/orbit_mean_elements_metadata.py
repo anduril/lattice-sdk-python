@@ -17,6 +17,10 @@ class OrbitMeanElementsMetadata(UniversalBaseModel):
         FieldMetadata(alias="creationDate"),
         pydantic.Field(alias="creationDate", description="Creation date/time in UTC"),
     ] = None
+    """
+    Creation date/time in UTC
+    """
+
     originator: typing.Optional[str] = pydantic.Field(default=None)
     """
     Creating agency or operator
@@ -27,11 +31,19 @@ class OrbitMeanElementsMetadata(UniversalBaseModel):
         FieldMetadata(alias="messageId"),
         pydantic.Field(alias="messageId", description="ID that uniquely identifies a message from a given originator."),
     ] = None
+    """
+    ID that uniquely identifies a message from a given originator.
+    """
+
     ref_frame: typing_extensions.Annotated[
         typing.Optional[OrbitMeanElementsMetadataRefFrame],
         FieldMetadata(alias="refFrame"),
         pydantic.Field(alias="refFrame", description="Reference frame, assumed to be Earth-centered"),
     ] = None
+    """
+    Reference frame, assumed to be Earth-centered
+    """
+
     ref_frame_epoch: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="refFrameEpoch"),
@@ -40,6 +52,10 @@ class OrbitMeanElementsMetadata(UniversalBaseModel):
             description="Reference frame epoch in UTC - mandatory only if not intrinsic to frame definition",
         ),
     ] = None
+    """
+    Reference frame epoch in UTC - mandatory only if not intrinsic to frame definition
+    """
+
     mean_element_theory: typing_extensions.Annotated[
         typing.Optional[OrbitMeanElementsMetadataMeanElementTheory],
         FieldMetadata(alias="meanElementTheory"),

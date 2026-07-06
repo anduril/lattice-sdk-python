@@ -17,6 +17,10 @@ class HighValueTargetMatch(UniversalBaseModel):
             description="The ID of the high value target list that matches the target description.",
         ),
     ] = None
+    """
+    The ID of the high value target list that matches the target description.
+    """
+
     high_value_target_description_id: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="highValueTargetDescriptionId"),
@@ -25,6 +29,10 @@ class HighValueTargetMatch(UniversalBaseModel):
             description="The ID of the specific high value target description within a high value target list that was matched against.\n The ID is considered to be a globally unique identifier across all high value target IDs.",
         ),
     ] = None
+    """
+    The ID of the specific high value target description within a high value target list that was matched against.
+     The ID is considered to be a globally unique identifier across all high value target IDs.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -29,6 +29,11 @@ class Principal(UniversalBaseModel):
             description='The Principal _this_ Principal is acting on behalf of.\n\n Likely only populated once in the nesting (i.e. the "on_behalf_of" Principal would not have another "on_behalf_of" in most cases).',
         ),
     ] = None
+    """
+    The Principal _this_ Principal is acting on behalf of.
+    
+     Likely only populated once in the nesting (i.e. the "on_behalf_of" Principal would not have another "on_behalf_of" in most cases).
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

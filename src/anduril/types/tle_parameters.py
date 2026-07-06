@@ -14,6 +14,10 @@ class TleParameters(UniversalBaseModel):
         FieldMetadata(alias="ephemerisType"),
         pydantic.Field(alias="ephemerisType", description="Integer specifying TLE ephemeris type"),
     ] = None
+    """
+    Integer specifying TLE ephemeris type
+    """
+
     classification_type: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="classificationType"),
@@ -21,11 +25,19 @@ class TleParameters(UniversalBaseModel):
             alias="classificationType", description="User-defined free-text message classification/caveats of this TLE"
         ),
     ] = None
+    """
+    User-defined free-text message classification/caveats of this TLE
+    """
+
     norad_cat_id: typing_extensions.Annotated[
         typing.Optional[int],
         FieldMetadata(alias="noradCatId"),
         pydantic.Field(alias="noradCatId", description="Norad catalog number: integer up to nine digits."),
     ] = None
+    """
+    Norad catalog number: integer up to nine digits.
+    """
+
     element_set_no: typing_extensions.Annotated[
         typing.Optional[int], FieldMetadata(alias="elementSetNo"), pydantic.Field(alias="elementSetNo")
     ] = None
@@ -34,6 +46,10 @@ class TleParameters(UniversalBaseModel):
         FieldMetadata(alias="revAtEpoch"),
         pydantic.Field(alias="revAtEpoch", description="Optional: revolution number"),
     ] = None
+    """
+    Optional: revolution number
+    """
+
     bstar: typing.Optional[float] = pydantic.Field(default=None)
     """
     Drag parameter for SGP-4 in units 1 / Earth radii
@@ -49,6 +65,10 @@ class TleParameters(UniversalBaseModel):
         FieldMetadata(alias="meanMotionDot"),
         pydantic.Field(alias="meanMotionDot", description="First time derivative of mean motion in rev / day^2"),
     ] = None
+    """
+    First time derivative of mean motion in rev / day^2
+    """
+
     mean_motion_ddot: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="meanMotionDdot"),
@@ -57,6 +77,10 @@ class TleParameters(UniversalBaseModel):
             description="Second time derivative of mean motion in rev / day^3. For use with SGP or PPT3.",
         ),
     ] = None
+    """
+    Second time derivative of mean motion in rev / day^3. For use with SGP or PPT3.
+    """
+
     agom: typing.Optional[float] = pydantic.Field(default=None)
     """
     Solar radiation pressure coefficient A_gamma / m in m^2 / kg. For use with SGP4-XP.

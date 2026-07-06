@@ -19,11 +19,18 @@ class GeoVisualDetails(UniversalBaseModel):
         FieldMetadata(alias="fillColor"),
         pydantic.Field(alias="fillColor", description="Describes the fill color of a geo-entity."),
     ] = None
+    """
+    Describes the fill color of a geo-entity.
+    """
+
     line_color: typing_extensions.Annotated[
         typing.Optional[Color],
         FieldMetadata(alias="lineColor"),
         pydantic.Field(alias="lineColor", description="Describes the line color of a geo-entity."),
     ] = None
+    """
+    Describes the line color of a geo-entity.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

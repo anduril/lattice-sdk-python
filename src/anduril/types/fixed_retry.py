@@ -21,6 +21,9 @@ class FixedRetry(UniversalBaseModel):
             description="Specifies the interval between retries. A default interval of 5 seconds is used if this field is not set.",
         ),
     ] = None
+    """
+    Specifies the interval between retries. A default interval of 5 seconds is used if this field is not set.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

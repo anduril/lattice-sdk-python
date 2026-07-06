@@ -22,6 +22,11 @@ class Lla(UniversalBaseModel):
             description="Meaning of alt.\n altitude in meters above either WGS84 or EGM96, use altitude_reference to\n determine what zero means.",
         ),
     ] = None
+    """
+    Meaning of alt.
+     altitude in meters above either WGS84 or EGM96, use altitude_reference to
+     determine what zero means.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

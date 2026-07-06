@@ -17,6 +17,10 @@ class CorrelationMembership(UniversalBaseModel):
         FieldMetadata(alias="correlationSetId"),
         pydantic.Field(alias="correlationSetId", description="The ID of the correlation set this entity belongs to."),
     ] = None
+    """
+    The ID of the correlation set this entity belongs to.
+    """
+
     primary: typing.Optional[PrimaryMembership] = pydantic.Field(default=None)
     """
     This entity is the primary of a correlation set meaning that it serves as the representative
@@ -31,6 +35,11 @@ class CorrelationMembership(UniversalBaseModel):
             description="This entity is not the primary of the correlation set. Note that there may not\n be a primary at all.",
         ),
     ] = None
+    """
+    This entity is not the primary of the correlation set. Note that there may not
+     be a primary at all.
+    """
+
     metadata: typing.Optional[CorrelationMetadata] = pydantic.Field(default=None)
     """
     Additional metadata on this correlation.

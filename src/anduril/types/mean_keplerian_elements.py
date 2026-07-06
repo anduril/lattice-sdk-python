@@ -20,6 +20,10 @@ class MeanKeplerianElements(UniversalBaseModel):
         FieldMetadata(alias="semiMajorAxisKm"),
         pydantic.Field(alias="semiMajorAxisKm", description="Preferred: semi major axis in kilometers"),
     ] = None
+    """
+    Preferred: semi major axis in kilometers
+    """
+
     mean_motion: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="meanMotion"),
@@ -28,27 +32,47 @@ class MeanKeplerianElements(UniversalBaseModel):
             description="If using SGP/SGP4, provide the Keplerian Mean Motion in revolutions per day",
         ),
     ] = None
+    """
+    If using SGP/SGP4, provide the Keplerian Mean Motion in revolutions per day
+    """
+
     eccentricity: typing.Optional[float] = None
     inclination_deg: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="inclinationDeg"),
         pydantic.Field(alias="inclinationDeg", description="Angle of inclination in deg"),
     ] = None
+    """
+    Angle of inclination in deg
+    """
+
     ra_of_asc_node_deg: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="raOfAscNodeDeg"),
         pydantic.Field(alias="raOfAscNodeDeg", description="Right ascension of the ascending node in deg"),
     ] = None
+    """
+    Right ascension of the ascending node in deg
+    """
+
     arg_of_pericenter_deg: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="argOfPericenterDeg"),
         pydantic.Field(alias="argOfPericenterDeg", description="Argument of pericenter in deg"),
     ] = None
+    """
+    Argument of pericenter in deg
+    """
+
     mean_anomaly_deg: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="meanAnomalyDeg"),
         pydantic.Field(alias="meanAnomalyDeg", description="Mean anomaly in deg"),
     ] = None
+    """
+    Mean anomaly in deg
+    """
+
     gm: typing.Optional[float] = pydantic.Field(default=None)
     """
     Optional: gravitational coefficient (Gravitational Constant x central mass) in kg^3 / s^2

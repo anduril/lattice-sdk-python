@@ -22,11 +22,19 @@ class Position(UniversalBaseModel):
         FieldMetadata(alias="latitudeDegrees"),
         pydantic.Field(alias="latitudeDegrees", description="WGS84 geodetic latitude in decimal degrees."),
     ] = None
+    """
+    WGS84 geodetic latitude in decimal degrees.
+    """
+
     longitude_degrees: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="longitudeDegrees"),
         pydantic.Field(alias="longitudeDegrees", description="WGS84 longitude in decimal degrees."),
     ] = None
+    """
+    WGS84 longitude in decimal degrees.
+    """
+
     altitude_hae_meters: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="altitudeHaeMeters"),
@@ -35,6 +43,11 @@ class Position(UniversalBaseModel):
             description="altitude as height above ellipsoid (WGS84) in meters. DoubleValue wrapper is used to distinguish optional from\n default 0.",
         ),
     ] = None
+    """
+    altitude as height above ellipsoid (WGS84) in meters. DoubleValue wrapper is used to distinguish optional from
+     default 0.
+    """
+
     altitude_agl_meters: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="altitudeAglMeters"),
@@ -43,6 +56,12 @@ class Position(UniversalBaseModel):
             description="Altitude as AGL (Above Ground Level) if the upstream data source has this value set. This value represents the\n entity's height above the terrain. This is typically measured with a radar altimeter or by using a terrain tile\n set lookup. If the value is not set from the upstream, this value is not set.",
         ),
     ] = None
+    """
+    Altitude as AGL (Above Ground Level) if the upstream data source has this value set. This value represents the
+     entity's height above the terrain. This is typically measured with a radar altimeter or by using a terrain tile
+     set lookup. If the value is not set from the upstream, this value is not set.
+    """
+
     altitude_asf_meters: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="altitudeAsfMeters"),
@@ -51,6 +70,11 @@ class Position(UniversalBaseModel):
             description="Altitude as ASF (Above Sea Floor) if the upstream data source has this value set. If the value is not set from the upstream, this value is\n not set.",
         ),
     ] = None
+    """
+    Altitude as ASF (Above Sea Floor) if the upstream data source has this value set. If the value is not set from the upstream, this value is
+     not set.
+    """
+
     pressure_depth_meters: typing_extensions.Annotated[
         typing.Optional[float],
         FieldMetadata(alias="pressureDepthMeters"),
@@ -59,6 +83,10 @@ class Position(UniversalBaseModel):
             description="The depth of the entity from the surface of the water through sensor measurements based on differential pressure\n between the interior and exterior of the vessel. If the value is not set from the upstream, this value is not set.",
         ),
     ] = None
+    """
+    The depth of the entity from the surface of the water through sensor measurements based on differential pressure
+     between the interior and exterior of the vessel. If the value is not set from the upstream, this value is not set.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -22,6 +22,10 @@ class TaskEventDataTaskEvent(UniversalBaseModel):
         FieldMetadata(alias="eventType"),
         pydantic.Field(alias="eventType", description="The type of event that occurred for this task."),
     ] = None
+    """
+    The type of event that occurred for this task.
+    """
+
     task: typing.Optional[Task] = pydantic.Field(default=None)
     """
     The task associated with this event.

@@ -20,21 +20,36 @@ class ProjectedFrustum(UniversalBaseModel):
         FieldMetadata(alias="upperLeft"),
         pydantic.Field(alias="upperLeft", description="Upper left point of the frustum."),
     ] = None
+    """
+    Upper left point of the frustum.
+    """
+
     upper_right: typing_extensions.Annotated[
         typing.Optional[Position],
         FieldMetadata(alias="upperRight"),
         pydantic.Field(alias="upperRight", description="Upper right point of the frustum."),
     ] = None
+    """
+    Upper right point of the frustum.
+    """
+
     bottom_right: typing_extensions.Annotated[
         typing.Optional[Position],
         FieldMetadata(alias="bottomRight"),
         pydantic.Field(alias="bottomRight", description="Bottom right point of the frustum."),
     ] = None
+    """
+    Bottom right point of the frustum.
+    """
+
     bottom_left: typing_extensions.Annotated[
         typing.Optional[Position],
         FieldMetadata(alias="bottomLeft"),
         pydantic.Field(alias="bottomLeft", description="Bottom left point of the frustum."),
     ] = None
+    """
+    Bottom left point of the frustum.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

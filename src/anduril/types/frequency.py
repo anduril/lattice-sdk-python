@@ -21,6 +21,9 @@ class Frequency(UniversalBaseModel):
             alias="frequencyHz", description="Indicates a frequency of a signal (Hz) with its standard deviation."
         ),
     ] = None
+    """
+    Indicates a frequency of a signal (Hz) with its standard deviation.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

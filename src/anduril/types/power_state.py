@@ -22,6 +22,10 @@ class PowerState(UniversalBaseModel):
             description="This is a map where the key is a unique id of the power source and the value is additional information about the\n power source.",
         ),
     ] = None
+    """
+    This is a map where the key is a unique id of the power source and the value is additional information about the
+     power source.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
