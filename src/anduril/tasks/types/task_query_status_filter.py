@@ -10,7 +10,7 @@ from .task_query_status_filter_status import TaskQueryStatusFilterStatus
 class TaskQueryStatusFilter(UniversalBaseModel):
     status: typing.Optional[TaskQueryStatusFilterStatus] = pydantic.Field(default=None)
     """
-    Status of the Task to filter by, inclusive.
+    Status of the task to filter by, inclusive.
     """
 
     if IS_PYDANTIC_V2:
