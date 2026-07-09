@@ -10,25 +10,25 @@ from ...core.serialization import FieldMetadata
 
 class TaskQueryUpdateTimeRange(UniversalBaseModel):
     """
-    If provided, only provides Tasks updated within the time range.
+    If provided, only provides tasks updated within the time range.
     """
 
     start_time: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="startTime"),
-        pydantic.Field(alias="startTime", description="If provided, returns Tasks only updated after this time."),
+        pydantic.Field(alias="startTime", description="If provided, returns tasks only updated after this time."),
     ] = None
     """
-    If provided, returns Tasks only updated after this time.
+    If provided, returns tasks only updated after this time.
     """
 
     end_time: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="endTime"),
-        pydantic.Field(alias="endTime", description="If provided, returns Tasks only updated before this time."),
+        pydantic.Field(alias="endTime", description="If provided, returns tasks only updated before this time."),
     ] = None
     """
-    If provided, returns Tasks only updated before this time.
+    If provided, returns tasks only updated before this time.
     """
 
     if IS_PYDANTIC_V2:
