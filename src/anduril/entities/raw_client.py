@@ -32,6 +32,7 @@ from ..types.geo_shape import GeoShape
 from ..types.group_details import GroupDetails
 from ..types.health import Health
 from ..types.indicators import Indicators
+from ..types.kinematics import Kinematics
 from ..types.location import Location
 from ..types.location_uncertainty import LocationUncertainty
 from ..types.media import Media
@@ -79,6 +80,7 @@ class RawEntitiesClient:
         status: typing.Optional[Status] = OMIT,
         location: typing.Optional[Location] = OMIT,
         location_uncertainty: typing.Optional[LocationUncertainty] = OMIT,
+        kinematics: typing.Optional[Kinematics] = OMIT,
         geo_shape: typing.Optional[GeoShape] = OMIT,
         geo_details: typing.Optional[GeoDetails] = OMIT,
         aliases: typing.Optional[Aliases] = OMIT,
@@ -158,10 +160,17 @@ class RawEntitiesClient:
             Human-readable descriptions of what the entity is currently doing.
 
         location : typing.Optional[Location]
-            Geospatial data related to the entity, including its position, kinematics, and orientation.
+            Geospatial data related to the entity, including its position, kinematics, and orientation. Populate either
+             this field (and `location_uncertainty`) or `kinematics`, not both. Populating both can lead to conflicting or
+             inconsistent kinematics data for the entity.
 
         location_uncertainty : typing.Optional[LocationUncertainty]
             Indicates uncertainty of the entity's position and kinematics.
+
+        kinematics : typing.Optional[Kinematics]
+            Kinematics data related to the entity to a higher degree of granularity than Location. This is preferred for Track Entities.
+             Populate either `location`/`location_uncertainty` or this field, not both.
+             Populating both can lead to conflicting or inconsistent kinematics data for the entity.
 
         geo_shape : typing.Optional[GeoShape]
             Geospatial representation of the entity, including entities that cover an area rather than a fixed point.
@@ -277,6 +286,9 @@ class RawEntitiesClient:
                 ),
                 "locationUncertainty": convert_and_respect_annotation_metadata(
                     object_=location_uncertainty, annotation=LocationUncertainty, direction="write"
+                ),
+                "kinematics": convert_and_respect_annotation_metadata(
+                    object_=kinematics, annotation=Kinematics, direction="write"
                 ),
                 "geoShape": convert_and_respect_annotation_metadata(
                     object_=geo_shape, annotation=GeoShape, direction="write"
@@ -944,6 +956,7 @@ class AsyncRawEntitiesClient:
         status: typing.Optional[Status] = OMIT,
         location: typing.Optional[Location] = OMIT,
         location_uncertainty: typing.Optional[LocationUncertainty] = OMIT,
+        kinematics: typing.Optional[Kinematics] = OMIT,
         geo_shape: typing.Optional[GeoShape] = OMIT,
         geo_details: typing.Optional[GeoDetails] = OMIT,
         aliases: typing.Optional[Aliases] = OMIT,
@@ -1023,10 +1036,17 @@ class AsyncRawEntitiesClient:
             Human-readable descriptions of what the entity is currently doing.
 
         location : typing.Optional[Location]
-            Geospatial data related to the entity, including its position, kinematics, and orientation.
+            Geospatial data related to the entity, including its position, kinematics, and orientation. Populate either
+             this field (and `location_uncertainty`) or `kinematics`, not both. Populating both can lead to conflicting or
+             inconsistent kinematics data for the entity.
 
         location_uncertainty : typing.Optional[LocationUncertainty]
             Indicates uncertainty of the entity's position and kinematics.
+
+        kinematics : typing.Optional[Kinematics]
+            Kinematics data related to the entity to a higher degree of granularity than Location. This is preferred for Track Entities.
+             Populate either `location`/`location_uncertainty` or this field, not both.
+             Populating both can lead to conflicting or inconsistent kinematics data for the entity.
 
         geo_shape : typing.Optional[GeoShape]
             Geospatial representation of the entity, including entities that cover an area rather than a fixed point.
@@ -1142,6 +1162,9 @@ class AsyncRawEntitiesClient:
                 ),
                 "locationUncertainty": convert_and_respect_annotation_metadata(
                     object_=location_uncertainty, annotation=LocationUncertainty, direction="write"
+                ),
+                "kinematics": convert_and_respect_annotation_metadata(
+                    object_=kinematics, annotation=Kinematics, direction="write"
                 ),
                 "geoShape": convert_and_respect_annotation_metadata(
                     object_=geo_shape, annotation=GeoShape, direction="write"

@@ -18,6 +18,7 @@ from .geo_shape import GeoShape
 from .group_details import GroupDetails
 from .health import Health
 from .indicators import Indicators
+from .kinematics import Kinematics
 from .location import Location
 from .location_uncertainty import LocationUncertainty
 from .media import Media
@@ -135,7 +136,9 @@ class Entity(UniversalBaseModel):
 
     location: typing.Optional[Location] = pydantic.Field(default=None)
     """
-    Geospatial data related to the entity, including its position, kinematics, and orientation.
+    Geospatial data related to the entity, including its position, kinematics, and orientation. Populate either
+     this field (and `location_uncertainty`) or `kinematics`, not both. Populating both can lead to conflicting or
+     inconsistent kinematics data for the entity.
     """
 
     location_uncertainty: typing_extensions.Annotated[
@@ -147,6 +150,13 @@ class Entity(UniversalBaseModel):
     ] = None
     """
     Indicates uncertainty of the entity's position and kinematics.
+    """
+
+    kinematics: typing.Optional[Kinematics] = pydantic.Field(default=None)
+    """
+    Kinematics data related to the entity to a higher degree of granularity than Location. This is preferred for Track Entities.
+     Populate either `location`/`location_uncertainty` or this field, not both.
+     Populating both can lead to conflicting or inconsistent kinematics data for the entity.
     """
 
     geo_shape: typing_extensions.Annotated[
