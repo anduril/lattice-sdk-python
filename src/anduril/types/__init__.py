@@ -20,6 +20,16 @@ if typing.TYPE_CHECKING:
     from .allocation import Allocation
     from .alternate_id import AlternateId
     from .alternate_id_type import AlternateIdType
+    from .altitude import Altitude
+    from .altitude_above_ground_level import AltitudeAboveGroundLevel
+    from .altitude_above_mean_sea_level_egm96 import AltitudeAboveMeanSeaLevelEgm96
+    from .altitude_above_mean_sea_level_pressure import AltitudeAboveMeanSeaLevelPressure
+    from .altitude_above_sea_floor import AltitudeAboveSeaFloor
+    from .altitude_above_standard_datum_plane_pressure import AltitudeAboveStandardDatumPlanePressure
+    from .altitude_above_wgs84ellipsoid import AltitudeAboveWgs84Ellipsoid
+    from .altitude_below_sea_surface import AltitudeBelowSeaSurface
+    from .altitude_provenance import AltitudeProvenance
+    from .altitude_provenance_source_type import AltitudeProvenanceSourceType
     from .and_operation import AndOperation
     from .angle_of_arrival import AngleOfArrival
     from .bad_request_error_body import BadRequestErrorBody
@@ -101,6 +111,9 @@ if typing.TYPE_CHECKING:
     from .high_value_target import HighValueTarget
     from .high_value_target_match import HighValueTargetMatch
     from .indicators import Indicators
+    from .kinematics import Kinematics
+    from .kinematics_geocentric import KinematicsGeocentric
+    from .kinematics_geodetic import KinematicsGeodetic
     from .line_of_bearing import LineOfBearing
     from .linear_ring import LinearRing
     from .list_operation import ListOperation
@@ -110,6 +123,8 @@ if typing.TYPE_CHECKING:
     from .lla import Lla
     from .lla_altitude_reference import LlaAltitudeReference
     from .location import Location
+    from .location_geocentric_ecef import LocationGeocentricEcef
+    from .location_geodetic import LocationGeodetic
     from .location_uncertainty import LocationUncertainty
     from .manual_control_frame import ManualControlFrame
     from .manual_control_frame_event import ManualControlFrameEvent
@@ -198,6 +213,7 @@ if typing.TYPE_CHECKING:
     from .symbology import Symbology
     from .system import System
     from .t_mat2 import TMat2
+    from .t_mat3 import TMat3
     from .target_priority import TargetPriority
     from .task import Task
     from .task_catalog import TaskCatalog
@@ -226,6 +242,7 @@ if typing.TYPE_CHECKING:
     from .unauthorized_error_body import UnauthorizedErrorBody
     from .user import User
     from .value import Value
+    from .vec3 import Vec3
     from .visual_details import VisualDetails
 _dynamic_imports: typing.Dict[str, str] = {
     "AcmDetails": ".acm_details",
@@ -242,6 +259,16 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Allocation": ".allocation",
     "AlternateId": ".alternate_id",
     "AlternateIdType": ".alternate_id_type",
+    "Altitude": ".altitude",
+    "AltitudeAboveGroundLevel": ".altitude_above_ground_level",
+    "AltitudeAboveMeanSeaLevelEgm96": ".altitude_above_mean_sea_level_egm96",
+    "AltitudeAboveMeanSeaLevelPressure": ".altitude_above_mean_sea_level_pressure",
+    "AltitudeAboveSeaFloor": ".altitude_above_sea_floor",
+    "AltitudeAboveStandardDatumPlanePressure": ".altitude_above_standard_datum_plane_pressure",
+    "AltitudeAboveWgs84Ellipsoid": ".altitude_above_wgs84ellipsoid",
+    "AltitudeBelowSeaSurface": ".altitude_below_sea_surface",
+    "AltitudeProvenance": ".altitude_provenance",
+    "AltitudeProvenanceSourceType": ".altitude_provenance_source_type",
     "AndOperation": ".and_operation",
     "AngleOfArrival": ".angle_of_arrival",
     "BadRequestErrorBody": ".bad_request_error_body",
@@ -323,6 +350,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HighValueTarget": ".high_value_target",
     "HighValueTargetMatch": ".high_value_target_match",
     "Indicators": ".indicators",
+    "Kinematics": ".kinematics",
+    "KinematicsGeocentric": ".kinematics_geocentric",
+    "KinematicsGeodetic": ".kinematics_geodetic",
     "LineOfBearing": ".line_of_bearing",
     "LinearRing": ".linear_ring",
     "ListOperation": ".list_operation",
@@ -332,6 +362,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Lla": ".lla",
     "LlaAltitudeReference": ".lla_altitude_reference",
     "Location": ".location",
+    "LocationGeocentricEcef": ".location_geocentric_ecef",
+    "LocationGeodetic": ".location_geodetic",
     "LocationUncertainty": ".location_uncertainty",
     "ManualControlFrame": ".manual_control_frame",
     "ManualControlFrameEvent": ".manual_control_frame_event",
@@ -420,6 +452,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Symbology": ".symbology",
     "System": ".system",
     "TMat2": ".t_mat2",
+    "TMat3": ".t_mat3",
     "TargetPriority": ".target_priority",
     "Task": ".task",
     "TaskCatalog": ".task_catalog",
@@ -448,6 +481,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnauthorizedErrorBody": ".unauthorized_error_body",
     "User": ".user",
     "Value": ".value",
+    "Vec3": ".vec3",
     "VisualDetails": ".visual_details",
 }
 
@@ -488,6 +522,16 @@ __all__ = [
     "Allocation",
     "AlternateId",
     "AlternateIdType",
+    "Altitude",
+    "AltitudeAboveGroundLevel",
+    "AltitudeAboveMeanSeaLevelEgm96",
+    "AltitudeAboveMeanSeaLevelPressure",
+    "AltitudeAboveSeaFloor",
+    "AltitudeAboveStandardDatumPlanePressure",
+    "AltitudeAboveWgs84Ellipsoid",
+    "AltitudeBelowSeaSurface",
+    "AltitudeProvenance",
+    "AltitudeProvenanceSourceType",
     "AndOperation",
     "AngleOfArrival",
     "BadRequestErrorBody",
@@ -569,6 +613,9 @@ __all__ = [
     "HighValueTarget",
     "HighValueTargetMatch",
     "Indicators",
+    "Kinematics",
+    "KinematicsGeocentric",
+    "KinematicsGeodetic",
     "LineOfBearing",
     "LinearRing",
     "ListOperation",
@@ -578,6 +625,8 @@ __all__ = [
     "Lla",
     "LlaAltitudeReference",
     "Location",
+    "LocationGeocentricEcef",
+    "LocationGeodetic",
     "LocationUncertainty",
     "ManualControlFrame",
     "ManualControlFrameEvent",
@@ -666,6 +715,7 @@ __all__ = [
     "Symbology",
     "System",
     "TMat2",
+    "TMat3",
     "TargetPriority",
     "Task",
     "TaskCatalog",
@@ -694,5 +744,6 @@ __all__ = [
     "UnauthorizedErrorBody",
     "User",
     "Value",
+    "Vec3",
     "VisualDetails",
 ]

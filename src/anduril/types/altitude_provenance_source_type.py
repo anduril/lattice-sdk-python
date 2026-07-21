@@ -1,0 +1,18 @@
+# This file was auto-generated from our API Definition.
+
+import typing
+
+AltitudeProvenanceSourceType = typing.Union[
+    typing.Literal[
+        "ALTITUDE_PROVENANCE_TYPE_INVALID",
+        "ALTITUDE_PROVENANCE_TYPE_RADAR_ALTIMETER",
+        "ALTITUDE_PROVENANCE_TYPE_LASER_ALTIMETER",
+        "ALTITUDE_PROVENANCE_TYPE_BAROMETER",
+        "ALTITUDE_PROVENANCE_TYPE_TERRAIN_CONVERSION",
+        "ALTITUDE_PROVENANCE_TYPE_GNSS",
+        "ALTITUDE_PROVENANCE_TYPE_SONAR",
+        "ALTITUDE_PROVENANCE_TYPE_USER_INPUT",
+        "ALTITUDE_PROVENANCE_TYPE_INS",
+    ],
+    typing.Any,
+]

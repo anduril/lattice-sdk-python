@@ -1,0 +1,28 @@
+# This file was auto-generated from our API Definition.
+
+import typing
+
+import pydantic
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+
+
+class TMat3(UniversalBaseModel):
+    """
+    A symmetric 3D matrix only representing the upper right triangle, useful for covariance matrices.
+    """
+
+    mxx: typing.Optional[float] = None
+    mxy: typing.Optional[float] = None
+    mxz: typing.Optional[float] = None
+    myy: typing.Optional[float] = None
+    myz: typing.Optional[float] = None
+    mzz: typing.Optional[float] = None
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
