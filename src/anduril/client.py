@@ -143,7 +143,12 @@ class Lattice:
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         if server is not None:
             _server = server if server is not None else "example.developer.anduril.com"
-            base_url = "https://{server}".format(server=_server)
+            _environment_url_templates = {
+                LatticeEnvironment.DEFAULT: "https://{server}",
+            }
+            _url_template = _environment_url_templates.get(environment, "https://{server}")
+            if base_url is None:
+                base_url = _url_template.format(server=_server)
         if token is not None:
             self._client_wrapper = SyncClientWrapper(
                 base_url=_get_base_url(base_url=base_url, environment=environment),
@@ -379,7 +384,12 @@ class AsyncLattice:
         _defaulted_max_retries = max_retries if max_retries is not None else 2
         if server is not None:
             _server = server if server is not None else "example.developer.anduril.com"
-            base_url = "https://{server}".format(server=_server)
+            _environment_url_templates = {
+                LatticeEnvironment.DEFAULT: "https://{server}",
+            }
+            _url_template = _environment_url_templates.get(environment, "https://{server}")
+            if base_url is None:
+                base_url = _url_template.format(server=_server)
         if token is not None:
             self._client_wrapper = AsyncClientWrapper(
                 base_url=_get_base_url(base_url=base_url, environment=environment),
