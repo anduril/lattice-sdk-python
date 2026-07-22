@@ -1,5 +1,7 @@
 # Changelog
 
+## [4.23.0] - 2026-07-22
+
 ## [4.22.0] - 2026-07-21
 ### Added
 - **`kinematics`** — new optional field on entity publish methods and the `Entity` model for higher-granularity kinematics data, preferred for Track Entities and mutually exclusive with `location`/`location_uncertainty`.
