@@ -18,10 +18,12 @@ from ..errors.bad_request_error import BadRequestError
 from ..errors.not_found_error import NotFoundError
 from ..errors.unauthorized_error import UnauthorizedError
 from ..types.agent_request import AgentRequest
+from ..types.delivery_constraints import DeliveryConstraints
 from ..types.entity_ids_selector import EntityIdsSelector
 from ..types.google_protobuf_any import GoogleProtobufAny
 from ..types.principal import Principal
 from ..types.relations import Relations
+from ..types.retry_strategy import RetryStrategy
 from ..types.task import Task
 from ..types.task_entity import TaskEntity
 from ..types.task_query_results import TaskQueryResults
@@ -55,6 +57,8 @@ class RawTasksClient:
         relations: typing.Optional[Relations] = OMIT,
         is_executed_elsewhere: typing.Optional[bool] = OMIT,
         initial_entities: typing.Optional[typing.Sequence[TaskEntity]] = OMIT,
+        retry_strategy: typing.Optional[RetryStrategy] = OMIT,
+        delivery_constraints: typing.Optional[DeliveryConstraints] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Task]:
         """
@@ -97,6 +101,12 @@ class RawTasksClient:
             Indicates an initial set of entities that can be used to execute an entity aware
             task. For example, an entity Objective, an entity Keep In Zone, etc.
 
+        retry_strategy : typing.Optional[RetryStrategy]
+            Any retry strategy for task execution or update.
+
+        delivery_constraints : typing.Optional[DeliveryConstraints]
+            Any scheduling constraints for Lattice delivery of the task.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -124,6 +134,12 @@ class RawTasksClient:
                 "isExecutedElsewhere": is_executed_elsewhere,
                 "initialEntities": convert_and_respect_annotation_metadata(
                     object_=initial_entities, annotation=typing.Sequence[TaskEntity], direction="write"
+                ),
+                "retryStrategy": convert_and_respect_annotation_metadata(
+                    object_=retry_strategy, annotation=RetryStrategy, direction="write"
+                ),
+                "deliveryConstraints": convert_and_respect_annotation_metadata(
+                    object_=delivery_constraints, annotation=DeliveryConstraints, direction="write"
                 ),
             },
             headers={
@@ -1102,6 +1118,8 @@ class AsyncRawTasksClient:
         relations: typing.Optional[Relations] = OMIT,
         is_executed_elsewhere: typing.Optional[bool] = OMIT,
         initial_entities: typing.Optional[typing.Sequence[TaskEntity]] = OMIT,
+        retry_strategy: typing.Optional[RetryStrategy] = OMIT,
+        delivery_constraints: typing.Optional[DeliveryConstraints] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Task]:
         """
@@ -1144,6 +1162,12 @@ class AsyncRawTasksClient:
             Indicates an initial set of entities that can be used to execute an entity aware
             task. For example, an entity Objective, an entity Keep In Zone, etc.
 
+        retry_strategy : typing.Optional[RetryStrategy]
+            Any retry strategy for task execution or update.
+
+        delivery_constraints : typing.Optional[DeliveryConstraints]
+            Any scheduling constraints for Lattice delivery of the task.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1171,6 +1195,12 @@ class AsyncRawTasksClient:
                 "isExecutedElsewhere": is_executed_elsewhere,
                 "initialEntities": convert_and_respect_annotation_metadata(
                     object_=initial_entities, annotation=typing.Sequence[TaskEntity], direction="write"
+                ),
+                "retryStrategy": convert_and_respect_annotation_metadata(
+                    object_=retry_strategy, annotation=RetryStrategy, direction="write"
+                ),
+                "deliveryConstraints": convert_and_respect_annotation_metadata(
+                    object_=delivery_constraints, annotation=DeliveryConstraints, direction="write"
                 ),
             },
             headers={

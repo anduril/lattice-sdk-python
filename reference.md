@@ -675,6 +675,22 @@ task. For example, an entity Objective, an entity Keep In Zone, etc.
 <dl>
 <dd>
 
+**retry_strategy:** `typing.Optional[RetryStrategy]` — Any retry strategy for task execution or update.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**delivery_constraints:** `typing.Optional[DeliveryConstraints]` — Any scheduling constraints for Lattice delivery of the task.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
