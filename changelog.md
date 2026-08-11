@@ -1,5 +1,7 @@
 # Changelog
 
+## [4.26.0] - 2026-08-11
+
 ## [4.25.0] - 2026-08-03
 ### Added
 - **`quote_path_param`** — new helper in `core.jsonable_encoder` that percent-encodes path parameter values so values containing `/` or `..` cannot change which endpoint a request resolves to.
