@@ -11,6 +11,7 @@ from .fixed import Fixed
 from .frequency import Frequency
 from .frequency_range import FrequencyRange
 from .line_of_bearing import LineOfBearing
+from .measurement import Measurement
 from .pulse_repetition_interval import PulseRepetitionInterval
 from .scan_characteristics import ScanCharacteristics
 
@@ -82,6 +83,18 @@ class Signal(UniversalBaseModel):
     ] = None
     """
     describes how a signal is observing the environment
+    """
+
+    received_signal_strength_dbm: typing_extensions.Annotated[
+        typing.Optional[Measurement],
+        FieldMetadata(alias="receivedSignalStrengthDbm"),
+        pydantic.Field(
+            alias="receivedSignalStrengthDbm",
+            description="Indicates the received signal strength (RSSI) of this signal in decibels relative to one milliwatt (dBm).",
+        ),
+    ] = None
+    """
+    Indicates the received signal strength (RSSI) of this signal in decibels relative to one milliwatt (dBm).
     """
 
     if IS_PYDANTIC_V2:
