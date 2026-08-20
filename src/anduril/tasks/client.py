@@ -1052,7 +1052,7 @@ class AsyncTasksClient:
 
 
         async def main() -> None:
-            response = await client.tasks.stream_tasks()
+            response = client.tasks.stream_tasks()
             async for chunk in response:
                 yield chunk
 
@@ -1192,7 +1192,7 @@ class AsyncTasksClient:
 
 
         async def main() -> None:
-            response = await client.tasks.stream_as_agent()
+            response = client.tasks.stream_as_agent()
             async for chunk in response:
                 yield chunk
 
@@ -1256,7 +1256,7 @@ class AsyncTasksClient:
 
 
         async def main() -> None:
-            response = await client.tasks.stream_manual_control_frames(
+            response = client.tasks.stream_manual_control_frames(
                 task_id="taskId",
             )
             async for chunk in response:
