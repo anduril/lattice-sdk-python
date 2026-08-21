@@ -1133,7 +1133,7 @@ class AsyncEntitiesClient:
 
 
         async def main() -> None:
-            response = client.entities.stream_entities()
+            response = await client.entities.stream_entities()
             async for chunk in response:
                 yield chunk
 

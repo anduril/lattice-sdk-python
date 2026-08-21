@@ -49,15 +49,13 @@ class ObjectsClient:
             Filters the objects based on the specified prefix path. If no path is specified, all objects are returned.
 
         since_timestamp : typing.Optional[dt.datetime]
-            Filters out objects whose `last_updated_at` is earlier than this timestamp.
-
-            `last_updated_at` records when an object arrived on the node that holds it, so this filter selects objects that arrived since the given time. It is not the time the object was authored: a copy that reaches a node later carries the later arrival time.
+            Sets the age for the oldest objects to query across the environment.
 
         page_token : typing.Optional[str]
-            Opaque cursor for continuing the same list request. Start a new listing without the previous cursor if any query parameter or listing scope changes.
+            Base64 and URL-encoded cursor returned by the service to continue paging.
 
         all_objects_in_mesh : typing.Optional[bool]
-            Lists objects across all environment nodes in a Lattice Mesh. When false or unset, only objects held by the local node are returned.
+            Lists objects across all environment nodes in a Lattice Mesh.
 
         max_page_size : typing.Optional[int]
             Sets the maximum number of items that should be returned on a single page.
@@ -214,7 +212,7 @@ class ObjectsClient:
         self, object_path: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Dict[str, str]:
         """
-        Returns metadata for a specified object path. Use this to fetch metadata such as object size (size_bytes), its expiry time (expiry_time), or when it arrived on the node holding it (last_updated_at).
+        Returns metadata for a specified object path. Use this to fetch metadata such as object size (size_bytes), its expiry time (expiry_time), or its latest update timestamp (last_updated_at).
 
         Parameters
         ----------
@@ -278,15 +276,13 @@ class AsyncObjectsClient:
             Filters the objects based on the specified prefix path. If no path is specified, all objects are returned.
 
         since_timestamp : typing.Optional[dt.datetime]
-            Filters out objects whose `last_updated_at` is earlier than this timestamp.
-
-            `last_updated_at` records when an object arrived on the node that holds it, so this filter selects objects that arrived since the given time. It is not the time the object was authored: a copy that reaches a node later carries the later arrival time.
+            Sets the age for the oldest objects to query across the environment.
 
         page_token : typing.Optional[str]
-            Opaque cursor for continuing the same list request. Start a new listing without the previous cursor if any query parameter or listing scope changes.
+            Base64 and URL-encoded cursor returned by the service to continue paging.
 
         all_objects_in_mesh : typing.Optional[bool]
-            Lists objects across all environment nodes in a Lattice Mesh. When false or unset, only objects held by the local node are returned.
+            Lists objects across all environment nodes in a Lattice Mesh.
 
         max_page_size : typing.Optional[int]
             Sets the maximum number of items that should be returned on a single page.
@@ -477,7 +473,7 @@ class AsyncObjectsClient:
         self, object_path: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Dict[str, str]:
         """
-        Returns metadata for a specified object path. Use this to fetch metadata such as object size (size_bytes), its expiry time (expiry_time), or when it arrived on the node holding it (last_updated_at).
+        Returns metadata for a specified object path. Use this to fetch metadata such as object size (size_bytes), its expiry time (expiry_time), or its latest update timestamp (last_updated_at).
 
         Parameters
         ----------

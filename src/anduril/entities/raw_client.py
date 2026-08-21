@@ -879,8 +879,6 @@ class RawEntitiesClient:
                             for _sse in _event_source.iter_sse():
                                 if _sse.data == None:
                                     return
-                                if len(_sse.data) == 0:
-                                    continue
                                 try:
                                     yield typing.cast(
                                         StreamEntitiesResponse,
@@ -1757,8 +1755,6 @@ class AsyncRawEntitiesClient:
                             async for _sse in _event_source.aiter_sse():
                                 if _sse.data == None:
                                     return
-                                if len(_sse.data) == 0:
-                                    continue
                                 try:
                                     yield typing.cast(
                                         StreamEntitiesResponse,
