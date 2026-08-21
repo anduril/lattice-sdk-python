@@ -11,7 +11,13 @@ from .content_identifier import ContentIdentifier
 class PathMetadata(UniversalBaseModel):
     content_identifier: ContentIdentifier
     size_bytes: int
-    last_updated_at: dt.datetime
+    last_updated_at: dt.datetime = pydantic.Field()
+    """
+    When this object arrived on the node that holds it, according to that node's clock. Because an object is never modified in place, this is effectively the time the object was created on that node.
+    
+    The value is local to the node holding the object and may differ when the same object is held on multiple nodes. It is not propagated from the node where the object originated.
+    """
+
     expiry_time: typing.Optional[dt.datetime] = None
 
     if IS_PYDANTIC_V2:
