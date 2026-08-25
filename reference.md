@@ -1756,7 +1756,9 @@ client = Lattice(
     environment=LatticeEnvironment.DEFAULT,
 )
 
-client.objects.upload_object()
+client.objects.upload_object(
+    object_path="objectPath",
+)
 
 ```
 </dd>
