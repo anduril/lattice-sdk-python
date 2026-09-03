@@ -165,6 +165,7 @@ if typing.TYPE_CHECKING:
     from .payload_configuration_effective_environment_item import PayloadConfigurationEffectiveEnvironmentItem
     from .payload_configuration_payload_operational_state import PayloadConfigurationPayloadOperationalState
     from .payloads import Payloads
+    from .platform_subcomponents import PlatformSubcomponents
     from .pose import Pose
     from .position import Position
     from .position_type import PositionType
@@ -404,6 +405,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PayloadConfigurationEffectiveEnvironmentItem": ".payload_configuration_effective_environment_item",
     "PayloadConfigurationPayloadOperationalState": ".payload_configuration_payload_operational_state",
     "Payloads": ".payloads",
+    "PlatformSubcomponents": ".platform_subcomponents",
     "Pose": ".pose",
     "Position": ".position",
     "PositionType": ".position_type",
@@ -667,6 +669,7 @@ __all__ = [
     "PayloadConfigurationEffectiveEnvironmentItem",
     "PayloadConfigurationPayloadOperationalState",
     "Payloads",
+    "PlatformSubcomponents",
     "Pose",
     "Position",
     "PositionType",

@@ -39,7 +39,6 @@ if typing.TYPE_CHECKING:
         TooManyRequestsError,
         UnauthorizedError,
     )
-    from . import video
 _dynamic_imports: typing.Dict[str, str] = {
     "BadRequestError": ".errors",
     "ConflictError": ".errors",
@@ -70,7 +69,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SrtSettings": ".types",
     "TooManyRequestsError": ".errors",
     "UnauthorizedError": ".errors",
-    "video": ".video",
 }
 
 
@@ -125,5 +123,4 @@ __all__ = [
     "SrtSettings",
     "TooManyRequestsError",
     "UnauthorizedError",
-    "video",
 ]

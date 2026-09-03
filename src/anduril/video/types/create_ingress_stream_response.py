@@ -29,12 +29,15 @@ class CreateIngressStreamResponse(UniversalBaseModel):
         FieldMetadata(alias="mpegTs"),
         pydantic.Field(
             alias="mpegTs",
-            description="Connection details for an MPEG-TS push. Only returned when MPEG-TS ingress is\n enabled for the deployment and the request selected mpeg_ts.",
+            description="Connection details for an MPEG-TS push. Only returned when the request selected\n mpeg_ts and MPEG-TS ingress is enabled for the deployment. MPEG-TS ingress is\n supported only at the edge, in closed networks; in a cloud environment reached over\n the public internet it may be disabled per deployment, in which case the create\n request is rejected and this field is never populated.",
         ),
     ] = None
     """
-    Connection details for an MPEG-TS push. Only returned when MPEG-TS ingress is
-     enabled for the deployment and the request selected mpeg_ts.
+    Connection details for an MPEG-TS push. Only returned when the request selected
+     mpeg_ts and MPEG-TS ingress is enabled for the deployment. MPEG-TS ingress is
+     supported only at the edge, in closed networks; in a cloud environment reached over
+     the public internet it may be disabled per deployment, in which case the create
+     request is rejected and this field is never populated.
     """
 
     srt: typing.Optional[SrtIngress] = None
