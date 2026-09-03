@@ -2,6 +2,20 @@
 
 ## [5.0.0] - 2026-09-03
 
+### Breaking Changes
+* client.video.video — the nested video subclient has been removed; call stream methods directly on client.video (e.g. use client.video.list_egress_streams() instead of client.video.video.list_egress_streams()).
+* RawVideoClient and AsyncRawVideoClient — removed along with all raw egress/ingress stream methods; migrate to the higher-level methods on the sync and async video clients.
+
+### Added
+* Video stream operations — list, create, get, and delete methods for both egress and ingress streams are now available on the sync and async video clients.
+* Typed error responses — video stream methods now raise specific errors such as BadRequestError, ConflictError, TooManyRequestsError, and ServiceUnavailableError, carrying GoogleRpcStatus bodies.
+* PlatformSubcomponents — new top-level exported type describing a platform and its positionally-related subcomponents, available as an optional platformSubcomponents field on GroupDetails.
+* requireAcknowledgement — new optional field on DeliveryConstraints requiring the agent to confirm receipt before a request is marked delivered.
+* DELIVERY_ERROR_CODE_NOT_ACKNOWLEDGED — new value in the DeliveryErrorCode union returned when acknowledgement is required but not received.
+
+### Changed
+MPEG-TS ingress docs — clarified that it is supported only at the edge in closed networks and may be disabled in cloud deployments.
+
 ## [4.30.0] - 2026-09-03
 
 **Added**
