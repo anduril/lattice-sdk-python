@@ -2,6 +2,14 @@
 
 ## [4.30.0] - 2026-09-03
 
+**Added**
+
+- client.video — new namespace with VideoClient and AsyncVideoClient for managing Lattice live video streams.
+- Ingress and egress stream operations — list, create, get, and delete methods for both ingress and egress streams.
+- RawVideoClient and AsyncRawVideoClient — low-level clients offering typed HTTP responses for the video streaming API.
+- Stream transport settings — support for RTSP, SRT, and MPEG-TS via new stream, transport, and settings models (e.g. IngressStream, EgressStream, RtspSettings, SrtSettings, MpegTsSettings).
+- Video error and response types — structured errors (BadRequestError, NotFoundError, ConflictError, ServiceUnavailableError, GoogleRpcStatus, GoogleProtobufAny) and request/response models for all stream operations.
+
 ## [4.29.1] - 2026-08-21
 
 ## [4.29.0] - 2026-08-20
