@@ -1756,7 +1756,9 @@ client = Lattice(
     environment=LatticeEnvironment.DEFAULT,
 )
 
-client.objects.upload_object()
+client.objects.upload_object(
+    object_path="objectPath",
+)
 
 ```
 </dd>
@@ -2018,6 +2020,708 @@ client.oauth.get_token()
 <dd>
 
 **client_secret:** `typing.Optional[str]` — The client secret
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Video
+<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">list_egress_streams</a>(...) -> ListEgressStreamsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of active egress stream objects.
+ Results are ordered by egress stream create time. If the
+ egress backend is unreachable, the listed streams might be stale or degraded.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+from anduril.environment import LatticeEnvironment
+
+client = Lattice(
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
+)
+
+client.video.video.list_egress_streams()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` 
+
+Desired number of egress streams per page. Defaults to 50 if left blank,
+ and capped at 100. The response may contain fewer than max page size.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[str]` 
+
+To retrieve the next page, pass the `next_page_token` from the previous
+ response. Leave empty for the first page.
+
+ Keep the rest of the request identical between pages, otherwise the
+ server may reject it.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">create_egress_stream</a>(...) -> CreateEgressStreamResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates an egress stream that publishes a live stream to a downstream consumer.
+ A stream in `STREAM_STATUS_UNAVAILABLE` is rejected as not-live.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+from anduril.environment import LatticeEnvironment
+
+client = Lattice(
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
+)
+
+client.video.video.create_egress_stream()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ingress_id:** `typing.Optional[str]` — Identifier of the live ingress stream to re-publish as an egress stream.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rtsp:** `typing.Optional[RtspSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**srt:** `typing.Optional[SrtSettings]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">get_egress_stream</a>(...) -> GetEgressStreamResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves an egress stream object and its associated metadata.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+from anduril.environment import LatticeEnvironment
+
+client = Lattice(
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
+)
+
+client.video.video.get_egress_stream(
+    egress_id="egressId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**egress_id:** `str` — Identifier of the egress stream to retrieve.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">delete_egress_stream</a>(...) -> DeleteEgressStreamResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes the egress stream for a live stream. Returns `NOT_FOUND` if no matching active
+ egress stream exists.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+from anduril.environment import LatticeEnvironment
+
+client = Lattice(
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
+)
+
+client.video.video.delete_egress_stream(
+    egress_id="egressId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**egress_id:** `str` — Identifier of the egress stream to delete.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">list_ingress_streams</a>(...) -> ListIngressStreamsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns a list of top level ingress stream objects, including ingress streams and internal
+ Anduril streams. Will only return active streams.
+ Results are ordered by ingress stream create time.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+from anduril.environment import LatticeEnvironment
+
+client = Lattice(
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
+)
+
+client.video.video.list_ingress_streams()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` 
+
+Desired number of ingress streams per page. Defaults to 50 if left blank,
+ and capped at 100. The response may contain fewer than requested.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[str]` 
+
+To retrieve the next page, pass the `next_page_token` from the previous
+ response. Leave empty for the first page.
+
+ Keep the rest of the request identical between pages, otherwise the
+ server may reject it.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">create_ingress_stream</a>(...) -> CreateIngressStreamResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a video ingress stream, returning metadata that you can use to stream live video to
+ Lattice. Exactly one of `rtsp` or `srt` must be set on the request.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+from anduril.environment import LatticeEnvironment
+
+client = Lattice(
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
+)
+
+client.video.video.create_ingress_stream()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ingress_id:** `typing.Optional[str]` 
+
+Caller-supplied identifier for the new stream. If omitted, the service generates a GUID.
+ If supplied, a consistent and recognizable pattern is recommended. A common convention
+ is a group prefix (organization, platform, or asset) followed by a specific identifier
+ using underscore or dot as a separator, for example, `drone_1`, `vessel_2`, or
+ `teamalpha.drone1`.
+
+ When supplied, an ingress_id must be between 4 and 36 characters long and use only
+ printable ASCII characters with no spaces; the 36-character ceiling leaves room for a
+ full GUID. A value outside that length range, or one containing spaces, control
+ characters, or non-ASCII characters, is rejected, as is an ingress_id that another
+ ingress stream is already using.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` 
+
+Human-readable title for the stream. A title is required: surrounding whitespace is
+ trimmed before it is stored, and what remains must be non-empty, valid UTF-8, and no
+ longer than 64 characters. Otherwise the request is rejected.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mpeg_ts:** `typing.Optional[MpegTsSettings]` 
+
+Receive an MPEG-TS push from the producer. The service allocates a UDP port and
+ returns the URL the producer must push to in CreateIngressStreamResponse.
+
+ MPEG-TS ingress may be disabled per deployment. When it is disabled, a request
+ that selects mpeg_ts is rejected with a gRPC error rather than accepted, so
+ callers should be prepared to fall back to another protocol.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rtsp:** `typing.Optional[RtspSettings]` — Pull from a caller-supplied RTSP URL.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**srt:** `typing.Optional[SrtSettings]` 
+
+Receive an SRT push from the producer. The service returns a URL and session_id
+ in CreateIngressStreamResponse.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">get_ingress_stream</a>(...) -> GetIngressStreamResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieves a top level ingress stream object and its associated metadata. This includes
+ ingress streams and internal Anduril streams.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+from anduril.environment import LatticeEnvironment
+
+client = Lattice(
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
+)
+
+client.video.video.get_ingress_stream(
+    ingress_id="ingressId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ingress_id:** `str` — Identifier of the ingress stream to retrieve.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">delete_ingress_stream</a>(...) -> DeleteIngressStreamResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a video ingress stream and transitions the stream to `STREAM_STATUS_ARCHIVED`.
+ Any egress streams consuming this stream will be stopped automatically.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+from anduril.environment import LatticeEnvironment
+
+client = Lattice(
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
+)
+
+client.video.video.delete_ingress_stream(
+    ingress_id="ingressId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**ingress_id:** `str` — Identifier of the ingress stream to delete.
     
 </dd>
 </dl>
