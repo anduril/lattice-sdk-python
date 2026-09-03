@@ -16,6 +16,7 @@ if typing.TYPE_CHECKING:
     from .oauth.client import AsyncOauthClient, OauthClient
     from .objects.client import AsyncObjectsClient, ObjectsClient
     from .tasks.client import AsyncTasksClient, TasksClient
+    from .video.client import AsyncVideoClient, VideoClient
 
 
 class Lattice:
@@ -207,6 +208,7 @@ class Lattice:
         self._tasks: typing.Optional[TasksClient] = None
         self._objects: typing.Optional[ObjectsClient] = None
         self._oauth: typing.Optional[OauthClient] = None
+        self._video: typing.Optional[VideoClient] = None
 
     @property
     def entities(self):
@@ -239,6 +241,14 @@ class Lattice:
 
             self._oauth = OauthClient(client_wrapper=self._client_wrapper)
         return self._oauth
+
+    @property
+    def video(self):
+        if self._video is None:
+            from .video.client import VideoClient  # noqa: E402
+
+            self._video = VideoClient(client_wrapper=self._client_wrapper)
+        return self._video
 
 
 def _make_default_async_client(
@@ -445,6 +455,7 @@ class AsyncLattice:
         self._tasks: typing.Optional[AsyncTasksClient] = None
         self._objects: typing.Optional[AsyncObjectsClient] = None
         self._oauth: typing.Optional[AsyncOauthClient] = None
+        self._video: typing.Optional[AsyncVideoClient] = None
 
     @property
     def entities(self):
@@ -477,6 +488,14 @@ class AsyncLattice:
 
             self._oauth = AsyncOauthClient(client_wrapper=self._client_wrapper)
         return self._oauth
+
+    @property
+    def video(self):
+        if self._video is None:
+            from .video.client import AsyncVideoClient  # noqa: E402
+
+            self._video = AsyncVideoClient(client_wrapper=self._client_wrapper)
+        return self._video
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: LatticeEnvironment) -> str:

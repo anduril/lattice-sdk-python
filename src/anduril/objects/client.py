@@ -174,7 +174,9 @@ class ObjectsClient:
             client_id="YOUR_CLIENT_ID",
             client_secret="YOUR_CLIENT_SECRET",
         )
-        client.objects.upload_object()
+        client.objects.upload_object(
+            object_path="objectPath",
+        )
         """
         _response = self._raw_client.upload_object(object_path, request=request, request_options=request_options)
         return _response.data
@@ -426,7 +428,9 @@ class AsyncObjectsClient:
 
 
         async def main() -> None:
-            await client.objects.upload_object()
+            await client.objects.upload_object(
+                object_path="objectPath",
+            )
 
 
         asyncio.run(main())

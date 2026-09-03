@@ -256,7 +256,7 @@ if typing.TYPE_CHECKING:
         TooManyRequestsError,
         UnauthorizedError,
     )
-    from . import entities, entity, oauth, object, objects, task, tasks
+    from . import entities, entity, oauth, object, objects, task, tasks, video
     from ._default_clients import DefaultAioHttpClient, DefaultAsyncHttpxClient
     from .client import AsyncLattice, Lattice
     from .entities import StreamEntitiesResponse, StreamEntitiesResponse_Entity, StreamEntitiesResponse_Heartbeat
@@ -568,6 +568,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "objects": ".objects",
     "task": ".task",
     "tasks": ".tasks",
+    "video": ".video",
 }
 
 
@@ -876,4 +877,5 @@ __all__ = [
     "objects",
     "task",
     "tasks",
+    "video",
 ]
