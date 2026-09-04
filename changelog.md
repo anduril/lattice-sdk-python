@@ -2,6 +2,21 @@
 
 ## [5.0.0] - 2026-09-04
 
+### Breaking Changes
+- **`VideoClient` / `AsyncVideoClient`** — the nested `client.video.video.*` namespace was removed; call stream methods directly on `client.video` (e.g. `client.video.list_egress_streams()`).
+- **`RawVideoClient` / `AsyncRawVideoClient`** — removed entirely; migrate to the standard video client methods that return parsed responses directly.
+- **Video types relocated** — response and stream types such as `CreateEgressStreamResponse`, `CreateIngressStreamResponse`, `IngressStream`, `EgressStream`, and `IngressStreamStatus` moved from `anduril.video.types` to the top-level `anduril.types`; update imports accordingly.
+
+### Added
+- **Video streaming types** — `IngressStream`, `EgressStream`, `RtspSettings`, `SrtSettings`, `MpegTsSettings`/`MpegTsIngress`, and their create/get/list/delete response types are now exported from the top-level `anduril` and `anduril.types` namespaces.
+- **Video stream methods** — `list`, `create`, `get`, and `delete` operations for both egress and ingress streams (supporting RTSP, SRT, and MPEG-TS settings) are available on the video client.
+- **Typed error responses** — video stream operations now return typed errors including `BadRequestError`, `UnauthorizedError`, `NotFoundError`, `ConflictError`, and `InternalServerError`.
+- **`PlatformSubcomponents`** — new model describing a platform group composed of subcomponent entities, exposed via the new optional `platformSubcomponents` field on `GroupDetails`.
+- **`requireAcknowledgement`** — optional field on `DeliveryConstraints` requiring agent receipt confirmation, plus the new `DELIVERY_ERROR_CODE_NOT_ACKNOWLEDGED` value on `DeliveryErrorCode`.
+
+### Changed
+- **`CreateIngressStreamResponse.mpeg_ts`** — documentation clarified that MPEG-TS ingress is supported only at the edge in closed networks and may be disabled in cloud deployments.
+
 ## [4.30.0] - 2026-09-03
 
 **Added**
