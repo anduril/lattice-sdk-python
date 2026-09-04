@@ -3,8 +3,11 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .echelon import Echelon
+from .platform_subcomponents import PlatformSubcomponents
 from .team import Team
 
 
@@ -14,6 +17,11 @@ class GroupDetails(UniversalBaseModel):
     """
 
     team: typing.Optional[Team] = None
+    platform_subcomponents: typing_extensions.Annotated[
+        typing.Optional[PlatformSubcomponents],
+        FieldMetadata(alias="platformSubcomponents"),
+        pydantic.Field(alias="platformSubcomponents"),
+    ] = None
     echelon: typing.Optional[Echelon] = None
 
     if IS_PYDANTIC_V2:
