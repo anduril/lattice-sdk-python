@@ -40,6 +40,24 @@ class DeliveryConstraints(UniversalBaseModel):
      This field is only required for tasks with retry strategies.
     """
 
+    require_acknowledgement: typing_extensions.Annotated[
+        typing.Optional[bool],
+        FieldMetadata(alias="requireAcknowledgement"),
+        pydantic.Field(
+            alias="requireAcknowledgement",
+            description="Requires the agent to acknowledge the request before Lattice considers it delivered.\n Without this, a request sent over a streaming agent connection is marked delivered as soon\n as the send returns, which only proves it reached a local buffer and not that the agent\n received it. With this set, the task is not marked delivered until the agent reports a\n status confirming receipt; Lattice re-sends until it does, and eventually fails delivery\n with DELIVERY_ERROR_CODE_NOT_ACKNOWLEDGED. Requires deliver_before, which bounds that\n retrying.",
+        ),
+    ] = None
+    """
+    Requires the agent to acknowledge the request before Lattice considers it delivered.
+     Without this, a request sent over a streaming agent connection is marked delivered as soon
+     as the send returns, which only proves it reached a local buffer and not that the agent
+     received it. With this set, the task is not marked delivered until the agent reports a
+     status confirming receipt; Lattice re-sends until it does, and eventually fails delivery
+     with DELIVERY_ERROR_CODE_NOT_ACKNOWLEDGED. Requires deliver_before, which bounds that
+     retrying.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
