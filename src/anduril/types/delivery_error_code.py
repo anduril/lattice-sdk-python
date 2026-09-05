@@ -8,6 +8,7 @@ DeliveryErrorCode = typing.Union[
         "DELIVERY_ERROR_CODE_UNAVAILABLE",
         "DELIVERY_ERROR_CODE_TIMEOUT",
         "DELIVERY_ERROR_CODE_REJECTED",
+        "DELIVERY_ERROR_CODE_NOT_ACKNOWLEDGED",
     ],
     typing.Any,
 ]
