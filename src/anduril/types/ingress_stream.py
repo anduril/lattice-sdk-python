@@ -5,8 +5,8 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ...core.serialization import FieldMetadata
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.serialization import FieldMetadata
 from .ingress_stream_status import IngressStreamStatus
 from .mpeg_ts_ingress import MpegTsIngress
 from .rtsp_ingress import RtspIngress

@@ -2040,7 +2040,7 @@ client.oauth.get_token()
 </details>
 
 ## Video
-<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">list_egress_streams</a>(...) -> ListEgressStreamsResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py">list_egress_streams</a>(...) -> ListEgressStreamsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2078,7 +2078,7 @@ client = Lattice(
     environment=LatticeEnvironment.DEFAULT,
 )
 
-client.video.video.list_egress_streams()
+client.video.list_egress_streams()
 
 ```
 </dd>
@@ -2131,7 +2131,7 @@ To retrieve the next page, pass the `next_page_token` from the previous
 </dl>
 </details>
 
-<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">create_egress_stream</a>(...) -> CreateEgressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py">create_egress_stream</a>(...) -> CreateEgressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2168,7 +2168,7 @@ client = Lattice(
     environment=LatticeEnvironment.DEFAULT,
 )
 
-client.video.video.create_egress_stream()
+client.video.create_egress_stream()
 
 ```
 </dd>
@@ -2220,7 +2220,7 @@ client.video.video.create_egress_stream()
 </dl>
 </details>
 
-<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">get_egress_stream</a>(...) -> GetEgressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py">get_egress_stream</a>(...) -> GetEgressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2256,7 +2256,7 @@ client = Lattice(
     environment=LatticeEnvironment.DEFAULT,
 )
 
-client.video.video.get_egress_stream(
+client.video.get_egress_stream(
     egress_id="egressId",
 )
 
@@ -2294,7 +2294,7 @@ client.video.video.get_egress_stream(
 </dl>
 </details>
 
-<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">delete_egress_stream</a>(...) -> DeleteEgressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py">delete_egress_stream</a>(...) -> DeleteEgressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2331,7 +2331,7 @@ client = Lattice(
     environment=LatticeEnvironment.DEFAULT,
 )
 
-client.video.video.delete_egress_stream(
+client.video.delete_egress_stream(
     egress_id="egressId",
 )
 
@@ -2369,7 +2369,7 @@ client.video.video.delete_egress_stream(
 </dl>
 </details>
 
-<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">list_ingress_streams</a>(...) -> ListIngressStreamsResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py">list_ingress_streams</a>(...) -> ListIngressStreamsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2407,7 +2407,7 @@ client = Lattice(
     environment=LatticeEnvironment.DEFAULT,
 )
 
-client.video.video.list_ingress_streams()
+client.video.list_ingress_streams()
 
 ```
 </dd>
@@ -2460,7 +2460,7 @@ To retrieve the next page, pass the `next_page_token` from the previous
 </dl>
 </details>
 
-<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">create_ingress_stream</a>(...) -> CreateIngressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py">create_ingress_stream</a>(...) -> CreateIngressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2497,7 +2497,7 @@ client = Lattice(
     environment=LatticeEnvironment.DEFAULT,
 )
 
-client.video.video.create_ingress_stream()
+client.video.create_ingress_stream()
 
 ```
 </dd>
@@ -2550,9 +2550,12 @@ Human-readable title for the stream. A title is required: surrounding whitespace
 Receive an MPEG-TS push from the producer. The service allocates a UDP port and
  returns the URL the producer must push to in CreateIngressStreamResponse.
 
- MPEG-TS ingress may be disabled per deployment. When it is disabled, a request
- that selects mpeg_ts is rejected with a gRPC error rather than accepted, so
- callers should be prepared to fall back to another protocol.
+ MPEG-TS ingress is supported only at the edge, in closed networks. When Lattice
+ runs in a cloud environment reached over the public internet, MPEG-TS ingress may
+ be disabled per deployment. When it is disabled, a request that selects mpeg_ts is
+ rejected with a gRPC error rather than accepted, so callers should be prepared to
+ fall back to RTSP or SRT. An MPEG-TS stream created at the edge can still be listed
+ and inspected on the IngressStream read model even when cloud ingress is disabled.
     
 </dd>
 </dl>
@@ -2591,7 +2594,7 @@ Receive an SRT push from the producer. The service returns a URL and session_id
 </dl>
 </details>
 
-<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">get_ingress_stream</a>(...) -> GetIngressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py">get_ingress_stream</a>(...) -> GetIngressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2628,7 +2631,7 @@ client = Lattice(
     environment=LatticeEnvironment.DEFAULT,
 )
 
-client.video.video.get_ingress_stream(
+client.video.get_ingress_stream(
     ingress_id="ingressId",
 )
 
@@ -2666,7 +2669,7 @@ client.video.video.get_ingress_stream(
 </dl>
 </details>
 
-<details><summary><code>client.video.video.<a href="src/anduril/video/video/client.py">delete_ingress_stream</a>(...) -> DeleteIngressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py">delete_ingress_stream</a>(...) -> DeleteIngressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2703,7 +2706,7 @@ client = Lattice(
     environment=LatticeEnvironment.DEFAULT,
 )
 
-client.video.video.delete_ingress_stream(
+client.video.delete_ingress_stream(
     ingress_id="ingressId",
 )
 

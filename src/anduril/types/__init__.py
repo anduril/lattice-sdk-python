@@ -55,10 +55,14 @@ if typing.TYPE_CHECKING:
     from .correlation_metadata import CorrelationMetadata
     from .correlation_metadata_replication_mode import CorrelationMetadataReplicationMode
     from .correlation_metadata_type import CorrelationMetadataType
+    from .create_egress_stream_response import CreateEgressStreamResponse
+    from .create_ingress_stream_response import CreateIngressStreamResponse
     from .cron_window import CronWindow
     from .decorrelated_all import DecorrelatedAll
     from .decorrelated_single import DecorrelatedSingle
     from .decorrelation import Decorrelation
+    from .delete_egress_stream_response import DeleteEgressStreamResponse
+    from .delete_ingress_stream_response import DeleteIngressStreamResponse
     from .delivery_constraints import DeliveryConstraints
     from .delivery_error import DeliveryError
     from .delivery_error_code import DeliveryErrorCode
@@ -67,6 +71,7 @@ if typing.TYPE_CHECKING:
     from .dimensions import Dimensions
     from .echelon import Echelon
     from .echelon_army_echelon import EchelonArmyEchelon
+    from .egress_stream import EgressStream
     from .emitter_notation import EmitterNotation
     from .entity import Entity
     from .entity_event import EntityEvent
@@ -99,7 +104,10 @@ if typing.TYPE_CHECKING:
     from .geo_polygon_position import GeoPolygonPosition
     from .geo_shape import GeoShape
     from .geo_visual_details import GeoVisualDetails
+    from .get_egress_stream_response import GetEgressStreamResponse
+    from .get_ingress_stream_response import GetIngressStreamResponse
     from .google_protobuf_any import GoogleProtobufAny
+    from .google_rpc_status import GoogleRpcStatus
     from .group_child import GroupChild
     from .group_details import GroupDetails
     from .group_parent import GroupParent
@@ -111,11 +119,15 @@ if typing.TYPE_CHECKING:
     from .high_value_target import HighValueTarget
     from .high_value_target_match import HighValueTargetMatch
     from .indicators import Indicators
+    from .ingress_stream import IngressStream
+    from .ingress_stream_status import IngressStreamStatus
     from .kinematics import Kinematics
     from .kinematics_geocentric import KinematicsGeocentric
     from .kinematics_geodetic import KinematicsGeodetic
     from .line_of_bearing import LineOfBearing
     from .linear_ring import LinearRing
+    from .list_egress_streams_response import ListEgressStreamsResponse
+    from .list_ingress_streams_response import ListIngressStreamsResponse
     from .list_operation import ListOperation
     from .list_operation_list_comparator import ListOperationListComparator
     from .list_response import ListResponse
@@ -142,6 +154,8 @@ if typing.TYPE_CHECKING:
     from .mode5 import Mode5
     from .mode5mode5interrogation_response import Mode5Mode5InterrogationResponse
     from .mode_s import ModeS
+    from .mpeg_ts_ingress import MpegTsIngress
+    from .mpeg_ts_settings import MpegTsSettings
     from .munition import Munition
     from .non_primary_membership import NonPrimaryMembership
     from .not_operation import NotOperation
@@ -165,6 +179,7 @@ if typing.TYPE_CHECKING:
     from .payload_configuration_effective_environment_item import PayloadConfigurationEffectiveEnvironmentItem
     from .payload_configuration_payload_operational_state import PayloadConfigurationPayloadOperationalState
     from .payloads import Payloads
+    from .platform_subcomponents import PlatformSubcomponents
     from .pose import Pose
     from .position import Position
     from .position_type import PositionType
@@ -193,6 +208,9 @@ if typing.TYPE_CHECKING:
     from .retry_strategy import RetryStrategy
     from .rf_configuration import RfConfiguration
     from .route_details import RouteDetails
+    from .rtsp_egress import RtspEgress
+    from .rtsp_ingress import RtspIngress
+    from .rtsp_settings import RtspSettings
     from .scan_characteristics import ScanCharacteristics
     from .scan_characteristics_scan_type import ScanCharacteristicsScanType
     from .schedule import Schedule
@@ -204,6 +222,9 @@ if typing.TYPE_CHECKING:
     from .sensor_sensor_type import SensorSensorType
     from .sensors import Sensors
     from .signal import Signal
+    from .srt_egress import SrtEgress
+    from .srt_ingress import SrtIngress
+    from .srt_settings import SrtSettings
     from .statement import Statement
     from .statement_set import StatementSet
     from .status import Status
@@ -294,10 +315,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CorrelationMetadata": ".correlation_metadata",
     "CorrelationMetadataReplicationMode": ".correlation_metadata_replication_mode",
     "CorrelationMetadataType": ".correlation_metadata_type",
+    "CreateEgressStreamResponse": ".create_egress_stream_response",
+    "CreateIngressStreamResponse": ".create_ingress_stream_response",
     "CronWindow": ".cron_window",
     "DecorrelatedAll": ".decorrelated_all",
     "DecorrelatedSingle": ".decorrelated_single",
     "Decorrelation": ".decorrelation",
+    "DeleteEgressStreamResponse": ".delete_egress_stream_response",
+    "DeleteIngressStreamResponse": ".delete_ingress_stream_response",
     "DeliveryConstraints": ".delivery_constraints",
     "DeliveryError": ".delivery_error",
     "DeliveryErrorCode": ".delivery_error_code",
@@ -306,6 +331,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Dimensions": ".dimensions",
     "Echelon": ".echelon",
     "EchelonArmyEchelon": ".echelon_army_echelon",
+    "EgressStream": ".egress_stream",
     "EmitterNotation": ".emitter_notation",
     "Entity": ".entity",
     "EntityEvent": ".entity_event",
@@ -338,7 +364,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "GeoPolygonPosition": ".geo_polygon_position",
     "GeoShape": ".geo_shape",
     "GeoVisualDetails": ".geo_visual_details",
+    "GetEgressStreamResponse": ".get_egress_stream_response",
+    "GetIngressStreamResponse": ".get_ingress_stream_response",
     "GoogleProtobufAny": ".google_protobuf_any",
+    "GoogleRpcStatus": ".google_rpc_status",
     "GroupChild": ".group_child",
     "GroupDetails": ".group_details",
     "GroupParent": ".group_parent",
@@ -350,11 +379,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "HighValueTarget": ".high_value_target",
     "HighValueTargetMatch": ".high_value_target_match",
     "Indicators": ".indicators",
+    "IngressStream": ".ingress_stream",
+    "IngressStreamStatus": ".ingress_stream_status",
     "Kinematics": ".kinematics",
     "KinematicsGeocentric": ".kinematics_geocentric",
     "KinematicsGeodetic": ".kinematics_geodetic",
     "LineOfBearing": ".line_of_bearing",
     "LinearRing": ".linear_ring",
+    "ListEgressStreamsResponse": ".list_egress_streams_response",
+    "ListIngressStreamsResponse": ".list_ingress_streams_response",
     "ListOperation": ".list_operation",
     "ListOperationListComparator": ".list_operation_list_comparator",
     "ListResponse": ".list_response",
@@ -381,6 +414,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Mode5": ".mode5",
     "Mode5Mode5InterrogationResponse": ".mode5mode5interrogation_response",
     "ModeS": ".mode_s",
+    "MpegTsIngress": ".mpeg_ts_ingress",
+    "MpegTsSettings": ".mpeg_ts_settings",
     "Munition": ".munition",
     "NonPrimaryMembership": ".non_primary_membership",
     "NotOperation": ".not_operation",
@@ -404,6 +439,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PayloadConfigurationEffectiveEnvironmentItem": ".payload_configuration_effective_environment_item",
     "PayloadConfigurationPayloadOperationalState": ".payload_configuration_payload_operational_state",
     "Payloads": ".payloads",
+    "PlatformSubcomponents": ".platform_subcomponents",
     "Pose": ".pose",
     "Position": ".position",
     "PositionType": ".position_type",
@@ -432,6 +468,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "RetryStrategy": ".retry_strategy",
     "RfConfiguration": ".rf_configuration",
     "RouteDetails": ".route_details",
+    "RtspEgress": ".rtsp_egress",
+    "RtspIngress": ".rtsp_ingress",
+    "RtspSettings": ".rtsp_settings",
     "ScanCharacteristics": ".scan_characteristics",
     "ScanCharacteristicsScanType": ".scan_characteristics_scan_type",
     "Schedule": ".schedule",
@@ -443,6 +482,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SensorSensorType": ".sensor_sensor_type",
     "Sensors": ".sensors",
     "Signal": ".signal",
+    "SrtEgress": ".srt_egress",
+    "SrtIngress": ".srt_ingress",
+    "SrtSettings": ".srt_settings",
     "Statement": ".statement",
     "StatementSet": ".statement_set",
     "Status": ".status",
@@ -557,10 +599,14 @@ __all__ = [
     "CorrelationMetadata",
     "CorrelationMetadataReplicationMode",
     "CorrelationMetadataType",
+    "CreateEgressStreamResponse",
+    "CreateIngressStreamResponse",
     "CronWindow",
     "DecorrelatedAll",
     "DecorrelatedSingle",
     "Decorrelation",
+    "DeleteEgressStreamResponse",
+    "DeleteIngressStreamResponse",
     "DeliveryConstraints",
     "DeliveryError",
     "DeliveryErrorCode",
@@ -569,6 +615,7 @@ __all__ = [
     "Dimensions",
     "Echelon",
     "EchelonArmyEchelon",
+    "EgressStream",
     "EmitterNotation",
     "Entity",
     "EntityEvent",
@@ -601,7 +648,10 @@ __all__ = [
     "GeoPolygonPosition",
     "GeoShape",
     "GeoVisualDetails",
+    "GetEgressStreamResponse",
+    "GetIngressStreamResponse",
     "GoogleProtobufAny",
+    "GoogleRpcStatus",
     "GroupChild",
     "GroupDetails",
     "GroupParent",
@@ -613,11 +663,15 @@ __all__ = [
     "HighValueTarget",
     "HighValueTargetMatch",
     "Indicators",
+    "IngressStream",
+    "IngressStreamStatus",
     "Kinematics",
     "KinematicsGeocentric",
     "KinematicsGeodetic",
     "LineOfBearing",
     "LinearRing",
+    "ListEgressStreamsResponse",
+    "ListIngressStreamsResponse",
     "ListOperation",
     "ListOperationListComparator",
     "ListResponse",
@@ -644,6 +698,8 @@ __all__ = [
     "Mode5",
     "Mode5Mode5InterrogationResponse",
     "ModeS",
+    "MpegTsIngress",
+    "MpegTsSettings",
     "Munition",
     "NonPrimaryMembership",
     "NotOperation",
@@ -667,6 +723,7 @@ __all__ = [
     "PayloadConfigurationEffectiveEnvironmentItem",
     "PayloadConfigurationPayloadOperationalState",
     "Payloads",
+    "PlatformSubcomponents",
     "Pose",
     "Position",
     "PositionType",
@@ -695,6 +752,9 @@ __all__ = [
     "RetryStrategy",
     "RfConfiguration",
     "RouteDetails",
+    "RtspEgress",
+    "RtspIngress",
+    "RtspSettings",
     "ScanCharacteristics",
     "ScanCharacteristicsScanType",
     "Schedule",
@@ -706,6 +766,9 @@ __all__ = [
     "SensorSensorType",
     "Sensors",
     "Signal",
+    "SrtEgress",
+    "SrtIngress",
+    "SrtSettings",
     "Statement",
     "StatementSet",
     "Status",

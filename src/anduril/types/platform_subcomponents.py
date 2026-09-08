@@ -3,17 +3,15 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class MpegTsIngress(UniversalBaseModel):
+class PlatformSubcomponents(UniversalBaseModel):
     """
-    MPEG-TS ingress connection details.
-    """
-
-    url: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    The URL that the producer should push the MPEG-TS stream to.
+    Describes a PlatformSubcomponents group type. Comprised of entities which
+     are subcomponents of the parent platform and the parent platform itself.
+     Subcomponents are assumed to be positionally related to the parent group.
+     relationship to a radar entity.
     """
 
     if IS_PYDANTIC_V2:
