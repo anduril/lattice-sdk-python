@@ -86,6 +86,7 @@ if typing.TYPE_CHECKING:
     from .enum_type import EnumType
     from .error_ellipse import ErrorEllipse
     from .execute_request import ExecuteRequest
+    from .execution_constraints import ExecutionConstraints
     from .field_classification_information import FieldClassificationInformation
     from .field_of_view import FieldOfView
     from .field_of_view_mode import FieldOfViewMode
@@ -346,6 +347,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "EnumType": ".enum_type",
     "ErrorEllipse": ".error_ellipse",
     "ExecuteRequest": ".execute_request",
+    "ExecutionConstraints": ".execution_constraints",
     "FieldClassificationInformation": ".field_classification_information",
     "FieldOfView": ".field_of_view",
     "FieldOfViewMode": ".field_of_view_mode",
@@ -630,6 +632,7 @@ __all__ = [
     "EnumType",
     "ErrorEllipse",
     "ExecuteRequest",
+    "ExecutionConstraints",
     "FieldClassificationInformation",
     "FieldOfView",
     "FieldOfViewMode",

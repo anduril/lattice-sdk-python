@@ -15,11 +15,11 @@ class ListIngressStreamsResponse(UniversalBaseModel):
         FieldMetadata(alias="ingressStreams"),
         pydantic.Field(
             alias="ingressStreams",
-            description="The ingress streams on this page. Up to `page_size` entries\n (defaults to 50, capped at 100). Ordered by ingress stream create time.",
+            description="The ingress streams on this page. Up to `pageSize` entries\n (defaults to 50, capped at 100). Ordered by ingress stream create time.",
         ),
     ] = None
     """
-    The ingress streams on this page. Up to `page_size` entries
+    The ingress streams on this page. Up to `pageSize` entries
      (defaults to 50, capped at 100). Ordered by ingress stream create time.
     """
 
@@ -28,11 +28,11 @@ class ListIngressStreamsResponse(UniversalBaseModel):
         FieldMetadata(alias="nextPageToken"),
         pydantic.Field(
             alias="nextPageToken",
-            description="Pass this back as `page_token` to retrieve the next page.\n Empty when there are no more pages.",
+            description="Pass this back as `pageToken` to retrieve the next page.\n Empty when there are no more pages.",
         ),
     ] = None
     """
-    Pass this back as `page_token` to retrieve the next page.
+    Pass this back as `pageToken` to retrieve the next page.
      Empty when there are no more pages.
     """
 

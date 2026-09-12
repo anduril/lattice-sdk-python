@@ -7,6 +7,7 @@ from ..core.request_options import RequestOptions
 from ..types.agent_request import AgentRequest
 from ..types.delivery_constraints import DeliveryConstraints
 from ..types.entity_ids_selector import EntityIdsSelector
+from ..types.execution_constraints import ExecutionConstraints
 from ..types.google_protobuf_any import GoogleProtobufAny
 from ..types.principal import Principal
 from ..types.relations import Relations
@@ -57,6 +58,7 @@ class TasksClient:
         initial_entities: typing.Optional[typing.Sequence[TaskEntity]] = OMIT,
         retry_strategy: typing.Optional[RetryStrategy] = OMIT,
         delivery_constraints: typing.Optional[DeliveryConstraints] = OMIT,
+        execution_constraints: typing.Optional[ExecutionConstraints] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Task:
         """
@@ -103,7 +105,10 @@ class TasksClient:
             Any retry strategy for task execution or update.
 
         delivery_constraints : typing.Optional[DeliveryConstraints]
-            Any scheduling constraints for Lattice delivery of the task.
+            Describes scheduling constraints for Lattice when delivering the task to the agent.
+
+        execution_constraints : typing.Optional[ExecutionConstraints]
+            Describes scheduling constraints for the agent executing the task after it has been delivered.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -134,6 +139,7 @@ class TasksClient:
             initial_entities=initial_entities,
             retry_strategy=retry_strategy,
             delivery_constraints=delivery_constraints,
+            execution_constraints=execution_constraints,
             request_options=request_options,
         )
         return _response.data
@@ -640,6 +646,7 @@ class AsyncTasksClient:
         initial_entities: typing.Optional[typing.Sequence[TaskEntity]] = OMIT,
         retry_strategy: typing.Optional[RetryStrategy] = OMIT,
         delivery_constraints: typing.Optional[DeliveryConstraints] = OMIT,
+        execution_constraints: typing.Optional[ExecutionConstraints] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Task:
         """
@@ -686,7 +693,10 @@ class AsyncTasksClient:
             Any retry strategy for task execution or update.
 
         delivery_constraints : typing.Optional[DeliveryConstraints]
-            Any scheduling constraints for Lattice delivery of the task.
+            Describes scheduling constraints for Lattice when delivering the task to the agent.
+
+        execution_constraints : typing.Optional[ExecutionConstraints]
+            Describes scheduling constraints for the agent executing the task after it has been delivered.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -725,6 +735,7 @@ class AsyncTasksClient:
             initial_entities=initial_entities,
             retry_strategy=retry_strategy,
             delivery_constraints=delivery_constraints,
+            execution_constraints=execution_constraints,
             request_options=request_options,
         )
         return _response.data

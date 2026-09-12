@@ -14,11 +14,11 @@ class GetIngressStreamResponse(UniversalBaseModel):
         typing.Optional[IngressStream],
         FieldMetadata(alias="ingressStream"),
         pydantic.Field(
-            alias="ingressStream", description="The ingress stream corresponding to the requested `ingress_id`."
+            alias="ingressStream", description="The ingress stream corresponding to the requested `ingressId`."
         ),
     ] = None
     """
-    The ingress stream corresponding to the requested `ingress_id`.
+    The ingress stream corresponding to the requested `ingressId`.
     """
 
     if IS_PYDANTIC_V2:
