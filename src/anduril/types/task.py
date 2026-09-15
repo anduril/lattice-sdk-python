@@ -10,6 +10,7 @@ import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ..core.serialization import FieldMetadata
 from .delivery_state import DeliveryState
+from .execution_constraints import ExecutionConstraints
 from .google_protobuf_any import GoogleProtobufAny
 from .owner import Owner
 from .relations import Relations
@@ -179,6 +180,18 @@ class Task(UniversalBaseModel):
     ] = None
     """
     The current delivery state of a task.
+    """
+
+    execution_constraints: typing_extensions.Annotated[
+        typing.Optional[ExecutionConstraints],
+        FieldMetadata(alias="executionConstraints"),
+        pydantic.Field(
+            alias="executionConstraints",
+            description="Any execution-related scheduling constraints for the agent after task delivery.",
+        ),
+    ] = None
+    """
+    Any execution-related scheduling constraints for the agent after task delivery.
     """
 
     if IS_PYDANTIC_V2:
