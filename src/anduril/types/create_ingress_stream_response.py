@@ -16,12 +16,12 @@ class CreateIngressStreamResponse(UniversalBaseModel):
         FieldMetadata(alias="ingressId"),
         pydantic.Field(
             alias="ingressId",
-            description="Identifier of the newly created ingress stream. Echoes the caller-supplied\n `ingress_id` if one was provided, otherwise a service-generated GUID.",
+            description="Identifier of the newly created ingress stream. Echoes the caller-supplied\n `ingressId` if one was provided, otherwise a service-generated GUID.",
         ),
     ] = None
     """
     Identifier of the newly created ingress stream. Echoes the caller-supplied
-     `ingress_id` if one was provided, otherwise a service-generated GUID.
+     `ingressId` if one was provided, otherwise a service-generated GUID.
     """
 
     mpeg_ts: typing_extensions.Annotated[
@@ -29,12 +29,12 @@ class CreateIngressStreamResponse(UniversalBaseModel):
         FieldMetadata(alias="mpegTs"),
         pydantic.Field(
             alias="mpegTs",
-            description="Connection details for an MPEG-TS push. Only returned when the request selected\n mpeg_ts and MPEG-TS ingress is enabled for the deployment. MPEG-TS ingress is\n supported only at the edge, in closed networks; in a cloud environment reached over\n the public internet it may be disabled per deployment, in which case the create\n request is rejected and this field is never populated.",
+            description="Connection details for an MPEG-TS push. Only returned when the request selected\n `mpegTs` and MPEG-TS ingress is enabled for the deployment. MPEG-TS ingress is\n supported only at the edge, in closed networks; in a cloud environment reached over\n the public internet it may be disabled per deployment, in which case the create\n request is rejected and this field is never populated.",
         ),
     ] = None
     """
     Connection details for an MPEG-TS push. Only returned when the request selected
-     mpeg_ts and MPEG-TS ingress is enabled for the deployment. MPEG-TS ingress is
+     `mpegTs` and MPEG-TS ingress is enabled for the deployment. MPEG-TS ingress is
      supported only at the edge, in closed networks; in a cloud environment reached over
      the public internet it may be disabled per deployment, in which case the create
      request is rejected and this field is never populated.
