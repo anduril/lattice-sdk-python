@@ -20,6 +20,7 @@ from ..errors.unauthorized_error import UnauthorizedError
 from ..types.agent_request import AgentRequest
 from ..types.delivery_constraints import DeliveryConstraints
 from ..types.entity_ids_selector import EntityIdsSelector
+from ..types.execution_constraints import ExecutionConstraints
 from ..types.google_protobuf_any import GoogleProtobufAny
 from ..types.principal import Principal
 from ..types.relations import Relations
@@ -59,6 +60,7 @@ class RawTasksClient:
         initial_entities: typing.Optional[typing.Sequence[TaskEntity]] = OMIT,
         retry_strategy: typing.Optional[RetryStrategy] = OMIT,
         delivery_constraints: typing.Optional[DeliveryConstraints] = OMIT,
+        execution_constraints: typing.Optional[ExecutionConstraints] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Task]:
         """
@@ -105,7 +107,10 @@ class RawTasksClient:
             Any retry strategy for task execution or update.
 
         delivery_constraints : typing.Optional[DeliveryConstraints]
-            Any scheduling constraints for Lattice delivery of the task.
+            Describes scheduling constraints for Lattice when delivering the task to the agent.
+
+        execution_constraints : typing.Optional[ExecutionConstraints]
+            Describes scheduling constraints for the agent executing the task after it has been delivered.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -140,6 +145,9 @@ class RawTasksClient:
                 ),
                 "deliveryConstraints": convert_and_respect_annotation_metadata(
                     object_=delivery_constraints, annotation=DeliveryConstraints, direction="write"
+                ),
+                "executionConstraints": convert_and_respect_annotation_metadata(
+                    object_=execution_constraints, annotation=ExecutionConstraints, direction="write"
                 ),
             },
             headers={
@@ -1126,6 +1134,7 @@ class AsyncRawTasksClient:
         initial_entities: typing.Optional[typing.Sequence[TaskEntity]] = OMIT,
         retry_strategy: typing.Optional[RetryStrategy] = OMIT,
         delivery_constraints: typing.Optional[DeliveryConstraints] = OMIT,
+        execution_constraints: typing.Optional[ExecutionConstraints] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Task]:
         """
@@ -1172,7 +1181,10 @@ class AsyncRawTasksClient:
             Any retry strategy for task execution or update.
 
         delivery_constraints : typing.Optional[DeliveryConstraints]
-            Any scheduling constraints for Lattice delivery of the task.
+            Describes scheduling constraints for Lattice when delivering the task to the agent.
+
+        execution_constraints : typing.Optional[ExecutionConstraints]
+            Describes scheduling constraints for the agent executing the task after it has been delivered.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1207,6 +1219,9 @@ class AsyncRawTasksClient:
                 ),
                 "deliveryConstraints": convert_and_respect_annotation_metadata(
                     object_=delivery_constraints, annotation=DeliveryConstraints, direction="write"
+                ),
+                "executionConstraints": convert_and_respect_annotation_metadata(
+                    object_=execution_constraints, annotation=ExecutionConstraints, direction="write"
                 ),
             },
             headers={
