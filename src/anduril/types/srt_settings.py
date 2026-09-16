@@ -12,13 +12,13 @@ class SrtSettings(UniversalBaseModel):
      and pull operations (egress).
 
      When configuring SRT for ingress, CreateIngressStreamResponse will
-     return to the user a url to push to which contains a unique 'session_id' to use
+     return to the user a url to push to which contains a unique `sessionId` to use
      on the connection. If supplied, passphrase will be applied on incoming
      connections.
 
      When configuring SRT for egress, CreateEgressStreamResponse will
      return to the user a url from which to pull a stream. Use the supplied
-     session_id and passphrase in your StreamId if applicable.
+     sessionId and passphrase in your StreamId if applicable.
      See the SRT documentation on Access Control for more information.
     """
 

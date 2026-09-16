@@ -60,7 +60,7 @@ class RawVideoClient:
              and capped at 100. The response may contain fewer than max page size.
 
         page_token : typing.Optional[str]
-            To retrieve the next page, pass the `next_page_token` from the previous
+            To retrieve the next page, pass the `nextPageToken` from the previous
              response. Leave empty for the first page.
 
              Keep the rest of the request identical between pages, otherwise the
@@ -514,7 +514,7 @@ class RawVideoClient:
              and capped at 100. The response may contain fewer than requested.
 
         page_token : typing.Optional[str]
-            To retrieve the next page, pass the `next_page_token` from the previous
+            To retrieve the next page, pass the `nextPageToken` from the previous
              response. Leave empty for the first page.
 
              Keep the rest of the request identical between pages, otherwise the
@@ -645,10 +645,10 @@ class RawVideoClient:
              using underscore or dot as a separator, for example, `drone_1`, `vessel_2`, or
              `teamalpha.drone1`.
 
-             When supplied, an ingress_id must be between 4 and 36 characters long and use only
+             When supplied, an ingressId must be between 4 and 36 characters long and use only
              printable ASCII characters with no spaces; the 36-character ceiling leaves room for a
              full GUID. A value outside that length range, or one containing spaces, control
-             characters, or non-ASCII characters, is rejected, as is an ingress_id that another
+             characters, or non-ASCII characters, is rejected, as is an ingressId that another
              ingress stream is already using.
 
         title : typing.Optional[str]
@@ -662,7 +662,7 @@ class RawVideoClient:
 
              MPEG-TS ingress is supported only at the edge, in closed networks. When Lattice
              runs in a cloud environment reached over the public internet, MPEG-TS ingress may
-             be disabled per deployment. When it is disabled, a request that selects mpeg_ts is
+             be disabled per deployment. When it is disabled, a request that selects `mpegTs` is
              rejected with a gRPC error rather than accepted, so callers should be prepared to
              fall back to RTSP or SRT. An MPEG-TS stream created at the edge can still be listed
              and inspected on the IngressStream read model even when cloud ingress is disabled.
@@ -671,7 +671,7 @@ class RawVideoClient:
             Pull from a caller-supplied RTSP URL.
 
         srt : typing.Optional[SrtSettings]
-            Receive an SRT push from the producer. The service returns a URL and session_id
+            Receive an SRT push from the producer. The service returns a URL and sessionId
              in CreateIngressStreamResponse.
 
         request_options : typing.Optional[RequestOptions]
@@ -1018,7 +1018,7 @@ class AsyncRawVideoClient:
              and capped at 100. The response may contain fewer than max page size.
 
         page_token : typing.Optional[str]
-            To retrieve the next page, pass the `next_page_token` from the previous
+            To retrieve the next page, pass the `nextPageToken` from the previous
              response. Leave empty for the first page.
 
              Keep the rest of the request identical between pages, otherwise the
@@ -1472,7 +1472,7 @@ class AsyncRawVideoClient:
              and capped at 100. The response may contain fewer than requested.
 
         page_token : typing.Optional[str]
-            To retrieve the next page, pass the `next_page_token` from the previous
+            To retrieve the next page, pass the `nextPageToken` from the previous
              response. Leave empty for the first page.
 
              Keep the rest of the request identical between pages, otherwise the
@@ -1603,10 +1603,10 @@ class AsyncRawVideoClient:
              using underscore or dot as a separator, for example, `drone_1`, `vessel_2`, or
              `teamalpha.drone1`.
 
-             When supplied, an ingress_id must be between 4 and 36 characters long and use only
+             When supplied, an ingressId must be between 4 and 36 characters long and use only
              printable ASCII characters with no spaces; the 36-character ceiling leaves room for a
              full GUID. A value outside that length range, or one containing spaces, control
-             characters, or non-ASCII characters, is rejected, as is an ingress_id that another
+             characters, or non-ASCII characters, is rejected, as is an ingressId that another
              ingress stream is already using.
 
         title : typing.Optional[str]
@@ -1620,7 +1620,7 @@ class AsyncRawVideoClient:
 
              MPEG-TS ingress is supported only at the edge, in closed networks. When Lattice
              runs in a cloud environment reached over the public internet, MPEG-TS ingress may
-             be disabled per deployment. When it is disabled, a request that selects mpeg_ts is
+             be disabled per deployment. When it is disabled, a request that selects `mpegTs` is
              rejected with a gRPC error rather than accepted, so callers should be prepared to
              fall back to RTSP or SRT. An MPEG-TS stream created at the edge can still be listed
              and inspected on the IngressStream read model even when cloud ingress is disabled.
@@ -1629,7 +1629,7 @@ class AsyncRawVideoClient:
             Pull from a caller-supplied RTSP URL.
 
         srt : typing.Optional[SrtSettings]
-            Receive an SRT push from the producer. The service returns a URL and session_id
+            Receive an SRT push from the producer. The service returns a URL and sessionId
              in CreateIngressStreamResponse.
 
         request_options : typing.Optional[RequestOptions]
