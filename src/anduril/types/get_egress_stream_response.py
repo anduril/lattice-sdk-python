@@ -14,11 +14,11 @@ class GetEgressStreamResponse(UniversalBaseModel):
         typing.Optional[EgressStream],
         FieldMetadata(alias="egressStream"),
         pydantic.Field(
-            alias="egressStream", description="The egress stream corresponding to the requested `egress_id`."
+            alias="egressStream", description="The egress stream corresponding to the requested `egressId`."
         ),
     ] = None
     """
-    The egress stream corresponding to the requested `egress_id`.
+    The egress stream corresponding to the requested `egressId`.
     """
 
     if IS_PYDANTIC_V2:
