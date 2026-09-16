@@ -1,5 +1,14 @@
 # Changelog
 
+## [5.1.0] - 2026-09-15
+
+### Added
+- **`ExecutionConstraints`** — new type with `startAfter` and `completeBefore` fields describing when an agent may execute a task after delivery.
+- **`execution_constraints`** — new optional parameter on task creation clients and a new field on the `Task` response model.
+
+### Changed
+- **Documentation** — reference camelCase field names (`nextPageToken`, `ingressId`, `mpegTs`, `sessionId`, `pageSize`) instead of snake_case.
+
 ## [5.0.0] - 2026-09-04
 
 ### Breaking Changes
