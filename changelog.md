@@ -1,5 +1,10 @@
 # Changelog
 
+## [5.2.0] - 2026-10-02
+### Added
+- **`async_token`** — new optional parameter on `AsyncLattice` accepting an async callable that returns a bearer token, for token acquisition requiring async I/O.
+- **`last_update_time`** — new optional field on the `TaskStatus` model recording the last time the task status changed to guard against out-of-order updates.
+
 ## [5.1.0] - 2026-09-15
 
 ### Added
