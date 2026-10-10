@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.2.0] - 2026-10-10
+### Added
+- **`async_token`** — new optional parameter on `AsyncLattice` accepting an async callable that returns a bearer token, for token acquisition involving async I/O.
+- **`retry_remote_protocol_errors`** — new optional `RequestOptions` field to opt in to retrying ambiguous server disconnects and incomplete responses.
+- **`TaskStatus.last_update_time`** — new optional field recording the last time the task status changed, used to guard against out-of-order updates.
+
+### Changed
+- **`RemoteProtocolError` retries** — these ambiguous disconnects are no longer retried automatically; enable `retry_remote_protocol_errors` only when replaying the request is safe.
+- **Header merging** — request header names are now treated case-insensitively, so a later `x-api-key` replaces an earlier `X-API-Key` instead of sending duplicate headers.
+
 ## [5.1.0] - 2026-09-15
 
 ### Added
