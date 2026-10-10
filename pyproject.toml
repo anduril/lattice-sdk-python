@@ -1,10 +1,11 @@
 [project]
 name = "anduril-lattice-sdk"
 dynamic = ["version"]
+license-files = ["LICENSE"]
 
 [tool.poetry]
 name = "anduril-lattice-sdk"
-version = "5.1.0"
+version = "5.2.0"
 description = "HTTP clients for the Anduril Lattice SDK"
 readme = "README.md"
 authors = [
@@ -14,7 +15,6 @@ keywords = [
     "anduril",
     "lattice"
 ]
-
 classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python",
