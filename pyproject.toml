@@ -1,6 +1,7 @@
 [project]
 name = "anduril-lattice-sdk"
 dynamic = ["version"]
+license-files = ["LICENSE"]
 
 [tool.poetry]
 name = "anduril-lattice-sdk"
@@ -14,7 +15,6 @@ keywords = [
     "anduril",
     "lattice"
 ]
-
 classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python",
