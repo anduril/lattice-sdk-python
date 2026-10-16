@@ -305,6 +305,9 @@ class AsyncLattice:
     token : typing.Union[str, typing.Callable[[], str]]
         Authenticate by providing a pre-generated bearer token, or a callable that returns one. In this mode, OAuth client credentials are not required.
 
+    async_token : typing.Optional[typing.Callable[[], typing.Awaitable[str]]]
+        An async callable that returns a bearer token. Use this when token acquisition involves async I/O (e.g., refreshing tokens via an async HTTP client). When provided, this is used instead of the synchronous token for async requests.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -371,6 +374,7 @@ class AsyncLattice:
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         token: typing.Union[str, typing.Callable[[], str]],
     ): ...
+    @typing.overload
     def __init__(
         self,
         *,
@@ -378,6 +382,23 @@ class AsyncLattice:
         environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
         server: typing.Optional[str] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        timeout: typing.Optional[float] = None,
+        max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+        async_token: typing.Callable[[], typing.Awaitable[str]],
+    ): ...
+    def __init__(
+        self,
+        *,
+        base_url: typing.Optional[str] = None,
+        environment: LatticeEnvironment = LatticeEnvironment.DEFAULT,
+        server: typing.Optional[str] = None,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
+        async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
@@ -400,7 +421,7 @@ class AsyncLattice:
             _url_template = _environment_url_templates.get(environment, "https://{server}")
             if base_url is None:
                 base_url = _url_template.format(server=_server)
-        if token is not None:
+        if token is not None or async_token is not None:
             self._client_wrapper = AsyncClientWrapper(
                 base_url=_get_base_url(base_url=base_url, environment=environment),
                 headers=headers,
@@ -413,6 +434,7 @@ class AsyncLattice:
                 max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
                 token=_token_getter_override if _token_getter_override is not None else token,
+                async_token=async_token,
             )
         elif client_id is not None and client_secret is not None:
             oauth_token_provider = AsyncOAuthTokenProvider(

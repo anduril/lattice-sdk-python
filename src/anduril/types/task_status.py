@@ -68,6 +68,19 @@ class TaskStatus(UniversalBaseModel):
     Any allocated agents of the task.
     """
 
+    last_update_time: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="lastUpdateTime"),
+        pydantic.Field(
+            alias="lastUpdateTime",
+            description="Last time the task status changed.\n Used to guard against out of order updates.",
+        ),
+    ] = None
+    """
+    Last time the task status changed.
+     Used to guard against out of order updates.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.2.0] - 2026-10-16
+### Added
+- **`async_token`** — new optional parameter on `AsyncLattice` accepting an async callable returning a bearer token, for token acquisition that involves async I/O.
+- **`retry_remote_protocol_errors`** — new `RequestOptions` field to opt into retrying ambiguous server disconnects and incomplete responses (defaults to `False`).
+- **`TaskStatus.last_update_time`** — new optional field recording the last time the task status changed, guarding against out-of-order updates.
+
+### Changed
+- **`httpx.RemoteProtocolError` retries** — are no longer automatic; such errors now re-raise by default unless `retry_remote_protocol_errors` is enabled, since the server may have already applied the request.
+- **Header handling** — request headers are now merged case-insensitively so a later variant (e.g. `x-api-key`) replaces an earlier one instead of producing duplicates.
+
 ## [5.1.0] - 2026-09-15
 
 ### Added
