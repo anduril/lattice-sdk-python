@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.3.0] - 2026-10-23
+### Added
+- **`TaskStatus.end_time`** — new optional field recording the time the task finished execution.
+
+### Changed
+- **Path parameter validation** — path parameter values of `.` or `..` (including segments within unencoded path values) now raise `ValueError` instead of being sent, preventing requests from resolving to an unintended path.
+
 ## [5.2.0] - 2026-10-16
 ### Added
 - **`async_token`** — new optional parameter on `AsyncLattice` accepting an async callable returning a bearer token, for token acquisition that involves async I/O.
