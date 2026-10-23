@@ -5,7 +5,7 @@ license-files = ["LICENSE"]
 
 [tool.poetry]
 name = "anduril-lattice-sdk"
-version = "5.2.0"
+version = "5.3.0"
 description = "HTTP clients for the Anduril Lattice SDK"
 readme = "README.md"
 authors = [
