@@ -1,5 +1,14 @@
 # Changelog
 
+## [5.3.0] - 2026-10-24
+### Added
+- **`TaskStatus.end_time`** — new optional field recording the time the task finished execution.
+- **`get_keepalive_proxy_mounts`** / **`get_async_keepalive_proxy_mounts`** — new helpers that build TCP-keepalive-enabled `httpx` mounts for proxies configured via `HTTP(S)_PROXY`, `ALL_PROXY`, and `NO_PROXY`.
+
+### Changed
+- **`retry-after-ms` handling** — retry delays now honor the millisecond `retry-after-ms` header (previously always ignored), falling back to `retry-after` when the value is non-positive, non-finite, or invalid.
+- **Path parameter validation** — path parameter values of `.` or `..` now raise `ValueError` instead of altering the request path.
+
 ## [5.2.0] - 2026-10-16
 ### Added
 - **`async_token`** — new optional parameter on `AsyncLattice` accepting an async callable returning a bearer token, for token acquisition that involves async I/O.
