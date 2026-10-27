@@ -81,6 +81,15 @@ class TaskStatus(UniversalBaseModel):
      Used to guard against out of order updates.
     """
 
+    end_time: typing_extensions.Annotated[
+        typing.Optional[dt.datetime],
+        FieldMetadata(alias="endTime"),
+        pydantic.Field(alias="endTime", description="Time the Task finished execution."),
+    ] = None
+    """
+    Time the Task finished execution.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
