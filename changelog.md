@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.3.0] - 2026-10-27
+### Added
+- **`TaskStatus.end_time`** — new optional field recording the time the task finished execution.
+- **`get_keepalive_proxy_mounts` / `get_async_keepalive_proxy_mounts`** — new helpers that build httpx proxy mounts from `HTTP(S)_PROXY`, `ALL_PROXY` and `NO_PROXY` with TCP keepalive socket options applied.
+
+### Changed
+- **`retry-after-ms` handling** — the header is now honored when computing retry delays, where it was previously ignored, and non-positive, non-finite or invalid values fall back to `retry-after`.
+- **Path parameter validation** — path parameter values of "." or ".." now raise a `ValueError` instead of silently altering the request path.
+
+### Fixed
+- **`update_forward_refs`** — now passes the provided local namespace when rebuilding models under Pydantic v2.
+
 ## [5.2.0] - 2026-10-16
 ### Added
 - **`async_token`** — new optional parameter on `AsyncLattice` accepting an async callable returning a bearer token, for token acquisition that involves async I/O.
