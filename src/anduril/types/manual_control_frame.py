@@ -15,7 +15,7 @@ class ManualControlFrame(UniversalBaseModel):
     A single frame of manual control input forwarded by Lattice to an agent.
 
      When an operator sends manual control input, for example, joystick movements using
-     `SendManualControlFrames`, Lattice packages each input into a `ManualControlFrame`
+     `SendManualControlFrame`, Lattice packages each input into a `ManualControlFrame`
      and forwards it to the executing agent via the `ListenForManualControlFrames`
      streaming RPC.
 
@@ -37,19 +37,19 @@ class ManualControlFrame(UniversalBaseModel):
         FieldMetadata(alias="epochMicros"),
         pydantic.Field(
             alias="epochMicros",
-            description="Unix timestamp in microseconds identifying the control session.\n Increments each time a client opens a new stream for this task.\n Agents should ignore frames with a lower epoch to handle stale streams\n or operator handoffs.",
+            description="Unix timestamp in microseconds identifying the control session.\n Increases each time a client starts a new control session for this task.\n Agents should ignore frames with a lower epoch to handle stale sessions\n or operator handoffs.",
         ),
     ] = None
     """
     Unix timestamp in microseconds identifying the control session.
-     Increments each time a client opens a new stream for this task.
-     Agents should ignore frames with a lower epoch to handle stale streams
+     Increases each time a client starts a new control session for this task.
+     Agents should ignore frames with a lower epoch to handle stale sessions
      or operator handoffs.
     """
 
     sequence: typing.Optional[str] = pydantic.Field(default=None)
     """
-    The sequence number for a stream, incremented for each frame.
+    The sequence number of this frame within a control session, incremented for each frame.
      Agents can use this to detect out-of-order delivery within the same epoch.
     """
 
