@@ -1,5 +1,11 @@
 # Changelog
 
+## [5.4.0] - 2026-10-30
+### Added
+- **`tasks.send_manual_control_frame`** — new sync and async method that sends a single manual control frame (e.g. joystick input) to an executing manual control task, identified by `session_epoch_micros` with an optional `sequence` and `specification`.
+- **`ConflictError`** — new error class raised on HTTP 409 responses, for example when a manual control frame belongs to a stale session.
+- **`ManualControlFrameResponse`** — new type returned when Lattice accepts a manual control frame.
+
 ## [5.3.0] - 2026-10-27
 ### Added
 - **`TaskStatus.end_time`** — new optional field recording the time the task finished execution.

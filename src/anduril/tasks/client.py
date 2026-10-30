@@ -9,6 +9,7 @@ from ..types.delivery_constraints import DeliveryConstraints
 from ..types.entity_ids_selector import EntityIdsSelector
 from ..types.execution_constraints import ExecutionConstraints
 from ..types.google_protobuf_any import GoogleProtobufAny
+from ..types.manual_control_frame_response import ManualControlFrameResponse
 from ..types.principal import Principal
 from ..types.relations import Relations
 from ..types.retry_strategy import RetryStrategy
@@ -616,6 +617,76 @@ class TasksClient:
             task_id, heartbeat_interval_ms=heartbeat_interval_ms, request_options=request_options
         ) as r:
             yield from r.data
+
+    def send_manual_control_frame(
+        self,
+        task_id: str,
+        *,
+        session_epoch_micros: str,
+        sequence: typing.Optional[str] = OMIT,
+        specification: typing.Optional[GoogleProtobufAny] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ManualControlFrameResponse:
+        """
+        Sends a single manual control frame, for example, joystick input, for a manual control task.
+
+        Call this endpoint repeatedly to control the asset executing the task. Lattice forwards each
+        frame to the executing agent, which receives it using the stream manual control frames endpoint.
+        The task must be in `STATUS_EXECUTING`.
+
+        The client manages the control session. When it begins controlling, it generates a
+        `sessionEpochMicros` and includes it in every request, along with a `sequence` that increases
+        with each frame. A higher epoch replaces the current session, which allows another operator to
+        take over control. A lower epoch is rejected as stale.
+
+        Parameters
+        ----------
+        task_id : str
+            The ID of the manual control task to send the frame for.
+
+        session_epoch_micros : str
+            Unix timestamp in microseconds identifying the control session. The client generates this
+            value when it begins a control session, and includes the same value in every request for
+            that session. Higher values replace previous sessions. Lower values are rejected as stale.
+
+        sequence : typing.Optional[str]
+            The sequence number of this frame within the current session. The client must increase it
+            with each frame so that agents can detect out-of-order delivery. Reset it to 1 when starting a
+            new session.
+
+        specification : typing.Optional[GoogleProtobufAny]
+            The control instructions for this frame. The format is specific to the task, and is passed
+            through to the agent without being inspected by Lattice.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ManualControlFrameResponse
+            The manual control frame was accepted.
+
+        Examples
+        --------
+        from anduril import Lattice
+
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
+        client.tasks.send_manual_control_frame(
+            task_id="taskId",
+            session_epoch_micros="sessionEpochMicros",
+        )
+        """
+        _response = self._raw_client.send_manual_control_frame(
+            task_id,
+            session_epoch_micros=session_epoch_micros,
+            sequence=sequence,
+            specification=specification,
+            request_options=request_options,
+        )
+        return _response.data
 
 
 class AsyncTasksClient:
@@ -1281,3 +1352,81 @@ class AsyncTasksClient:
         ) as r:
             async for _chunk in r.data:
                 yield _chunk
+
+    async def send_manual_control_frame(
+        self,
+        task_id: str,
+        *,
+        session_epoch_micros: str,
+        sequence: typing.Optional[str] = OMIT,
+        specification: typing.Optional[GoogleProtobufAny] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ManualControlFrameResponse:
+        """
+        Sends a single manual control frame, for example, joystick input, for a manual control task.
+
+        Call this endpoint repeatedly to control the asset executing the task. Lattice forwards each
+        frame to the executing agent, which receives it using the stream manual control frames endpoint.
+        The task must be in `STATUS_EXECUTING`.
+
+        The client manages the control session. When it begins controlling, it generates a
+        `sessionEpochMicros` and includes it in every request, along with a `sequence` that increases
+        with each frame. A higher epoch replaces the current session, which allows another operator to
+        take over control. A lower epoch is rejected as stale.
+
+        Parameters
+        ----------
+        task_id : str
+            The ID of the manual control task to send the frame for.
+
+        session_epoch_micros : str
+            Unix timestamp in microseconds identifying the control session. The client generates this
+            value when it begins a control session, and includes the same value in every request for
+            that session. Higher values replace previous sessions. Lower values are rejected as stale.
+
+        sequence : typing.Optional[str]
+            The sequence number of this frame within the current session. The client must increase it
+            with each frame so that agents can detect out-of-order delivery. Reset it to 1 when starting a
+            new session.
+
+        specification : typing.Optional[GoogleProtobufAny]
+            The control instructions for this frame. The format is specific to the task, and is passed
+            through to the agent without being inspected by Lattice.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ManualControlFrameResponse
+            The manual control frame was accepted.
+
+        Examples
+        --------
+        import asyncio
+
+        from anduril import AsyncLattice
+
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
+
+
+        async def main() -> None:
+            await client.tasks.send_manual_control_frame(
+                task_id="taskId",
+                session_epoch_micros="sessionEpochMicros",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.send_manual_control_frame(
+            task_id,
+            session_epoch_micros=session_epoch_micros,
+            sequence=sequence,
+            specification=specification,
+            request_options=request_options,
+        )
+        return _response.data

@@ -15,13 +15,16 @@ from ..core.pydantic_utilities import parse_obj_as, parse_sse_obj
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.bad_request_error import BadRequestError
+from ..errors.conflict_error import ConflictError
 from ..errors.not_found_error import NotFoundError
 from ..errors.unauthorized_error import UnauthorizedError
+from ..task.types.error import Error
 from ..types.agent_request import AgentRequest
 from ..types.delivery_constraints import DeliveryConstraints
 from ..types.entity_ids_selector import EntityIdsSelector
 from ..types.execution_constraints import ExecutionConstraints
 from ..types.google_protobuf_any import GoogleProtobufAny
+from ..types.manual_control_frame_response import ManualControlFrameResponse
 from ..types.principal import Principal
 from ..types.relations import Relations
 from ..types.retry_strategy import RetryStrategy
@@ -1116,6 +1119,133 @@ class RawTasksClient:
 
             yield _stream()
 
+    def send_manual_control_frame(
+        self,
+        task_id: str,
+        *,
+        session_epoch_micros: str,
+        sequence: typing.Optional[str] = OMIT,
+        specification: typing.Optional[GoogleProtobufAny] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ManualControlFrameResponse]:
+        """
+        Sends a single manual control frame, for example, joystick input, for a manual control task.
+
+        Call this endpoint repeatedly to control the asset executing the task. Lattice forwards each
+        frame to the executing agent, which receives it using the stream manual control frames endpoint.
+        The task must be in `STATUS_EXECUTING`.
+
+        The client manages the control session. When it begins controlling, it generates a
+        `sessionEpochMicros` and includes it in every request, along with a `sequence` that increases
+        with each frame. A higher epoch replaces the current session, which allows another operator to
+        take over control. A lower epoch is rejected as stale.
+
+        Parameters
+        ----------
+        task_id : str
+            The ID of the manual control task to send the frame for.
+
+        session_epoch_micros : str
+            Unix timestamp in microseconds identifying the control session. The client generates this
+            value when it begins a control session, and includes the same value in every request for
+            that session. Higher values replace previous sessions. Lower values are rejected as stale.
+
+        sequence : typing.Optional[str]
+            The sequence number of this frame within the current session. The client must increase it
+            with each frame so that agents can detect out-of-order delivery. Reset it to 1 when starting a
+            new session.
+
+        specification : typing.Optional[GoogleProtobufAny]
+            The control instructions for this frame. The format is specific to the task, and is passed
+            through to the agent without being inspected by Lattice.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ManualControlFrameResponse]
+            The manual control frame was accepted.
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"api/v1/tasks/{encode_path_param(task_id)}/manual-control/frames",
+            method="POST",
+            json={
+                "sessionEpochMicros": session_epoch_micros,
+                "sequence": sequence,
+                "specification": convert_and_respect_annotation_metadata(
+                    object_=specification, annotation=GoogleProtobufAny, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ManualControlFrameResponse,
+                    parse_obj_as(
+                        type_=ManualControlFrameResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        Error,
+                        parse_obj_as(
+                            type_=Error,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawTasksClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -2191,3 +2321,130 @@ class AsyncRawTasksClient:
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield await _stream()
+
+    async def send_manual_control_frame(
+        self,
+        task_id: str,
+        *,
+        session_epoch_micros: str,
+        sequence: typing.Optional[str] = OMIT,
+        specification: typing.Optional[GoogleProtobufAny] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ManualControlFrameResponse]:
+        """
+        Sends a single manual control frame, for example, joystick input, for a manual control task.
+
+        Call this endpoint repeatedly to control the asset executing the task. Lattice forwards each
+        frame to the executing agent, which receives it using the stream manual control frames endpoint.
+        The task must be in `STATUS_EXECUTING`.
+
+        The client manages the control session. When it begins controlling, it generates a
+        `sessionEpochMicros` and includes it in every request, along with a `sequence` that increases
+        with each frame. A higher epoch replaces the current session, which allows another operator to
+        take over control. A lower epoch is rejected as stale.
+
+        Parameters
+        ----------
+        task_id : str
+            The ID of the manual control task to send the frame for.
+
+        session_epoch_micros : str
+            Unix timestamp in microseconds identifying the control session. The client generates this
+            value when it begins a control session, and includes the same value in every request for
+            that session. Higher values replace previous sessions. Lower values are rejected as stale.
+
+        sequence : typing.Optional[str]
+            The sequence number of this frame within the current session. The client must increase it
+            with each frame so that agents can detect out-of-order delivery. Reset it to 1 when starting a
+            new session.
+
+        specification : typing.Optional[GoogleProtobufAny]
+            The control instructions for this frame. The format is specific to the task, and is passed
+            through to the agent without being inspected by Lattice.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ManualControlFrameResponse]
+            The manual control frame was accepted.
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"api/v1/tasks/{encode_path_param(task_id)}/manual-control/frames",
+            method="POST",
+            json={
+                "sessionEpochMicros": session_epoch_micros,
+                "sequence": sequence,
+                "specification": convert_and_respect_annotation_metadata(
+                    object_=specification, annotation=GoogleProtobufAny, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ManualControlFrameResponse,
+                    parse_obj_as(
+                        type_=ManualControlFrameResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        typing.Any,
+                        parse_obj_as(
+                            type_=typing.Any,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        Error,
+                        parse_obj_as(
+                            type_=Error,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

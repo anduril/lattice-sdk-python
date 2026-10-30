@@ -141,6 +141,7 @@ if typing.TYPE_CHECKING:
     from .location_uncertainty import LocationUncertainty
     from .manual_control_frame import ManualControlFrame
     from .manual_control_frame_event import ManualControlFrameEvent
+    from .manual_control_frame_response import ManualControlFrameResponse
     from .mean_keplerian_elements import MeanKeplerianElements
     from .measurement import Measurement
     from .media import Media
@@ -402,6 +403,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LocationUncertainty": ".location_uncertainty",
     "ManualControlFrame": ".manual_control_frame",
     "ManualControlFrameEvent": ".manual_control_frame_event",
+    "ManualControlFrameResponse": ".manual_control_frame_response",
     "MeanKeplerianElements": ".mean_keplerian_elements",
     "Measurement": ".measurement",
     "Media": ".media",
@@ -687,6 +689,7 @@ __all__ = [
     "LocationUncertainty",
     "ManualControlFrame",
     "ManualControlFrameEvent",
+    "ManualControlFrameResponse",
     "MeanKeplerianElements",
     "Measurement",
     "Media",
