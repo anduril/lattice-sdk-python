@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.5.0] - 2026-11-06
+### Added
+- **`video.query_ingress_streams`** — new sync and async method that returns ingress streams matching an optional `IngressStreamFilter`, newest first, paginated with `page_size` and `page_token`.
+- **`IngressStreamFilter`** — new filter type for narrowing ingress stream queries by creator, ingress ID, title or status, supported by the new `CreatorFilter`, `StringFilter` and `IngressStreamFilterStatusesItem` types.
+- **`QueryIngressStreamsResponse`** — new response type that holds a page of `ingress_streams` (newest first) and a `next_page_token` for fetching the next page.
+- **`Sensor.camera_configuration`** — new optional field containing a `CameraConfiguration` that reports a camera sensor's zoom percentage.
+- **Package root exports** — all new filter, response and `CameraConfiguration` types can now be imported directly from the package root.
+
+### Changed
+- **SDK logger name** — the SDK now logs under `anduril.lattice.sdk` instead of `fern`, so update any logging configuration that targets the old name.
+- **SDK telemetry headers** — requests now send `X-Codegen-Language`, `X-Codegen-Runtime`, `X-Codegen-Platform` and `X-Codegen-SDK-Name` instead of the `X-Fern-*` headers, and no longer send an SDK version header.
+- **`ingressId` documentation** — now states that only letters, digits, `.`, `_`, `-` and `/` are accepted.
+
 ## [5.4.0] - 2026-10-30
 ### Added
 - **`tasks.send_manual_control_frame`** — new sync and async method that sends a single manual control frame (e.g. joystick input) to an executing manual control task, identified by `session_epoch_micros` with an optional `sequence` and `specification`.
