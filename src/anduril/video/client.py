@@ -10,9 +10,11 @@ from ..types.delete_egress_stream_response import DeleteEgressStreamResponse
 from ..types.delete_ingress_stream_response import DeleteIngressStreamResponse
 from ..types.get_egress_stream_response import GetEgressStreamResponse
 from ..types.get_ingress_stream_response import GetIngressStreamResponse
+from ..types.ingress_stream_filter import IngressStreamFilter
 from ..types.list_egress_streams_response import ListEgressStreamsResponse
 from ..types.list_ingress_streams_response import ListIngressStreamsResponse
 from ..types.mpeg_ts_settings import MpegTsSettings
+from ..types.query_ingress_streams_response import QueryIngressStreamsResponse
 from ..types.rtsp_settings import RtspSettings
 from ..types.srt_settings import SrtSettings
 from .raw_client import AsyncRawVideoClient, RawVideoClient
@@ -269,10 +271,10 @@ class VideoClient:
              `teamalpha.drone1`.
 
              When supplied, an ingressId must be between 4 and 36 characters long and use only
-             printable ASCII characters with no spaces; the 36-character ceiling leaves room for a
-             full GUID. A value outside that length range, or one containing spaces, control
-             characters, or non-ASCII characters, is rejected, as is an ingressId that another
-             ingress stream is already using.
+             letters, digits, and the characters `.`, `_`, `-`, and `/`. The 36-character ceiling
+             leaves room for a full GUID. A value outside that length range, or one containing
+             any other character, is rejected, as is an ingressId that another ingress stream is
+             already using.
 
         title : typing.Optional[str]
             Human-readable title for the stream. A title is required: surrounding whitespace is
@@ -317,6 +319,58 @@ class VideoClient:
         """
         _response = self._raw_client.create_ingress_stream(
             ingress_id=ingress_id, title=title, mpeg_ts=mpeg_ts, rtsp=rtsp, srt=srt, request_options=request_options
+        )
+        return _response.data
+
+    def query_ingress_streams(
+        self,
+        *,
+        page_size: typing.Optional[int] = OMIT,
+        page_token: typing.Optional[str] = OMIT,
+        filter: typing.Optional[IngressStreamFilter] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> QueryIngressStreamsResponse:
+        """
+        Returns the ingress streams that match the filter, newest first. Streams
+         created through this API come first, then streams discovered on the mesh, and
+         each group starts with its newest stream. For a discovered stream, "created"
+         means when Video Manager first saw it.
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many streams to return per page. Defaults to 50, and values above 100
+             count as 100. A page can contain fewer streams than you asked for.
+
+        page_token : typing.Optional[str]
+            To get the next page, pass the `nextPageToken` from the previous response.
+             Leave it empty for the first page. Send the same filter on every page: the
+             server rejects a token if the filter changed, or if the token came from
+             ListIngressStreams.
+
+        filter : typing.Optional[IngressStreamFilter]
+            Which streams to return. Leave it out to return every stream you can see.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        QueryIngressStreamsResponse
+            OK
+
+        Examples
+        --------
+        from anduril import Lattice
+
+        client = Lattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
+        client.video.query_ingress_streams()
+        """
+        _response = self._raw_client.query_ingress_streams(
+            page_size=page_size, page_token=page_token, filter=filter, request_options=request_options
         )
         return _response.data
 
@@ -679,10 +733,10 @@ class AsyncVideoClient:
              `teamalpha.drone1`.
 
              When supplied, an ingressId must be between 4 and 36 characters long and use only
-             printable ASCII characters with no spaces; the 36-character ceiling leaves room for a
-             full GUID. A value outside that length range, or one containing spaces, control
-             characters, or non-ASCII characters, is rejected, as is an ingressId that another
-             ingress stream is already using.
+             letters, digits, and the characters `.`, `_`, `-`, and `/`. The 36-character ceiling
+             leaves room for a full GUID. A value outside that length range, or one containing
+             any other character, is rejected, as is an ingressId that another ingress stream is
+             already using.
 
         title : typing.Optional[str]
             Human-readable title for the stream. A title is required: surrounding whitespace is
@@ -735,6 +789,66 @@ class AsyncVideoClient:
         """
         _response = await self._raw_client.create_ingress_stream(
             ingress_id=ingress_id, title=title, mpeg_ts=mpeg_ts, rtsp=rtsp, srt=srt, request_options=request_options
+        )
+        return _response.data
+
+    async def query_ingress_streams(
+        self,
+        *,
+        page_size: typing.Optional[int] = OMIT,
+        page_token: typing.Optional[str] = OMIT,
+        filter: typing.Optional[IngressStreamFilter] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> QueryIngressStreamsResponse:
+        """
+        Returns the ingress streams that match the filter, newest first. Streams
+         created through this API come first, then streams discovered on the mesh, and
+         each group starts with its newest stream. For a discovered stream, "created"
+         means when Video Manager first saw it.
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many streams to return per page. Defaults to 50, and values above 100
+             count as 100. A page can contain fewer streams than you asked for.
+
+        page_token : typing.Optional[str]
+            To get the next page, pass the `nextPageToken` from the previous response.
+             Leave it empty for the first page. Send the same filter on every page: the
+             server rejects a token if the filter changed, or if the token came from
+             ListIngressStreams.
+
+        filter : typing.Optional[IngressStreamFilter]
+            Which streams to return. Leave it out to return every stream you can see.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        QueryIngressStreamsResponse
+            OK
+
+        Examples
+        --------
+        import asyncio
+
+        from anduril import AsyncLattice
+
+        client = AsyncLattice(
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
+
+
+        async def main() -> None:
+            await client.video.query_ingress_streams()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.query_ingress_streams(
+            page_size=page_size, page_token=page_token, filter=filter, request_options=request_options
         )
         return _response.data
 
