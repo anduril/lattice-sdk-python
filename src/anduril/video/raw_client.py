@@ -646,10 +646,10 @@ class RawVideoClient:
              `teamalpha.drone1`.
 
              When supplied, an ingressId must be between 4 and 36 characters long and use only
-             printable ASCII characters with no spaces; the 36-character ceiling leaves room for a
-             full GUID. A value outside that length range, or one containing spaces, control
-             characters, or non-ASCII characters, is rejected, as is an ingressId that another
-             ingress stream is already using.
+             letters, digits, and the characters `.`, `_`, `-`, and `/`. The 36-character ceiling
+             leaves room for a full GUID. A value outside that length range, or one containing
+             any other character, is rejected, as is an ingressId that another ingress stream is
+             already using.
 
         title : typing.Optional[str]
             Human-readable title for the stream. A title is required: surrounding whitespace is
@@ -1604,10 +1604,10 @@ class AsyncRawVideoClient:
              `teamalpha.drone1`.
 
              When supplied, an ingressId must be between 4 and 36 characters long and use only
-             printable ASCII characters with no spaces; the 36-character ceiling leaves room for a
-             full GUID. A value outside that length range, or one containing spaces, control
-             characters, or non-ASCII characters, is rejected, as is an ingressId that another
-             ingress stream is already using.
+             letters, digits, and the characters `.`, `_`, `-`, and `/`. The 36-character ceiling
+             leaves room for a full GUID. A value outside that length range, or one containing
+             any other character, is rejected, as is an ingressId that another ingress stream is
+             already using.
 
         title : typing.Optional[str]
             Human-readable title for the stream. A title is required: surrounding whitespace is

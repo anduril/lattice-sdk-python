@@ -7,6 +7,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .camera_configuration import CameraConfiguration
 from .field_of_view import FieldOfView
 from .rf_configuration import RfConfiguration
 from .sensor_operational_state import SensorOperationalState
@@ -78,6 +79,15 @@ class Sensor(UniversalBaseModel):
     ] = None
     """
     Multiple fields of view for a single sensor component
+    """
+
+    camera_configuration: typing_extensions.Annotated[
+        typing.Optional[CameraConfiguration],
+        FieldMetadata(alias="cameraConfiguration"),
+        pydantic.Field(alias="cameraConfiguration", description="Camera zoom state, for camera sensors."),
+    ] = None
+    """
+    Camera zoom state, for camera sensors.
     """
 
     if IS_PYDANTIC_V2:
