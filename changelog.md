@@ -1,5 +1,14 @@
 # Changelog
 
+## [5.5.0] - 2026-11-09
+### Added
+- **`Sensor.camera_configuration`** — new optional field of the new `CameraConfiguration` type that describes a camera sensor's zoom state through an optional `zoom_percentage`, where 0 is fully zoomed out and 100 is fully zoomed in.
+
+### Changed
+- **SDK telemetry headers** — requests now send `X-Codegen-Language`, `X-Codegen-Runtime`, `X-Codegen-Platform` and `X-Codegen-SDK-Name` instead of the `X-Fern-*` equivalents, and no longer send an SDK version header.
+- **SDK logger name** — the built-in console logger now uses the `anduril.lattice.sdk` logger name instead of `fern`, so update any logging configuration that targets `fern` to target `anduril.lattice.sdk`.
+- **`ingressId`** — documentation on video ingress stream methods now states that only letters, digits, `.`, `_`, `-` and `/` are accepted.
+
 ## [5.4.0] - 2026-10-30
 ### Added
 - **`tasks.send_manual_control_frame`** — new sync and async method that sends a single manual control frame (e.g. joystick input) to an executing manual control task, identified by `session_epoch_micros` with an optional `sequence` and `specification`.
