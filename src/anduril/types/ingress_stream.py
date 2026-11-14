@@ -46,10 +46,15 @@ class IngressStream(UniversalBaseModel):
     created_at: typing_extensions.Annotated[
         typing.Optional[dt.datetime],
         FieldMetadata(alias="createdAt"),
-        pydantic.Field(alias="createdAt", description="Wall-clock time the stream was created."),
+        pydantic.Field(
+            alias="createdAt",
+            description="When the stream was created. For a stream discovered on the mesh rather than\n created through this API, this is when Video Manager first saw it, which can\n reset if Video Manager restarts.",
+        ),
     ] = None
     """
-    Wall-clock time the stream was created.
+    When the stream was created. For a stream discovered on the mesh rather than
+     created through this API, this is when Video Manager first saw it, which can
+     reset if Video Manager restarts.
     """
 
     updated_at: typing_extensions.Annotated[
