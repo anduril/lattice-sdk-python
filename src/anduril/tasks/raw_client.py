@@ -64,6 +64,7 @@ class RawTasksClient:
         retry_strategy: typing.Optional[RetryStrategy] = OMIT,
         delivery_constraints: typing.Optional[DeliveryConstraints] = OMIT,
         execution_constraints: typing.Optional[ExecutionConstraints] = OMIT,
+        suppress_delivery: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Task]:
         """
@@ -115,6 +116,12 @@ class RawTasksClient:
         execution_constraints : typing.Optional[ExecutionConstraints]
             Describes scheduling constraints for the agent executing the task after it has been delivered.
 
+        suppress_delivery : typing.Optional[bool]
+            If set, then the service will not deliver this request. Useful for reporting a task
+            that the assignee already holds. Requires an assignee, and cannot be combined with
+            isExecutedElsewhere. The task is stored with STATUS_SENT. A later cancel is delivered
+            as expected.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -152,6 +159,7 @@ class RawTasksClient:
                 "executionConstraints": convert_and_respect_annotation_metadata(
                     object_=execution_constraints, annotation=ExecutionConstraints, direction="write"
                 ),
+                "suppressDelivery": suppress_delivery,
             },
             headers={
                 "content-type": "application/json",
@@ -1265,6 +1273,7 @@ class AsyncRawTasksClient:
         retry_strategy: typing.Optional[RetryStrategy] = OMIT,
         delivery_constraints: typing.Optional[DeliveryConstraints] = OMIT,
         execution_constraints: typing.Optional[ExecutionConstraints] = OMIT,
+        suppress_delivery: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Task]:
         """
@@ -1316,6 +1325,12 @@ class AsyncRawTasksClient:
         execution_constraints : typing.Optional[ExecutionConstraints]
             Describes scheduling constraints for the agent executing the task after it has been delivered.
 
+        suppress_delivery : typing.Optional[bool]
+            If set, then the service will not deliver this request. Useful for reporting a task
+            that the assignee already holds. Requires an assignee, and cannot be combined with
+            isExecutedElsewhere. The task is stored with STATUS_SENT. A later cancel is delivered
+            as expected.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1353,6 +1368,7 @@ class AsyncRawTasksClient:
                 "executionConstraints": convert_and_respect_annotation_metadata(
                     object_=execution_constraints, annotation=ExecutionConstraints, direction="write"
                 ),
+                "suppressDelivery": suppress_delivery,
             },
             headers={
                 "content-type": "application/json",
