@@ -2167,7 +2167,7 @@ client.oauth.get_token()
 </details>
 
 ## Video
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L39-L85">list_egress_streams</a>(...) -> ListEgressStreamsResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L41-L87">list_egress_streams</a>(...) -> ListEgressStreamsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2258,7 +2258,7 @@ To retrieve the next page, pass the `nextPageToken` from the previous
 </dl>
 </details>
 
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L87-L129">create_egress_stream</a>(...) -> CreateEgressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L89-L131">create_egress_stream</a>(...) -> CreateEgressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2347,7 +2347,7 @@ client.video.create_egress_stream()
 </dl>
 </details>
 
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L131-L163">get_egress_stream</a>(...) -> GetEgressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L133-L165">get_egress_stream</a>(...) -> GetEgressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2421,7 +2421,7 @@ client.video.get_egress_stream(
 </dl>
 </details>
 
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L165-L198">delete_egress_stream</a>(...) -> DeleteEgressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L167-L200">delete_egress_stream</a>(...) -> DeleteEgressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2496,7 +2496,7 @@ client.video.delete_egress_stream(
 </dl>
 </details>
 
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L200-L246">list_ingress_streams</a>(...) -> ListIngressStreamsResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L202-L248">list_ingress_streams</a>(...) -> ListIngressStreamsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2587,7 +2587,7 @@ To retrieve the next page, pass the `nextPageToken` from the previous
 </dl>
 </details>
 
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L248-L321">create_ingress_stream</a>(...) -> CreateIngressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L250-L323">create_ingress_stream</a>(...) -> CreateIngressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2721,7 +2721,106 @@ Receive an SRT push from the producer. The service returns a URL and sessionId
 </dl>
 </details>
 
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L323-L356">get_ingress_stream</a>(...) -> GetIngressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L325-L375">query_ingress_streams</a>(...) -> QueryIngressStreamsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the ingress streams that match the filter, newest first. Streams
+ created through this API come first, then streams discovered on the mesh, and
+ each group starts with its newest stream. For a discovered stream, "created"
+ means when Video Manager first saw it.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+from anduril.environment import LatticeEnvironment
+
+client = Lattice(
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
+)
+
+client.video.query_ingress_streams()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` 
+
+How many streams to return per page. Defaults to 50, and values above 100
+ count as 100. A page can contain fewer streams than you asked for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[str]` 
+
+To get the next page, pass the `nextPageToken` from the previous response.
+ Leave it empty for the first page. Send the same filter on every page: the
+ server rejects a token if the filter changed, or if the token came from
+ ListIngressStreams.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `typing.Optional[IngressStreamFilter]` — Which streams to return. Leave it out to return every stream you can see.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L377-L410">get_ingress_stream</a>(...) -> GetIngressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2796,7 +2895,7 @@ client.video.get_ingress_stream(
 </dl>
 </details>
 
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L358-L391">delete_ingress_stream</a>(...) -> DeleteIngressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L412-L445">delete_ingress_stream</a>(...) -> DeleteIngressStreamResponse</code></summary>
 <dl>
 <dd>
 

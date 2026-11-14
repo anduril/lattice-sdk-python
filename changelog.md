@@ -1,5 +1,14 @@
 # Changelog
 
+## [5.6.0] - 2026-11-14
+### Added
+- **`video.query_ingress_streams`** — new sync and async method that returns ingress streams matching an optional filter, newest first, with `page_size` and `page_token` pagination.
+- **`IngressStreamFilter`** — new filter type that matches streams by `creator` (`CreatorFilter`), `ingress_id` and `title` (`StringFilter` with exact, prefix or contains matching), and `statuses` (`IngressStreamFilterStatusesItem`).
+- **`QueryIngressStreamsResponse`** — new response type containing `ingress_streams` and a `next_page_token` for fetching the next page.
+
+### Changed
+- **`IngressStream.created_at`** — documentation now explains that, for streams discovered on the mesh, this is when Video Manager first saw the stream and that it can reset if Video Manager restarts.
+
 ## [5.5.0] - 2026-11-09
 ### Added
 - **`Sensor.camera_configuration`** — new optional field of the new `CameraConfiguration` type that describes a camera sensor's zoom state through an optional `zoom_percentage`, where 0 is fully zoomed out and 100 is fully zoomed in.
