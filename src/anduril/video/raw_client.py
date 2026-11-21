@@ -18,9 +18,11 @@ from ..types.delete_ingress_stream_response import DeleteIngressStreamResponse
 from ..types.get_egress_stream_response import GetEgressStreamResponse
 from ..types.get_ingress_stream_response import GetIngressStreamResponse
 from ..types.google_rpc_status import GoogleRpcStatus
+from ..types.ingress_stream_filter import IngressStreamFilter
 from ..types.list_egress_streams_response import ListEgressStreamsResponse
 from ..types.list_ingress_streams_response import ListIngressStreamsResponse
 from ..types.mpeg_ts_settings import MpegTsSettings
+from ..types.query_ingress_streams_response import QueryIngressStreamsResponse
 from ..types.rtsp_settings import RtspSettings
 from ..types.srt_settings import SrtSettings
 from .errors.bad_request_error import BadRequestError
@@ -767,6 +769,133 @@ class RawVideoClient:
                 )
             if _response.status_code == 429:
                 raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        GoogleRpcStatus,
+                        parse_obj_as(
+                            type_=GoogleRpcStatus,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        GoogleRpcStatus,
+                        parse_obj_as(
+                            type_=GoogleRpcStatus,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def query_ingress_streams(
+        self,
+        *,
+        page_size: typing.Optional[int] = OMIT,
+        page_token: typing.Optional[str] = OMIT,
+        filter: typing.Optional[IngressStreamFilter] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[QueryIngressStreamsResponse]:
+        """
+        Returns the ingress streams that match the filter, newest first. Streams
+         created through this API come first, then streams discovered on the mesh, and
+         each group starts with its newest stream. For a discovered stream, "created"
+         means when Video Manager first saw it.
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many streams to return per page. Defaults to 50, and values above 100
+             count as 100. A page can contain fewer streams than you asked for.
+
+        page_token : typing.Optional[str]
+            To get the next page, pass the `nextPageToken` from the previous response.
+             Leave it empty for the first page. Send the same filter on every page: the
+             server rejects a token if the filter changed, or if the token came from
+             ListIngressStreams.
+
+        filter : typing.Optional[IngressStreamFilter]
+            Which streams to return. Leave it out to return every stream you can see.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[QueryIngressStreamsResponse]
+            OK
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "api/v1/video/ingress_streams/query",
+            method="POST",
+            json={
+                "pageSize": page_size,
+                "pageToken": page_token,
+                "filter": convert_and_respect_annotation_metadata(
+                    object_=filter, annotation=IngressStreamFilter, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    QueryIngressStreamsResponse,
+                    parse_obj_as(
+                        type_=QueryIngressStreamsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        GoogleRpcStatus,
+                        parse_obj_as(
+                            type_=GoogleRpcStatus,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        GoogleRpcStatus,
+                        parse_obj_as(
+                            type_=GoogleRpcStatus,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        GoogleRpcStatus,
+                        parse_obj_as(
+                            type_=GoogleRpcStatus,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         GoogleRpcStatus,
@@ -1725,6 +1854,133 @@ class AsyncRawVideoClient:
                 )
             if _response.status_code == 429:
                 raise TooManyRequestsError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        GoogleRpcStatus,
+                        parse_obj_as(
+                            type_=GoogleRpcStatus,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 503:
+                raise ServiceUnavailableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        GoogleRpcStatus,
+                        parse_obj_as(
+                            type_=GoogleRpcStatus,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def query_ingress_streams(
+        self,
+        *,
+        page_size: typing.Optional[int] = OMIT,
+        page_token: typing.Optional[str] = OMIT,
+        filter: typing.Optional[IngressStreamFilter] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[QueryIngressStreamsResponse]:
+        """
+        Returns the ingress streams that match the filter, newest first. Streams
+         created through this API come first, then streams discovered on the mesh, and
+         each group starts with its newest stream. For a discovered stream, "created"
+         means when Video Manager first saw it.
+
+        Parameters
+        ----------
+        page_size : typing.Optional[int]
+            How many streams to return per page. Defaults to 50, and values above 100
+             count as 100. A page can contain fewer streams than you asked for.
+
+        page_token : typing.Optional[str]
+            To get the next page, pass the `nextPageToken` from the previous response.
+             Leave it empty for the first page. Send the same filter on every page: the
+             server rejects a token if the filter changed, or if the token came from
+             ListIngressStreams.
+
+        filter : typing.Optional[IngressStreamFilter]
+            Which streams to return. Leave it out to return every stream you can see.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[QueryIngressStreamsResponse]
+            OK
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "api/v1/video/ingress_streams/query",
+            method="POST",
+            json={
+                "pageSize": page_size,
+                "pageToken": page_token,
+                "filter": convert_and_respect_annotation_metadata(
+                    object_=filter, annotation=IngressStreamFilter, direction="write"
+                ),
+            },
+            headers={
+                "content-type": "application/json",
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    QueryIngressStreamsResponse,
+                    parse_obj_as(
+                        type_=QueryIngressStreamsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        GoogleRpcStatus,
+                        parse_obj_as(
+                            type_=GoogleRpcStatus,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        GoogleRpcStatus,
+                        parse_obj_as(
+                            type_=GoogleRpcStatus,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise ForbiddenError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        GoogleRpcStatus,
+                        parse_obj_as(
+                            type_=GoogleRpcStatus,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 500:
+                raise InternalServerError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         GoogleRpcStatus,

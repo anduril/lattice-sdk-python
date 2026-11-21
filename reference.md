@@ -539,7 +539,7 @@ the gRPC StreamEntityComponents endpoint.
 </details>
 
 ## Tasks
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L49-L146">create_task</a>(...) -> Task</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L49-L154">create_task</a>(...) -> Task</code></summary>
 <dl>
 <dd>
 
@@ -699,6 +699,19 @@ task. For example, an entity Objective, an entity Keep In Zone, etc.
 <dl>
 <dd>
 
+**suppress_delivery:** `typing.Optional[bool]` 
+
+If set, then the service will not deliver this request. Useful for reporting a task
+that the assignee already holds. Requires an assignee, and cannot be combined with
+isExecutedElsewhere. The task is stored with STATUS_SENT. A later cancel is delivered
+as expected.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -711,7 +724,7 @@ task. For example, an entity Objective, an entity Keep In Zone, etc.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L148-L185">get_task</a>(...) -> Task</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L156-L193">get_task</a>(...) -> Task</code></summary>
 <dl>
 <dd>
 
@@ -792,7 +805,7 @@ client.tasks.get_task(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L187-L252">update_task_status</a>(...) -> Task</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L195-L260">update_task_status</a>(...) -> Task</code></summary>
 <dl>
 <dd>
 
@@ -905,7 +918,7 @@ is known are considered stale and ignored.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L254-L302">cancel_task</a>(...) -> Task</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L262-L310">cancel_task</a>(...) -> Task</code></summary>
 <dl>
 <dd>
 
@@ -996,7 +1009,7 @@ client.tasks.cancel_task(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L304-L367">query_tasks</a>(...) -> TaskQueryResults</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L312-L375">query_tasks</a>(...) -> TaskQueryResults</code></summary>
 <dl>
 <dd>
 
@@ -1107,7 +1120,7 @@ any of the remaining parameters, but not both.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L369-L449">stream_tasks</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L377-L457">stream_tasks</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1248,7 +1261,7 @@ Either provide `parentTaskId` or any combination of the other filters, but not b
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L451-L503">listen_as_agent</a>(...) -> AgentRequest</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L459-L511">listen_as_agent</a>(...) -> AgentRequest</code></summary>
 <dl>
 <dd>
 
@@ -1339,7 +1352,7 @@ client.tasks.listen_as_agent()
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L505-L562">stream_as_agent</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L513-L570">stream_as_agent</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1435,7 +1448,7 @@ client.tasks.stream_as_agent()
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L564-L619">stream_manual_control_frames</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L572-L627">stream_manual_control_frames</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1529,7 +1542,7 @@ client.tasks.stream_manual_control_frames(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L621-L689">send_manual_control_frame</a>(...) -> ManualControlFrameResponse</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L629-L697">send_manual_control_frame</a>(...) -> ManualControlFrameResponse</code></summary>
 <dl>
 <dd>
 
@@ -2167,7 +2180,7 @@ client.oauth.get_token()
 </details>
 
 ## Video
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L39-L85">list_egress_streams</a>(...) -> ListEgressStreamsResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L41-L87">list_egress_streams</a>(...) -> ListEgressStreamsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2258,7 +2271,7 @@ To retrieve the next page, pass the `nextPageToken` from the previous
 </dl>
 </details>
 
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L87-L129">create_egress_stream</a>(...) -> CreateEgressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L89-L131">create_egress_stream</a>(...) -> CreateEgressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2347,7 +2360,7 @@ client.video.create_egress_stream()
 </dl>
 </details>
 
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L131-L163">get_egress_stream</a>(...) -> GetEgressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L133-L165">get_egress_stream</a>(...) -> GetEgressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2421,7 +2434,7 @@ client.video.get_egress_stream(
 </dl>
 </details>
 
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L165-L198">delete_egress_stream</a>(...) -> DeleteEgressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L167-L200">delete_egress_stream</a>(...) -> DeleteEgressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2496,7 +2509,7 @@ client.video.delete_egress_stream(
 </dl>
 </details>
 
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L200-L246">list_ingress_streams</a>(...) -> ListIngressStreamsResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L202-L248">list_ingress_streams</a>(...) -> ListIngressStreamsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2587,7 +2600,7 @@ To retrieve the next page, pass the `nextPageToken` from the previous
 </dl>
 </details>
 
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L248-L321">create_ingress_stream</a>(...) -> CreateIngressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L250-L323">create_ingress_stream</a>(...) -> CreateIngressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2721,7 +2734,106 @@ Receive an SRT push from the producer. The service returns a URL and sessionId
 </dl>
 </details>
 
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L323-L356">get_ingress_stream</a>(...) -> GetIngressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L325-L375">query_ingress_streams</a>(...) -> QueryIngressStreamsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the ingress streams that match the filter, newest first. Streams
+ created through this API come first, then streams discovered on the mesh, and
+ each group starts with its newest stream. For a discovered stream, "created"
+ means when Video Manager first saw it.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from anduril import Lattice
+from anduril.environment import LatticeEnvironment
+
+client = Lattice(
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    environment=LatticeEnvironment.DEFAULT,
+)
+
+client.video.query_ingress_streams()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page_size:** `typing.Optional[int]` 
+
+How many streams to return per page. Defaults to 50, and values above 100
+ count as 100. A page can contain fewer streams than you asked for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[str]` 
+
+To get the next page, pass the `nextPageToken` from the previous response.
+ Leave it empty for the first page. Send the same filter on every page: the
+ server rejects a token if the filter changed, or if the token came from
+ ListIngressStreams.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `typing.Optional[IngressStreamFilter]` — Which streams to return. Leave it out to return every stream you can see.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L377-L410">get_ingress_stream</a>(...) -> GetIngressStreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -2796,7 +2908,7 @@ client.video.get_ingress_stream(
 </dl>
 </details>
 
-<details><summary><code>client.video.<a href="src/anduril/video/client.py#L358-L391">delete_ingress_stream</a>(...) -> DeleteIngressStreamResponse</code></summary>
+<details><summary><code>client.video.<a href="src/anduril/video/client.py#L412-L445">delete_ingress_stream</a>(...) -> DeleteIngressStreamResponse</code></summary>
 <dl>
 <dd>
 
