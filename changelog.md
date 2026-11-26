@@ -1,5 +1,9 @@
 # Changelog
 
+## [5.6.0] - 2026-11-26
+### Added
+- **`suppress_delivery`** — new optional parameter on the sync and async task creation methods that stores the task with `STATUS_SENT` without delivering it, useful for reporting a task the assignee already holds (requires an assignee and cannot be combined with `isExecutedElsewhere`).
+
 ## [5.5.0] - 2026-11-09
 ### Added
 - **`Sensor.camera_configuration`** — new optional field of the new `CameraConfiguration` type that describes a camera sensor's zoom state through an optional `zoom_percentage`, where 0 is fully zoomed out and 100 is fully zoomed in.
