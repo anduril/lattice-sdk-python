@@ -539,7 +539,7 @@ the gRPC StreamEntityComponents endpoint.
 </details>
 
 ## Tasks
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L49-L146">create_task</a>(...) -> Task</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L49-L154">create_task</a>(...) -> Task</code></summary>
 <dl>
 <dd>
 
@@ -699,6 +699,19 @@ task. For example, an entity Objective, an entity Keep In Zone, etc.
 <dl>
 <dd>
 
+**suppress_delivery:** `typing.Optional[bool]` 
+
+If set, then the service will not deliver this request. Useful for reporting a task
+that the assignee already holds. Requires an assignee, and cannot be combined with
+isExecutedElsewhere. The task is stored with STATUS_SENT. A later cancel is delivered
+as expected.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -711,7 +724,7 @@ task. For example, an entity Objective, an entity Keep In Zone, etc.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L148-L185">get_task</a>(...) -> Task</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L156-L193">get_task</a>(...) -> Task</code></summary>
 <dl>
 <dd>
 
@@ -792,7 +805,7 @@ client.tasks.get_task(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L187-L252">update_task_status</a>(...) -> Task</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L195-L260">update_task_status</a>(...) -> Task</code></summary>
 <dl>
 <dd>
 
@@ -905,7 +918,7 @@ is known are considered stale and ignored.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L254-L302">cancel_task</a>(...) -> Task</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L262-L310">cancel_task</a>(...) -> Task</code></summary>
 <dl>
 <dd>
 
@@ -996,7 +1009,7 @@ client.tasks.cancel_task(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L304-L367">query_tasks</a>(...) -> TaskQueryResults</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L312-L375">query_tasks</a>(...) -> TaskQueryResults</code></summary>
 <dl>
 <dd>
 
@@ -1107,7 +1120,7 @@ any of the remaining parameters, but not both.
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L369-L449">stream_tasks</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L377-L457">stream_tasks</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1248,7 +1261,7 @@ Either provide `parentTaskId` or any combination of the other filters, but not b
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L451-L503">listen_as_agent</a>(...) -> AgentRequest</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L459-L511">listen_as_agent</a>(...) -> AgentRequest</code></summary>
 <dl>
 <dd>
 
@@ -1339,7 +1352,7 @@ client.tasks.listen_as_agent()
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L505-L562">stream_as_agent</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L513-L570">stream_as_agent</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1435,7 +1448,7 @@ client.tasks.stream_as_agent()
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L564-L619">stream_manual_control_frames</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L572-L627">stream_manual_control_frames</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1529,7 +1542,7 @@ client.tasks.stream_manual_control_frames(
 </dl>
 </details>
 
-<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L621-L689">send_manual_control_frame</a>(...) -> ManualControlFrameResponse</code></summary>
+<details><summary><code>client.tasks.<a href="src/anduril/tasks/client.py#L629-L697">send_manual_control_frame</a>(...) -> ManualControlFrameResponse</code></summary>
 <dl>
 <dd>
 
